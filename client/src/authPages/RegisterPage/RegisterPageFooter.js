@@ -5,17 +5,18 @@ import { useHistory } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 
 const getFormNotValidMessage = () => {
-  return "Enter correct e-mail address and password should contain between 6 and 12 characters";
+  return "Username should contain characters between 3 and 12 and password should be 6 and 12 characters.";
 };
 
 const getFormValidMessage = () => {
-  return "Press To Login";
+  return "Press To Register";
 };
 
-const LoginPageFooter = ({ handleLogin, isFormValid }) => {
+const RegisterPageFooter = ({ handleRegister, isFormValid }) => {
   const history = useHistory();
-  const handlePushToRegisterPage = () => {
-    history.push("/register");
+
+  const handlePushToLoginPage = () => {
+    history.push("/login");
   };
 
   return (
@@ -25,21 +26,21 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
       >
         <div>
           <CustomPrimaryButton
-            label="Log in"
+            label="Register"
             additionalStyles={{ marginTop: "30px" }}
             disabled={!isFormValid}
-            onClick={handleLogin}
+            onClick={handleRegister}
           />
         </div>
       </Tooltip>
       <RedirectInfo
-        text="Need an account?"
+        text="Already Have an Account?"
         redirectText="Create an account"
         additionalStyles={{ marginTop: "5px" }}
-        redirectHandler={handlePushToRegisterPage}
+        redirectHandler={handlePushToLoginPage}
       />
     </>
   );
 };
 
-export default LoginPageFooter;
+export default RegisterPageFooter;

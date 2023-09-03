@@ -9,7 +9,7 @@ import {
 import LoginPage from "./authPages/LoginPage/LoginPage";
 import Dashboard from "./Dashboard/Dashboard";
 import RegisterPage from "./authPages/RegisterPage/RegisterPage";
-
+import AlertNotificationComponents from "./shared/components/AlertNotificationComponents";
 import "./App.css";
 
 function App() {
@@ -31,6 +31,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      <AlertNotificationComponents />
     </>
   );
 }
