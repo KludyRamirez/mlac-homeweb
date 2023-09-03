@@ -7,16 +7,16 @@ import { getActions } from "../../store/actions/alertActions";
 const AlertNotificationComponents = ({
   showAlertMessage,
   closeAlertMessage,
-  alertMesssageContent,
+  alertMessageContent,
 }) => {
   return (
     <Snackbar
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
       open={showAlertMessage}
-      onClose={() => {}}
+      onClose={closeAlertMessage}
       autoHideDuration={4000}
     >
-      <Alert severity="info">{alertMesssageContent}</Alert>
+      <Alert severity="info">{alertMessageContent}</Alert>
     </Snackbar>
   );
 };
@@ -32,6 +32,7 @@ const mapActionsToProps = (dispatch) => {
     ...getActions(dispatch),
   };
 };
+
 export default connect(
   mapStoreStateToProps,
   mapActionsToProps
