@@ -1,27 +1,41 @@
-export const validateLoginForm = ({ mail, password }) => {
-  const isMailValid = validateMail(mail);
+export const validateLoginForm = ({ username, password }) => {
+  const isUsernameValid = validateUsername(username);
   const isPasswordValid = validatePassword(password);
 
-  return isMailValid && isPasswordValid;
+  return isUsernameValid && isPasswordValid;
 };
 
-export const validateRegisterForm = ({ mail, password, username }) => {
+export const validateRegisterForm = ({
+  role,
+  password,
+  username,
+  lastname,
+}) => {
   return (
-    validateMail(mail) &&
+    validateRole(role) &&
     validatePassword(password) &&
-    validateUsername(username)
+    validateUsername(username) &&
+    validateLastname(lastname)
   );
 };
 
 const validatePassword = (password) => {
-  return password.length > 6 && password.length < 12;
+  return password.length > 6 && password.length < 24;
 };
 
-const validateMail = (mail) => {
-  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  return emailPattern.test(mail);
-};
+// const validateMail = (mail) => {
+//   const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+//   return emailPattern.test(mail);
+// };
 
 const validateUsername = (username) => {
-  return username.length > 2 && username.length < 13;
+  return username.length > 3 && username.length < 24;
+};
+
+const validateLastname = (lastname) => {
+  return lastname.length > 3 && lastname.length < 24;
+};
+
+const validateRole = (role) => {
+  return role !== undefined && role.trim() !== "";
 };

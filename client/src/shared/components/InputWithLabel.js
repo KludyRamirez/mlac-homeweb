@@ -10,7 +10,7 @@ const Wrapper = styled("div")({
 
 const Label = styled("p")({
   color: "#b9bbbe",
-  textTransform: "uppercase",
+  textTransform: "sentencecase",
   fontWeight: "600",
   fontSize: "16px",
 });

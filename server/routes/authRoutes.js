@@ -8,14 +8,15 @@ const auth = require("../middleware/auth");
 // backend validation middleware
 
 const registerSchema = Joi.object({
-  username: Joi.string().min(3).max(12).required(),
-  password: Joi.string().min(6).max(12).required(),
-  mail: Joi.string().email().required(),
+  lastname: Joi.string().min(3).max(24).required(),
+  username: Joi.string().min(3).max(24).required(),
+  password: Joi.string().min(6).max(24).required(),
+  role: Joi.string(),
 });
 
 const loginSchema = Joi.object({
-  password: Joi.string().min(6).max(12).required(),
-  mail: Joi.string().email().required(),
+  username: Joi.string().min(3).max(24).required(),
+  password: Joi.string().min(6).max(24).required(),
 });
 
 // traditional routing

@@ -10,24 +10,32 @@ import { useHistory } from "react-router-dom";
 
 const RegisterPage = ({ register }) => {
   const history = useHistory();
-  const [mail, setMail] = useState("");
+  const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
 
   const [isFormValid, setIsFormValid] = useState("");
 
   useEffect(() => {
-    setIsFormValid(validateRegisterForm({ mail, password, username }));
-  }, [mail, password, username, setIsFormValid]);
+    setIsFormValid(
+      validateRegisterForm({ lastname, password, username, role })
+    );
+  }, [lastname, password, username, role, setIsFormValid]);
 
   const handleRegister = () => {
     const userDetails = {
-      mail,
+      lastname,
       password,
       username,
+      role,
     };
 
     register(userDetails, history);
+    setLastname("");
+    setUsername("");
+    setPassword("");
+    setRole("");
   };
 
   return (
@@ -36,16 +44,22 @@ const RegisterPage = ({ register }) => {
         Create an Account
       </Typography>
       <RegisterPageInputs
-        mail={mail}
-        setMail={setMail}
+        lastname={lastname}
+        setLastname={setLastname}
         username={username}
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
+        role={role}
+        setRole={setRole}
       />
       <RegisterPageFooter
         isFormValid={isFormValid}
         handleRegister={handleRegister}
+        // setLastname={setLastname}
+        // setUsername={setUsername}
+        // setPassword={setPassword}
+        // setRole={setRole}
       />
     </AuthBox>
   );

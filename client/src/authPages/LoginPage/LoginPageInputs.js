@@ -1,15 +1,15 @@
 import React from "react";
 import InputWithLabel from "../../shared/components/InputWithLabel";
 
-const LoginPageInputs = ({ mail, setMail, password, setPassword }) => {
+const LoginPageInputs = ({ username, setUsername, password, setPassword }) => {
   return (
     <>
       <InputWithLabel
-        value={mail}
-        setValue={setMail}
-        label="E-mail"
+        value={username}
+        setValue={setUsername}
+        label="Name"
         type="text"
-        placeholder="Enter e-mail address"
+        placeholder="Enter name"
       ></InputWithLabel>
       <InputWithLabel
         value={password}

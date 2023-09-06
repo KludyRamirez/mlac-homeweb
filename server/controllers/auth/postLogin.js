@@ -5,9 +5,9 @@ const jwt = require("jsonwebtoken");
 const postLogin = async (req, res) => {
   try {
     console.log("login event came");
-    const { mail, password } = req.body;
+    const { password, username } = req.body;
 
-    const user = await User.findOne({ mail: mail.toLowerCase() });
+    const user = await User.findOne({ username: username.toLowerCase() });
 
     console.log(user);
 
@@ -16,7 +16,7 @@ const postLogin = async (req, res) => {
       const token = jwt.sign(
         {
           userId: user._id,
-          mail,
+          username,
         },
         process.env.TOKEN_KEY,
         {
@@ -26,7 +26,6 @@ const postLogin = async (req, res) => {
 
       return res.status(200).json({
         userDetails: {
-          mail: user.mail,
           token: token,
           username: user.username,
         },

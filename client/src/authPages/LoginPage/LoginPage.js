@@ -10,18 +10,18 @@ import { useHistory } from "react-router-dom";
 
 const LoginPage = ({ login }) => {
   const history = useHistory();
-  const [mail, setMail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    setIsFormValid(validateLoginForm({ mail, password }));
-  }, [mail, password, setIsFormValid]);
+    setIsFormValid(validateLoginForm({ password, username }));
+  }, [password, username, setIsFormValid]);
 
   const handleLogin = () => {
     const userDetails = {
-      mail,
       password,
+      username,
     };
     login(userDetails, history);
   };
@@ -30,8 +30,8 @@ const LoginPage = ({ login }) => {
     <AuthBox>
       <LoginPageHeader />
       <LoginPageInputs
-        mail={mail}
-        setMail={setMail}
+        username={username}
+        setUsername={setUsername}
         password={password}
         setPassword={setPassword}
       />

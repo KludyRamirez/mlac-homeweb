@@ -33,7 +33,7 @@ const login = (userDetails, history) => {
       localStorage.setItem("user", JSON.stringify(userDetails));
 
       dispatch(setUserDetails(userDetails));
-      history.push("/dashboard");
+      history.push("/user");
     }
   };
 };
