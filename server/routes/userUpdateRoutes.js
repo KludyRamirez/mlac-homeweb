@@ -4,6 +4,7 @@ const userUpdateController = require("../controllers/outsidechat/userUpdateContr
 
 const auth = require("../middleware/auth");
 
+router.get("/user/:id", userUpdateController.controllers.updateUserGet);
 router.put("/user/:id", userUpdateController.controllers.editUser);
 
 // test route to verify middleware if working

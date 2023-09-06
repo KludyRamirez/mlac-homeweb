@@ -7,6 +7,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 import axios from "axios";
+import UpdateUserPage from "./UserUpdate";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -163,7 +164,7 @@ const EditUser = () => {
               <tbody>
                 {users.map((user) => (
                   <tr key={user._id}>
-                    <TD>{user.cardId.slice(-4)}</TD>
+                    <TD>{user.cardId ? user.cardId.slice(-4) : ""}</TD>
                   </tr>
                 ))}
               </tbody>

@@ -12,10 +12,10 @@ import RegisterPage from "./authPages/RegisterPage/RegisterPage";
 import AlertNotificationComponents from "./shared/components/AlertNotificationComponents";
 
 //admin
-import EditUser from "./Admin/AdminDashboard/FunctionPages/EditUser";
+import AllUser from "./Admin/AdminDashboard/FunctionPages/AllUser";
 
 import "./App.css";
-import UpdateUserPage from "./Admin/AdminDashboard/FunctionPages/UpdateUserPage";
+import UserUpdate from "./Admin/AdminDashboard/FunctionPages/UserUpdate";
 
 function App() {
   return (
@@ -35,10 +35,10 @@ function App() {
             <Dashboard />
           </Route>
           <Route exact path="/user">
-            <EditUser />
+            <AllUser />
           </Route>
           <Route exact path="/user/:id">
-            <UpdateUserPage />
+            <UserUpdate />
           </Route>
         </Switch>
       </Router>
