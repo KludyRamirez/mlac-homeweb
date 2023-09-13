@@ -2,10 +2,18 @@ const express = require("express");
 const router = express.Router();
 const userUpdateController = require("../controllers/outsidechat/userUpdateController");
 
-const auth = require("../middleware/auth");
+const { verifyToken, adminCheck } = require("../middleware/auth");
 
-router.get("/user/:id", userUpdateController.controllers.updateUserGet);
-router.put("/user/:id", userUpdateController.controllers.editUser);
+const auth = verifyToken;
+const admin = adminCheck;
+
+router.get(
+  "/user/:id",
+  auth,
+  admin,
+  userUpdateController.controllers.updateUserGet
+);
+router.put("/user/:id", auth, admin, userUpdateController.controllers.editUser);
 
 // test route to verify middleware if working
 

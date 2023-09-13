@@ -20,7 +20,7 @@ const editUser = async (req, res) => {
   const { username, lastname, password } = req.body;
 
   try {
-    const user = await User.findOneAndUpdate(req.params.id);
+    const user = await User.findByIdAndUpdate(req.params.id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

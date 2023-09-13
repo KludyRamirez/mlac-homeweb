@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { styled } from "@mui/system";
 import AppBar from "../AppBar/AppBar";
 import SideBar from "../SideBar/SideBar";
@@ -7,7 +8,6 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 import axios from "axios";
-import UpdateUserPage from "./UserUpdate";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -118,13 +118,25 @@ const EditUser = () => {
 
   const history = useHistory();
 
+  const { auth } = useSelector((state) => ({ ...state }));
+
   useEffect(() => {
     getUsers();
   }, []);
 
   const getUsers = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API}/user`);
+      if (!auth.userDetails.token) {
+        // Handle the case where the token is missing
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const res = await axios.get(`${process.env.REACT_APP_API}/user`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
       setUsers(res.data);
     } catch (err) {
       console.error("Error fetching users:", err);
