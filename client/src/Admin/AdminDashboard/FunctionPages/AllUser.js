@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 import { styled } from "@mui/system";
 import AppBar from "../AppBar/AppBar";
 import SideBar from "../SideBar/SideBar";
@@ -113,16 +114,22 @@ const Spacer = styled("div")({
   gap: "20px",
 });
 
+const selectAuth = (state) => state.auth;
+
+// Create a memoized selector
+const authSelector = createSelector([selectAuth], (auth) => auth);
+
 const EditUser = () => {
   const [users, setUsers] = useState([]);
 
-  const history = useHistory();
+  // Use the memoized selector in your component
+  const auth = useSelector(authSelector);
 
-  const { auth } = useSelector((state) => ({ ...state }));
+  const history = useHistory();
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [auth]);
 
   const getUsers = async () => {
     try {
@@ -144,8 +151,17 @@ const EditUser = () => {
   };
 
   const deleteUsers = async (id) => {
+    if (!auth.userDetails.token) {
+      // Handle the case where the token is missing
+      console.error("Authentication token not found.");
+      return;
+    }
     try {
-      await axios.delete(`${process.env.REACT_APP_API}/user/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API}/user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
       getUsers();
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -191,7 +207,7 @@ const EditUser = () => {
               <tbody>
                 {users.map((user) => (
                   <tr key={user._id}>
-                    <TD>{user.username}</TD>
+                    <TD>{user.firstname}</TD>
                   </tr>
                 ))}
               </tbody>
