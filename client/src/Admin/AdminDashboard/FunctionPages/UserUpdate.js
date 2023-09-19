@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const initialState = {
@@ -9,17 +10,26 @@ const initialState = {
 };
 
 const UpdateUserPage = () => {
-  const { id } = useParams();
-
   const [values, setValues] = useState(initialState);
+  const { id } = useParams();
+  const { auth } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     getUsers();
   }, []);
 
   const getUsers = async () => {
+    if (!auth.userDetails.token) {
+      // Handle the case where the token is missing
+      console.error("Authentication token not found.");
+      return;
+    }
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API}/user/${id}`);
+      const res = await axios.get(`${process.env.REACT_APP_API}/user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
       setValues({ ...values, ...res.data });
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -29,10 +39,20 @@ const UpdateUserPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const handleUpdate = async () => {
+      if (!auth.userDetails.token) {
+        // Handle the case where the token is missing
+        console.error("Authentication token not found.");
+        return;
+      }
       try {
         const res = await axios.put(
           `${process.env.REACT_APP_API}/user/${id}`,
-          values
+          values,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.userDetails.token}`,
+            },
+          }
         );
 
         // Provide feedback to the user (e.g., show a success message)

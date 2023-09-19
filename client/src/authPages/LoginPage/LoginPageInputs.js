@@ -7,9 +7,9 @@ const LoginPageInputs = ({ username, setUsername, password, setPassword }) => {
       <InputWithLabel
         value={username}
         setValue={setUsername}
-        label="Name"
+        label="[User] name"
         type="text"
-        placeholder="Enter name"
+        placeholder="Enter [user] name"
       ></InputWithLabel>
       <InputWithLabel
         value={password}

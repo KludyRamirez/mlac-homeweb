@@ -7,7 +7,6 @@ import AppBar from "../AppBar/AppBar";
 import SideBar from "../SideBar/SideBar";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-
 import axios from "axios";
 
 const Wrapper = styled("div")({

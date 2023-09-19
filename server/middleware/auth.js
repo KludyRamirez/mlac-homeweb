@@ -24,7 +24,9 @@ const adminCheck = async (req, res, next) => {
   const { username } = req.user;
 
   try {
-    const adminUser = await User.findOne({ username: username }).exec();
+    const adminUser = await User.findOne({
+      username: username,
+    }).exec();
 
     if (!adminUser) {
       return res.status(403).json({

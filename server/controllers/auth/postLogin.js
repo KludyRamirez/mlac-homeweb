@@ -7,7 +7,7 @@ const postLogin = async (req, res) => {
     console.log("login event came");
     const { password, username } = req.body;
 
-    const user = await User.findOne({ username: username.toLowerCase() });
+    const user = await User.findOne({ username: username });
 
     console.log(user);
 

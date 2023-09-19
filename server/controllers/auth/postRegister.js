@@ -6,14 +6,22 @@ const uniqid = require("uniqid");
 const postRegister = async (req, res) => {
   try {
     console.log("register came");
-    const { username, lastname, password, role, cardId } = req.body;
+    const { username, lastname, password, role, firstname, cardId } = req.body;
     // check if user exists - kluds - 1st comment
-    const userExists = await User.exists({
-      lastname: lastname.toLowerCase(),
+    // const userExists = await User.exists({
+    //   cardId: cardId,
+    // });
+
+    // if (userExists) {
+    //   return res.status(409).send("Account already exists");
+    // }
+
+    const usernameExists = await User.exists({
+      username: username,
     });
 
-    if (userExists) {
-      return res.status(409).send("Account already in use");
+    if (usernameExists) {
+      return res.status(409).send("Username already exists");
     }
 
     // encrypt password
@@ -22,6 +30,7 @@ const postRegister = async (req, res) => {
     // create user document and save in database
     const user = await User.create({
       username,
+      firstname,
       lastname,
       password: encryptedPassword,
       role,
@@ -42,6 +51,7 @@ const postRegister = async (req, res) => {
     res.status(201).json({
       userDetails: {
         token: token,
+        cardId: user.cardId,
         username: user.username,
       },
     });

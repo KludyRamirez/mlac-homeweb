@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 
 const RegisterPage = ({ register }) => {
   const history = useHistory();
+  const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -19,12 +20,13 @@ const RegisterPage = ({ register }) => {
 
   useEffect(() => {
     setIsFormValid(
-      validateRegisterForm({ lastname, password, username, role })
+      validateRegisterForm({ firstname, lastname, password, username, role })
     );
-  }, [lastname, password, username, role, setIsFormValid]);
+  }, [firstname, lastname, password, username, role, setIsFormValid]);
 
   const handleRegister = () => {
     const userDetails = {
+      firstname,
       lastname,
       password,
       username,
@@ -32,8 +34,9 @@ const RegisterPage = ({ register }) => {
     };
 
     register(userDetails, history);
-    setLastname("");
     setUsername("");
+    setFirstname("");
+    setLastname("");
     setPassword("");
     setRole("");
   };
@@ -44,6 +47,8 @@ const RegisterPage = ({ register }) => {
         Create an Account
       </Typography>
       <RegisterPageInputs
+        firstname={firstname}
+        setFirstname={setFirstname}
         lastname={lastname}
         setLastname={setLastname}
         username={username}

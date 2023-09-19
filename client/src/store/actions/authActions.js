@@ -38,7 +38,7 @@ const login = (userDetails, history) => {
   };
 };
 
-const register = (userDetails, history) => {
+const register = (userDetails) => {
   return async (dispatch) => {
     const response = await api.register(userDetails);
     console.log(response);
@@ -46,13 +46,12 @@ const register = (userDetails, history) => {
     if (response.error) {
       // show message in alert
       dispatch(openAlertMessage(response?.exception?.response?.data));
-    }
-    // else {
-    //     const { userDetails } = response?.data;
-    //     localStorage.setItem("user", JSON.stringify(userDetails));
+    } else {
+      // const { userDetails } = response?.data;
+      // localStorage.setItem("user", JSON.stringify(userDetails));
 
-    //     dispatch(setUserDetails(userDetails));
-    //     history.push("/dashboard");
-    //   }
+      // dispatch(setUserDetails(userDetails));
+      dispatch(openAlertMessage("Account Successfully Created!"));
+    }
   };
 };

@@ -4,9 +4,19 @@ import InputWithLabel from "../../shared/components/InputWithLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { styled } from "@mui/system";
+
+const RadioG = styled(RadioGroup)({
+  color: "#b9bbbe",
+  textTransform: "sentencecase",
+  fontWeight: "600",
+  fontSize: "16px",
+});
 
 const RegisterPageInputs = (props) => {
   const {
+    firstname,
+    setFirstname,
     lastname,
     setLastname,
     username,
@@ -22,16 +32,23 @@ const RegisterPageInputs = (props) => {
       <InputWithLabel
         value={username}
         setValue={setUsername}
-        label="First Name"
+        label="[User] Name"
         type="text"
-        placeholder="Enter first name"
+        placeholder="Enter username"
+      />
+      <InputWithLabel
+        value={firstname}
+        setValue={setFirstname}
+        label="[First] Name"
+        type="text"
+        placeholder="Enter [first] name"
       />
       <InputWithLabel
         value={lastname}
         setValue={setLastname}
-        label="Last Name"
+        label="[Last] Name"
         type="text"
-        placeholder="Enter last name"
+        placeholder="Enter [last] name"
       />
       <InputWithLabel
         value={password}
@@ -40,7 +57,7 @@ const RegisterPageInputs = (props) => {
         type="password"
         placeholder="Enter password"
       />
-      <RadioGroup
+      <RadioG
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
@@ -65,7 +82,7 @@ const RegisterPageInputs = (props) => {
           control={<Radio />}
           label="Admin"
         />
-      </RadioGroup>
+      </RadioG>
     </>
   );
 };

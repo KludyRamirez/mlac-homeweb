@@ -3,16 +3,16 @@ const router = express.Router();
 const authControllers = require("../controllers/auth/authControllers");
 const Joi = require("joi");
 const validator = require("express-joi-validation").createValidator({});
-const { verifyToken, adminCheck } = require("../middleware/auth");
+const { verifyToken } = require("../middleware/auth");
 
 const auth = verifyToken;
-const admin = adminCheck;
 
 // backend validation middleware
 
 const registerSchema = Joi.object({
-  lastname: Joi.string().min(3).max(24).required(),
   username: Joi.string().min(3).max(24).required(),
+  firstname: Joi.string().min(3).max(24).required(),
+  lastname: Joi.string().min(3).max(24).required(),
   password: Joi.string().min(6).max(24).required(),
   role: Joi.string(),
 });

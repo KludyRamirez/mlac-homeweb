@@ -13,7 +13,7 @@ router.get(
   admin,
   userUpdateController.controllers.updateUserGet
 );
-router.put("/user/:id", auth, admin, userUpdateController.controllers.editUser);
+router.put("/user/:id", userUpdateController.controllers.editUser);
 
 // test route to verify middleware if working
 
