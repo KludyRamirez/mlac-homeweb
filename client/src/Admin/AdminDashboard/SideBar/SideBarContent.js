@@ -4,13 +4,12 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Face4OutlinedIcon from "@mui/icons-material/Face4Outlined";
 import SickOutlinedIcon from "@mui/icons-material/SickOutlined";
 import AutoStoriesOutlinedIcon from "@mui/icons-material/AutoStoriesOutlined";
-import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import logo from "../images/logoarrow.png";
+import logo from "../../../images/logoarrow.png";
 
 const MainContainer = styled("div")({
   width: "100%",

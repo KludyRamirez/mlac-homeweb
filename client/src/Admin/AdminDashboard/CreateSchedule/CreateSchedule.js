@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 import { styled } from "@mui/system";
 import AppBar from "../AppBar/AppBar";
 import SideBar from "../SideBar/SideBar";
@@ -8,6 +9,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 import axios from "axios";
+import CreateScheduleForm from "./CreateScheduleForm";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -26,59 +28,107 @@ const CreateScheduleContainer = styled("div")({
   alignItems: "center",
 });
 
+const initialState = {
+  nameOfStudent: "",
+  // images: [],
+
+  timings: [
+    "7 AM to 8 AM",
+    "8 AM to 9 AM",
+    "9 AM to 10 AM",
+    "10 AM to 11 AM",
+    "11 AM to 12 NN",
+    "12 NN to 1 PM",
+    "1 PM to 2 PM",
+    "2 PM to 3 PM",
+    "3 PM to 4 PM",
+    "4 PM to 5 PM",
+  ],
+  timing: "",
+  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  day: "",
+  parents: [],
+  parent: "",
+  schedTypes: ["Permanent"],
+  schedType: "Permanent",
+  studentTypes: ["Solo", "Dyad"],
+  studentType: "",
+};
+
+const selectAuth = (state) => state.auth;
+const authSelector = createSelector([selectAuth], (auth) => auth);
+
 const CreateSchedule = () => {
+  const [values, setValues] = useState(initialState);
+  const auth = useSelector(authSelector);
+
+  useEffect(() => {
+    getParents();
+  }, []);
+
+  const getParents = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        // Handle the case where the token is missing
+        console.error("Authentication token not found.");
+        return;
+      }
+      const res = await axios.get(`${process.env.REACT_APP_API}/user`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+      setValues({ ...values, parents: res.data });
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    try {
+      if (!auth.userDetails.token) {
+        // Handle the case where the token is missing
+        console.error("Authentication token not found.");
+        return;
+      }
+      const res = await axios.post(`${process.env.REACT_APP_API}/schedule`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+      console.log(res);
+      window.alert(`"${res.data.title}" is created`);
+      window.location.reload();
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleParentChange = (e) => {
+    e.preventDefault();
+    console.log("CLICKED Parent", e.target.value);
+    setValues({ ...values, parent: e.target.value });
+  };
+
   return (
     <Wrapper>
       <SideBar />
       <AppBar />
       <CreateScheduleContainer>
-        <FirstWeekOfMonth />
+        <CreateScheduleForm
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          setValues={setValues}
+          values={values}
+          handleParentChange={handleParentChange}
+        />
       </CreateScheduleContainer>
     </Wrapper>
   );
 };
 
 export default CreateSchedule;
-
-function getFirstMondayOfMonth(date) {
-  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-  const dayOfWeek = firstDayOfMonth.getDay();
-
-  if (dayOfWeek === 1) {
-    // If the first day is already a Monday, return it.
-    return firstDayOfMonth;
-  } else {
-    // Calculate the number of days to the next Monday.
-    const daysUntilMonday = 8 - dayOfWeek + 1;
-    const firstMondayOfMonth = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      daysUntilMonday
-    );
-    return firstMondayOfMonth;
-  }
-}
-
-function FirstWeekOfMonth() {
-  const today = new Date();
-  const firstMondayOfMonth = getFirstMondayOfMonth(today);
-  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const weekDays = [];
-
-  for (let i = 0; i < 5; i++) {
-    const day = new Date(firstMondayOfMonth);
-    day.setDate(firstMondayOfMonth.getDate() + i);
-    weekDays.push(
-      <div key={i}>
-        {daysOfWeek[i]} - {day.getDate()}
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <h2>First Week of the Month</h2>
-      <div>{weekDays}</div>
-    </div>
-  );
-}

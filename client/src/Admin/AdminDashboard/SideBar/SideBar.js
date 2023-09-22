@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
-import SideBarContent from "../../SideBarContent";
+import SideBarContent from "./SideBarContent";
 
 const MainContainer = styled("div")({
   width: "60px",
