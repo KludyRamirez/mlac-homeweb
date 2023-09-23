@@ -41,7 +41,7 @@ function App() {
           <Route exact path="/user/:id">
             <UserUpdate />
           </Route>
-          <Route exact path="/create-sched">
+          <Route exact path="/create-schedule">
             <CreateSchedule />
           </Route>
         </Switch>

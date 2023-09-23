@@ -1,15 +1,26 @@
 import React from "react";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { styled } from "@mui/system";
+
+const RadioG = styled(RadioGroup)({
+  color: "#b9bbbe",
+  textTransform: "sentencecase",
+  fontWeight: "600",
+  fontSize: "16px",
+});
 
 const CreateScheduleForm = ({
   handleSubmit,
   handleChange,
   handleParentChange,
   values,
+  handleTimingChange,
 }) => {
   // destructure
   const {
-    title,
-    timings,
+    nameOfStudent,
     days,
     day,
     parents,
@@ -18,6 +29,8 @@ const CreateScheduleForm = ({
     schedType,
     studentTypes,
     studentType,
+    timings,
+    timing,
   } = values;
 
   return (
@@ -26,10 +39,10 @@ const CreateScheduleForm = ({
         <label className="fw-bold pb-1">Student Name</label>
         <input
           type="text"
-          name="title"
+          name="nameOfStudent"
           className="form-control"
           placeholder="Enter Student Name"
-          value={title}
+          value={nameOfStudent}
           onChange={handleChange}
           style={{ fontSize: "13px", height: "40px" }}
         />
@@ -91,14 +104,23 @@ const CreateScheduleForm = ({
 
       <div className="form-group">
         <label className="fw-bold pb-1 pt-2">Timings</label>
-        <input
-          type="time"
-          name="timings"
-          className="form-control"
-          value={timings}
-          onChange={handleChange}
-          style={{ fontSize: "13px", height: "40px" }}
-        />
+        <RadioG
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          value={timing}
+          onChange={handleTimingChange}
+        >
+          {timings.map((t) => (
+            <FormControlLabel
+              key={t}
+              value={t}
+              checked={timing === t}
+              control={<Radio />}
+              label={t}
+            />
+          ))}
+        </RadioG>
       </div>
 
       <div className="form-group">
@@ -113,7 +135,7 @@ const CreateScheduleForm = ({
           <option>Please Select</option>
           {parents.map((p) => (
             <option key={p._id} value={p._id}>
-              {p.email}
+              {p.firstname}
             </option>
           ))}
         </select>

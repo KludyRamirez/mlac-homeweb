@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
 import AppBar from "../AppBar/AppBar";
 import SideBar from "../SideBar/SideBar";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 
 import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
@@ -30,8 +27,14 @@ const CreateScheduleContainer = styled("div")({
 
 const initialState = {
   nameOfStudent: "",
-  // images: [],
-
+  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  day: "",
+  parents: [],
+  parent: "",
+  schedTypes: ["Permanent"],
+  schedType: "Permanent",
+  studentTypes: ["Solo", "Dyad"],
+  studentType: "",
   timings: [
     "7 AM to 8 AM",
     "8 AM to 9 AM",
@@ -45,14 +48,6 @@ const initialState = {
     "4 PM to 5 PM",
   ],
   timing: "",
-  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-  day: "",
-  parents: [],
-  parent: "",
-  schedTypes: ["Permanent"],
-  schedType: "Permanent",
-  studentTypes: ["Solo", "Dyad"],
-  studentType: "",
 };
 
 const selectAuth = (state) => state.auth;
@@ -85,19 +80,24 @@ const CreateSchedule = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       if (!auth.userDetails.token) {
         // Handle the case where the token is missing
         console.error("Authentication token not found.");
         return;
       }
-      const res = await axios.post(`${process.env.REACT_APP_API}/schedule`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/schedule`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
       console.log(res);
-      window.alert(`"${res.data.title}" is created`);
+      window.alert(`"${res.data.timing}" is created`);
       window.location.reload();
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -106,6 +106,10 @@ const CreateSchedule = () => {
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleTimingChange = (e) => {
+    setValues({ ...values, timing: e.target.value });
   };
 
   const handleParentChange = (e) => {
@@ -125,6 +129,7 @@ const CreateSchedule = () => {
           setValues={setValues}
           values={values}
           handleParentChange={handleParentChange}
+          handleTimingChange={handleTimingChange}
         />
       </CreateScheduleContainer>
     </Wrapper>

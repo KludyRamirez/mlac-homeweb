@@ -67,15 +67,18 @@ const Logo = styled("img")({
 const SideBarContent = () => {
   const links = [
     { path: "/admin/dashboard", icon: <HomeOutlinedIcon fontSize="small" /> },
-    { path: "/admin/user", icon: <Face4OutlinedIcon fontSize="small" /> },
+    { path: "/user", icon: <Face4OutlinedIcon fontSize="small" /> },
     { path: "/absentreq", icon: <SickOutlinedIcon fontSize="small" /> },
-    { path: "/report", icon: <AutoStoriesOutlinedIcon fontSize="small" /> },
+    {
+      path: "/create-schedule",
+      icon: <AutoStoriesOutlinedIcon fontSize="small" />,
+    },
     { path: "/temporary", icon: <EventNoteOutlinedIcon fontSize="small" /> },
     { path: "/absentlogs", icon: <EditCalendarIcon fontSize="small" /> },
     { path: "/admin/logs", icon: <AssessmentOutlinedIcon fontSize="small" /> },
   ];
 
-  const [activeLink, setActiveLink] = useState("/admin/user");
+  const [activeLink, setActiveLink] = useState("");
 
   const handleLinkClick = (path) => {
     setActiveLink(path);
