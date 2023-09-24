@@ -13,8 +13,4 @@ router.delete("/user/:id", auth, admin, userController.controllers.deleteUser);
 
 // test route to verify middleware if working
 
-router.get("/test", auth, (req, res) => {
-  res.send("request passed");
-});
-
 module.exports = router;

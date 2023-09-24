@@ -1,5 +1,6 @@
 const User = require("../../models/user");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const updateUserGet = async (req, res) => {
   try {
@@ -17,7 +18,7 @@ const updateUserGet = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-  const { username, lastname, password } = req.body;
+  const { username, firstname, lastname, password } = req.body;
 
   try {
     const user = await User.findByIdAndUpdate(req.params.id);
@@ -25,9 +26,13 @@ const editUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Update email if provided
     if (username) {
       user.username = username;
+    }
+
+    // Update email if provided
+    if (firstname) {
+      user.firstname = firstname;
     }
 
     // Update username if provided
@@ -45,7 +50,16 @@ const editUser = async (req, res) => {
 
     await user.save();
 
-    res.json({ message: "Profile updated successfully" });
+    const tokenPayload = { userId: user._id, username: user.username };
+    const secretKey = process.env.TOKEN_KEY;
+    const token = jwt.sign(tokenPayload, secretKey, { expiresIn: "24h" });
+
+    return res.status(200).json({
+      userDetails: {
+        token: token,
+        username: user.username,
+      },
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

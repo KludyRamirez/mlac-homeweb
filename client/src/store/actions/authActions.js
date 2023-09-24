@@ -3,6 +3,7 @@ import { openAlertMessage } from "./alertActions";
 
 export const authActions = {
   SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",
+  LOGOUT: "AUTH.LOGOUT",
 };
 
 export const getActions = (dispatch) => {
@@ -10,6 +11,7 @@ export const getActions = (dispatch) => {
     login: (userDetails, history) => dispatch(login(userDetails, history)),
     register: (userDetails, history) =>
       dispatch(register(userDetails, history)),
+    // logout: (history) => dispatch(logout(history)),
   };
 };
 

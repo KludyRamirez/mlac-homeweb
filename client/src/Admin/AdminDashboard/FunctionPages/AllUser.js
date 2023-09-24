@@ -7,6 +7,7 @@ import AppBar from "../AppBar/AppBar";
 import SideBar from "../SideBar/SideBar";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { getCurrentUser } from "../../../shared/components/getCurrentUser";
 import axios from "axios";
 
 const Wrapper = styled("div")({
@@ -131,9 +132,10 @@ const EditUser = () => {
   }, [auth]);
 
   const getUsers = async () => {
+    const cardId = await getCurrentUser();
+
     try {
       if (!auth.userDetails.token) {
-        // Handle the case where the token is missing
         console.error("Authentication token not found.");
         return;
       }
@@ -143,7 +145,8 @@ const EditUser = () => {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
       });
-      setUsers(res.data);
+      const filteredUsers = res.data.filter((user) => user.cardId !== cardId);
+      setUsers(filteredUsers);
     } catch (err) {
       console.error("Error fetching users:", err);
     }

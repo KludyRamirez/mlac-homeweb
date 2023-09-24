@@ -10,6 +10,10 @@ import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import logo from "../../../images/logoarrow.png";
+// import { connect } from "react-redux";
+// import { getActions } from "../../../store/actions/authActions";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const MainContainer = styled("div")({
   width: "100%",
@@ -29,9 +33,9 @@ const IconContainer = styled("div")(({ isActive }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  color: isActive ? "#66a3ff" : "#ffffff",
+  color: isActive ? "#007bff" : "#ffffff",
   cursor: "pointer",
-  border: isActive ? "2px solid #66a3ff" : "2px solid white",
+  border: isActive ? "2px solid white" : "2px solid white",
   boxShadow: "rgba(0, 0, 0, 0.25) 0px 25px 50px -12px",
 }));
 
@@ -65,6 +69,8 @@ const Logo = styled("img")({
 });
 
 const SideBarContent = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const links = [
     { path: "/admin/dashboard", icon: <HomeOutlinedIcon fontSize="small" /> },
     { path: "/user", icon: <Face4OutlinedIcon fontSize="small" /> },
@@ -82,6 +88,15 @@ const SideBarContent = () => {
 
   const handleLinkClick = (path) => {
     setActiveLink(path);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch({
+      type: "LOGOUT",
+      payload: null,
+    });
+    history.push("/login");
   };
 
   return (
@@ -104,11 +119,9 @@ const SideBarContent = () => {
         </Gapper>
       </Flexer>
 
-      <Link to="/logout">
-        <IconContainer isActive={activeLink === "/logout"}>
-          <LogoutOutlinedIcon fontSize="small" />
-        </IconContainer>
-      </Link>
+      <IconContainer onClick={handleLogout}>
+        <LogoutOutlinedIcon fontSize="small" />
+      </IconContainer>
     </MainContainer>
   );
 };

@@ -7,6 +7,7 @@ import SideBar from "../SideBar/SideBar";
 
 import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
+import AllSchedule from "../AllSchedule/AllSchedule";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -18,11 +19,14 @@ const Wrapper = styled("div")({
 
 const CreateScheduleContainer = styled("div")({
   flexGrow: 1,
-  marginTop: "60px",
+  marginTop: "0px",
   display: "flex",
   border: "none",
-  justifyContent: "center",
-  alignItems: "center",
+  justifyContent: "space-around",
+  alignItems: "flex-start",
+  padding: "80px",
+  gap: "40px",
+  flexWrap: "wrap",
 });
 
 const initialState = {
@@ -108,8 +112,8 @@ const CreateSchedule = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleTimingChange = (e) => {
-    setValues({ ...values, timing: e.target.value });
+  const handleStudentTypeChange = (e) => {
+    setValues({ ...values, studentType: e.target.value });
   };
 
   const handleParentChange = (e) => {
@@ -129,8 +133,9 @@ const CreateSchedule = () => {
           setValues={setValues}
           values={values}
           handleParentChange={handleParentChange}
-          handleTimingChange={handleTimingChange}
+          handleStudentTypeChange={handleStudentTypeChange}
         />
+        <AllSchedule />
       </CreateScheduleContainer>
     </Wrapper>
   );

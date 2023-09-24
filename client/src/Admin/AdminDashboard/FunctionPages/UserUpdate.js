@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const initialState = {
-  lastname: "",
   username: "",
+  firstname: "",
+  lastname: "",
   password: "",
 };
 
@@ -76,20 +77,29 @@ const UpdateUserPage = () => {
     <div>
       <h1>Update Profile</h1>
       <div>
-        <label>Lastname:</label>
-        <input
-          type="text"
-          name="lastname"
-          value={values.lastname}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Username:</label>
+        <label>Name [User]:</label>
         <input
           type="text"
           name="username"
           value={values.username}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Name [First]:</label>
+        <input
+          type="text"
+          name="firstname"
+          value={values.firstname}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <label>Name [Last]:</label>
+        <input
+          type="text"
+          name="lastname"
+          value={values.lastname}
           onChange={handleInputChange}
         />
       </div>
