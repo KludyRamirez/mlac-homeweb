@@ -7,7 +7,7 @@ const MainContainer = styled("div")({
   top: "0",
   height: "60px",
   backgroundColor: "#ffffff",
-  width: "calc(100% - 90px)",
+  width: "calc(100% - 92px)",
   alignItems: "center",
   padding: "0px 15px",
   border: "none",

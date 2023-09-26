@@ -17,6 +17,9 @@ import AllUser from "./Admin/AdminDashboard/FunctionPages/AllUser";
 import "./App.css";
 import UserUpdate from "./Admin/AdminDashboard/FunctionPages/UserUpdate";
 import CreateSchedule from "./Admin/AdminDashboard/CreateSchedule/CreateSchedule";
+import UpdateSchedule from "./Admin/AdminDashboard/UpdateSchedule/UpdateSchedule";
+import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreateSchedule";
+import Home from "./Admin/AdminDashboard/Home/Home";
 
 function App() {
   return (
@@ -41,8 +44,17 @@ function App() {
           <Route exact path="/user/:id">
             <UserUpdate />
           </Route>
-          <Route exact path="/create-schedule">
+          <Route exact path="/schedule">
             <CreateSchedule />
+          </Route>
+          <Route exact path="/schedule/:id">
+            <UpdateSchedule />
+          </Route>
+          <Route exact path="/temp-schedule">
+            <TempCreateSchedule />
+          </Route>
+          <Route exact path="/home">
+            <Home />
           </Route>
         </Switch>
       </Router>

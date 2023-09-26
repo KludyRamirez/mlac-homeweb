@@ -22,7 +22,7 @@ const scheduleSchema = new mongoose.Schema(
     },
     permanentSched: {
       type: ObjectId,
-      ref: "Product",
+      ref: "schedule",
     },
     dateTime: {
       type: String,
@@ -74,6 +74,7 @@ const scheduleSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-scheduleSchema.index({ day: 1, timings: 1, isActive: true }, { unique: true });
 
 module.exports = mongoose.model("schedule", scheduleSchema);
+
+scheduleSchema.index({ day: 1, timing: 1, isActive: true }, { unique: true });

@@ -29,13 +29,15 @@ const IconContainer = styled("div")(({ isActive }) => ({
   width: "33px",
   height: "33px",
   borderRadius: "30px",
-  backgroundColor: isActive ? "#ffffff" : "#007bff",
+  backgroundImage: isActive
+    ? "#ffffff"
+    : "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   color: isActive ? "#007bff" : "#ffffff",
   cursor: "pointer",
-  border: isActive ? "2px solid white" : "2px solid white",
+  border: isActive ? "1px solid #007bff" : "2px solid white",
   boxShadow: "rgba(0, 0, 0, 0.25) 0px 25px 50px -12px",
 }));
 
@@ -72,14 +74,17 @@ const SideBarContent = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const links = [
-    { path: "/admin/dashboard", icon: <HomeOutlinedIcon fontSize="small" /> },
+    { path: "/home", icon: <HomeOutlinedIcon fontSize="small" /> },
     { path: "/user", icon: <Face4OutlinedIcon fontSize="small" /> },
     { path: "/absentreq", icon: <SickOutlinedIcon fontSize="small" /> },
     {
-      path: "/create-schedule",
+      path: "/schedule",
       icon: <AutoStoriesOutlinedIcon fontSize="small" />,
     },
-    { path: "/temporary", icon: <EventNoteOutlinedIcon fontSize="small" /> },
+    {
+      path: "/temp-schedule",
+      icon: <EventNoteOutlinedIcon fontSize="small" />,
+    },
     { path: "/absentlogs", icon: <EditCalendarIcon fontSize="small" /> },
     { path: "/admin/logs", icon: <AssessmentOutlinedIcon fontSize="small" /> },
   ];

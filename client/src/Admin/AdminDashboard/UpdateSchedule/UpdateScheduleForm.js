@@ -49,13 +49,14 @@ const CreateScheduleForm = ({
   handleParentChange,
   values,
   handleStudentTypeChange,
+  selectedParent,
+  parents,
 }) => {
   // destructure
   const {
     nameOfStudent,
     days,
     day,
-    parents,
     parent,
     schedTypes,
     schedType,
@@ -69,7 +70,7 @@ const CreateScheduleForm = ({
     <>
       <FormContainer>
         <TitleCon>
-          <FormTitle>Create Schedule</FormTitle>
+          <FormTitle>Update Schedule</FormTitle>
           <StyledButton>
             <EditCalendarIcon />
           </StyledButton>
@@ -92,24 +93,6 @@ const CreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        {/* <FormControl>
-        <label className="fw-bold pb-1 pt-2">Schedule Type</label>
-        <select
-          name="schedType"
-          className="form-control"
-          value={schedType}
-          onChange={handleChange}
-          style={{ fontSize: "13px", height: "40px" }}
-        >
-          <option>Please Select</option>
-          {schedTypes.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
-      </FormControl> */}
-
         <FormControl variant="standard" sx={{ minWidth: "400px" }}>
           <InputLabel id="demo-simple-select-standard-label">
             Day of Schedule
@@ -149,12 +132,12 @@ const CreateScheduleForm = ({
         <br />
         <br />
         <FormControl variant="standard" sx={{ minWidth: "300px" }}>
-          <InputLabel id="demo-simple-select-label">Parents</InputLabel>
+          <InputLabel id="demo-simple-select-label">Parent</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             name="parent"
-            value={parent}
+            value={selectedParent ? selectedParent : parent}
             onChange={handleParentChange}
           >
             {parents.map((p) => (
