@@ -8,12 +8,11 @@ import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { Link } from "react-router-dom/cjs/react-router-dom";
 import logo from "../../../images/logoarrow.png";
 // import { connect } from "react-redux";
 // import { getActions } from "../../../store/actions/authActions";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const MainContainer = styled("div")({
   width: "100%",
@@ -37,8 +36,8 @@ const IconContainer = styled("div")(({ isActive }) => ({
   alignItems: "center",
   color: isActive ? "#007bff" : "#ffffff",
   cursor: "pointer",
-  border: isActive ? "1px solid #007bff" : "2px solid white",
-  boxShadow: "rgba(0, 0, 0, 0.25) 0px 25px 50px -12px",
+  border: isActive ? "2px solid #007bff" : "2px solid white",
+  boxShadow: "rgba(0, 123, 255, 0.25) 0px 25px 50px -12px",
 }));
 
 const Flexer = styled("div")({
@@ -74,7 +73,7 @@ const SideBarContent = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const links = [
-    { path: "/home", icon: <HomeOutlinedIcon fontSize="small" /> },
+    { path: "/timetable", icon: <HomeOutlinedIcon fontSize="small" /> },
     { path: "/user", icon: <Face4OutlinedIcon fontSize="small" /> },
     { path: "/absentreq", icon: <SickOutlinedIcon fontSize="small" /> },
     {
@@ -93,6 +92,7 @@ const SideBarContent = () => {
 
   const handleLinkClick = (path) => {
     setActiveLink(path);
+    history.push(path);
   };
 
   const handleLogout = () => {
@@ -112,14 +112,13 @@ const SideBarContent = () => {
         </LogoContainer>
         <Gapper>
           {links.map((link) => (
-            <Link to={link.path} key={link.path}>
-              <IconContainer
-                isActive={activeLink === link.path}
-                onClick={() => handleLinkClick(link.path)}
-              >
-                {link.icon}
-              </IconContainer>
-            </Link>
+            <IconContainer
+              key={link.path}
+              isActive={activeLink === link.path}
+              onClick={() => handleLinkClick(link.path)}
+            >
+              {link.icon}
+            </IconContainer>
           ))}
         </Gapper>
       </Flexer>

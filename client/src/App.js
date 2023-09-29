@@ -19,7 +19,7 @@ import UserUpdate from "./Admin/AdminDashboard/FunctionPages/UserUpdate";
 import CreateSchedule from "./Admin/AdminDashboard/CreateSchedule/CreateSchedule";
 import UpdateSchedule from "./Admin/AdminDashboard/UpdateSchedule/UpdateSchedule";
 import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreateSchedule";
-import Home from "./Admin/AdminDashboard/Home/Home";
+import Timetable from "./Admin/AdminDashboard/TimeTableHome/Timetable";
 
 function App() {
   return (
@@ -53,8 +53,8 @@ function App() {
           <Route exact path="/temp-schedule">
             <TempCreateSchedule />
           </Route>
-          <Route exact path="/home">
-            <Home />
+          <Route exact path="/timetable">
+            <Timetable />
           </Route>
         </Switch>
       </Router>

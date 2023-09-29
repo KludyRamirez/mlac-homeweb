@@ -83,7 +83,7 @@ const TitleCon = styled(Button)(({ theme }) => ({
   cursor: "pointer",
   fontFamily: '"JetBrains Mono", monospace',
   width: "140px",
-  height: "60px",
+  height: "40px",
   lineHeight: 1,
   listStyle: "none",
   overflow: "hidden",
