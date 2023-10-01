@@ -7,22 +7,29 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import axios from "axios";
+import FaceIcon from "@mui/icons-material/Face";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import TodayIcon from "@mui/icons-material/Today";
+import Face2Icon from "@mui/icons-material/Face2";
+import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+import TouchAppIcon from "@mui/icons-material/TouchApp";
 
 const AllScheduleContainer = styled("div")({
   display: "flex",
   justifyContent: "center",
-  alignItems: "end",
   boxShadow: "rgba(0, 123, 255, 0.25) 0px 25px 50px -12px",
   height: "100%",
-  width: "65%",
+  width: "70%",
 });
 
 const ContentCon = styled("div")({
-  width: "90%",
-  height: "100%",
+  width: "100%",
   display: "flex",
   justifyContent: "space-around",
   alignItems: "start",
+  padding: "35px 30px",
+  gap: "10px",
+  flexWrap: "wrap",
 });
 
 export const StyledButton = styled("div")(({ theme }) => ({
@@ -30,16 +37,15 @@ export const StyledButton = styled("div")(({ theme }) => ({
   backgroundImage:
     "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
   border: 0,
-  borderRadius: "30px",
+  borderRadius: "25px",
   boxShadow:
     "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
   boxSizing: "border-box",
   color: "#fff",
   cursor: "pointer",
   display: "inline-flex",
-  fontFamily: '"JetBrains Mono", monospace',
-  width: "60px",
-  height: "60px",
+  width: "50px",
+  height: "50px",
   justifyContent: "center",
   lineHeight: 1,
   listStyle: "none",
@@ -72,111 +78,15 @@ export const StyledButton = styled("div")(({ theme }) => ({
   },
 }));
 
-const TitleCon = styled(Button)(({ theme }) => ({
+const TitleCon = styled("div")(({ theme }) => ({
   backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+    "radial-gradient(100% 100% at 100% 0, #FFFFFF, #FFFFFF  100%)",
   border: 0,
-  borderRadius: "3px",
+  borderRadius: "5px",
   boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
+    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(58, 65, 111, .5) 0 0px 0",
   boxSizing: "border-box",
   cursor: "pointer",
-  fontFamily: '"JetBrains Mono", monospace',
-  width: "140px",
-  height: "40px",
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  paddingLeft: "16px",
-  paddingRight: "16px",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "14px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "white",
-  fontWeight: "600",
-  "&:focus": {
-    boxShadow: `${theme.palette.primary.main} 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, ${theme.palette.primary.main} 0 -3px 0 inset`,
-  },
-  "&:hover": {
-    boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, " +
-      theme.palette.primary.main +
-      " 0 -3px 0 inset",
-    transform: "translateY(-2px)",
-  },
-  "&:active": {
-    boxShadow: `${theme.palette.primary.main} 0 3px 7px inset`,
-    transform: "translateY(2px)",
-  },
-}));
-
-const YellowBox = styled("div")({
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #FFFAA0 0, #F4C430 100%)",
-  border: 0,
-  borderRadius: "30px",
-  boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
-  boxSizing: "border-box",
-  cursor: "pointer",
-  fontFamily: '"JetBrains Mono", monospace',
-  width: "60px",
-  height: "60px",
-
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  paddingLeft: "16px",
-  paddingRight: "16px",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "14px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "white",
-  fontWeight: "600",
-  "&:focus": {
-    boxShadow: `#F4BB44 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #F4BB44 0 -3px 0 inset`,
-  },
-  "&:hover": {
-    boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #F4BB44 0 -3px 0 inset ",
-    transform: "translateY(-2px)",
-  },
-  "&:active": {
-    boxShadow: `#F4BB44 0 3px 7px inset`,
-    transform: "translateY(2px)",
-  },
-});
-
-const RedBox = styled("div")({
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #FAA0A0 0, #FF2400 100%)",
-  border: 0,
-  borderRadius: "20px",
-  boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
-  boxSizing: "border-box",
-  cursor: "pointer",
-  fontFamily: '"JetBrains Mono", monospace',
   width: "40px",
   height: "40px",
   lineHeight: 1,
@@ -200,24 +110,65 @@ const RedBox = styled("div")({
   color: "white",
   fontWeight: "600",
   "&:focus": {
-    boxShadow: `#FF4433 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #FF4433 0 -3px 0 inset`,
+    boxShadow: `#B6D0E2 0 0 0 1.5px, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 -3px 0 inset`,
   },
   "&:hover": {
     boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #FF4433 0 -3px 0 inset ",
+      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 0px 0",
     transform: "translateY(-2px)",
   },
   "&:active": {
-    boxShadow: `#FF4433 0 3px 7px inset`,
+    boxShadow: `#B6D0E2 0 3px 7px`,
     transform: "translateY(2px)",
   },
-});
+}));
 
-const ColorBoxCon = styled("div")({
+const TitleCon2 = styled(Button)(({ theme }) => ({
+  backgroundImage:
+    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+  border: 0,
+  borderRadius: "5px",
+  boxShadow:
+    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
+  boxSizing: "border-box",
+  cursor: "pointer",
+  width: "115px",
+  height: "40px",
+  lineHeight: 1,
+  listStyle: "none",
+  overflow: "hidden",
+  paddingLeft: "16px",
+  paddingRight: "16px",
+  position: "relative",
+  textAlign: "left",
+  textDecoration: "none",
+  transition: "box-shadow .15s, transform .15s",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  whiteSpace: "nowrap",
+  willChange: "box-shadow, transform",
+  fontSize: "1 4px",
   display: "flex",
   justifyContent: "center",
-  gap: "10px",
-});
+  alignItems: "center",
+  color: "white",
+  fontWeight: "600",
+  "&:focus": {
+    boxShadow: `${theme.palette.primary.main} 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, ${theme.palette.primary.main} 0 -3px 0 inset`,
+  },
+  "&:hover": {
+    boxShadow:
+      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, " +
+      theme.palette.primary.main +
+      " 0 -3px 0 inset",
+    transform: "translateY(-2px)",
+  },
+  "&:active": {
+    boxShadow: `${theme.palette.primary.main} 0 3px 7px inset`,
+    transform: "translateY(2px)",
+  },
+}));
 
 const ActionDel = styled(Button)({
   color: "#007bff",
@@ -233,15 +184,14 @@ const Columner = styled("div")({
   justifyContent: "center",
   alignItems: "center",
   height: "100%",
-  width: "100%",
-  gap: "30px",
+  width: "165px",
+  gap: "20px",
 });
 
 const DetailsCon = styled("div")({
-  height: "80%",
+  height: "100%",
   width: "100%",
-  borderTop: "1px solid #B6D0E2",
-  borderRight: "1px solid #B6D0E2",
+  border: "2px solid #B6D0E2",
   borderRadius: "1px",
   display: "flex",
   alignItems: "center",
@@ -249,10 +199,9 @@ const DetailsCon = styled("div")({
   textAlign: "center",
 });
 const TDetailsCon = styled("div")({
-  height: "80%",
+  height: "100%",
   width: "100%",
-  borderTop: "1px solid #B6D0E2",
-  borderLeft: "1px solid #B6D0E2",
+  border: "2px solid #B6D0E2",
   borderRadius: "1px",
   display: "flex",
   alignItems: "center",
@@ -260,10 +209,9 @@ const TDetailsCon = styled("div")({
   flexDirection: "column",
 });
 const BDetailsCon = styled("div")({
-  height: "80%",
+  height: "100%",
   width: "100%",
-  borderBottom: "1px solid #B6D0E2",
-  borderLeft: "1px solid #B6D0E2",
+  border: "2px solid #B6D0E2",
   borderRadius: "1px",
   display: "flex",
   alignItems: "center",
@@ -273,16 +221,21 @@ const BDetailsCon = styled("div")({
 
 const MapCon = styled("div")({
   height: "40px",
-  width: "120px",
+  width: "130px",
   color: "#007bff",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   borderBottom: "1px solid #B6D0E2",
-  fontSize: "14px",
+  fontSize: "13px",
   fontWeight: "600",
-  fontFamily: '"JetBrains Mono", monospace',
   textAlign: "center",
+});
+
+const Flexer = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
 });
 
 const selectAuth = (state) => state.auth;
@@ -345,7 +298,12 @@ const AllSchedule = () => {
     <AllScheduleContainer>
       <ContentCon>
         <Columner>
-          <TitleCon>Name [Student]</TitleCon>
+          <Flexer>
+            <TitleCon>
+              <FaceIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>Student</TitleCon2>
+          </Flexer>
           <DetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>{schedule.nameOfStudent}</MapCon>
@@ -353,7 +311,12 @@ const AllSchedule = () => {
           </DetailsCon>
         </Columner>
         <Columner>
-          <TitleCon>Day [Schedule]</TitleCon>
+          <Flexer>
+            <TitleCon>
+              <TodayIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>Day</TitleCon2>
+          </Flexer>
           <BDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>{schedule.day}</MapCon>
@@ -361,7 +324,12 @@ const AllSchedule = () => {
           </BDetailsCon>
         </Columner>
         <Columner>
-          <TitleCon>Time [Schedule]</TitleCon>
+          <Flexer>
+            <TitleCon>
+              <AccessTimeFilledIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>Time</TitleCon2>
+          </Flexer>
           <TDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>{schedule.timing}</MapCon>
@@ -369,17 +337,28 @@ const AllSchedule = () => {
           </TDetailsCon>
         </Columner>
         <Columner>
-          <TitleCon>Parents</TitleCon>
+          <Flexer>
+            <TitleCon>
+              <Face2Icon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>Parent</TitleCon2>
+          </Flexer>
           <BDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>
-                {schedule.parent.firstname} {schedule.parent.lastname}
+                {schedule.parent && schedule.parent.firstname}{" "}
+                {schedule.parent && schedule.parent.lastname}
               </MapCon>
             ))}
           </BDetailsCon>
         </Columner>
         <Columner>
-          <TitleCon>Type [Student]</TitleCon>
+          <Flexer>
+            <TitleCon>
+              <ConnectWithoutContactIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>Type</TitleCon2>
+          </Flexer>
           <TDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>{schedule.studentType}</MapCon>
@@ -387,10 +366,12 @@ const AllSchedule = () => {
           </TDetailsCon>
         </Columner>
         <Columner>
-          <ColorBoxCon>
-            <YellowBox />
-            <RedBox />
-          </ColorBoxCon>
+          <Flexer>
+            <TitleCon>
+              <TouchAppIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>Action</TitleCon2>
+          </Flexer>
           <BDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>

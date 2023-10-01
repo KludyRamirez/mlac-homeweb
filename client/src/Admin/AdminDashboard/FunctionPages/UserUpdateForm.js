@@ -1,19 +1,12 @@
 import React from "react";
 import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { Button, FormControl, FormGroup, TextField } from "@mui/material";
 import { styled } from "@mui/system";
-import { StyledButton } from "../../Admin/AdminDashboard/AllSchedule/AllSchedule";
-import { FormControl, TextField, Button, Tooltip } from "@mui/material";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { StyledButton } from "../AllSchedule/AllSchedule";
+import RadioGroup from "@mui/material/RadioGroup";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-
-const RadioG = styled(RadioGroup)({
-  color: "#b9bbbe",
-  textTransform: "sentencecase",
-  fontWeight: "600",
-  fontSize: "16px",
-});
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const FormContainer = styled("div")({
   boxShadow:
@@ -45,35 +38,20 @@ const FormTitle = styled("h1")({
   MozTextFillColor: "transparent",
 });
 
-const RegisterPageInputs = (props) => {
-  const {
-    firstname,
-    setFirstname,
-    lastname,
-    setLastname,
-    username,
-    setUsername,
-    password,
-    setPassword,
-    role,
-    setRole,
-    isFormValid,
-    handleRegister,
-  } = props;
-
-  const getFormNotValidMessage = () => {
-    return "Username should contain characters between 3 and 12 and password should be 6 and 12 characters.";
-  };
-
-  const getFormValidMessage = () => {
-    return "Press To Register";
-  };
+const UserUpdateForm = ({
+  handleSubmit,
+  handleInputChange,
+  handleRadioChange,
+  values,
+}) => {
+  // destructure
+  const { username, firstname, lastname, password, role, roles } = values;
 
   return (
     <>
       <FormContainer>
         <TitleCon>
-          <FormTitle>Create User</FormTitle>
+          <FormTitle>Update User</FormTitle>
           <StyledButton>
             <PersonAddAltIcon />
           </StyledButton>
@@ -91,7 +69,7 @@ const RegisterPageInputs = (props) => {
             name="username"
             variant="standard"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleInputChange}
             label="[User] Name"
           />
         </FormControl>
@@ -108,7 +86,7 @@ const RegisterPageInputs = (props) => {
             name="firstname"
             variant="standard"
             value={firstname}
-            onChange={(e) => setFirstname(e.target.value)}
+            onChange={handleInputChange}
             label="[First] Name"
           />
         </FormControl>
@@ -127,7 +105,7 @@ const RegisterPageInputs = (props) => {
             name="lastname"
             variant="standard"
             value={lastname}
-            onChange={(e) => setLastname(e.target.value)}
+            onChange={handleInputChange}
             label="[Last] Name"
           />
         </FormControl>
@@ -143,44 +121,33 @@ const RegisterPageInputs = (props) => {
             name="password"
             variant="standard"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleInputChange}
             label="Password"
           />
         </FormControl>
         <br />
         <br />
-        <RadioG
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        >
-          <FormControlLabel
-            value="Parent"
-            checked={role === "Parent"}
-            control={<Radio />}
-            label="Parent"
-          />
-          <FormControlLabel
-            value="Therapist"
-            checked={role === "Therapist"}
-            control={<Radio />}
-            label="Therapist"
-          />
-          <FormControlLabel
-            value="Administrator"
-            checked={role === "Administrator"}
-            control={<Radio />}
-            label="Administrator"
-          />
-        </RadioG>
+        <FormControl>
+          <div style={{ fontSize: "13px", fontWeight: "500" }}>Role</div>
+          <FormGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+            value={role}
+            onChange={handleRadioChange}
+          >
+            {roles.map((r) => (
+              <FormControlLabel
+                key={r}
+                value={r}
+                checked={role === r}
+                control={<Radio />}
+                label={r}
+              />
+            ))}
+          </FormGroup>
+        </FormControl>
         <br />
-        <Tooltip
-          title={
-            !isFormValid ? getFormNotValidMessage() : getFormValidMessage()
-          }
-        ></Tooltip>
         <div
           style={{
             display: "flex",
@@ -190,18 +157,18 @@ const RegisterPageInputs = (props) => {
             height: "40px",
           }}
         >
-          <Link to="/schedule" style={{ textDecoration: "none" }}>
+          <Link to="/user" style={{ textDecoration: "none" }}>
             <p
               style={{ fontSize: "12px", fontWeight: "600", color: "#007bff" }}
             >
-              Create <br /> Permanent Schedule?
+              Create <br /> a User?
             </p>
           </Link>
           <Button
             variant="outlined"
             sx={{ fontWeight: "600" }}
-            onClick={handleRegister}
-            disabled={!isFormValid}
+            onClick={handleSubmit}
+            // disabled={!isFormValid}
           >
             Submit
           </Button>
@@ -211,4 +178,4 @@ const RegisterPageInputs = (props) => {
   );
 };
 
-export default RegisterPageInputs;
+export default UserUpdateForm;

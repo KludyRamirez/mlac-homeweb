@@ -5,10 +5,12 @@ import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
 import { StyledButton } from "../AllSchedule/AllSchedule";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const FormContainer = styled("div")({
   boxShadow:
-    "rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px",
+    "rgba(0, 123, 255, 0.15) 0px 1px 0px, rgba(0, 123, 255, 0.15) 0px 8px 24px, rgba(0, 123, 255, 0.15) 0px 16px 48px",
   padding: "40px",
   backgroundColor: "#fdfdfd",
   color: "gray",
@@ -18,6 +20,7 @@ const FormContainer = styled("div")({
 
 const TitleCon = styled("div")({
   display: "flex",
+  gap: "20px",
   justifyContent: "space-between",
 });
 
@@ -33,6 +36,21 @@ const FormTitle = styled("h1")({
   WebkitTextFillColor: "transparent",
   MozBackgroundClip: "text",
   MozTextFillColor: "transparent",
+});
+
+const DateTimeCon = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: "5px",
+});
+
+const DateTimeInput = styled("input")({
+  borderRadius: "5px",
+  width: "75%",
+  borderColor: "#007bff",
+  padding: "0px 10px",
+  textTransform: "uppercase",
+  color: "darkgray",
 });
 
 const TempCreateScheduleForm = ({
@@ -53,8 +71,8 @@ const TempCreateScheduleForm = ({
     dateTime,
   } = values;
 
-  const currentDate = new Date();
-  const minDate = currentDate.toISOString().slice(0, 16);
+  const today = new Date().toISOString().split("T")[0];
+  const minDate = today;
 
   return (
     <>
@@ -62,10 +80,10 @@ const TempCreateScheduleForm = ({
         <TitleCon>
           <FormTitle>Temporary Schedule</FormTitle>
           <StyledButton>
-            <EditCalendarIcon />
+            <HourglassTopIcon fontSize="small" />
           </StyledButton>
         </TitleCon>
-        <FormControl variant="standard" sx={{ minWidth: "200px" }}>
+        <FormControl variant="standard" sx={{ width: "50%" }}>
           <InputLabel id="demo-simple-select-standard-label">
             Student Name
           </InputLabel>
@@ -87,20 +105,21 @@ const TempCreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        {/* <Form.Group>
-          <Form.Label className="fw-bold pb-1 pt-2">Date Time</Form.Label>
-          <Form.Control
-            type="datetime-local"
+        <DateTimeCon>
+          <label id="date">Date:</label>
+          <DateTimeInput
+            id="dateTime"
+            type="date"
             name="dateTime"
             min={minDate}
             value={dateTime}
             onChange={handleChange}
             style={{ fontSize: "13px", height: "40px" }}
           />
-        </Form.Group> */}
+        </DateTimeCon>
+
         <br />
-        <br />
-        <FormControl variant="standard" sx={{ minWidth: "400px" }}>
+        <FormControl variant="standard" sx={{ width: "100%" }}>
           <InputLabel id="demo-simple-select-label">Schedule With:</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -121,16 +140,33 @@ const TempCreateScheduleForm = ({
         <br />
         <br />
 
-        <Button
-          variant="outlined"
-          sx={{ fontWeight: "600" }}
-          onClick={handleSubmit}
-          disabled={
-            !nameOfStudent || !schedType || !permanentSched || !dateTime
-          }
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+            height: "40px",
+          }}
         >
-          Submit
-        </Button>
+          <Link to="/schedule" style={{ textDecoration: "none" }}>
+            <p
+              style={{ fontSize: "12px", fontWeight: "600", color: "#007bff" }}
+            >
+              Create <br /> Permanent Schedule?
+            </p>
+          </Link>
+          <Button
+            variant="outlined"
+            sx={{ fontWeight: "600" }}
+            onClick={handleSubmit}
+            disabled={
+              !nameOfStudent || !schedType || !permanentSched || !dateTime
+            }
+          >
+            Submit
+          </Button>
+        </div>
       </FormContainer>
     </>
   );

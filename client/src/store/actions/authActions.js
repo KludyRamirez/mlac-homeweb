@@ -11,7 +11,6 @@ export const getActions = (dispatch) => {
     login: (userDetails, history) => dispatch(login(userDetails, history)),
     register: (userDetails, history) =>
       dispatch(register(userDetails, history)),
-    // logout: (history) => dispatch(logout(history)),
   };
 };
 
@@ -49,10 +48,6 @@ const register = (userDetails) => {
       // show message in alert
       dispatch(openAlertMessage(response?.exception?.response?.data));
     } else {
-      // const { userDetails } = response?.data;
-      // localStorage.setItem("user", JSON.stringify(userDetails));
-
-      // dispatch(setUserDetails(userDetails));
       dispatch(openAlertMessage("Account Successfully Created!"));
     }
   };

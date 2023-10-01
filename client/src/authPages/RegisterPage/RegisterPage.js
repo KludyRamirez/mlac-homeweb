@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from "react";
-import AuthBox from "../../shared/components/AuthBox";
-import { Typography } from "@mui/material";
+import SideBar from "../../Admin/AdminDashboard/SideBar/SideBar";
 import RegisterPageInputs from "./RegisterPageInputs";
-import RegisterPageFooter from "./RegisterPageFooter";
 import { validateRegisterForm } from "../../shared/utils/validators";
 import { connect } from "react-redux";
 import { getActions } from "../../store/actions/authActions";
 import { useHistory } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import EditUser from "../../Admin/AdminDashboard/FunctionPages/AllUser";
+
+const Wrapper = styled("div")({
+  width: "100%",
+  height: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  backgroundColor: "#ffffff",
+});
+
+const CreateUserContainer = styled("div")({
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "flex-start",
+  padding: "80px 20px",
+  flexWrap: "wrap",
+  width: "100%",
+});
 
 const RegisterPage = ({ register }) => {
   const history = useHistory();
@@ -39,34 +56,30 @@ const RegisterPage = ({ register }) => {
     setLastname("");
     setPassword("");
     setRole("");
+    // window.location.reload();
   };
 
   return (
-    <AuthBox>
-      <Typography variant="h5" sx={{ color: "white" }}>
-        Create an Account
-      </Typography>
-      <RegisterPageInputs
-        firstname={firstname}
-        setFirstname={setFirstname}
-        lastname={lastname}
-        setLastname={setLastname}
-        username={username}
-        setUsername={setUsername}
-        password={password}
-        setPassword={setPassword}
-        role={role}
-        setRole={setRole}
-      />
-      <RegisterPageFooter
-        isFormValid={isFormValid}
-        handleRegister={handleRegister}
-        // setLastname={setLastname}
-        // setUsername={setUsername}
-        // setPassword={setPassword}
-        // setRole={setRole}
-      />
-    </AuthBox>
+    <Wrapper>
+      <SideBar />
+      <CreateUserContainer>
+        <RegisterPageInputs
+          firstname={firstname}
+          setFirstname={setFirstname}
+          lastname={lastname}
+          setLastname={setLastname}
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+          role={role}
+          setRole={setRole}
+          isFormValid={isFormValid}
+          handleRegister={handleRegister}
+        />
+        <EditUser />
+      </CreateUserContainer>
+    </Wrapper>
   );
 };
 

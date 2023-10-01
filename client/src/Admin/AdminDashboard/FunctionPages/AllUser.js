@@ -2,129 +2,251 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { styled } from "@mui/system";
-import AppBar from "../AppBar/AppBar";
-import SideBar from "../SideBar/SideBar";
+import { styled } from "@mui/material/styles";
+import { Button } from "@mui/material";
+
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { getCurrentUser } from "../../../shared/components/getCurrentUser";
 import axios from "axios";
-
-const Wrapper = styled("div")({
-  width: "100%",
-  height: "100vh",
-  display: "flex",
-  zIndex: "1",
-  backgroundColor: "#fdfdfd",
-});
+import Face5Icon from "@mui/icons-material/Face5";
+import KeyIcon from "@mui/icons-material/Key";
+import Face6Icon from "@mui/icons-material/Face6";
+import FaceIcon from "@mui/icons-material/Face";
+import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+import TouchAppIcon from "@mui/icons-material/TouchApp";
+import GroupWorkIcon from "@mui/icons-material/GroupWork";
 
 const EditUserContainer = styled("div")({
-  flexGrow: 1,
-  marginTop: "60px",
-  display: "flex",
-  border: "none",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
-const CrudUserBox = styled("div")({
-  width: "90%",
-  height: "85%",
-  boxShadow: "rgba(0, 0, 0, 0.08) 0px 4px 12px",
-  borderRadius: "10px",
-  padding: "0px",
-  zIndex: "3",
-  backgroundColor: "#66a3ff",
-});
-
-const Users = styled("div")({
-  padding: "0px 20px 0px 20px",
-  color: "#ffffff",
-});
-
-const TableContainer = styled("div")({
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
-  padding: "0px 20px",
-  gap: "5px",
+  boxShadow: "rgba(0, 123, 255, 0.25) 0px 25px 50px -12px",
+  height: "100%",
+  width: "70%",
+});
+
+const ContentCon = styled("div")({
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "start",
+  padding: "35px 30px",
+  gap: "10px",
   flexWrap: "wrap",
 });
 
-const PureTable = styled("table")({
-  textAlign: "center",
-});
-
-const TH = styled("th")({
-  height: "40px",
-  width: "200px",
-  textAlign: "center",
-  backgroundColor: "#007bff",
-  color: "white",
-  boxShadow: "rgba(0, 0, 0, 0.08) 0px 4px 12px",
-});
-
-const TH2 = styled("th")({
-  height: "40px",
+export const StyledButton = styled("div")(({ theme }) => ({
+  alignItems: "center",
+  backgroundImage:
+    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+  border: 0,
+  borderRadius: "25px",
+  boxShadow:
+    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
+  boxSizing: "border-box",
+  color: "#fff",
+  cursor: "pointer",
+  display: "inline-flex",
   width: "50px",
-  textAlign: "center",
-  backgroundColor: "#007bff",
-  color: "gold",
-  boxShadow: "rgba(0, 0, 0, 0.08) 0px 4px 12px",
-});
-
-const TD = styled("td")({
-  textAlign: "center",
   height: "50px",
-  backgroundColor: "#f9f9f9",
-  boxShadow: "rgba(0, 0, 0, 0.08) 0px 4px 12px",
-  color: "#212427",
+  justifyContent: "center",
+  lineHeight: 1,
+  listStyle: "none",
+  overflow: "hidden",
+  paddingLeft: "16px",
+  paddingRight: "16px",
+  position: "relative",
+  textAlign: "left",
+  textDecoration: "none",
+  transition: "box-shadow .15s, transform .15s",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  whiteSpace: "nowrap",
+  willChange: "box-shadow, transform",
+  fontSize: "18px",
+  "&:focus": {
+    boxShadow: `${theme.palette.primary.main} 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, ${theme.palette.primary.main} 0 -3px 0 inset`,
+  },
+  "&:hover": {
+    boxShadow:
+      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, " +
+      theme.palette.primary.main +
+      " 0 -3px 0 inset",
+    transform: "translateY(-2px)",
+  },
+  "&:active": {
+    boxShadow: `${theme.palette.primary.main} 0 3px 7px inset`,
+    transform: "translateY(2px)",
+  },
+}));
+
+const TitleCon = styled("div")(({ theme }) => ({
+  backgroundImage:
+    "radial-gradient(100% 100% at 100% 0, #FFFFFF, #FFFFFF  100%)",
+  border: 0,
+  borderRadius: "5px",
+  boxShadow:
+    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(58, 65, 111, .5) 0 0px 0",
+  boxSizing: "border-box",
+  cursor: "pointer",
+  width: "40px",
+  height: "40px",
+  lineHeight: 1,
+  listStyle: "none",
+  overflow: "hidden",
+  paddingLeft: "16px",
+  paddingRight: "16px",
+  position: "relative",
+  textAlign: "left",
+  textDecoration: "none",
+  transition: "box-shadow .15s, transform .15s",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  whiteSpace: "nowrap",
+  willChange: "box-shadow, transform",
+  fontSize: "14px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  color: "white",
   fontWeight: "600",
-  padding: "0px 20px",
-  zIndex: "4",
-});
+  "&:focus": {
+    boxShadow: `#B6D0E2 0 0 0 1.5px, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 -3px 0 inset`,
+  },
+  "&:hover": {
+    boxShadow:
+      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 0px 0",
+    transform: "translateY(-2px)",
+  },
+  "&:active": {
+    boxShadow: `#B6D0E2 0 3px 7px`,
+    transform: "translateY(2px)",
+  },
+}));
 
-const DeleteCon = styled("div")({
-  border: "2px solid red",
-  borderRadius: "50px",
-  width: "30px",
-  height: "30px",
-  color: "red",
+const TitleCon2 = styled(Button)(({ theme }) => ({
+  backgroundImage:
+    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+  border: 0,
+  borderRadius: "5px",
+  boxShadow:
+    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
+  boxSizing: "border-box",
+  cursor: "pointer",
+  width: "115px",
+  height: "40px",
+  lineHeight: 1,
+  listStyle: "none",
+  overflow: "hidden",
+  paddingLeft: "16px",
+  paddingRight: "16px",
+  position: "relative",
+  textAlign: "left",
+  textDecoration: "none",
+  transition: "box-shadow .15s, transform .15s",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  whiteSpace: "nowrap",
+  willChange: "box-shadow, transform",
+  fontSize: "1 4px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  cursor: "pointer",
+  color: "white",
+  fontWeight: "600",
+  "&:focus": {
+    boxShadow: `${theme.palette.primary.main} 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, ${theme.palette.primary.main} 0 -3px 0 inset`,
+  },
+  "&:hover": {
+    boxShadow:
+      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, " +
+      theme.palette.primary.main +
+      " 0 -3px 0 inset",
+    transform: "translateY(-2px)",
+  },
+  "&:active": {
+    boxShadow: `${theme.palette.primary.main} 0 3px 7px inset`,
+    transform: "translateY(2px)",
+  },
+}));
+
+const ActionDel = styled(Button)({
+  color: "#007bff",
 });
 
-const EditCon = styled("div")({
-  border: "2px solid gold",
-  borderRadius: "50px",
-  width: "30px",
-  height: "30px",
-  color: "gold",
+const ActionEdit = styled(Button)({
+  color: "#007bff",
+});
+
+const Columner = styled("div")({
   display: "flex",
+  flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  cursor: "pointer",
-});
-
-const Spacer = styled("div")({
-  display: "flex",
-  justifyContent: "center",
+  height: "100%",
+  width: "165px",
   gap: "20px",
 });
 
-const selectAuth = (state) => state.auth;
+const DetailsCon = styled("div")({
+  height: "100%",
+  width: "100%",
+  border: "2px solid #B6D0E2",
+  borderRadius: "1px",
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "column",
+  textAlign: "center",
+});
+const TDetailsCon = styled("div")({
+  height: "100%",
+  width: "100%",
+  border: "2px solid #B6D0E2",
+  borderRadius: "1px",
+  display: "flex",
+  alignItems: "center",
+  textAlign: "center",
+  flexDirection: "column",
+});
+const BDetailsCon = styled("div")({
+  height: "100%",
+  width: "100%",
+  border: "2px solid #B6D0E2",
+  borderRadius: "1px",
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "column",
+  textAlign: "center",
+});
 
-// Create a memoized selector
+const MapCon = styled("div")({
+  height: "40px",
+  width: "130px",
+  color: "#007bff",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderBottom: "1px solid #B6D0E2",
+  fontSize: "13px",
+  fontWeight: "600",
+  textAlign: "center",
+});
+
+const Flexer = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+});
+
+const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
 const EditUser = () => {
   const [users, setUsers] = useState([]);
-
-  // Use the memoized selector in your component
   const auth = useSelector(authSelector);
-
   const history = useHistory();
 
   useEffect(() => {
@@ -172,106 +294,102 @@ const EditUser = () => {
 
   const navigateUpdate = (id) => {
     history.push(`/user/${id}`);
+    window.location.reload();
   };
 
   return (
-    <Wrapper>
-      <SideBar />
-      <AppBar />
-      <EditUserContainer>
-        <CrudUserBox>
-          <Users>
-            <h1>Edit Users</h1>
-          </Users>
-          <TableContainer>
-            <PureTable>
-              <thead>
-                <tr style={{ paddingBottom: "10px" }}>
-                  <TH2>ID</TH2>
-                </tr>
-              </thead>
+    <EditUserContainer>
+      <ContentCon>
+        <Columner>
+          <Flexer>
+            <TitleCon>
+              <KeyIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>ID</TitleCon2>
+          </Flexer>
+          <DetailsCon>
+            {users.map((user) => (
+              <MapCon key={user._id}>
+                {user.cardId ? user.cardId.slice(-4) : ""}
+              </MapCon>
+            ))}
+          </DetailsCon>
+        </Columner>
+        <Columner>
+          <Flexer>
+            <TitleCon>
+              <FaceIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>[User]</TitleCon2>
+          </Flexer>
+          <TDetailsCon>
+            {users.map((user) => (
+              <MapCon key={user._id}>{user.username}</MapCon>
+            ))}
+          </TDetailsCon>
+        </Columner>
+        <Columner>
+          <Flexer>
+            <TitleCon>
+              <Face5Icon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>[First]</TitleCon2>
+          </Flexer>
+          <BDetailsCon>
+            {users.map((user) => (
+              <MapCon key={user._id}>{user.firstname}</MapCon>
+            ))}
+          </BDetailsCon>
+        </Columner>
+        <Columner>
+          <Flexer>
+            <TitleCon>
+              <Face6Icon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>[Last]</TitleCon2>
+          </Flexer>
+          <TDetailsCon>
+            {users.map((user) => (
+              <MapCon key={user._id}>{user.lastname}</MapCon>
+            ))}
+          </TDetailsCon>
+        </Columner>
+        <Columner>
+          <Flexer>
+            <TitleCon>
+              <GroupWorkIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>Role</TitleCon2>
+          </Flexer>
+          <BDetailsCon>
+            {users.map((user) => (
+              <MapCon key={user._id}>{user.role}</MapCon>
+            ))}
+          </BDetailsCon>
+        </Columner>
 
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id}>
-                    <TD>{user.cardId ? user.cardId.slice(-4) : ""}</TD>
-                  </tr>
-                ))}
-              </tbody>
-            </PureTable>
-            <PureTable>
-              <thead>
-                <tr>
-                  <TH>Name (First)</TH>
-                </tr>
-              </thead>
-
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id}>
-                    <TD>{user.firstname}</TD>
-                  </tr>
-                ))}
-              </tbody>
-            </PureTable>
-            <PureTable>
-              <thead>
-                <tr>
-                  <TH>Name (Last)</TH>
-                </tr>
-              </thead>
-
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id}>
-                    <TD>{user.lastname}</TD>
-                  </tr>
-                ))}
-              </tbody>
-            </PureTable>
-            <PureTable>
-              <thead>
-                <tr>
-                  <TH>Role</TH>
-                </tr>
-              </thead>
-
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id}>
-                    <TD>{user.role}</TD>
-                  </tr>
-                ))}
-              </tbody>
-            </PureTable>
-            <PureTable>
-              <thead>
-                <tr>
-                  <TH>Action</TH>
-                </tr>
-              </thead>
-
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id}>
-                    <TD>
-                      <Spacer>
-                        <EditCon onClick={() => navigateUpdate(user._id)}>
-                          <EditNoteIcon fontSize="small" />
-                        </EditCon>
-                        <DeleteCon onClick={() => deleteUsers(user._id)}>
-                          <DeleteOutlineIcon fontSize="small" />
-                        </DeleteCon>
-                      </Spacer>
-                    </TD>
-                  </tr>
-                ))}
-              </tbody>
-            </PureTable>
-          </TableContainer>
-        </CrudUserBox>
-      </EditUserContainer>
-    </Wrapper>
+        <Columner>
+          <Flexer>
+            <TitleCon>
+              <TouchAppIcon sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <TitleCon2>Action</TitleCon2>
+          </Flexer>
+          <BDetailsCon>
+            {users.map((user) => (
+              <MapCon key={user._id}>
+                <ActionEdit onClick={() => navigateUpdate(user._id)}>
+                  <EditNoteIcon fontSize="small" />
+                </ActionEdit>
+                <ActionDel onClick={() => deleteUsers(user._id)}>
+                  <DeleteOutlineIcon fontSize="small" />
+                </ActionDel>
+              </MapCon>
+            ))}
+          </BDetailsCon>
+        </Columner>
+      </ContentCon>
+    </EditUserContainer>
   );
 };
 

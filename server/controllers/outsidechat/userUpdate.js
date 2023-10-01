@@ -18,12 +18,16 @@ const updateUserGet = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-  const { username, firstname, lastname, password } = req.body;
+  const { username, firstname, lastname, password, role } = req.body;
 
   try {
     const user = await User.findByIdAndUpdate(req.params.id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
+    }
+
+    if (role) {
+      user.role = role;
     }
 
     if (username) {

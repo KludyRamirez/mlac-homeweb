@@ -1,9 +1,9 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { styled } from "@mui/system";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
@@ -12,12 +12,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
+import StarIcon from "@mui/icons-material/Star";
 import Toolbar from "@mui/material/Toolbar";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import Typography from "@mui/material/Typography";
 import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
+import EventNoteIcon from "@mui/icons-material/EventNote";
+import HomeIcon from "@mui/icons-material/Home";
+import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const drawerWidth = 240;
 
@@ -27,12 +30,49 @@ const HorizontalNavBar = styled("div")({
   alignItems: "center",
   color: "#007bff",
   width: "100%",
+  gap: "10px",
 });
 
-const IconContainer = styled("div")({
-  padding: "10px",
+const IconContainer = styled("div")(({ theme }) => ({
+  backgroundImage:
+    "radial-gradient(100% 100% at 100% 0, #FFFFFF, #FFFFFF  100%)",
+  border: 0,
+  borderRadius: "5px",
+  padding: "6px",
+  boxShadow:
+    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(58, 65, 111, .5) 0 0px 0",
+  boxSizing: "border-box",
   cursor: "pointer",
-});
+  lineHeight: 1,
+  listStyle: "none",
+  overflow: "hidden",
+  position: "relative",
+  textAlign: "left",
+  textDecoration: "none",
+  transition: "box-shadow .15s, transform .15s",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  whiteSpace: "nowrap",
+  willChange: "box-shadow, transform",
+  fontSize: "14px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontWeight: "600",
+  "&:focus": {
+    boxShadow: `#B6D0E2 0 0 0 1.5px, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 -3px 0 inset`,
+  },
+  "&:hover": {
+    boxShadow:
+      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 0px 0",
+    transform: "translateY(-2px)",
+  },
+  "&:active": {
+    boxShadow: `#B6D0E2 0 3px 7px`,
+    transform: "translateY(2px)",
+  },
+}));
 
 function ResponsiveDrawer(props) {
   const { window } = props;
@@ -46,15 +86,58 @@ function ResponsiveDrawer(props) {
     <div>
       <Toolbar />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+        {[
+          {
+            text: "Home",
+            icon: <HomeIcon sx={{ color: "white" }} fontSize="small" />,
+            path: "/timetable",
+          },
+          {
+            text: "Schedules",
+            icon: <EventNoteIcon sx={{ color: "white" }} fontSize="small" />,
+            path: "/schedule",
+          },
+          {
+            text: "Users",
+            icon: (
+              <AccountCircleIcon sx={{ color: "white" }} fontSize="small" />
+            ),
+            path: "/user",
+          },
+          {
+            text: "Logs",
+            icon: <StickyNote2Icon sx={{ color: "white" }} fontSize="small" />,
+            path: "/logs",
+          },
+          // Add more items with icons and paths here
+        ].map((item, index) => (
+          <Link
+            to={item.path}
+            style={{ textDecoration: "none", color: "#5A5A5A" }}
+          >
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <div
+                    style={{
+                      borderRadius: "5px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "6px",
+                      boxShadow:
+                        "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
+                      backgroundImage:
+                        "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+                    }}
+                  >
+                    {item.icon}
+                  </div>
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </div>
@@ -70,26 +153,25 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor: "transparent",
+          backgroundColor: "white",
           boxShadow: "none",
         }}
       >
         <Toolbar>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { sm: "none" }, color: "#007bff" }}
           >
             <MenuIcon />
           </IconButton>
           <HorizontalNavBar>
             <IconContainer>
-              <NotificationsIcon />
+              <NotificationsIcon fontSize="small" sx={{ color: "#007bff" }} />
             </IconContainer>
             <IconContainer>
-              <LogoutOutlined />
+              <LogoutOutlined fontSize="small" sx={{ color: "#007bff" }} />
             </IconContainer>
           </HorizontalNavBar>
         </Toolbar>
@@ -131,16 +213,6 @@ function ResponsiveDrawer(props) {
         >
           {drawer}
         </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}
-      >
-        <Toolbar />
       </Box>
     </Box>
   );

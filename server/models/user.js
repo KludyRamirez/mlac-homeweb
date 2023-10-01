@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema(
     password: { type: String },
     role: {
       type: String,
-      default: "parent",
-      enum: ["parent", "therapist", "admin"],
+      default: "Parent",
+      enum: ["Parent", "Therapist", "Administrator"],
     },
     address: {
       type: String,

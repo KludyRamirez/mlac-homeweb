@@ -1,31 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { styled } from "@mui/system";
+import SideBar from "../SideBar/SideBar";
+import EditUser from "./AllUser";
+import UserUpdateForm from "./UserUpdateForm";
+// import { validateRegisterForm } from "../../../shared/utils/validators";
+
 import axios from "axios";
+
+const Wrapper = styled("div")({
+  width: "100%",
+  height: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  backgroundColor: "#ffffff",
+});
+
+const UpdateUserContainer = styled("div")({
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "flex-start",
+  padding: "80px 20px",
+  flexWrap: "wrap",
+  width: "100%",
+});
 
 const initialState = {
   username: "",
   firstname: "",
   lastname: "",
   password: "",
+  roles: ["Parent", "Therapist", "Administrator"],
+  role: "",
 };
+
+const selectAuth = (state) => state.auth;
+const authSelector = createSelector([selectAuth], (auth) => auth);
 
 const UpdateUserPage = () => {
   const [values, setValues] = useState(initialState);
+  // const [isFormValid, setIsFormValid] = useState("");
   const { id } = useParams();
-  const { auth } = useSelector((state) => ({ ...state }));
+
+  const auth = useSelector(authSelector);
 
   useEffect(() => {
     getUsers();
   }, []);
 
   const getUsers = async () => {
-    if (!auth.userDetails.token) {
-      // Handle the case where the token is missing
-      console.error("Authentication token not found.");
-      return;
-    }
     try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
       const res = await axios.get(`${process.env.REACT_APP_API}/user/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.userDetails.token}`,
@@ -37,83 +67,55 @@ const UpdateUserPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const handleUpdate = async () => {
+    try {
       if (!auth.userDetails.token) {
-        // Handle the case where the token is missing
         console.error("Authentication token not found.");
         return;
       }
-      try {
-        const res = await axios.put(
-          `${process.env.REACT_APP_API}/user/${id}`,
-          values,
-          {
-            headers: {
-              Authorization: `Bearer ${auth.userDetails.token}`,
-            },
-          }
-        );
 
-        // Provide feedback to the user (e.g., show a success message)
-        console.log(res.data, "Update successful");
+      const res = await axios.put(
+        `${process.env.REACT_APP_API}/user/${id}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
 
-        // You can navigate to a different page or provide a go-back option here
-      } catch (error) {
-        console.error(error);
-        // Provide feedback to the user (e.g., show an error message)
-      }
-    };
-
-    handleUpdate();
+      console.log(res.data);
+      window.alert(`"${values.username}" is updated`);
+      // window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleInputChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  const handleRadioChange = (e) => {
+    setValues({ ...values, role: e.target.value });
+  };
+
   return (
-    <div>
-      <h1>Update Profile</h1>
-      <div>
-        <label>Name [User]:</label>
-        <input
-          type="text"
-          name="username"
-          value={values.username}
-          onChange={handleInputChange}
+    <Wrapper>
+      <SideBar />
+      <UpdateUserContainer>
+        <UserUpdateForm
+          handleSubmit={handleSubmit}
+          handleInputChange={handleInputChange}
+          handleRadioChange={handleRadioChange}
+          setValues={setValues}
+          values={values}
+          // isFormValid={isFormValid}
         />
-      </div>
-      <div>
-        <label>Name [First]:</label>
-        <input
-          type="text"
-          name="firstname"
-          value={values.firstname}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Name [Last]:</label>
-        <input
-          type="text"
-          name="lastname"
-          value={values.lastname}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={values.password}
-          onChange={handleInputChange}
-        />
-      </div>
-      <button onClick={handleSubmit}>Update Profile</button>
-    </div>
+        <EditUser />
+      </UpdateUserContainer>
+    </Wrapper>
   );
 };
 

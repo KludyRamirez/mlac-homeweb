@@ -32,14 +32,11 @@ function App() {
           <Route exact path="/login">
             <LoginPage />
           </Route>
-          <Route exact path="/register">
-            <RegisterPage />
-          </Route>
           <Route exact path="/dashboard">
             <Dashboard />
           </Route>
           <Route exact path="/user">
-            <AllUser />
+            <RegisterPage />
           </Route>
           <Route exact path="/user/:id">
             <UserUpdate />

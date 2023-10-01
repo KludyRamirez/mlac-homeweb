@@ -16,7 +16,7 @@ import { StyledButton } from "../AllSchedule/AllSchedule";
 
 const FormContainer = styled("div")({
   boxShadow:
-    "rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px",
+    "rgba(0, 123, 255, 0.15) 0px 1px 0px, rgba(0, 123, 255, 0.15) 0px 8px 24px, rgba(0, 123, 255, 0.15) 0px 16px 48px",
   padding: "40px",
   backgroundColor: "#fdfdfd",
   color: "gray",
@@ -27,6 +27,7 @@ const FormContainer = styled("div")({
 const TitleCon = styled("div")({
   display: "flex",
   justifyContent: "space-between",
+  gap: "20px",
 });
 
 const FormTitle = styled("h1")({
@@ -43,7 +44,7 @@ const FormTitle = styled("h1")({
   MozTextFillColor: "transparent",
 });
 
-const CreateScheduleForm = ({
+const UpdateScheduleForm = ({
   handleSubmit,
   handleChange,
   handleParentChange,
@@ -72,7 +73,7 @@ const CreateScheduleForm = ({
         <TitleCon>
           <FormTitle>Update Schedule</FormTitle>
           <StyledButton>
-            <EditCalendarIcon />
+            <EditCalendarIcon fontSize="small" />
           </StyledButton>
         </TitleCon>
         <FormControl
@@ -93,7 +94,7 @@ const CreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        <FormControl variant="standard" sx={{ minWidth: "400px" }}>
+        <FormControl variant="standard" sx={{ width: "100%" }}>
           <InputLabel id="demo-simple-select-standard-label">
             Day of Schedule
           </InputLabel>
@@ -113,7 +114,7 @@ const CreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        <FormControl variant="standard" sx={{ minWidth: "400px" }}>
+        <FormControl variant="standard" sx={{ width: "100%" }}>
           <InputLabel id="demo-simple-select-label">Timings</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -131,7 +132,7 @@ const CreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        <FormControl variant="standard" sx={{ minWidth: "300px" }}>
+        <FormControl variant="standard" sx={{ width: "80%" }}>
           <InputLabel id="demo-simple-select-label">Parent</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -181,7 +182,7 @@ const CreateScheduleForm = ({
         <br />
         <Button
           variant="outlined"
-          sx={{ fontWeight: "600" }}
+          sx={{ fontWeight: "600", float: "right" }}
           onClick={handleSubmit}
           disabled={
             !nameOfStudent || !studentType || !schedType || !day || !parent
@@ -194,4 +195,4 @@ const CreateScheduleForm = ({
   );
 };
 
-export default CreateScheduleForm;
+export default UpdateScheduleForm;

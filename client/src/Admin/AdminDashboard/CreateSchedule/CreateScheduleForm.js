@@ -1,6 +1,5 @@
 import React from "react";
 import Radio from "@mui/material/Radio";
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import {
   Button,
@@ -13,10 +12,12 @@ import {
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
 import { StyledButton } from "../AllSchedule/AllSchedule";
+import AddchartIcon from "@mui/icons-material/Addchart";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const FormContainer = styled("div")({
   boxShadow:
-    "rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px",
+    "rgba(0, 123, 255, 0.15) 0px 1px 0px, rgba(0, 123, 255, 0.15) 0px 8px 24px, rgba(0, 123, 255, 0.15) 0px 16px 48px",
   padding: "40px",
   backgroundColor: "#fdfdfd",
   color: "gray",
@@ -27,6 +28,7 @@ const FormContainer = styled("div")({
 const TitleCon = styled("div")({
   display: "flex",
   justifyContent: "space-between",
+  gap: "20px",
 });
 
 const FormTitle = styled("h1")({
@@ -71,7 +73,7 @@ const CreateScheduleForm = ({
         <TitleCon>
           <FormTitle>Create Schedule</FormTitle>
           <StyledButton>
-            <EditCalendarIcon />
+            <AddchartIcon />
           </StyledButton>
         </TitleCon>
         <FormControl
@@ -92,25 +94,7 @@ const CreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        {/* <FormControl>
-        <label className="fw-bold pb-1 pt-2">Schedule Type</label>
-        <select
-          name="schedType"
-          className="form-control"
-          value={schedType}
-          onChange={handleChange}
-          style={{ fontSize: "13px", height: "40px" }}
-        >
-          <option>Please Select</option>
-          {schedTypes.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
-      </FormControl> */}
-
-        <FormControl variant="standard" sx={{ minWidth: "400px" }}>
+        <FormControl variant="standard" sx={{ width: "100%" }}>
           <InputLabel id="demo-simple-select-standard-label">
             Day of Schedule
           </InputLabel>
@@ -130,7 +114,7 @@ const CreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        <FormControl variant="standard" sx={{ minWidth: "400px" }}>
+        <FormControl variant="standard" sx={{ width: "100%" }}>
           <InputLabel id="demo-simple-select-label">Timings</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -148,7 +132,7 @@ const CreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        <FormControl variant="standard" sx={{ minWidth: "300px" }}>
+        <FormControl variant="standard" sx={{ width: "80%" }}>
           <InputLabel id="demo-simple-select-label">Parents</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -196,16 +180,33 @@ const CreateScheduleForm = ({
         </FormControl>
         <br />
         <br />
-        <Button
-          variant="outlined"
-          sx={{ fontWeight: "600" }}
-          onClick={handleSubmit}
-          disabled={
-            !nameOfStudent || !studentType || !schedType || !day || !parent
-          }
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+            height: "40px",
+          }}
         >
-          Submit
-        </Button>
+          <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
+            <p
+              style={{ fontSize: "12px", fontWeight: "600", color: "#007bff" }}
+            >
+              Create <br /> Temporary Schedule?
+            </p>
+          </Link>
+          <Button
+            variant="outlined"
+            sx={{ fontWeight: "600" }}
+            onClick={handleSubmit}
+            disabled={
+              !nameOfStudent || !studentType || !schedType || !day || !parent
+            }
+          >
+            Submit
+          </Button>
+        </div>
       </FormContainer>
     </>
   );

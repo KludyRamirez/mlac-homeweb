@@ -14,20 +14,17 @@ const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
-  zIndex: "1",
+  justifyContent: "center",
   backgroundColor: "#ffffff",
 });
 
 const UpdateScheduleContainer = styled("div")({
-  flexGrow: 1,
-  marginTop: "0px",
   display: "flex",
-  border: "none",
   justifyContent: "space-around",
   alignItems: "flex-start",
-  padding: "80px",
-  gap: "40px",
+  padding: "80px 20px",
   flexWrap: "wrap",
+  width: "100%",
 });
 
 const initialState = {

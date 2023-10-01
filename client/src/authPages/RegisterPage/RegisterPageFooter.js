@@ -12,14 +12,7 @@ const getFormValidMessage = () => {
   return "Press To Register";
 };
 
-const RegisterPageFooter = ({
-  handleRegister,
-  isFormValid,
-  // setLastname,
-  // setUsername,
-  // setRole,
-  // setPassword,
-}) => {
+const RegisterPageFooter = ({ handleRegister, isFormValid }) => {
   const history = useHistory();
 
   const handlePushToLoginPage = () => {
