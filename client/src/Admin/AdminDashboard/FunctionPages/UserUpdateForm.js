@@ -4,7 +4,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { Button, FormControl, FormGroup, TextField } from "@mui/material";
 import { styled } from "@mui/system";
 import { StyledButton } from "../AllSchedule/AllSchedule";
-import RadioGroup from "@mui/material/RadioGroup";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -46,6 +45,8 @@ const UserUpdateForm = ({
 }) => {
   // destructure
   const { username, firstname, lastname, password, role, roles } = values;
+
+  const isButtonDisabled = username.length < 3 || username.length > 24;
 
   return (
     <>
@@ -148,6 +149,7 @@ const UserUpdateForm = ({
           </FormGroup>
         </FormControl>
         <br />
+        <br />
         <div
           style={{
             display: "flex",
@@ -168,7 +170,7 @@ const UserUpdateForm = ({
             variant="outlined"
             sx={{ fontWeight: "600" }}
             onClick={handleSubmit}
-            // disabled={!isFormValid}
+            disabled={isButtonDisabled}
           >
             Submit
           </Button>

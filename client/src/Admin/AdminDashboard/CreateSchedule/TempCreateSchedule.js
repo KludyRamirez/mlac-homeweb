@@ -7,7 +7,8 @@ import SideBar from "../SideBar/SideBar";
 
 import axios from "axios";
 import TempCreateScheduleForm from "./TempCreateScheduleForm";
-import AllSchedule from "../AllSchedule/AllSchedule";
+
+import TempSchedule from "../AllSchedule/TempSchedule";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -26,10 +27,20 @@ const TempCreateScheduleContainer = styled("div")({
   width: "100%",
 });
 
+const Flexer = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  flexWrap: "wrap",
+  width: "100%",
+});
+
 const initialState = {
-  nameOfStudents: [],
-  nameOfStudent: "",
+  tempStudentNames: [],
+  tempStudentName: "",
   dateTime: "",
+  tempSoloDay: "",
   schedTypes: ["Temporary"],
   schedType: "Temporary",
   permanentScheds: [],
@@ -44,25 +55,28 @@ const TempCreateSchedule = () => {
   const auth = useSelector(authSelector);
 
   useEffect(() => {
-    getSchedules();
+    getTempSchedules();
   }, []);
 
-  const getSchedules = async () => {
+  const getTempSchedules = async () => {
     try {
       if (!auth.userDetails.token) {
         console.error("Authentication token not found.");
         return;
       }
 
-      const res = await axios.get(`${process.env.REACT_APP_API}/schedule`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
       setValues({
         ...values,
         permanentScheds: res.data,
-        nameOfStudents: res.data,
+        tempStudentNames: res.data,
       });
     } catch (err) {
       console.error("Error fetching schedules:", err);
@@ -87,7 +101,6 @@ const TempCreateSchedule = () => {
         }
       );
       console.log(res);
-      window.alert(`"${res.data.nameOfStudent}" is created`);
       window.location.reload();
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -105,7 +118,15 @@ const TempCreateSchedule = () => {
 
   const handleNameOfStudentChange = (e) => {
     e.preventDefault();
-    setValues({ ...values, nameOfStudent: e.target.value });
+    setValues({ ...values, tempStudentName: e.target.value });
+  };
+
+  const handleTempSoloDayChange = (e) => {
+    e.preventDefault();
+    const newDateTime = e.target.value;
+    const dateObj = new Date(newDateTime);
+    const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
+    setValues({ ...values, dateTime: newDateTime, tempSoloDay: dayOfWeek });
   };
 
   return (
@@ -118,10 +139,11 @@ const TempCreateSchedule = () => {
           handleChange={handleChange}
           handlePermanentChange={handlePermanentChange}
           handleNameOfStudentChange={handleNameOfStudentChange}
+          handleTempSoloDayChange={handleTempSoloDayChange}
           setValues={setValues}
           values={values}
         />
-        <AllSchedule />
+        <TempSchedule />
       </TempCreateScheduleContainer>
     </Wrapper>
   );

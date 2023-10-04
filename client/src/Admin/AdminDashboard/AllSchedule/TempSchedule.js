@@ -241,29 +241,35 @@ const Flexer = styled("div")({
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const AllSchedule = () => {
+const TempSchedule = () => {
   const [schedules, setSchedules] = useState([]);
   const auth = useSelector(authSelector);
   const history = useHistory();
 
   useEffect(() => {
-    getSchedules();
+    getTempSchedules();
   }, [auth]);
 
-  const getSchedules = async () => {
+  const getTempSchedules = async () => {
     try {
       if (!auth.userDetails.token) {
         console.error("Authentication token not found.");
         return;
       }
 
-      const res = await axios.get(`${process.env.REACT_APP_API}/schedule`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
       const filteredSchedules = res.data.filter(
-        (schedule) => schedule.schedType === "Permanent"
+        (schedule) =>
+          schedule.schedType === "Temporary" &&
+          schedule.tempStudentName &&
+          schedule.tempStudentName.studentType === "Dyad"
       );
       setSchedules(filteredSchedules);
     } catch (err) {
@@ -271,7 +277,7 @@ const AllSchedule = () => {
     }
   };
 
-  const deleteOneSched = async (id) => {
+  const deleteOneTempSched = async (id) => {
     if (!auth.userDetails.token) {
       // Handle the case where the token is missing
       console.error("Authentication token not found.");
@@ -283,16 +289,16 @@ const AllSchedule = () => {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
       });
-      getSchedules();
+      getTempSchedules();
     } catch (err) {
       console.error("Error fetching users:", err);
     }
   };
 
-  const navigateUpdate = (id) => {
-    history.push(`/schedule/${id}`);
-    window.location.reload();
-  };
+  //   const navigateUpdate = (id) => {
+  //     history.push(`/temp-schedule/${id}`);
+  //     window.location.reload();
+  //   };
 
   return (
     <AllScheduleContainer>
@@ -306,7 +312,10 @@ const AllSchedule = () => {
           </Flexer>
           <DetailsCon>
             {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.nameOfStudent}</MapCon>
+              <MapCon key={schedule._id}>
+                {schedule.tempStudentName &&
+                  schedule.tempStudentName.nameOfStudent}
+              </MapCon>
             ))}
           </DetailsCon>
         </Columner>
@@ -319,7 +328,9 @@ const AllSchedule = () => {
           </Flexer>
           <BDetailsCon>
             {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.day}</MapCon>
+              <MapCon key={schedule._id}>
+                {schedule.permanentSched && schedule.permanentSched.day}
+              </MapCon>
             ))}
           </BDetailsCon>
         </Columner>
@@ -332,7 +343,9 @@ const AllSchedule = () => {
           </Flexer>
           <TDetailsCon>
             {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.timing}</MapCon>
+              <MapCon key={schedule._id}>
+                {schedule.permanentSched && schedule.permanentSched.timing}
+              </MapCon>
             ))}
           </TDetailsCon>
         </Columner>
@@ -341,11 +354,11 @@ const AllSchedule = () => {
             <TitleCon>
               <Face2Icon sx={{ color: "#007bff" }} />
             </TitleCon>
-            <TitleCon2>Parent</TitleCon2>
+            <TitleCon2>Date</TitleCon2>
           </Flexer>
           <BDetailsCon>
             {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.parent}</MapCon>
+              <MapCon key={schedule._id}>{schedule.dateTime}</MapCon>
             ))}
           </BDetailsCon>
         </Columner>
@@ -354,11 +367,14 @@ const AllSchedule = () => {
             <TitleCon>
               <ConnectWithoutContactIcon sx={{ color: "#007bff" }} />
             </TitleCon>
-            <TitleCon2>Type</TitleCon2>
+            <TitleCon2>With</TitleCon2>
           </Flexer>
           <TDetailsCon>
             {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.studentType}</MapCon>
+              <MapCon key={schedule._id}>
+                {schedule.permanentSched &&
+                  schedule.permanentSched.nameOfStudent}
+              </MapCon>
             ))}
           </TDetailsCon>
         </Columner>
@@ -372,10 +388,10 @@ const AllSchedule = () => {
           <BDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>
-                <ActionEdit onClick={() => navigateUpdate(schedule._id)}>
+                {/* <ActionEdit onClick={() => navigateUpdate(schedule._id)}>
                   <EditNoteIcon fontSize="small" />
-                </ActionEdit>
-                <ActionDel onClick={() => deleteOneSched(schedule._id)}>
+                </ActionEdit> */}
+                <ActionDel onClick={() => deleteOneTempSched(schedule._id)}>
                   <DeleteOutlineIcon fontSize="small" />
                 </ActionDel>
               </MapCon>
@@ -387,4 +403,4 @@ const AllSchedule = () => {
   );
 };
 
-export default AllSchedule;
+export default TempSchedule;

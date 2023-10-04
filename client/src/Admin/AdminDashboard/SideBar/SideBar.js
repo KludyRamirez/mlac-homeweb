@@ -6,21 +6,22 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
-import StarIcon from "@mui/icons-material/Star";
 import Toolbar from "@mui/material/Toolbar";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import HomeIcon from "@mui/icons-material/Home";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -33,14 +34,23 @@ const HorizontalNavBar = styled("div")({
   gap: "10px",
 });
 
+const AppNavBar = styled(AppBar)({
+  background: "white",
+  boxShadow: "none",
+  backdropFilter: "blur(10px)",
+  WebkitBackdropFilter: "blur(10px)",
+  width: { sm: `calc(100% - ${drawerWidth}px)` },
+  ml: { sm: `${drawerWidth}px` },
+});
+
 const IconContainer = styled("div")(({ theme }) => ({
   backgroundImage:
     "radial-gradient(100% 100% at 100% 0, #FFFFFF, #FFFFFF  100%)",
   border: 0,
-  borderRadius: "5px",
-  padding: "6px",
+  borderRadius: "20px",
+  padding: "10px",
   boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(58, 65, 111, .5) 0 0px 0",
+    "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
   boxSizing: "border-box",
   cursor: "pointer",
   lineHeight: 1,
@@ -77,69 +87,163 @@ const IconContainer = styled("div")(({ theme }) => ({
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch({
+      type: "LOGOUT",
+      payload: null,
+    });
+    history.push("/login");
+  };
+
   const drawer = (
     <div>
       <Toolbar />
-      <List>
-        {[
-          {
-            text: "Home",
-            icon: <HomeIcon sx={{ color: "white" }} fontSize="small" />,
-            path: "/timetable",
-          },
-          {
-            text: "Schedules",
-            icon: <EventNoteIcon sx={{ color: "white" }} fontSize="small" />,
-            path: "/schedule",
-          },
-          {
-            text: "Users",
-            icon: (
-              <AccountCircleIcon sx={{ color: "white" }} fontSize="small" />
-            ),
-            path: "/user",
-          },
-          {
-            text: "Logs",
-            icon: <StickyNote2Icon sx={{ color: "white" }} fontSize="small" />,
-            path: "/logs",
-          },
-          // Add more items with icons and paths here
-        ].map((item, index) => (
-          <Link
-            to={item.path}
-            style={{ textDecoration: "none", color: "#5A5A5A" }}
-          >
-            <ListItem key={item.text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <div
-                    style={{
-                      borderRadius: "5px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      padding: "6px",
-                      boxShadow:
-                        "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
-                      backgroundImage:
-                        "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
-                    }}
-                  >
-                    {item.icon}
-                  </div>
-                </ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        ))}
-      </List>
+      <div
+        style={{
+          height: "93vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <List>
+          {[
+            {
+              text: (
+                <div
+                  style={{
+                    color: "#007bff",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                  }}
+                >
+                  Home
+                </div>
+              ),
+              icon: <HomeIcon sx={{ color: "white" }} fontSize="small" />,
+              path: "/timetable",
+            },
+            {
+              text: (
+                <div
+                  style={{
+                    color: "#007bff",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                  }}
+                >
+                  Schedule
+                </div>
+              ),
+              icon: <EventNoteIcon sx={{ color: "white" }} fontSize="small" />,
+              path: "/schedule",
+            },
+            {
+              text: (
+                <div
+                  style={{
+                    color: "#007bff",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                  }}
+                >
+                  User
+                </div>
+              ),
+              icon: (
+                <AccountCircleIcon sx={{ color: "white" }} fontSize="small" />
+              ),
+              path: "/user",
+            },
+            {
+              text: (
+                <div
+                  style={{
+                    color: "#007bff",
+                    fontWeight: "400",
+                    fontSize: "14px",
+                  }}
+                >
+                  Logs
+                </div>
+              ),
+              icon: (
+                <StickyNote2Icon sx={{ color: "white" }} fontSize="small" />
+              ),
+              path: "/logs",
+            },
+            // Add more items with icons and paths here
+          ].map((item, index) => (
+            <Link
+              to={item.path}
+              style={{ textDecoration: "none", color: "#5A5A5A" }}
+            >
+              <ListItem key={item.text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <div
+                      style={{
+                        borderRadius: "20px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "6px",
+                        boxShadow:
+                          "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 0px 0",
+                        backgroundImage:
+                          "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+                      }}
+                    >
+                      {item.icon}
+                    </div>
+                  </ListItemIcon>
+                  <ListItemText>{item.text}</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+        <List>
+          <ListItem onClick={handleLogout} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <div
+                  style={{
+                    borderRadius: "20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "6px",
+                    boxShadow:
+                      "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 0px 0",
+                    backgroundImage:
+                      "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+                  }}
+                >
+                  <LogoutOutlined sx={{ color: "white" }} fontSize="small" />
+                </div>
+              </ListItemIcon>
+              <div
+                style={{
+                  color: "#007bff",
+                  fontWeight: "400",
+                  fontSize: "14px",
+                }}
+              >
+                Sign Out
+              </div>
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </div>
     </div>
   );
 
@@ -148,15 +252,7 @@ function ResponsiveDrawer(props) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-          backgroundColor: "white",
-          boxShadow: "none",
-        }}
-      >
+      <AppNavBar position="fixed">
         <Toolbar>
           <IconButton
             aria-label="open drawer"
@@ -168,14 +264,14 @@ function ResponsiveDrawer(props) {
           </IconButton>
           <HorizontalNavBar>
             <IconContainer>
-              <NotificationsIcon fontSize="small" sx={{ color: "#007bff" }} />
-            </IconContainer>
-            <IconContainer>
-              <LogoutOutlined fontSize="small" sx={{ color: "#007bff" }} />
+              <NotificationsActiveOutlinedIcon
+                fontSize="small"
+                sx={{ color: "#007bff" }}
+              />
             </IconContainer>
           </HorizontalNavBar>
         </Toolbar>
-      </AppBar>
+      </AppNavBar>
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}

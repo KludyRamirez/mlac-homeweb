@@ -72,9 +72,7 @@ const deleteOneSchedule = async (req, res) => {
 
 const createTempSchedule = async (req, res) => {
   try {
-    const formattedDateTime = moment(req.body.dateTime).format(
-      "MMMM Do YYYY, h:mm:ss a"
-    );
+    const formattedDateTime = moment(req.body.dateTime).format("MMMM Do YYYY");
 
     const newSchedule = await new Schedule({
       ...req.body,
@@ -92,7 +90,10 @@ const createTempSchedule = async (req, res) => {
 
 const getTempSchedule = async (req, res) => {
   try {
-    const scheds = await Schedule.find();
+    const scheds = await Schedule.find()
+      .populate("permanentSched", "day timing parent nameOfStudent")
+      .populate("tempStudentName", "parent nameOfStudent studentType")
+      .exec();
 
     res.json(scheds);
   } catch (error) {

@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
+import AppBar from "../AppBar/AppBar";
 import SideBar from "../SideBar/SideBar";
+
 import axios from "axios";
-import CreateScheduleForm from "./CreateScheduleForm";
-import AllSchedule from "../AllSchedule/AllSchedule";
+import TempCreateScheduleForm from "./TempCreateScheduleForm";
+
+import TempSchedule from "../AllSchedule/TempSchedule";
+import TempSoloCreateSchedForm from "./TempSoloCreateSchedForm";
+import TempSoloSchedule from "../AllSchedule/TempSoloSchedule";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -15,7 +20,7 @@ const Wrapper = styled("div")({
   backgroundColor: "#ffffff",
 });
 
-const CreateScheduleContainer = styled("div")({
+const TempCreateScheduleContainer = styled("div")({
   display: "flex",
   justifyContent: "space-around",
   alignItems: "flex-start",
@@ -25,15 +30,14 @@ const CreateScheduleContainer = styled("div")({
 });
 
 const initialState = {
-  nameOfStudent: "",
-  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-  day: "",
-  parents: [],
-  parent: "",
-  schedTypes: ["Permanent"],
-  schedType: "Permanent",
-  studentTypes: ["Solo", "Dyad"],
-  studentType: "",
+  tempStudentNames: [],
+  tempStudentName: "",
+  dateTime: "",
+  tempSoloDay: "",
+  schedTypes: ["Temporary"],
+  schedType: "Temporary",
+  //   permanentScheds: [],
+  //   permanentSched: "",
   timings: [
     "7 AM to 8 AM",
     "8 AM to 9 AM",
@@ -52,29 +56,36 @@ const initialState = {
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const CreateSchedule = () => {
+const TempSoloCreateSched = () => {
   const [values, setValues] = useState(initialState);
   const auth = useSelector(authSelector);
 
   useEffect(() => {
-    getParents();
+    getTempSchedules();
   }, []);
 
-  const getParents = async () => {
+  const getTempSchedules = async () => {
     try {
       if (!auth.userDetails.token) {
-        // Handle the case where the token is missing
         console.error("Authentication token not found.");
         return;
       }
-      const res = await axios.get(`${process.env.REACT_APP_API}/user`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
+
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      setValues({
+        ...values,
+        permanentScheds: res.data,
+        tempStudentNames: res.data,
       });
-      setValues({ ...values, parents: res.data });
     } catch (err) {
-      console.error("Error fetching users:", err);
+      console.error("Error fetching schedules:", err);
     }
   };
 
@@ -87,7 +98,7 @@ const CreateSchedule = () => {
         return;
       }
       const res = await axios.post(
-        `${process.env.REACT_APP_API}/schedule`,
+        `${process.env.REACT_APP_API}/temp-schedule`,
         values,
         {
           headers: {
@@ -96,7 +107,6 @@ const CreateSchedule = () => {
         }
       );
       console.log(res);
-      window.alert(`"${res.data.nameOfStudent}" is created`);
       window.location.reload();
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -107,32 +117,42 @@ const CreateSchedule = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleStudentTypeChange = (e) => {
-    setValues({ ...values, studentType: e.target.value });
+  //   const handlePermanentChange = (e) => {
+  //     e.preventDefault();
+  //     setValues({ ...values, permanentSched: e.target.value });
+  //   };
+
+  const handleNameOfStudentChange = (e) => {
+    e.preventDefault();
+    setValues({ ...values, tempStudentName: e.target.value });
   };
 
-  const handleParentChange = (e) => {
+  const handleTempSoloDayChange = (e) => {
     e.preventDefault();
-    console.log("CLICKED Parent", e.target.value);
-    setValues({ ...values, parent: e.target.value });
+    const newDateTime = e.target.value;
+    const dateObj = new Date(newDateTime);
+    const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
+    setValues({ ...values, dateTime: newDateTime, tempSoloDay: dayOfWeek });
   };
 
   return (
     <Wrapper>
       <SideBar />
-      <CreateScheduleContainer>
-        <CreateScheduleForm
+      <AppBar />
+      <TempCreateScheduleContainer>
+        <TempSoloCreateSchedForm
           handleSubmit={handleSubmit}
           handleChange={handleChange}
+          //   handlePermanentChange={handlePermanentChange}
+          handleNameOfStudentChange={handleNameOfStudentChange}
+          handleTempSoloDayChange={handleTempSoloDayChange}
           setValues={setValues}
           values={values}
-          handleParentChange={handleParentChange}
-          handleStudentTypeChange={handleStudentTypeChange}
         />
-        <AllSchedule />
-      </CreateScheduleContainer>
+        <TempSoloSchedule />
+      </TempCreateScheduleContainer>
     </Wrapper>
   );
 };
 
-export default CreateSchedule;
+export default TempSoloCreateSched;

@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
 import { StyledButton } from "../AllSchedule/AllSchedule";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { format, addDays } from "date-fns";
 
 const FormContainer = styled("div")({
   boxShadow:
@@ -55,24 +55,42 @@ const DateTimeInput = styled("input")({
 
 const TempCreateScheduleForm = ({
   handleSubmit,
-  handleChange,
   handleNameOfStudentChange,
   values,
   handlePermanentChange,
+  handleTempSoloDayChange,
 }) => {
   // destructure
   const {
-    nameOfStudents,
-    nameOfStudent,
-    schedTypes,
+    tempStudentNames,
+    tempStudentName,
     schedType,
     permanentScheds,
     permanentSched,
     dateTime,
+    tempSoloDay,
   } = values;
 
-  const today = new Date().toISOString().split("T")[0];
-  const minDate = today;
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const today = new Date();
+
+  let selectedDay = "";
+
+  const selectedPermanentSched = permanentScheds.find(
+    (ps) => ps._id === permanentSched
+  );
+
+  if (selectedPermanentSched) {
+    selectedDay = selectedPermanentSched.day;
+  }
+
+  useEffect(() => {
+    if (tempSoloDay === selectedDay) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  }, [tempSoloDay, permanentSched]);
 
   return (
     <>
@@ -91,13 +109,13 @@ const TempCreateScheduleForm = ({
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             name="nameOfStudent"
-            value={nameOfStudent}
+            value={tempStudentName}
             onChange={handleNameOfStudentChange}
           >
-            {nameOfStudents
-              .filter((n) => n.isActive === false)
+            {tempStudentNames
+              .filter((n) => n.isActive === false && n.studentType === "Dyad")
               .map((n) => (
-                <MenuItem key={n._id} value={n.nameOfStudent}>
+                <MenuItem key={n._id} value={n._id}>
                   {n.nameOfStudent}
                 </MenuItem>
               ))}
@@ -111,9 +129,10 @@ const TempCreateScheduleForm = ({
             id="dateTime"
             type="date"
             name="dateTime"
-            min={minDate}
+            min={format(today, "yyyy-MM-dd")}
+            max={format(addDays(today, 365), "yyyy-MM-dd")}
             value={dateTime}
-            onChange={handleChange}
+            onChange={handleTempSoloDayChange}
             style={{ fontSize: "13px", height: "40px" }}
           />
         </DateTimeCon>
@@ -132,7 +151,7 @@ const TempCreateScheduleForm = ({
               .filter((ps) => ps.isActive === true && ps.studentType === "Dyad")
               .map((ps) => (
                 <MenuItem key={ps._id} value={ps._id}>
-                  {ps.nameOfStudent}
+                  {ps.nameOfStudent} [{ps.day}]
                 </MenuItem>
               ))}
           </Select>
@@ -149,11 +168,11 @@ const TempCreateScheduleForm = ({
             height: "40px",
           }}
         >
-          <Link to="/schedule" style={{ textDecoration: "none" }}>
+          <Link to="/temp-schedule-solo" style={{ textDecoration: "none" }}>
             <p
               style={{ fontSize: "12px", fontWeight: "600", color: "#007bff" }}
             >
-              Create <br /> Permanent Schedule?
+              Create Temporary <br /> Schedule for Solo Students?
             </p>
           </Link>
           <Button
@@ -161,7 +180,11 @@ const TempCreateScheduleForm = ({
             sx={{ fontWeight: "600" }}
             onClick={handleSubmit}
             disabled={
-              !nameOfStudent || !schedType || !permanentSched || !dateTime
+              !tempStudentName ||
+              !schedType ||
+              !permanentSched ||
+              !dateTime ||
+              !isButtonEnabled
             }
           >
             Submit

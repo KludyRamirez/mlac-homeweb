@@ -12,7 +12,6 @@ import RegisterPage from "./authPages/RegisterPage/RegisterPage";
 import AlertNotificationComponents from "./shared/components/AlertNotificationComponents";
 
 //admin
-import AllUser from "./Admin/AdminDashboard/FunctionPages/AllUser";
 
 import "./App.css";
 import UserUpdate from "./Admin/AdminDashboard/FunctionPages/UserUpdate";
@@ -20,6 +19,7 @@ import CreateSchedule from "./Admin/AdminDashboard/CreateSchedule/CreateSchedule
 import UpdateSchedule from "./Admin/AdminDashboard/UpdateSchedule/UpdateSchedule";
 import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreateSchedule";
 import Timetable from "./Admin/AdminDashboard/TimeTableHome/Timetable";
+import TempSoloCreateSched from "./Admin/AdminDashboard/CreateSchedule/TempSoloCreateSched";
 
 function App() {
   return (
@@ -49,6 +49,9 @@ function App() {
           </Route>
           <Route exact path="/temp-schedule">
             <TempCreateSchedule />
+          </Route>
+          <Route exact path="/temp-schedule-solo">
+            <TempSoloCreateSched />
           </Route>
           <Route exact path="/timetable">
             <Timetable />

@@ -142,7 +142,7 @@ const UpdateScheduleForm = ({
             onChange={handleParentChange}
           >
             {parents.map((p) => (
-              <MenuItem key={p._id} value={p._id}>
+              <MenuItem key={p._id} value={`${p.firstname} ${p.lastname}`}>
                 {p.firstname} {p.lastname}
               </MenuItem>
             ))}

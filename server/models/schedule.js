@@ -8,6 +8,12 @@ const scheduleSchema = new mongoose.Schema(
       trim: true,
       maxlength: 32,
     },
+
+    tempStudentName: {
+      type: ObjectId,
+      ref: "schedule",
+    },
+
     isActive: {
       type: Boolean,
       default: true,
@@ -27,9 +33,11 @@ const scheduleSchema = new mongoose.Schema(
     dateTime: {
       type: String,
     },
+    tempSoloDay: {
+      type: String,
+    },
     parent: {
-      type: ObjectId,
-      ref: "user",
+      type: String,
     },
     timing: {
       type: String,

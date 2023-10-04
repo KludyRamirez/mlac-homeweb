@@ -1,18 +1,10 @@
 import React from "react";
-import Radio from "@mui/material/Radio";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import {
-  Button,
-  FormControl,
-  FormGroup,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+
+import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
 import { StyledButton } from "../AllSchedule/AllSchedule";
-import AddchartIcon from "@mui/icons-material/Addchart";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const FormContainer = styled("div")({
@@ -27,8 +19,8 @@ const FormContainer = styled("div")({
 
 const TitleCon = styled("div")({
   display: "flex",
+  gap: "20px",
   justifyContent: "space-between",
-  gap: "60px",
 });
 
 const FormTitle = styled("h1")({
@@ -45,76 +37,88 @@ const FormTitle = styled("h1")({
   MozTextFillColor: "transparent",
 });
 
-const CreateScheduleForm = ({
+const DateTimeCon = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: "5px",
+});
+
+const DateTimeInput = styled("input")({
+  borderRadius: "5px",
+  width: "75%",
+  borderColor: "#007bff",
+  padding: "0px 10px",
+  textTransform: "uppercase",
+  color: "darkgray",
+});
+
+const TempSoloCreateSchedForm = ({
   handleSubmit,
   handleChange,
-  handleParentChange,
+  handleNameOfStudentChange,
   values,
-  handleStudentTypeChange,
+  handleTempSoloDayChange,
 }) => {
   // destructure
   const {
-    nameOfStudent,
-    days,
-    day,
-    parents,
-    parent,
+    tempStudentNames,
+    tempStudentName,
     schedTypes,
     schedType,
-    studentTypes,
-    studentType,
+    dateTime,
+    tempSoloDay,
     timings,
     timing,
   } = values;
+
+  const today = new Date().toISOString().split("T")[0];
+  const minDate = today;
 
   return (
     <>
       <FormContainer>
         <TitleCon>
-          <FormTitle>Create Schedule</FormTitle>
+          <FormTitle>Temporary Schedule</FormTitle>
           <StyledButton>
-            <AddchartIcon />
+            <HourglassBottomIcon fontSize="small" />
           </StyledButton>
         </TitleCon>
-        <FormControl
-          sx={{
-            border: "2px solid #007bff",
-            padding: "10px",
-            borderRadius: "5px",
-          }}
-        >
-          <TextField
-            id="standard-basic"
-            label="Student Name"
-            variant="standard"
-            name="nameOfStudent"
-            value={nameOfStudent}
-            onChange={handleChange}
-          ></TextField>
-        </FormControl>
-        <br />
-        <br />
-        <FormControl variant="standard" sx={{ width: "100%" }}>
+        <FormControl variant="standard" sx={{ width: "50%" }}>
           <InputLabel id="demo-simple-select-standard-label">
-            Day of Schedule
+            Student Name
           </InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
-            name="day"
-            value={day}
-            onChange={handleChange}
+            name="nameOfStudent"
+            value={tempStudentName}
+            onChange={handleNameOfStudentChange}
           >
-            {days.map((d) => (
-              <MenuItem key={d} value={d}>
-                {d}
-              </MenuItem>
-            ))}
+            {tempStudentNames
+              .filter((n) => n.isActive === false && n.studentType === "Solo")
+              .map((n) => (
+                <MenuItem key={n._id} value={n._id}>
+                  {n.nameOfStudent}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
         <br />
         <br />
-        <FormControl variant="standard" sx={{ width: "90%" }}>
+        <DateTimeCon>
+          <label id="date">Date:</label>
+          <DateTimeInput
+            id="dateTime"
+            type="date"
+            name="dateTime"
+            min={minDate}
+            value={dateTime}
+            onChange={handleTempSoloDayChange}
+            style={{ fontSize: "13px", height: "40px" }}
+          />
+        </DateTimeCon>
+        <br />
+        <FormControl variant="standard" sx={{ width: "100%" }}>
           <InputLabel id="demo-simple-select-label">Timings</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -130,58 +134,29 @@ const CreateScheduleForm = ({
             ))}
           </Select>
         </FormControl>
+
         <br />
-        <br />
-        <FormControl variant="standard" sx={{ width: "80%" }}>
-          <InputLabel id="demo-simple-select-label">Parents</InputLabel>
+        {/* <FormControl variant="standard" sx={{ width: "100%" }}>
+          <InputLabel id="demo-simple-select-label">Schedule With:</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            name="parent"
-            value={parent}
-            onChange={handleParentChange}
+            name="permanentSched"
+            value={permanentSched}
+            onChange={handlePermanentChange}
           >
-            {parents
-              .filter((p) => p.role === "Administrator")
-              .map((p) => (
-                <MenuItem key={p._id} value={`${p.firstname} ${p.lastname}`}>
-                  {p.firstname} {p.lastname}
+            {permanentScheds
+              .filter((ps) => ps.isActive === true && ps.studentType === "Dyad")
+              .map((ps) => (
+                <MenuItem key={ps._id} value={ps._id}>
+                  {ps.nameOfStudent}
                 </MenuItem>
               ))}
           </Select>
         </FormControl>
+        <br /> */}
         <br />
-        <br />
-        <FormControl
-          sx={{
-            border: "2px solid #007bff",
-            padding: "10px",
-            borderRadius: "5px",
-          }}
-        >
-          <div style={{ fontSize: "13px", fontWeight: "500" }}>
-            Student Type
-          </div>
-          <FormGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-            value={studentType}
-            onChange={handleStudentTypeChange}
-          >
-            {studentTypes.map((st) => (
-              <FormControlLabel
-                key={st}
-                value={st}
-                checked={studentType === st}
-                control={<Radio />}
-                label={st}
-              />
-            ))}
-          </FormGroup>
-        </FormControl>
-        <br />
-        <br />
+
         <div
           style={{
             display: "flex",
@@ -202,9 +177,7 @@ const CreateScheduleForm = ({
             variant="outlined"
             sx={{ fontWeight: "600" }}
             onClick={handleSubmit}
-            disabled={
-              !nameOfStudent || !studentType || !schedType || !day || !parent
-            }
+            disabled={!tempStudentName || !schedType || !timing || !dateTime}
           >
             Submit
           </Button>
@@ -214,4 +187,4 @@ const CreateScheduleForm = ({
   );
 };
 
-export default CreateScheduleForm;
+export default TempSoloCreateSchedForm;

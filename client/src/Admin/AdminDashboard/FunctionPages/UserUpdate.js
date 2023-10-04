@@ -6,7 +6,7 @@ import { styled } from "@mui/system";
 import SideBar from "../SideBar/SideBar";
 import EditUser from "./AllUser";
 import UserUpdateForm from "./UserUpdateForm";
-// import { validateRegisterForm } from "../../../shared/utils/validators";
+import { validateRegisterForm } from "../../../shared/utils/validators";
 
 import axios from "axios";
 
@@ -87,7 +87,7 @@ const UpdateUserPage = () => {
 
       console.log(res.data);
       window.alert(`"${values.username}" is updated`);
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -111,7 +111,6 @@ const UpdateUserPage = () => {
           handleRadioChange={handleRadioChange}
           setValues={setValues}
           values={values}
-          // isFormValid={isFormValid}
         />
         <EditUser />
       </UpdateUserContainer>

@@ -139,7 +139,7 @@ const UpdateSchedule = () => {
   const handleParentChange = (e) => {
     e.preventDefault();
     console.log("CLICKED Parent", e.target.value);
-    setValues({ ...values });
+    setValues({ ...values, parent: e.target.value });
 
     setSelectedParent(e.target.value);
     if (values.parent._id === e.target.value) {
