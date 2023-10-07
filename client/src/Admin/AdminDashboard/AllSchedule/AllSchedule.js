@@ -16,20 +16,19 @@ import TouchAppIcon from "@mui/icons-material/TouchApp";
 
 const AllScheduleContainer = styled("div")({
   display: "flex",
-  justifyContent: "center",
   boxShadow: "rgba(0, 123, 255, 0.25) 0px 25px 50px -12px",
-  height: "100%",
-  width: "70%",
+  overflow: "hidden",
+  overflowX: "scroll",
+  padding: "0 35px 35px 35px",
+  "@media (max-width: 1366px)": {
+    width: "555px",
+  },
 });
 
 const ContentCon = styled("div")({
-  width: "100%",
   display: "flex",
-  justifyContent: "space-around",
-  alignItems: "start",
-  padding: "35px 30px",
+  justifyContent: "flex-start",
   gap: "10px",
-  flexWrap: "wrap",
 });
 
 export const StyledButton = styled("div")(({ theme }) => ({
@@ -179,14 +178,13 @@ const Columner = styled("div")({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  height: "100%",
   width: "165px",
   gap: "20px",
 });
 
 const DetailsCon = styled("div")({
-  height: "100%",
   width: "100%",
+  // height: "75vh",
   border: "2px solid #B6D0E2",
   borderRadius: "1px",
   display: "flex",
@@ -195,8 +193,8 @@ const DetailsCon = styled("div")({
   textAlign: "center",
 });
 const TDetailsCon = styled("div")({
-  height: "100%",
   width: "100%",
+  // height: "75vh",
   border: "2px solid #B6D0E2",
   borderRadius: "1px",
   display: "flex",
@@ -205,8 +203,8 @@ const TDetailsCon = styled("div")({
   flexDirection: "column",
 });
 const BDetailsCon = styled("div")({
-  height: "100%",
   width: "100%",
+  // height: "75vh",
   border: "2px solid #B6D0E2",
   borderRadius: "1px",
   display: "flex",
@@ -226,6 +224,9 @@ const MapCon = styled("div")({
   fontSize: "13px",
   fontWeight: "600",
   textAlign: "center",
+  "&:last-child": {
+    border: "none",
+  },
 });
 
 const Flexer = styled("div")({

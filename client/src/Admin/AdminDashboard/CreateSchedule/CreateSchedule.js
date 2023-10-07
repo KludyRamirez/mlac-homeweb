@@ -11,17 +11,17 @@ const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
-  justifyContent: "center",
   backgroundColor: "#ffffff",
 });
 
 const CreateScheduleContainer = styled("div")({
   display: "flex",
-  justifyContent: "space-around",
+  justifyContent: "center",
   alignItems: "flex-start",
-  padding: "80px 20px",
-  flexWrap: "wrap",
+  marginTop: "80px",
   width: "100%",
+  gap: "40px 20px",
+  flexWrap: "wrap",
 });
 
 const initialState = {

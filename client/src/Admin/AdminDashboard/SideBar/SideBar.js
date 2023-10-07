@@ -31,7 +31,6 @@ const HorizontalNavBar = styled("div")({
   alignItems: "center",
   color: "#007bff",
   width: "100%",
-  gap: "10px",
 });
 
 const AppNavBar = styled(AppBar)({
@@ -49,8 +48,6 @@ const IconContainer = styled("div")(({ theme }) => ({
   border: 0,
   borderRadius: "20px",
   padding: "10px",
-  boxShadow:
-    "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
   boxSizing: "border-box",
   cursor: "pointer",
   lineHeight: 1,
@@ -71,15 +68,15 @@ const IconContainer = styled("div")(({ theme }) => ({
   alignItems: "center",
   fontWeight: "600",
   "&:focus": {
-    boxShadow: `#B6D0E2 0 0 0 1.5px, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 -3px 0 inset`,
+    boxShadow: `rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px`,
   },
   "&:hover": {
     boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 0px 0",
+      "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
     transform: "translateY(-2px)",
   },
   "&:active": {
-    boxShadow: `#B6D0E2 0 3px 7px`,
+    boxShadow: `rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px`,
     transform: "translateY(2px)",
   },
 }));
@@ -108,7 +105,7 @@ function ResponsiveDrawer(props) {
       <Toolbar />
       <div
         style={{
-          height: "93vh",
+          height: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",

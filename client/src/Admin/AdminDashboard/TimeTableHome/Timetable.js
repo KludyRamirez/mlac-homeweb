@@ -13,26 +13,24 @@ const Wrapper = styled("div")({
   height: "100vh",
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "#ffffff",
-  margin: "0",
+  alignItems: "flex-start",
 });
 
 const TimeTableCon = styled("div")({
   display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "flex-start",
-  width: "85%",
-  height: "90%",
-  marginTop: "60px",
+  justifyContent: "flex-start",
+  width: "80%",
   gap: "20px",
   boxShadow: "rgba(0, 123, 255, 0.25) 0px 25px 50px -12px",
   overflow: "hidden",
   overflowX: "scroll",
-  backgroundColor: "#8BC6EC",
-  backgroundImage: "linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%)",
-  borderRadius: "5px",
+  scrollbarWidth: "thin",
+  scrollbarColor: "transparent transparent",
+  // backgroundColor: "#8BC6EC",
+  backgroundImage:
+    "linear-gradient(179.7deg, rgb(197, 214, 227) 2.9%, rgb(144, 175, 202) 97.1%)",
+  padding: "40px",
+  marginTop: "60px",
 });
 
 const Flexer = styled("div")({
@@ -41,27 +39,25 @@ const Flexer = styled("div")({
   alignItems: "flex-start",
   gap: "5px",
   height: "inherit",
-  padding: "0px 40px",
+  padding: "0px 0px",
 });
 
 const Timetable = () => {
   return (
-    <div>
-      <Wrapper>
-        <SideBar />
-        <TimeTableCon>
-          {/* <DateDetails></DateDetails> */}
-          <Flexer>
-            <Monday />
-            <Tuesday />
-            <Wednesday></Wednesday>
-            <Thursday />
-            <Friday />
-            <Saturday />
-          </Flexer>
-        </TimeTableCon>
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <SideBar />
+      <TimeTableCon>
+        {/* <DateDetails></DateDetails> */}
+        <Flexer>
+          <Monday />
+          <Tuesday />
+          <Wednesday></Wednesday>
+          <Thursday />
+          <Friday />
+          <Saturday />
+        </Flexer>
+      </TimeTableCon>
+    </Wrapper>
   );
 };
 
