@@ -60,7 +60,8 @@ const CellCon2 = styled("div")({
 });
 
 const Cell = styled("div")({
-  background: "rgba(255, 255, 255, 0.25)",
+  background:
+    "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))",
   boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
   backdropFilter: "blur(3px)",
   WebkitBackdropFilter: "blur(3px)",

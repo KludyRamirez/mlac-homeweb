@@ -19,6 +19,8 @@ const getSchedule = async (req, res) => {
   try {
     const scheds = await Schedule.find()
       .populate("parent", "firstname lastname")
+      .populate("permanentSched", "day timing parent nameOfStudent")
+      .populate("tempStudentName", "parent nameOfStudent studentType")
       .exec();
     res.json(scheds);
   } catch (error) {

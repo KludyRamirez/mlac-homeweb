@@ -39,7 +39,7 @@ export const StyledButton = styled("div")(({ theme }) => ({
   border: 0,
   borderRadius: "25px",
   boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
+    "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset",
   boxSizing: "border-box",
   color: "#fff",
   cursor: "pointer",
@@ -63,17 +63,15 @@ export const StyledButton = styled("div")(({ theme }) => ({
   willChange: "box-shadow, transform",
   fontSize: "18px",
   "&:focus": {
-    boxShadow: `${theme.palette.primary.main} 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, ${theme.palette.primary.main} 0 -3px 0 inset`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px inset, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset`,
   },
   "&:hover": {
     boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, " +
-      theme.palette.primary.main +
-      " 0 -3px 0 inset",
+      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset",
     transform: "translateY(-2px)",
   },
   "&:active": {
-    boxShadow: `${theme.palette.primary.main} 0 3px 7px inset`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 3px 7px inset`,
     transform: "translateY(2px)",
   },
 }));
@@ -84,7 +82,7 @@ const TitleCon = styled("div")(({ theme }) => ({
   border: 0,
   borderRadius: "5px",
   boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(58, 65, 111, .5) 0 0px 0",
+    "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0",
   boxSizing: "border-box",
   cursor: "pointer",
   width: "40px",
@@ -110,15 +108,15 @@ const TitleCon = styled("div")(({ theme }) => ({
   color: "white",
   fontWeight: "600",
   "&:focus": {
-    boxShadow: `#B6D0E2 0 0 0 1.5px, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 -3px 0 inset`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset`,
   },
   "&:hover": {
     boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 0px 0",
+      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0",
     transform: "translateY(-2px)",
   },
   "&:active": {
-    boxShadow: `#B6D0E2 0 3px 7px`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 3px 7px`,
     transform: "translateY(2px)",
   },
 }));
@@ -129,7 +127,7 @@ const TitleCon2 = styled(Button)(({ theme }) => ({
   border: 0,
   borderRadius: "5px",
   boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
+    "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset",
   boxSizing: "border-box",
   cursor: "pointer",
   width: "115px",
@@ -155,17 +153,15 @@ const TitleCon2 = styled(Button)(({ theme }) => ({
   color: "white",
   fontWeight: "600",
   "&:focus": {
-    boxShadow: `${theme.palette.primary.main} 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, ${theme.palette.primary.main} 0 -3px 0 inset`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px inset, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset`,
   },
   "&:hover": {
     boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, " +
-      theme.palette.primary.main +
-      " 0 -3px 0 inset",
+      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset",
     transform: "translateY(-2px)",
   },
   "&:active": {
-    boxShadow: `${theme.palette.primary.main} 0 3px 7px inset`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 3px 7px inset`,
     transform: "translateY(2px)",
   },
 }));

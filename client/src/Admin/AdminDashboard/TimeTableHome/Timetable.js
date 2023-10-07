@@ -30,17 +30,9 @@ const TimeTableCon = styled("div")({
   boxShadow: "rgba(0, 123, 255, 0.25) 0px 25px 50px -12px",
   overflow: "hidden",
   overflowX: "scroll",
-  backgroundColor: "#fde74c",
-  backgroundImage:
-    "linear-gradient(319deg, #fde74c 0%, #32ff7a 37%, #2fcbe0 100%)",
-  borderRadius: "10px",
-});
-
-const DateDetails = styled("div")({
-  width: "200px",
-  height: "100px",
-  border: "1px solid black",
-  marginTop: "20px",
+  backgroundColor: "#8BC6EC",
+  backgroundImage: "linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%)",
+  borderRadius: "5px",
 });
 
 const Flexer = styled("div")({
