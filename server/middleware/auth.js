@@ -34,7 +34,7 @@ const adminCheck = async (req, res, next) => {
       });
     }
 
-    if (adminUser.role !== "admin") {
+    if (adminUser.role !== "Administrator") {
       return res.status(403).json({
         err: "Admin resource. Access denied.",
       });

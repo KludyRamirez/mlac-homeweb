@@ -5,7 +5,6 @@ import { Button } from "@mui/material";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import axios from "axios";
 import FaceIcon from "@mui/icons-material/Face";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
@@ -284,7 +283,7 @@ const TempSchedule = () => {
       return;
     }
     try {
-      await axios.delete(`${process.env.REACT_APP_API}/schedule/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API}/temp-schedule/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },

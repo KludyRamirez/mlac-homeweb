@@ -34,20 +34,20 @@ const HorizontalNavBar = styled("div")({
 });
 
 const AppNavBar = styled(AppBar)({
-  background: "white",
-  boxShadow: "none",
-  backdropFilter: "blur(10px)",
-  WebkitBackdropFilter: "blur(10px)",
+  background: "#007bff",
   width: { sm: `calc(100% - ${drawerWidth}px)` },
   ml: { sm: `${drawerWidth}px` },
+  boxShadow: "none",
+  height: "40px",
 });
 
 const IconContainer = styled("div")(({ theme }) => ({
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #FFFFFF, #FFFFFF  100%)",
+  background: "rgba(255, 255, 255, 0.1)",
+  backdropFilter: "blur(6px)",
+  WebkitBackdropFilter: "blur(6px)",
   border: 0,
   borderRadius: "20px",
-  padding: "10px",
+  padding: "6px",
   boxSizing: "border-box",
   cursor: "pointer",
   lineHeight: 1,
@@ -102,13 +102,14 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Toolbar />
+      {/* <Toolbar /> */}
       <div
         style={{
-          height: "100%",
+          height: "100vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          // border: "1px solid black",
         }}
       >
         <List>
@@ -181,7 +182,10 @@ function ResponsiveDrawer(props) {
           ].map((item, index) => (
             <Link
               to={item.path}
-              style={{ textDecoration: "none", color: "#5A5A5A" }}
+              style={{
+                textDecoration: "none",
+                color: "#5A5A5A",
+              }}
             >
               <ListItem key={item.text} disablePadding>
                 <ListItemButton>
@@ -208,7 +212,7 @@ function ResponsiveDrawer(props) {
             </Link>
           ))}
         </List>
-        <List>
+        {/* <List>
           <ListItem onClick={handleLogout} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -222,7 +226,7 @@ function ResponsiveDrawer(props) {
                     boxShadow:
                       "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 0px 0",
                     backgroundImage:
-                      "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+                      "radial-gradient(100% 100% at 100% 0, #f9f9f9 0, gray 100%)",
                   }}
                 >
                   <LogoutOutlined sx={{ color: "white" }} fontSize="small" />
@@ -230,8 +234,8 @@ function ResponsiveDrawer(props) {
               </ListItemIcon>
               <div
                 style={{
-                  color: "#007bff",
-                  fontWeight: "400",
+                  color: "#FF3131",
+                  fontWeight: "600",
                   fontSize: "14px",
                 }}
               >
@@ -239,7 +243,7 @@ function ResponsiveDrawer(props) {
               </div>
             </ListItemButton>
           </ListItem>
-        </List>
+        </List> */}
       </div>
     </div>
   );
@@ -250,7 +254,13 @@ function ResponsiveDrawer(props) {
   return (
     <Box sx={{ display: "flex" }}>
       <AppNavBar position="fixed">
-        <Toolbar>
+        <div
+          sx={{
+            border: "1px solid black",
+            position: "relative",
+            display: "flex",
+          }}
+        >
           <IconButton
             aria-label="open drawer"
             edge="start"
@@ -259,19 +269,22 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <HorizontalNavBar>
+          {/* <HorizontalNavBar>
             <IconContainer>
               <NotificationsActiveOutlinedIcon
                 fontSize="small"
                 sx={{ color: "#007bff" }}
               />
             </IconContainer>
-          </HorizontalNavBar>
-        </Toolbar>
+          </HorizontalNavBar> */}
+        </div>
       </AppNavBar>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: { sm: drawerWidth },
+          flexShrink: { sm: 0 },
+        }}
         aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -288,6 +301,9 @@ function ResponsiveDrawer(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              border: "none",
+              boxShadow:
+                "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
             },
           }}
         >
@@ -300,6 +316,9 @@ function ResponsiveDrawer(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              border: "none",
+              boxShadow:
+                "rgba(0, 0, 0, 0.06) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
             },
           }}
           open

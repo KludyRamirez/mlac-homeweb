@@ -13,7 +13,6 @@ import Face5Icon from "@mui/icons-material/Face5";
 import KeyIcon from "@mui/icons-material/Key";
 import Face6Icon from "@mui/icons-material/Face6";
 import FaceIcon from "@mui/icons-material/Face";
-import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 

@@ -19,10 +19,15 @@ const FormContainer = styled("div")({
   boxShadow:
     "rgba(0, 123, 255, 0.15) 0px 1px 0px, rgba(0, 123, 255, 0.15) 0px 8px 24px, rgba(0, 123, 255, 0.15) 0px 16px 48px",
   padding: "40px",
-  backgroundColor: "#fdfdfd",
+  backgroundColor: "white",
   color: "gray",
   borderRadius: "5px",
   border: "2px solid #007bff",
+  "@media (max-width: 1366px)": {
+    boxShadow: "none",
+    border: "none",
+    padding: "0 40px 0px 40px",
+  },
 });
 
 const TitleCon = styled("div")({

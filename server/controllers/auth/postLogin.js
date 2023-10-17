@@ -29,6 +29,7 @@ const postLogin = async (req, res) => {
           token: token,
           username: user.username,
           cardId: user.cardId,
+          role: user.role,
         },
       });
     }

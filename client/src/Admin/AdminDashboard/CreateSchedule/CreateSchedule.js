@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
+import { toast } from "react-toastify";
 import SideBar from "../SideBar/SideBar";
 import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
@@ -82,7 +83,6 @@ const CreateSchedule = () => {
     e.preventDefault();
     try {
       if (!auth.userDetails.token) {
-        // Handle the case where the token is missing
         console.error("Authentication token not found.");
         return;
       }
@@ -95,11 +95,14 @@ const CreateSchedule = () => {
           },
         }
       );
-      console.log(res);
-      window.alert(`"${res.data.nameOfStudent}" is created`);
+      toast.success(`${res.data.nameOfStudent} is created.`);
       window.location.reload();
-    } catch (err) {
-      console.error("Error fetching users:", err);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        toast.error(error.response.data);
+      } else {
+        toast.error("Error.");
+      }
     }
   };
 

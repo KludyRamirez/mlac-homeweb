@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
-import AppBar from "../AppBar/AppBar";
+import { toast } from "react-toastify";
 import SideBar from "../SideBar/SideBar";
 
 import axios from "axios";
@@ -65,14 +65,11 @@ const TempCreateSchedule = () => {
         return;
       }
 
-      const res = await axios.get(
-        `${process.env.REACT_APP_API}/temp-schedule`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_API}/schedule`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
       setValues({
         ...values,
         permanentScheds: res.data,
@@ -100,10 +97,14 @@ const TempCreateSchedule = () => {
           },
         }
       );
-      console.log(res);
+      toast.success("Temporary account is created.");
       window.location.reload();
-    } catch (err) {
-      console.error("Error fetching users:", err);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        toast.error(error.response.data);
+      } else {
+        toast.error("Error.");
+      }
     }
   };
 
@@ -126,13 +127,16 @@ const TempCreateSchedule = () => {
     const newDateTime = e.target.value;
     const dateObj = new Date(newDateTime);
     const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
-    setValues({ ...values, dateTime: newDateTime, tempSoloDay: dayOfWeek });
+    setValues({
+      ...values,
+      dateTime: newDateTime,
+      tempSoloDay: dayOfWeek,
+    });
   };
 
   return (
     <Wrapper>
       <SideBar />
-      <AppBar />
       <TempCreateScheduleContainer>
         <TempCreateScheduleForm
           handleSubmit={handleSubmit}

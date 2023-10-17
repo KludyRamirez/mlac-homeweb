@@ -3,6 +3,8 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import authReducer from "./reducers/authReducer";
 import alertReducer from "./reducers/alertReducer";
+import { auditReducer } from "./reducers/auditReducer";
+import { conReducer } from "./reducers/conReducer";
 
 // Define a function to load state from localStorage
 const loadState = () => {
@@ -23,13 +25,15 @@ const saveState = (state) => {
     const serializedState = JSON.stringify(state);
     localStorage.setItem("reduxState", serializedState);
   } catch (err) {
-    // Handle write errors
+    console.log("Error saving User details", err);
   }
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
   alert: alertReducer,
+  con: conReducer,
+  audit: auditReducer,
 });
 
 // Load the initial state from localStorage

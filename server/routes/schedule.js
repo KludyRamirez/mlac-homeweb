@@ -1,0 +1,85 @@
+const express = require("express");
+const router = express.Router();
+const mainController = require("../controllers/outsidechat/mainController");
+
+const { verifyToken, adminCheck } = require("../middleware/auth");
+
+const auth = verifyToken;
+const admin = adminCheck;
+
+router.post(
+  "/schedule",
+  auth,
+  admin,
+  mainController.controllers.createSchedule
+);
+
+router.post(
+  "/temp-schedule",
+  auth,
+  admin,
+  mainController.controllers.createTempSchedule
+);
+
+router.post(
+  "/temp-soloschedule",
+  auth,
+  admin,
+  mainController.controllers.createTempSoloSchedule
+);
+
+router.get("/schedule", auth, admin, mainController.controllers.getSchedule);
+router.get(
+  "/temp-schedule",
+  auth,
+  admin,
+  mainController.controllers.getTempSchedule
+);
+
+router.get(
+  "/schedule/:id",
+  auth,
+  admin,
+  mainController.controllers.getOneSchedule
+);
+router.put(
+  "/schedule/:id",
+  auth,
+  admin,
+  mainController.controllers.updateOneSchedule
+);
+router.patch(
+  "/schedule/:id/setActive",
+  auth,
+  admin,
+  mainController.controllers.setActive
+);
+router.delete(
+  "/schedule/:id",
+  auth,
+  admin,
+  mainController.controllers.deleteOneSchedule
+);
+router.delete(
+  "/temp-schedule/:id",
+  auth,
+  admin,
+  mainController.controllers.deleteOneTempSchedule
+);
+
+router.delete(
+  "/temp-schedule",
+  auth,
+  admin,
+  mainController.controllers.deleteTempSchedules
+);
+router.delete(
+  "/temp-soloschedule",
+  auth,
+  admin,
+  mainController.controllers.deleteTempSoloSchedules
+);
+
+// test route to verify middleware if working
+
+module.exports = router;

@@ -4,24 +4,26 @@ import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import axios from "axios";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import axios from "axios";
+
 import FaceIcon from "@mui/icons-material/Face";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import TodayIcon from "@mui/icons-material/Today";
 import Face2Icon from "@mui/icons-material/Face2";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
+import arrow from "../../../images/arrow.svg";
 
 const AllScheduleContainer = styled("div")({
   display: "flex",
-  boxShadow: "rgba(0, 123, 255, 0.25) 0px 25px 50px -12px",
-  overflow: "hidden",
-  overflowX: "scroll",
-  padding: "0 35px 35px 35px",
+  boxShadow: "rgba(0, 123, 255, 0.20) 0px 25px 50px -12px",
+  padding: "40px",
   "@media (max-width: 1366px)": {
     width: "555px",
+    overflow: "hidden",
+    overflowX: "scroll",
   },
 });
 
@@ -79,18 +81,16 @@ const TitleCon = styled("div")(({ theme }) => ({
   backgroundImage:
     "radial-gradient(100% 100% at 100% 0, #FFFFFF, #FFFFFF  100%)",
   border: 0,
-  borderRadius: "5px",
+  borderRadius: "34px",
   boxShadow:
     "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0",
   boxSizing: "border-box",
   cursor: "pointer",
-  width: "40px",
-  height: "40px",
+  width: "34px",
+  height: "34px",
   lineHeight: 1,
   listStyle: "none",
   overflow: "hidden",
-  paddingLeft: "16px",
-  paddingRight: "16px",
   position: "relative",
   textAlign: "left",
   textDecoration: "none",
@@ -101,17 +101,18 @@ const TitleCon = styled("div")(({ theme }) => ({
   whiteSpace: "nowrap",
   willChange: "box-shadow, transform",
   fontSize: "14px",
+  zIndex: "2",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   color: "white",
   fontWeight: "600",
   "&:focus": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0`,
   },
   "&:hover": {
     boxShadow:
-      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0",
+      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0 ",
     transform: "translateY(-2px)",
   },
   "&:active": {
@@ -120,22 +121,20 @@ const TitleCon = styled("div")(({ theme }) => ({
   },
 }));
 
-const TitleCon2 = styled(Button)(({ theme }) => ({
+const TitleCon2 = styled("div")(({ theme }) => ({
   backgroundImage:
     "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
   border: 0,
-  borderRadius: "5px",
+  borderRadius: "6px",
   boxShadow:
-    "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset",
+    "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0",
   boxSizing: "border-box",
   cursor: "pointer",
-  width: "115px",
-  height: "40px",
+  width: "90px",
+  height: "34px",
   lineHeight: 1,
   listStyle: "none",
   overflow: "hidden",
-  paddingLeft: "16px",
-  paddingRight: "16px",
   position: "relative",
   textAlign: "left",
   textDecoration: "none",
@@ -145,22 +144,22 @@ const TitleCon2 = styled(Button)(({ theme }) => ({
   touchAction: "manipulation",
   whiteSpace: "nowrap",
   willChange: "box-shadow, transform",
-  fontSize: "1 4px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  fontSize: "14px",
+  textTransform: "uppercase",
+  textAlign: "center",
+  paddingTop: "10px",
   color: "white",
-  fontWeight: "600",
+  fontWeight: "bold",
   "&:focus": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px inset, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0`,
   },
   "&:hover": {
     boxShadow:
-      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset",
+      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0 ",
     transform: "translateY(-2px)",
   },
   "&:active": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 3px 7px inset`,
+    boxShadow: `rgba(0, 123, 255, 0.25) 0 3px 7px`,
     transform: "translateY(2px)",
   },
 }));
@@ -179,14 +178,15 @@ const Columner = styled("div")({
   justifyContent: "center",
   alignItems: "center",
   width: "165px",
-  gap: "20px",
+  gap: "10px",
 });
 
 const DetailsCon = styled("div")({
   width: "100%",
   // height: "75vh",
-  border: "2px solid #B6D0E2",
-  borderRadius: "1px",
+  // borderTop: "2px solid #B6D0E2",
+  // borderLeft: "2px solid #B6D0E2",
+  // borderBottom: "2px solid #B6D0E2",
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
@@ -195,8 +195,10 @@ const DetailsCon = styled("div")({
 const TDetailsCon = styled("div")({
   width: "100%",
   // height: "75vh",
-  border: "2px solid #B6D0E2",
-  borderRadius: "1px",
+  // borderTop: "2px solid #B6D0E2",
+  // borderBottom: "2px solid #B6D0E2",
+  borderLeft: "1px solid #B6D0E2",
+  // borderRight: "1px solid #B6D0E2",
   display: "flex",
   alignItems: "center",
   textAlign: "center",
@@ -205,7 +207,9 @@ const TDetailsCon = styled("div")({
 const BDetailsCon = styled("div")({
   width: "100%",
   // height: "75vh",
-  border: "2px solid #B6D0E2",
+  // borderTop: "2px solid #B6D0E2",
+  // borderRight: "2px solid #B6D0E2",
+  // borderBottom: "2px solid #B6D0E2",
   borderRadius: "1px",
   display: "flex",
   alignItems: "center",
@@ -215,7 +219,40 @@ const BDetailsCon = styled("div")({
 
 const MapCon = styled("div")({
   height: "40px",
-  width: "130px",
+  width: "120%",
+  color: "#007bff",
+  paddingLeft: "8px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderBottom: "1px solid #B6D0E2",
+  fontSize: "13px",
+  fontWeight: "600",
+  textAlign: "center",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const MapCon1 = styled("div")({
+  height: "40px",
+  width: "100%",
+  color: "#007bff",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderBottom: "1px solid #B6D0E2",
+  fontSize: "13px",
+  fontWeight: "600",
+  textAlign: "center",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const MapCon2 = styled("div")({
+  height: "40px",
+  width: "100%",
   color: "#007bff",
   display: "flex",
   justifyContent: "center",
@@ -297,34 +334,52 @@ const AllSchedule = () => {
         <Columner>
           <Flexer>
             <TitleCon>
-              <FaceIcon sx={{ color: "#007bff" }} />
+              <FaceIcon fontSize="small" sx={{ color: "#007bff" }} />
             </TitleCon>
+            <img
+              src={arrow}
+              alt=""
+              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
+            />
             <TitleCon2>Student</TitleCon2>
           </Flexer>
           <DetailsCon>
             {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.nameOfStudent}</MapCon>
+              <MapCon1 key={schedule._id}>{schedule.nameOfStudent}</MapCon1>
             ))}
           </DetailsCon>
         </Columner>
         <Columner>
           <Flexer>
             <TitleCon>
-              <TodayIcon sx={{ color: "#007bff" }} />
+              <TodayIcon fontSize="small" sx={{ color: "#007bff" }} />
             </TitleCon>
+            <img
+              src={arrow}
+              alt=""
+              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
+            />
             <TitleCon2>Day</TitleCon2>
           </Flexer>
-          <BDetailsCon>
+          <TDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>{schedule.day}</MapCon>
             ))}
-          </BDetailsCon>
+          </TDetailsCon>
         </Columner>
         <Columner>
           <Flexer>
             <TitleCon>
-              <AccessTimeFilledIcon sx={{ color: "#007bff" }} />
+              <AccessTimeFilledIcon
+                fontSize="small"
+                sx={{ color: "#007bff" }}
+              />
             </TitleCon>
+            <img
+              src={arrow}
+              alt=""
+              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
+            />
             <TitleCon2>Time</TitleCon2>
           </Flexer>
           <TDetailsCon>
@@ -336,48 +391,69 @@ const AllSchedule = () => {
         <Columner>
           <Flexer>
             <TitleCon>
-              <Face2Icon sx={{ color: "#007bff" }} />
+              <Face2Icon fontSize="small" sx={{ color: "#007bff" }} />
             </TitleCon>
+            <img
+              src={arrow}
+              alt=""
+              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
+            />
             <TitleCon2>Parent</TitleCon2>
-          </Flexer>
-          <BDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.parent}</MapCon>
-            ))}
-          </BDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <ConnectWithoutContactIcon sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <TitleCon2>Type</TitleCon2>
           </Flexer>
           <TDetailsCon>
             {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.studentType}</MapCon>
+              <MapCon key={schedule._id}>{schedule.parent}</MapCon>
             ))}
           </TDetailsCon>
         </Columner>
         <Columner>
           <Flexer>
             <TitleCon>
-              <TouchAppIcon sx={{ color: "#007bff" }} />
+              <ConnectWithoutContactIcon
+                fontSize="small"
+                sx={{ color: "#007bff" }}
+              />
             </TitleCon>
-            <TitleCon2>Action</TitleCon2>
+            <img
+              src={arrow}
+              alt=""
+              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
+            />
+            <TitleCon2>Type</TitleCon2>
           </Flexer>
-          <BDetailsCon>
+          <TDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>
+                {schedule.studentType}/
+                {schedule.isActive ? "Present" : "Absent"}
+              </MapCon>
+            ))}
+          </TDetailsCon>
+        </Columner>
+        <Columner>
+          <Flexer>
+            <TitleCon>
+              <TouchAppIcon fontSize="small" sx={{ color: "#007bff" }} />
+            </TitleCon>
+            <img
+              src={arrow}
+              alt=""
+              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
+            />
+            <TitleCon2>Action</TitleCon2>
+          </Flexer>
+          <TDetailsCon>
+            {schedules.map((schedule) => (
+              <MapCon2 key={schedule._id}>
                 <ActionEdit onClick={() => navigateUpdate(schedule._id)}>
                   <EditNoteIcon fontSize="small" />
                 </ActionEdit>
                 <ActionDel onClick={() => deleteOneSched(schedule._id)}>
-                  <DeleteOutlineIcon fontSize="small" />
+                  <DeleteOutlineIcon fontSize="small" sx={{ color: "red" }} />
                 </ActionDel>
-              </MapCon>
+              </MapCon2>
             ))}
-          </BDetailsCon>
+          </TDetailsCon>
         </Columner>
       </ContentCon>
     </AllScheduleContainer>

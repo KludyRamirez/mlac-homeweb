@@ -257,14 +257,11 @@ const TempSoloSchedule = () => {
         return;
       }
 
-      const res = await axios.get(
-        `${process.env.REACT_APP_API}/temp-schedule`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_API}/schedule`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
       const filteredSchedules = res.data.filter(
         (schedule) =>
           schedule.schedType === "Temporary" &&
@@ -277,7 +274,7 @@ const TempSoloSchedule = () => {
     }
   };
 
-  const deleteOneTempSched = async (id) => {
+  const deleteOneTempSoloSched = async (id) => {
     if (!auth.userDetails.token) {
       // Handle the case where the token is missing
       console.error("Authentication token not found.");
@@ -386,7 +383,7 @@ const TempSoloSchedule = () => {
                 {/* <ActionEdit onClick={() => navigateUpdate(schedule._id)}>
                   <EditNoteIcon fontSize="small" />
                 </ActionEdit> */}
-                <ActionDel onClick={() => deleteOneTempSched(schedule._id)}>
+                <ActionDel onClick={() => deleteOneTempSoloSched(schedule._id)}>
                   <DeleteOutlineIcon fontSize="small" />
                 </ActionDel>
               </MapCon>

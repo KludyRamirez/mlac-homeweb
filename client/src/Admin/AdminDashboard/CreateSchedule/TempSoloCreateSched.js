@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
+import { toast } from "react-toastify";
 import AppBar from "../AppBar/AppBar";
 import SideBar from "../SideBar/SideBar";
-
 import axios from "axios";
-import TempCreateScheduleForm from "./TempCreateScheduleForm";
-
-import TempSchedule from "../AllSchedule/TempSchedule";
 import TempSoloCreateSchedForm from "./TempSoloCreateSchedForm";
 import TempSoloSchedule from "../AllSchedule/TempSoloSchedule";
 
@@ -34,10 +31,9 @@ const initialState = {
   tempStudentName: "",
   dateTime: "",
   tempSoloDay: "",
+  day: "",
   schedTypes: ["Temporary"],
   schedType: "Temporary",
-  //   permanentScheds: [],
-  //   permanentSched: "",
   timings: [
     "7 AM to 8 AM",
     "8 AM to 9 AM",
@@ -71,14 +67,11 @@ const TempSoloCreateSched = () => {
         return;
       }
 
-      const res = await axios.get(
-        `${process.env.REACT_APP_API}/temp-schedule`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
+      const res = await axios.get(`${process.env.REACT_APP_API}/schedule`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
       setValues({
         ...values,
         permanentScheds: res.data,
@@ -93,12 +86,11 @@ const TempSoloCreateSched = () => {
     e.preventDefault();
     try {
       if (!auth.userDetails.token) {
-        // Handle the case where the token is missing
         console.error("Authentication token not found.");
         return;
       }
       const res = await axios.post(
-        `${process.env.REACT_APP_API}/temp-schedule`,
+        `${process.env.REACT_APP_API}/temp-soloschedule`,
         values,
         {
           headers: {
@@ -106,21 +98,20 @@ const TempSoloCreateSched = () => {
           },
         }
       );
-      console.log(res);
+      toast.success("Solo temporary account is created.");
       window.location.reload();
-    } catch (err) {
-      console.error("Error fetching users:", err);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        toast.error(error.response.data);
+      } else {
+        toast.error("Error.");
+      }
     }
   };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-
-  //   const handlePermanentChange = (e) => {
-  //     e.preventDefault();
-  //     setValues({ ...values, permanentSched: e.target.value });
-  //   };
 
   const handleNameOfStudentChange = (e) => {
     e.preventDefault();
@@ -132,7 +123,12 @@ const TempSoloCreateSched = () => {
     const newDateTime = e.target.value;
     const dateObj = new Date(newDateTime);
     const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
-    setValues({ ...values, dateTime: newDateTime, tempSoloDay: dayOfWeek });
+    setValues({
+      ...values,
+      dateTime: newDateTime,
+      tempSoloDay: dayOfWeek,
+      day: dayOfWeek,
+    });
   };
 
   return (
