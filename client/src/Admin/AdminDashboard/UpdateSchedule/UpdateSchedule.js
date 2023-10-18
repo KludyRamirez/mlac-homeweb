@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import AllSchedule from "../AllSchedule/AllSchedule";
 import UpdateScheduleForm from "./UpdateScheduleForm";
+import { toast } from "react-toastify";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -127,8 +128,12 @@ const UpdateSchedule = () => {
       console.log(res);
       window.alert(`"${res.data.nameOfStudent}" is updated`);
       window.location.reload();
-    } catch (err) {
-      console.error("Error updating schedules:", err);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        toast.error(error.response.data);
+      } else {
+        toast.error("Error.");
+      }
     }
   };
 

@@ -3,56 +3,135 @@ import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
+import SideBar from "../SideBar/SideBar";
 import axios from "axios";
-import moment from "moment";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import TimerIcon from "@mui/icons-material/Timer";
+import EditIcon from "@mui/icons-material/Edit";
+import PersonIcon from "@mui/icons-material/Person";
+import CheckIcon from "@mui/icons-material/Check";
+import BlockIcon from "@mui/icons-material/Block";
+import Tilt from "react-parallax-tilt";
+
+const Wrapper = styled("div")({
+  width: "100%",
+  height: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "flex-start",
+});
 
 const StudentParentCon = styled("div")({
   display: "flex",
+  flexDirection: "column",
   justifyContent: "flex-start",
-  width: "80%",
-  overflow: "hidden",
-  overflowX: "scroll",
-  backgroundColor: "#ffffff",
-  padding: "20px 40px",
+  alignItems: "center",
+  width: "100%",
+  height: "inherit",
+  backgroundColor: "#FAFAFA",
+  marginTop: "40px",
+  gap: "20px",
+  flexWrap: "wrap",
 });
 
 const Cell = styled("div")({
-  backgroundImage:
-    "radial-gradient(at bottom left, rgba(117, 255, 220, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(248, 215, 251, 0.15) 87.8%)",
-  boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-  backdropFilter: "blur(10px)",
-  WebkitBackdropFilter: "blur(10px)",
-  borderRadius: "5px",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  border: "1px dashed #007bff",
+  borderRadius: "10px",
   width: "176px",
   height: "106px",
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
   justifyContent: "space-between",
-  color: "white",
   fontSize: "16px",
   fontWeight: "600",
   padding: "10px",
   cursor: "pointer",
-  listStyle: "none",
-  overflow: "hidden",
-  position: "relative",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  "&:focus": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-  },
   "&:hover": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-    transform: "translateY(-3px)",
+    background: "white",
   },
-  "&:active": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
-    transform: "translateY(3px)",
+});
+
+const LowerIconDiv = styled("div")({
+  background: "#007bff",
+  color: "#007bff",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  transition: "width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+});
+
+const LowerIconDiv2 = styled("div")({
+  background: "#FFBF00",
+  color: "#FFBF00",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  transition: "width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+});
+
+const LowerIconDiv3 = styled("div")({
+  background: "#7CFC00",
+  color: "#7CFC00",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  transition: "width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+});
+
+const LowerIconDiv4 = styled("div")({
+  background: "#FF3131",
+  color: "#FF3131",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  transition: "width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
   },
 });
 
@@ -72,6 +151,8 @@ const ParentSortSchedule = () => {
   const audit = useSelector(auditSelector);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const { id } = useParams();
 
   useEffect(() => {
     deleteExpiredTemporarySchedule();
@@ -111,14 +192,24 @@ const ParentSortSchedule = () => {
 
   const handleSetActiveToFalse = async (id) => {
     try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
       await axios.patch(
         `${process.env.REACT_APP_API}/schedule/${id}/setActive`,
         {
           isActive: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
         }
       );
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching schedules:", error);
     }
   };
 
@@ -217,22 +308,313 @@ const ParentSortSchedule = () => {
     }
   };
   return (
-    <>
+    <Wrapper>
+      <SideBar />
       <StudentParentCon>
-        {schedules
-          .filter(
-            (schedule) =>
-              (schedule.parent ===
-                (auth && `${auth.firstname} ${auth.lastname}`) &&
-                schedule.isActive === true) ||
-              (schedule.permanentSched && schedule.permanentSched.parent) ===
-                (auth && auth._id)
-          )
-          .map((schedule) => (
-            <Cell key={schedule._id}></Cell>
-          ))}
+        {/* <div
+          style={{
+            color: "#07bbff",
+            fontSize: "48px",
+            fontWeight: "600",
+            padding: "30px 0 0 0",
+          }}
+        >
+          Children
+        </div> */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: "20px",
+            flexWrap: "wrap",
+            width: "100%",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: "20px",
+              flexWrap: "wrap",
+
+              width: "700px",
+              height: "fit-content",
+              padding: "40px",
+              borderRadius: "10px",
+            }}
+          >
+            {schedules
+              .filter(
+                (schedule) =>
+                  schedule.parent === (auth && auth.userDetails.fullname) &&
+                  schedule.schedType === "Permanent"
+              )
+              .map((schedule) => (
+                <Tilt>
+                  <Cell key={schedule.id}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <div
+                        style={{
+                          padding: "0px 0 0 3px",
+                        }}
+                      >
+                        {schedule.nameOfStudent}
+                        {schedule.tempStudentName &&
+                          schedule.tempStudentName.nameOfStudent}
+                      </div>
+                    </div>
+                    <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          color: "#1434AF",
+                        }}
+                      >
+                        {schedule.timing}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: "400",
+                          color: "#1434A4",
+                        }}
+                      >
+                        {schedule.studentType}
+                        {schedule.dateTime
+                          ? schedule.dateTime.slice(0, -5)
+                          : ""}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-end",
+                        width: "100%",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            gap: "4px",
+                          }}
+                        >
+                          <LowerIconDiv>
+                            <PersonIcon
+                              sx={{
+                                fontSize: "14px",
+                              }}
+                            />
+                          </LowerIconDiv>
+                          {auth &&
+                            auth.userDetails.role === "Administrator" && (
+                              <>
+                                <LowerIconDiv2
+                                // onClick={() => navigateUpdate(schedule._id)}
+                                >
+                                  <EditIcon
+                                    sx={{
+                                      fontSize: "14px",
+                                    }}
+                                  />
+                                </LowerIconDiv2>
+                                <LowerIconDiv3>
+                                  <CheckIcon
+                                    sx={{
+                                      fontSize: "14px",
+                                    }}
+                                  />
+                                </LowerIconDiv3>
+                                <LowerIconDiv4
+                                  onClick={() =>
+                                    handleSetActiveToFalse(schedule._id)
+                                  }
+                                >
+                                  <BlockIcon
+                                    sx={{
+                                      fontSize: "14px",
+                                    }}
+                                  />
+                                </LowerIconDiv4>
+                              </>
+                            )}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            color: "#007bff",
+                            fontSize: "12px",
+                          }}
+                        >
+                          {schedule.day}
+                        </div>
+                      </div>
+                    </div>
+                  </Cell>
+                </Tilt>
+              ))}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "20px",
+              flexWrap: "wrap",
+              border: "1px solid #07bbff",
+              width: "416px",
+              padding: "40px",
+              background: "#FCFCFC",
+            }}
+          >
+            {schedules
+              .filter(
+                (schedule) =>
+                  (schedule.parent === (auth && auth.userDetails.fullname) &&
+                    schedule.schedType === "Temporary") ||
+                  (schedule.tempStudentName &&
+                    schedule.tempStudentName.parent ===
+                      (auth && auth.userDetails.fullname) &&
+                    schedule.schedType === "Temporary")
+              )
+              .map((schedule) => (
+                <Tilt style={{ height: "fit-content" }}>
+                  <Cell key={schedule.id}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <div
+                        style={{
+                          padding: "0px 0 0 3px",
+                        }}
+                      >
+                        {schedule.nameOfStudent}
+                        {schedule.tempStudentName &&
+                          schedule.tempStudentName.nameOfStudent}
+                      </div>
+                    </div>
+                    <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          color: "#1434AF",
+                        }}
+                      >
+                        {schedule.timing}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: "400",
+                          color: "#1434A4",
+                        }}
+                      >
+                        {schedule.studentType}
+                        {schedule.dateTime
+                          ? schedule.dateTime.slice(0, -5)
+                          : ""}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-end",
+                        width: "100%",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "0 0 1px 0",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            gap: "4px",
+                          }}
+                        >
+                          <LowerIconDiv>
+                            <PersonIcon
+                              sx={{
+                                fontSize: "14px",
+                              }}
+                            />
+                          </LowerIconDiv>
+                          {auth &&
+                            auth.userDetails.role === "Administrator" && (
+                              <>
+                                <LowerIconDiv2
+                                // onClick={() => navigateUpdate(schedule._id)}
+                                >
+                                  <EditIcon
+                                    sx={{
+                                      fontSize: "14px",
+                                    }}
+                                  />
+                                </LowerIconDiv2>
+                                <LowerIconDiv3>
+                                  <CheckIcon
+                                    sx={{
+                                      fontSize: "14px",
+                                    }}
+                                  />
+                                </LowerIconDiv3>
+                                <LowerIconDiv4>
+                                  <BlockIcon
+                                    sx={{
+                                      fontSize: "14px",
+                                    }}
+                                  />
+                                </LowerIconDiv4>
+                              </>
+                            )}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            color: "#007bff",
+                            fontSize: "12px",
+                          }}
+                        >
+                          {schedule.day}
+                        </div>
+                      </div>
+                    </div>
+                  </Cell>
+                </Tilt>
+              ))}
+          </div>
+        </div>
       </StudentParentCon>
-    </>
+    </Wrapper>
   );
 };
 export default ParentSortSchedule;

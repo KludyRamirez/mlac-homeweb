@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema.Types;
 
-const scheduleSchema = new mongoose.Schema(
+const schedsSchema = new mongoose.Schema(
   {
     nameOfStudent: {
       type: String,
@@ -10,8 +9,9 @@ const scheduleSchema = new mongoose.Schema(
     },
 
     tempStudentName: {
-      type: ObjectId,
-      ref: "schedule",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "scheds",
+      unique: true,
     },
 
     isActive: {
@@ -27,8 +27,8 @@ const scheduleSchema = new mongoose.Schema(
       enum: ["Solo", "Dyad"],
     },
     permanentSched: {
-      type: ObjectId,
-      ref: "schedule",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "scheds",
     },
     dateTime: {
       type: String,
@@ -79,10 +79,18 @@ const scheduleSchema = new mongoose.Schema(
         "Bad Weather",
       ],
     },
+    attendanceCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("schedule", scheduleSchema);
-
-scheduleSchema.index({ day: 1, timing: 1, isActive: true }, { unique: true });
+schedsSchema.index({ schedType: 1, day: 1, timing: 1 }, { unique: true });
+schedsSchema.index({ isActive: 1, day: 1, timing: 1 }, { unique: true });
+schedsSchema.index(
+  { tempStudentName: 1, schedType: 1, day: 1, timing: 1 },
+  { unique: true }
+);
+module.exports = mongoose.model("scheds", schedsSchema);

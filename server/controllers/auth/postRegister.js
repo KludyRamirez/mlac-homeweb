@@ -35,6 +35,7 @@ const postRegister = async (req, res) => {
       password: encryptedPassword,
       role,
       cardId: uniqid(),
+      fullname: `${firstname} ${lastname}`,
     });
 
     // create JWT token
@@ -52,6 +53,7 @@ const postRegister = async (req, res) => {
       userDetails: {
         token: token,
         cardId: user.cardId,
+        fullname: user.fullname,
         username: user.username,
       },
     });

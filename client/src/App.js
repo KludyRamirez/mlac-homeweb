@@ -22,6 +22,7 @@ import UpdateSchedule from "./Admin/AdminDashboard/UpdateSchedule/UpdateSchedule
 import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreateSchedule";
 import Timetable from "./Admin/AdminDashboard/TimeTableHome/Timetable";
 import TempSoloCreateSched from "./Admin/AdminDashboard/CreateSchedule/TempSoloCreateSched";
+import ParentSortSchedule from "./Admin/AdminDashboard/AllSchedule/ParentSortSchedule";
 
 function App() {
   return (
@@ -69,6 +70,9 @@ function App() {
           </Route>
           <Route exact path="/timetable">
             <Timetable />
+          </Route>
+          <Route exact path="/children">
+            <ParentSortSchedule />
           </Route>
         </Switch>
       </Router>

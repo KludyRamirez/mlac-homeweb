@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
-import ThreeSixtyIcon from "@mui/icons-material/ThreeSixty";
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import FlipToFrontIcon from "@mui/icons-material/FlipToFront";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
+import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
+import TimerIcon from "@mui/icons-material/Timer";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
@@ -308,11 +309,13 @@ const authSelector = createSelector([selectAuth], (auth) => auth);
 const Monday = () => {
   const [showDiv, setShowDiv] = useState(true);
   const [schedules, setSchedules] = useState([]);
+  const [tempSchedules, setTempSchedules] = useState([]);
   const auth = useSelector(authSelector);
   const history = useHistory();
 
   useEffect(() => {
     getSchedules();
+    getTempSchedules();
   }, [auth]);
 
   const getSchedules = async () => {
@@ -327,10 +330,28 @@ const Monday = () => {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
       });
-      // const filteredSchedules = res.data.filter(
-      //   (schedule) => schedule.schedType === "Permanent"
-      // );
       setSchedules(res.data);
+    } catch (err) {
+      console.error("Error fetching schedules:", err);
+    }
+  };
+
+  const getTempSchedules = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      setTempSchedules(res.data);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
@@ -354,6 +375,24 @@ const Monday = () => {
     }
   };
 
+  const deleteOneTempSched = async (id) => {
+    if (!auth.userDetails.token) {
+      // Handle the case where the token is missing
+      console.error("Authentication token not found.");
+      return;
+    }
+    try {
+      await axios.delete(`${process.env.REACT_APP_API}/temp-schedule/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+      getTempSchedules();
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
+  };
+
   const navigateUpdate = (id) => {
     history.push(`/schedule/${id}`);
     window.location.reload();
@@ -368,7 +407,7 @@ const Monday = () => {
       <FormTitle>
         <h2 style={{ color: "#007bff", margin: "0", padding: "0" }}>Monday</h2>
         <IconContainer onClick={toggleDiv}>
-          <ThreeSixtyIcon sx={{ color: "#007bff", fontSize: "18px" }} />
+          <FlipToFrontIcon sx={{ color: "#007bff", fontSize: "16px" }} />
         </IconContainer>
       </FormTitle>
       <TableTitle>
@@ -540,22 +579,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -722,22 +753,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -907,22 +930,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -1092,22 +1107,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -1277,22 +1284,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -1335,7 +1334,7 @@ const Monday = () => {
 
           <Temporary>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1371,7 +1370,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -1434,22 +1433,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -1458,7 +1449,7 @@ const Monday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Monday" &&
@@ -1486,7 +1477,7 @@ const Monday = () => {
               )}
             </CellCon>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1522,7 +1513,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -1585,22 +1576,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -1609,7 +1592,7 @@ const Monday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Monday" &&
@@ -1637,7 +1620,7 @@ const Monday = () => {
               )}
             </CellCon>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1673,7 +1656,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -1736,22 +1719,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -1760,7 +1735,7 @@ const Monday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Monday" &&
@@ -1788,7 +1763,7 @@ const Monday = () => {
               )}
             </CellCon>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1810,7 +1785,7 @@ const Monday = () => {
                       >
                         <div
                           style={{
-                            color: "#5D3FD3",
+                            color: "#1434A4",
                             padding: "0px 0 0 3px",
                           }}
                         >
@@ -1824,7 +1799,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -1843,14 +1818,12 @@ const Monday = () => {
                         <div
                           style={{
                             fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
+                            fontWeight: "500",
+                            color: "white",
                           }}
                         >
-                          [
                           {schedule.permanentSched &&
                             schedule.permanentSched.nameOfStudent}
-                          ]
                         </div>
                       </div>
                       <div
@@ -1887,22 +1860,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -1911,7 +1876,7 @@ const Monday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Monday" &&
@@ -1939,7 +1904,7 @@ const Monday = () => {
               )}
             </CellCon>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1975,7 +1940,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -2038,22 +2003,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -2062,7 +2019,7 @@ const Monday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Monday" &&
@@ -2226,22 +2183,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -2411,22 +2360,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -2596,22 +2537,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -2781,22 +2714,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -2966,22 +2891,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
                                 sx={{ color: "white" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -3060,7 +2977,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -3128,17 +3045,9 @@ const Monday = () => {
                                 sx={{ color: "#FFBF00" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -3211,7 +3120,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -3274,22 +3183,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -3362,7 +3263,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -3425,22 +3326,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -3513,7 +3406,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -3576,22 +3469,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -3664,7 +3549,7 @@ const Monday = () => {
                               color: "white",
                               fontSize: "16px",
                             }}
-                            onClick={() => deleteOneSched(schedule._id)}
+                            onClick={() => deleteOneTempSched(schedule._id)}
                           />
                         )}
                       </div>
@@ -3727,22 +3612,14 @@ const Monday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <TimerOutlinedIcon
                                 fontSize="small"
                                 sx={{ color: "#1434A4" }}
                               />
                             ) : (
-                              <CancelIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>

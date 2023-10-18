@@ -74,7 +74,7 @@ router.delete(
   mainController.controllers.deleteTempSchedules
 );
 router.delete(
-  "/temp-soloschedule",
+  "/schedule",
   auth,
   admin,
   mainController.controllers.deleteTempSoloSchedules

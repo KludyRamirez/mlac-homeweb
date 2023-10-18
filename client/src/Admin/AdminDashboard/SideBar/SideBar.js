@@ -25,19 +25,12 @@ import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 
-const HorizontalNavBar = styled("div")({
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  color: "#007bff",
-  width: "100%",
-});
-
 const AppNavBar = styled(AppBar)({
   background: "#007bff",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   width: { sm: `calc(100% - ${drawerWidth}px)` },
   ml: { sm: `${drawerWidth}px` },
-  boxShadow: "none",
   height: "40px",
 });
 

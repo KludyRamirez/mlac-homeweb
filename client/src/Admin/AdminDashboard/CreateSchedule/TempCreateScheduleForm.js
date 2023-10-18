@@ -7,6 +7,7 @@ import { StyledButton } from "../AllSchedule/AllSchedule";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { format, addDays } from "date-fns";
+import moment from "moment";
 
 const FormContainer = styled("div")({
   boxShadow:
@@ -92,6 +93,12 @@ const TempCreateScheduleForm = ({
     }
   }, [tempSoloDay, permanentSched]);
 
+  const todaym = moment();
+  const minDate = todaym.add(1, "days").format("YYYY-MM-DD");
+
+  const maxDate = moment().add(6, "days");
+  const maxDateISOString = maxDate.format("YYYY-MM-DD");
+
   return (
     <>
       <FormContainer>
@@ -129,8 +136,8 @@ const TempCreateScheduleForm = ({
             id="dateTime"
             type="date"
             name="dateTime"
-            min={format(today, "yyyy-MM-dd")}
-            max={format(addDays(today, 365), "yyyy-MM-dd")}
+            min={minDate}
+            max={maxDateISOString}
             value={dateTime}
             onChange={handleTempSoloDayChange}
             style={{ fontSize: "13px", height: "40px" }}
@@ -151,7 +158,7 @@ const TempCreateScheduleForm = ({
               .filter((ps) => ps.isActive === true && ps.studentType === "Dyad")
               .map((ps) => (
                 <MenuItem key={ps._id} value={ps._id}>
-                  {ps.nameOfStudent} [{ps.day}]
+                  {ps.nameOfStudent} - {ps.day} [{ps.timing}]
                 </MenuItem>
               ))}
           </Select>

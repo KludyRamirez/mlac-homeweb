@@ -1,4 +1,4 @@
-const Schedule = require("../../models/mixedSchedules");
+const Schedule = require("../../models/scheds");
 const TempSchedule = require("../../models/tempSchedules");
 const moment = require("moment");
 
@@ -32,7 +32,7 @@ const getSchedule = async (req, res) => {
     const scheds = await Schedule.find()
       .populate("parent", "firstname lastname")
       .populate("permanentSched", "day timing parent nameOfStudent")
-      .populate("tempStudentName", "parent nameOfStudent studentType")
+      .populate("tempStudentName", "parent nameOfStudent studentType schedType")
       .exec();
     res.json(scheds);
   } catch (error) {
@@ -66,7 +66,7 @@ const updateOneSchedule = async (req, res) => {
     }
     res.json(schedule);
   } catch (error) {
-    res.status(500).json("Update Error.");
+    return res.status(400).send("Schedule update error!");
   }
 };
 
@@ -114,7 +114,7 @@ const getTempSchedule = async (req, res) => {
   try {
     const tempScheds = await TempSchedule.find()
       .populate("permanentSched", "day timing parent nameOfStudent")
-      .populate("tempStudentName", "parent nameOfStudent studentType")
+      .populate("tempStudentName", "parent nameOfStudent studentType schedType")
       .exec();
 
     res.json(tempScheds);
@@ -126,7 +126,9 @@ const getTempSchedule = async (req, res) => {
 const deleteTempSchedules = async (req, res) => {
   try {
     const currentDate = new Date();
-    const formattedDate = moment(currentDate).format("MMMM Do YYYY");
+    const formattedDate = moment(currentDate)
+      .add(1, "days")
+      .format("MMMM Do YYYY");
 
     const schedulesToDelete = await TempSchedule.find({
       dateTime: { $eq: formattedDate },
@@ -158,7 +160,9 @@ const deleteTempSchedules = async (req, res) => {
 const deleteTempSoloSchedules = async (req, res) => {
   try {
     const currentDate = new Date();
-    const formattedDate = moment(currentDate).format("MMMM Do YYYY");
+    const formattedDate = moment(currentDate)
+      .add(1, "days")
+      .format("MMMM Do YYYY");
 
     const schedulesToDelete = await Schedule.find({
       dateTime: { $eq: formattedDate },
@@ -191,7 +195,6 @@ const setActive = async (req, res) => {
   try {
     const { isActive } = req.body;
     await Schedule.findByIdAndUpdate(req.params.id, { isActive });
-
     res.status(200).json({ message: "Active status changed." });
   } catch (error) {
     res.status(500).json({ error: "Failed to change active status." });

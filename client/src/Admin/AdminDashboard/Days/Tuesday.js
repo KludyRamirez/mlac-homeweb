@@ -76,7 +76,7 @@ const CellCon2 = styled("div")({
 
 const Cell = styled("div")({
   backgroundImage:
-    "radial-gradient(at bottom left, rgba(117, 255, 220, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(248, 215, 251, 0.15) 87.8%)",
+    "radial-gradient(at bottom left, rgba(117, 255, 220, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(255, 255, 255, 0.15) 87.8%)",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   backdropFilter: "blur(20px)",

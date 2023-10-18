@@ -26,10 +26,12 @@ const postLogin = async (req, res) => {
 
       return res.status(200).json({
         userDetails: {
+          _id: user._id,
           token: token,
-          username: user.username,
           cardId: user.cardId,
           role: user.role,
+          fullname: user.fullname,
+          username: user.username,
         },
       });
     }

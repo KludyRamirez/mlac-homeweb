@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -6,6 +6,7 @@ import { styled } from "@mui/system";
 import { StyledButton } from "../AllSchedule/AllSchedule";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import moment from "moment";
 
 const FormContainer = styled("div")({
   boxShadow:
@@ -71,8 +72,21 @@ const TempSoloCreateSchedForm = ({
     timing,
   } = values;
 
-  const today = new Date().toISOString().split("T")[0];
-  const minDate = today;
+  const today = moment();
+  const minDate = today.add(1, "days").format("YYYY-MM-DD");
+
+  const maxDate = moment().add(6, "days");
+  const maxDateISOString = maxDate.format("YYYY-MM-DD");
+
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    if (tempSoloDay !== "Sunday") {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  }, [tempSoloDay]);
 
   return (
     <>
@@ -112,6 +126,7 @@ const TempSoloCreateSchedForm = ({
             type="date"
             name="dateTime"
             min={minDate}
+            max={maxDateISOString}
             value={dateTime}
             onChange={handleTempSoloDayChange}
             style={{ fontSize: "13px", height: "40px" }}
@@ -136,25 +151,6 @@ const TempSoloCreateSchedForm = ({
         </FormControl>
 
         <br />
-        {/* <FormControl variant="standard" sx={{ width: "100%" }}>
-          <InputLabel id="demo-simple-select-label">Schedule With:</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            name="permanentSched"
-            value={permanentSched}
-            onChange={handlePermanentChange}
-          >
-            {permanentScheds
-              .filter((ps) => ps.isActive === true && ps.studentType === "Dyad")
-              .map((ps) => (
-                <MenuItem key={ps._id} value={ps._id}>
-                  {ps.nameOfStudent}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-        <br /> */}
         <br />
 
         <div
@@ -177,7 +173,13 @@ const TempSoloCreateSchedForm = ({
             variant="outlined"
             sx={{ fontWeight: "600" }}
             onClick={handleSubmit}
-            disabled={!tempStudentName || !schedType || !timing || !dateTime}
+            disabled={
+              !tempStudentName ||
+              !schedType ||
+              !timing ||
+              !dateTime ||
+              !isButtonEnabled
+            }
           >
             Submit
           </Button>

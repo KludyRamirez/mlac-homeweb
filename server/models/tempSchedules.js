@@ -25,8 +25,4 @@ const tempScheduleSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// tempScheduleSchema.index(
-//   { tempStudentName: 1, tempSoloDay: 1, timing: 1 },
-//   { unique: true }
-// );
 module.exports = mongoose.model("tempschedule", tempScheduleSchema);

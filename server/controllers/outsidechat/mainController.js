@@ -25,6 +25,10 @@ const { emptyCon } = require("./user");
 const { userOrders } = require("./user");
 const { createSchedOrder } = require("./user");
 
+// holiday
+const { postHoliday } = require("./holiday");
+const { getHoliday } = require("./holiday");
+
 exports.controllers = {
   createSchedule,
   getSchedule,
@@ -47,4 +51,6 @@ exports.controllers = {
   emptyCon,
   userOrders,
   createSchedOrder,
+  postHoliday,
+  getHoliday,
 };
