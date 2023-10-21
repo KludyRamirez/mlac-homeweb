@@ -16,11 +16,7 @@ import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import BlockIcon from "@mui/icons-material/Block";
 import Tilt from "react-parallax-tilt";
 
-const MondayWrapper = styled("div")({
-  // border: "2px solid #white",
-  // padding: "40px",
-  // borderRadius: "7px"
-});
+const MondayWrapper = styled("div")({});
 
 const FormTitle = styled("div")({
   display: "flex",
@@ -41,14 +37,10 @@ const TableTitle = styled("div")({
 const Flexer = styled("div")({
   display: "flex",
   justifyContent: "center",
-  // width: "inherit",
-  // height: "inherit",
   gap: "10px",
 });
 
 const Permanent = styled("div")({
-  // width: "33%",
-  // height: "91%",
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
@@ -56,7 +48,6 @@ const Permanent = styled("div")({
 });
 
 const Temporary = styled("div")({
-  // width: "67%",
   height: "fit-content",
   display: "flex",
   flexDirection: "column",
@@ -111,8 +102,6 @@ const Cell = styled("div")({
   "&:hover": {
     boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
     transform: "translateY(-3px)",
-    // background: "#f7f7f7",
-    // color: "#007bff",
   },
   "&:active": {
     boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",

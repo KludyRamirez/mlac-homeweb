@@ -20,9 +20,9 @@ import UserUpdate from "./Admin/AdminDashboard/FunctionPages/UserUpdate";
 import CreateSchedule from "./Admin/AdminDashboard/CreateSchedule/CreateSchedule";
 import UpdateSchedule from "./Admin/AdminDashboard/UpdateSchedule/UpdateSchedule";
 import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreateSchedule";
-import Timetable from "./Admin/AdminDashboard/TimeTableHome/Timetable";
 import TempSoloCreateSched from "./Admin/AdminDashboard/CreateSchedule/TempSoloCreateSched";
 import ParentSortSchedule from "./Admin/AdminDashboard/AllSchedule/ParentSortSchedule";
+import AllTimetable from "./Admin/AdminDashboard/TimeTableHome/AllTimetable";
 
 function App() {
   return (
@@ -40,6 +40,7 @@ function App() {
           pauseOnHover
           theme="colored"
         />
+
         <Switch>
           <Route exact path="/">
             <Redirect to="/login" />
@@ -69,8 +70,9 @@ function App() {
             <TempSoloCreateSched />
           </Route>
           <Route exact path="/timetable">
-            <Timetable />
+            <AllTimetable />
           </Route>
+
           <Route exact path="/children">
             <ParentSortSchedule />
           </Route>
