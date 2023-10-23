@@ -30,7 +30,7 @@ const TableTitle = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   margin: "0",
-  padding: "6px 0px 0px 0px",
+  padding: "10px 0px 0px 0px",
   width: "100%",
 });
 
@@ -76,13 +76,9 @@ const CellCon2 = styled("div")({
 });
 
 const Cell = styled("div")({
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  backdropFilter: "blur(20px)",
-  WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid #5adaff",
+  border: "1px dashed #007bff",
   borderRadius: "10px",
   width: "176px",
   height: "106px",
@@ -90,31 +86,15 @@ const Cell = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   justifyContent: "space-between",
-  color: "white",
   fontSize: "16px",
   fontWeight: "600",
   padding: "10px",
   cursor: "pointer",
-  listStyle: "none",
-  overflow: "hidden",
-  position: "relative",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  "&:focus": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 8px",
-  },
   "&:hover": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 8px",
+    background: "white",
     transform: "translateY(-3px)",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 4px",
   },
-  // "&:active": {
-  //   boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 8px",
-  //   transform: "translateY(3px)",
-  // },
 });
 
 const CellTemp = styled("div")({
@@ -295,6 +275,7 @@ const authSelector = createSelector([selectAuth], (auth) => auth);
 
 const Friday = () => {
   const [schedules, setSchedules] = useState([]);
+  const [tempSchedules, setTempSchedules] = useState([]);
   const [nextSixDays, setNextSixDays] = useState([]);
   const [cell2Count, setCell2Count] = useState(0);
   const auth = useSelector(authSelector);
@@ -303,6 +284,7 @@ const Friday = () => {
   useEffect(() => {
     handleNextSixDays();
     getSchedules();
+    getTempSchedules();
   }, [auth]);
 
   useEffect(() => {
@@ -355,6 +337,27 @@ const Friday = () => {
     }
   };
 
+  const getTempSchedules = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      setTempSchedules(res.data);
+    } catch (err) {
+      console.error("Error fetching schedules:", err);
+    }
+  };
+
   const deleteOneSched = async (id) => {
     if (!auth.userDetails.token) {
       // Handle the case where the token is missing
@@ -363,6 +366,24 @@ const Friday = () => {
     }
     try {
       await axios.delete(`${process.env.REACT_APP_API}/schedule/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+      getSchedules();
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
+  };
+
+  const deleteOneTempSched = async (id) => {
+    if (!auth.userDetails.token) {
+      // Handle the case where the token is missing
+      console.error("Authentication token not found.");
+      return;
+    }
+    try {
+      await axios.delete(`${process.env.REACT_APP_API}/temp-schedule/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
@@ -408,7 +429,12 @@ const Friday = () => {
 
   return (
     <FridayWrapper>
-      <div> {cell2Count}</div>
+      {/* <div> {cell2Count}</div> */}
+      <FormTitle>
+        <h2 style={{ color: "#007bff", margin: "6px 0 0 0", padding: "0" }}>
+          Friday,
+        </h2>
+      </FormTitle>
       {nextSixDays
         .filter((date) => date.day === "Friday")
         .map((date, index) => (
@@ -417,17 +443,14 @@ const Friday = () => {
             style={{
               fontSize: "52px",
               color: "#07bbff",
+              marginTop: "8px",
               marginLeft: "-5px",
+              fontWeight: "300",
             }}
           >
             {date.date}
           </div>
         ))}
-      <FormTitle>
-        <h2 style={{ color: "#007bff", margin: "14x 0 0 0", padding: "0" }}>
-          Friday
-        </h2>
-      </FormTitle>
       <div
         style={{ display: "flex", justifyContent: "flex-start", gap: "40px" }}
       >
@@ -471,7 +494,6 @@ const Friday = () => {
                     <Cell key={schedule.id}>
                       <div
                         style={{
-                          color: "white",
                           display: "flex",
                           justifyContent: "space-between",
                           width: "100%",
@@ -479,7 +501,7 @@ const Friday = () => {
                       >
                         <div
                           style={{
-                            color: "white",
+                            color: "#007bff",
                             padding: "0px 0 0 3px",
                           }}
                         >
@@ -489,7 +511,7 @@ const Friday = () => {
                         </div>
                         <CloseSharpIcon
                           sx={{
-                            color: "white",
+                            color: "#FF3131",
                             fontSize: "16px",
                           }}
                           onClick={() => deleteOneSched(schedule._id)}
@@ -586,12 +608,12 @@ const Friday = () => {
                             {schedule.schedType === "Temporary" ? (
                               <TimerIcon
                                 fontSize="small"
-                                sx={{ color: "white" }}
+                                sx={{ color: "#007bff" }}
                               />
                             ) : (
                               <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "white" }}
+                                sx={{ color: "#007bff" }}
                               />
                             )}
                           </div>
@@ -1185,7 +1207,7 @@ const Friday = () => {
               </div>
             </TableTitle>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1207,7 +1229,7 @@ const Friday = () => {
                       >
                         <div
                           style={{
-                            color: "#5D3FD3",
+                            color: "white",
                             padding: "0px 0 0 3px",
                           }}
                         >
@@ -1218,7 +1240,7 @@ const Friday = () => {
                         {auth && auth.userDetails.role === "Administrator" && (
                           <CloseSharpIcon
                             sx={{
-                              color: "white",
+                              color: "#ff3131",
                               fontSize: "16px",
                             }}
                             onClick={() => deleteOneSched(schedule._id)}
@@ -1308,7 +1330,7 @@ const Friday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Friday" &&
@@ -1336,7 +1358,7 @@ const Friday = () => {
               )}
             </CellCon>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1358,7 +1380,7 @@ const Friday = () => {
                       >
                         <div
                           style={{
-                            color: "#5D3FD3",
+                            color: "#007bff",
                             padding: "0px 0 0 3px",
                           }}
                         >
@@ -1392,13 +1414,11 @@ const Friday = () => {
                           style={{
                             fontSize: "11px",
                             fontWeight: "400",
-                            color: "#1434A4",
+                            color: "white",
                           }}
                         >
-                          [
-                          {schedule.permanentSched &&
-                            schedule.permanentSched.nameOfStudent}
-                          ]
+                          {schedule.tempStudentName &&
+                            schedule.tempStudentName.studentType}
                         </div>
                       </div>
                       <div
@@ -1435,22 +1455,14 @@ const Friday = () => {
                             }}
                           >
                             {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
+                              <TimerIcon
                                 fontSize="small"
-                                sx={{ color: "#FFBF00" }}
+                                sx={{ color: "orange" }}
                               />
                             ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
+                              <BookmarkAddedIcon
                                 fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
+                                sx={{ color: "white" }}
                               />
                             )}
                           </div>
@@ -1459,7 +1471,7 @@ const Friday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Friday" &&
@@ -1487,7 +1499,7 @@ const Friday = () => {
               )}
             </CellCon>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1610,7 +1622,7 @@ const Friday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Friday" &&
@@ -1638,7 +1650,7 @@ const Friday = () => {
               )}
             </CellCon>
             <CellCon>
-              {schedules
+              {tempSchedules
                 .filter(
                   (schedule) =>
                     (schedule.permanentSched && schedule.permanentSched.day) ===
@@ -1761,7 +1773,7 @@ const Friday = () => {
                     </CellTemp>
                   </Tilt>
                 ))}
-              {schedules.filter(
+              {tempSchedules.filter(
                 (schedule) =>
                   (schedule.permanentSched && schedule.permanentSched.day) ===
                     "Friday" &&

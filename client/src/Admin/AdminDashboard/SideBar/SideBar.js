@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/system";
 import PropTypes from "prop-types";
@@ -7,38 +7,32 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
-import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
-import EventNoteIcon from "@mui/icons-material/EventNote";
-import HomeIcon from "@mui/icons-material/Home";
-import StickyNote2Icon from "@mui/icons-material/StickyNote2";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import GroupsIcon from "@mui/icons-material/Groups";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import LocalLibraryOutlinedIcon from "@mui/icons-material/LocalLibraryOutlined";
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 
-const AppNavBar = styled(AppBar)({
-  background: "#007bff",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  width: { sm: `calc(100% - ${drawerWidth}px)` },
-  ml: { sm: `${drawerWidth}px` },
-  height: "40px",
-});
-
 const IconContainer = styled("div")(({ theme }) => ({
-  background: "rgba(255, 255, 255, 0.1)",
+  background: "rgba(255, 255, 255, 0.2)",
   backdropFilter: "blur(6px)",
   WebkitBackdropFilter: "blur(6px)",
-  border: 0,
+  border: "1px solid #007bff",
   borderRadius: "20px",
   padding: "6px",
   boxSizing: "border-box",
@@ -74,11 +68,34 @@ const IconContainer = styled("div")(({ theme }) => ({
   },
 }));
 
+const HorizontalNavBar = styled("div")({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  color: "#007bff",
+  width: "100%",
+});
+
+const AppNavBar = styled(AppBar)({
+  background: "#007bff",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  width: { sm: `calc(100% - ${drawerWidth}px)` },
+  ml: { sm: `${drawerWidth}px` },
+  maxHeight: "40px",
+});
+
 function ResponsiveDrawer(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setActiveItem(pathname);
+  }, [pathname]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -95,148 +112,162 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      {/* <Toolbar /> */}
       <div
         style={{
           height: "100vh",
           display: "flex",
-          flexDirection: "column",
           justifyContent: "space-between",
-          // border: "1px solid black",
         }}
       >
-        <List>
-          {[
-            {
-              text: (
-                <div
-                  style={{
-                    color: "#007bff",
-                    fontWeight: "400",
-                    fontSize: "14px",
-                  }}
-                >
-                  Home
-                </div>
-              ),
-              icon: <HomeIcon sx={{ color: "white" }} fontSize="small" />,
-              path: "/timetable",
-            },
-            {
-              text: (
-                <div
-                  style={{
-                    color: "#007bff",
-                    fontWeight: "400",
-                    fontSize: "14px",
-                  }}
-                >
-                  Schedule
-                </div>
-              ),
-              icon: <EventNoteIcon sx={{ color: "white" }} fontSize="small" />,
-              path: "/schedule",
-            },
-            {
-              text: (
-                <div
-                  style={{
-                    color: "#007bff",
-                    fontWeight: "400",
-                    fontSize: "14px",
-                  }}
-                >
-                  User
-                </div>
-              ),
-              icon: (
-                <AccountCircleIcon sx={{ color: "white" }} fontSize="small" />
-              ),
-              path: "/user",
-            },
-            {
-              text: (
-                <div
-                  style={{
-                    color: "#007bff",
-                    fontWeight: "400",
-                    fontSize: "14px",
-                  }}
-                >
-                  Logs
-                </div>
-              ),
-              icon: (
-                <StickyNote2Icon sx={{ color: "white" }} fontSize="small" />
-              ),
-              path: "/logs",
-            },
-            // Add more items with icons and paths here
-          ].map((item, index) => (
-            <Link
-              to={item.path}
-              style={{
-                textDecoration: "none",
-                color: "#5A5A5A",
-              }}
-            >
-              <ListItem key={item.text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <div
-                      style={{
-                        borderRadius: "20px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        padding: "6px",
-                        boxShadow:
-                          "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 0px 0",
-                        backgroundImage:
-                          "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
-                      }}
-                    >
-                      {item.icon}
-                    </div>
-                  </ListItemIcon>
-                  <ListItemText>{item.text}</ListItemText>
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-        {/* <List>
-          <ListItem onClick={handleLogout} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <div
-                  style={{
-                    borderRadius: "20px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            width: "25%",
+            background: "#007bff",
+            gap: "12px",
+          }}
+        >
+          <Toolbar />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/timetable">
+              {activeItem === "/timetable" ? (
+                <DashboardOutlinedIcon
+                  className={activeItem === "/timetable" ? "icon-active" : ""}
+                  sx={{ fontSize: "20px", fontWeight: "100" }}
+                />
+              ) : (
+                <DashboardOutlinedIcon
+                  sx={{
+                    color: "white",
                     padding: "6px",
-                    boxShadow:
-                      "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 0px 0",
-                    backgroundImage:
-                      "radial-gradient(100% 100% at 100% 0, #f9f9f9 0, gray 100%)",
+                    fontSize: "20px",
+                    fontWeight: "100",
                   }}
-                >
-                  <LogoutOutlined sx={{ color: "white" }} fontSize="small" />
-                </div>
-              </ListItemIcon>
-              <div
-                style={{
-                  color: "#FF3131",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                }}
-              >
-                Sign Out
-              </div>
-            </ListItemButton>
-          </ListItem>
-        </List> */}
+                />
+              )}
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/user">
+              {activeItem === "/user" ? (
+                <GroupsIcon
+                  className={activeItem === "/user" ? "icon-active" : ""}
+                  sx={{ fontSize: "20px", fontWeight: "300" }}
+                />
+              ) : (
+                <GroupsOutlinedIcon
+                  sx={{
+                    color: "white",
+                    padding: "6px",
+                    fontSize: "20px",
+                    fontWeight: "300",
+                  }}
+                />
+              )}
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "flex",
+
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/children">
+              {activeItem === "/children" ? (
+                <LocalLibraryOutlinedIcon
+                  className={activeItem === "/children" ? "icon-active" : ""}
+                  sx={{ fontSize: "20px", fontWeight: "300" }}
+                />
+              ) : (
+                <LocalLibraryOutlinedIcon
+                  sx={{
+                    color: "white",
+                    padding: "6px",
+                    fontSize: "20px",
+                    fontWeight: "100",
+                  }}
+                />
+              )}
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/chat">
+              {activeItem === "/chat" ? (
+                <ForumOutlinedIcon
+                  className={activeItem === "/chat" ? "icon-active" : ""}
+                  sx={{ fontSize: "20px", fontWeight: "300" }}
+                />
+              ) : (
+                <ForumOutlinedIcon
+                  sx={{
+                    color: "white",
+                    padding: "6px",
+                    fontSize: "20px",
+                    fontWeight: "100",
+                  }}
+                />
+              )}
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/schedule">
+              {activeItem === "/schedule" ? (
+                <CalendarMonthOutlinedIcon
+                  className={activeItem === "/schedule" ? "icon-active" : ""}
+                  sx={{ fontSize: "20px", fontWeight: "300" }}
+                />
+              ) : (
+                <CalendarMonthOutlinedIcon
+                  sx={{
+                    color: "white",
+                    padding: "6px",
+                    fontSize: "20px",
+                    fontWeight: "300",
+                  }}
+                />
+              )}
+            </Link>
+          </div>
+        </div>
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            width: "75%",
+          }}
+        ></div>
       </div>
     </div>
   );
@@ -247,30 +278,21 @@ function ResponsiveDrawer(props) {
   return (
     <Box sx={{ display: "flex" }}>
       <AppNavBar position="fixed">
-        <div
-          sx={{
-            border: "1px solid black",
-            position: "relative",
-            display: "flex",
-          }}
-        >
+        <Toolbar sx={{ minHeight: "0px" }}>
           <IconButton
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" }, color: "#007bff" }}
+            sx={{ mr: 2, display: { sm: "none" }, color: "white" }}
           >
             <MenuIcon />
           </IconButton>
-          {/* <HorizontalNavBar>
+          <HorizontalNavBar>
             <IconContainer>
-              <NotificationsActiveOutlinedIcon
-                fontSize="small"
-                sx={{ color: "#007bff" }}
-              />
+              <NotificationsIcon fontSize="small" sx={{ color: "white" }} />
             </IconContainer>
-          </HorizontalNavBar> */}
-        </div>
+          </HorizontalNavBar>
+        </Toolbar>
       </AppNavBar>
       <Box
         component="nav"

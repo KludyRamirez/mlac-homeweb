@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
 import SideBar from "../SideBar/SideBar";
 import Monday from "../Days/Monday";
 import Tuesday from "../Days/Tuesday";

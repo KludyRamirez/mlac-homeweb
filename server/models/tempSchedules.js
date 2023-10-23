@@ -4,7 +4,7 @@ const tempScheduleSchema = new mongoose.Schema(
   {
     tempStudentName: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "mixedschedules",
+      ref: "scheds",
       unique: true,
     },
     schedType: {
@@ -13,7 +13,7 @@ const tempScheduleSchema = new mongoose.Schema(
     },
     permanentSched: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "mixedschedules",
+      ref: "scheds",
     },
     dateTime: {
       type: String,

@@ -88,7 +88,7 @@ const schedsSchema = new mongoose.Schema(
 );
 
 schedsSchema.index({ schedType: 1, day: 1, timing: 1 }, { unique: true });
-schedsSchema.index({ isActive: 1, day: 1, timing: 1 }, { unique: true });
+schedsSchema.index({ day: 1, timing: 1 }, { unique: true });
 schedsSchema.index(
   { tempStudentName: 1, schedType: 1, day: 1, timing: 1 },
   { unique: true }
