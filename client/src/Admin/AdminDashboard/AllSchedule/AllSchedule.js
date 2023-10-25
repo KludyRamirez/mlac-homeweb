@@ -282,7 +282,7 @@ const AllSchedule = () => {
 
   useEffect(() => {
     getSchedules();
-  }, [auth]);
+  }, []);
 
   const getSchedules = async () => {
     try {

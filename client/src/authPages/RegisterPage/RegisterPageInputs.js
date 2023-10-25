@@ -61,14 +61,6 @@ const RegisterPageInputs = (props) => {
     handleRegister,
   } = props;
 
-  const getFormNotValidMessage = () => {
-    return "Username should contain characters between 3 and 12 and password should be 6 and 12 characters.";
-  };
-
-  const getFormValidMessage = () => {
-    return "Press To Register";
-  };
-
   return (
     <>
       <FormContainer>
@@ -176,11 +168,7 @@ const RegisterPageInputs = (props) => {
           />
         </RadioG>
         <br />
-        <Tooltip
-          title={
-            !isFormValid ? getFormNotValidMessage() : getFormValidMessage()
-          }
-        ></Tooltip>
+
         <div
           style={{
             display: "flex",

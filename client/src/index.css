@@ -14,7 +14,7 @@ code {
 
 .icon-active {
   color: white;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.25);
   border: none;
   padding: 8px;
   backdrop-filter: 6px;

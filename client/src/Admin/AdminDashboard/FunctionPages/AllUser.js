@@ -250,7 +250,7 @@ const EditUser = () => {
 
   useEffect(() => {
     getUsers();
-  }, [auth]);
+  }, []);
 
   const getUsers = async () => {
     const cardId = await getCurrentUser();

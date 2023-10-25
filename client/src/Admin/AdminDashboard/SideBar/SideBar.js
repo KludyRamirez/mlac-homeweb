@@ -20,19 +20,23 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 
+import { socket } from "../../../authPages/LoginPage/LoginPage";
+
 const drawerWidth = 240;
 
 const IconContainer = styled("div")(({ theme }) => ({
-  background: "rgba(255, 255, 255, 0.2)",
+  background: "rgba(255, 255, 255, 0.4)",
   backdropFilter: "blur(6px)",
   WebkitBackdropFilter: "blur(6px)",
-  border: "1px solid #007bff",
+  borderRight: "1px solid #007bff",
+  borderLeft: "1px solid #007bff",
+  borderBottom: "1px solid #007bff",
   borderRadius: "20px",
   padding: "6px",
   boxSizing: "border-box",
@@ -85,13 +89,22 @@ const AppNavBar = styled(AppBar)({
   maxHeight: "40px",
 });
 
-function ResponsiveDrawer(props) {
+function ResponsiveDrawer(props, { socket }) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
+  const [notifications, setNotifications] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    socket?.on("getNotification", (data) => {
+      setNotifications((prev) => [...prev, data]);
+    });
+  }, [socket]);
+
+  console.log("-------->", notifications);
 
   useEffect(() => {
     setActiveItem(pathname);
@@ -128,7 +141,7 @@ function ResponsiveDrawer(props) {
             alignItems: "center",
             width: "25%",
             background: "#007bff",
-            gap: "12px",
+            gap: "14px",
           }}
         >
           <Toolbar />
@@ -289,7 +302,10 @@ function ResponsiveDrawer(props) {
           </IconButton>
           <HorizontalNavBar>
             <IconContainer>
-              <NotificationsIcon fontSize="small" sx={{ color: "white" }} />
+              <NotificationsNoneRoundedIcon
+                fontSize="small"
+                sx={{ color: "#FAFAFA" }}
+              />
             </IconContainer>
           </HorizontalNavBar>
         </Toolbar>

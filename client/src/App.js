@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { io } from "socket.io-client";
 
 import LoginPage from "./authPages/LoginPage/LoginPage";
 import Dashboard from "./Dashboard/Dashboard";
@@ -25,6 +27,18 @@ import ParentSortSchedule from "./Admin/AdminDashboard/AllSchedule/ParentSortSch
 import AllTimetable from "./Admin/AdminDashboard/TimeTableHome/AllTimetable";
 
 function App() {
+  const [userNotif, setUserNotif] = useState("");
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5001"));
+  }, []);
+
+  useEffect(() => {
+    socket?.emit("newUser", userNotif);
+    console.log(userNotif);
+  }, [socket, userNotif]);
+
   return (
     <>
       <Router>
@@ -46,35 +60,34 @@ function App() {
             <Redirect to="/login" />
           </Route>
           <Route exact path="/login">
-            <LoginPage />
+            <LoginPage setUserNotif={setUserNotif} />
           </Route>
           <Route exact path="/dashboard">
-            <Dashboard />
+            <Dashboard socket={socket} />
           </Route>
           <Route exact path="/user">
-            <RegisterPage />
+            <RegisterPage socket={socket} />
           </Route>
           <Route exact path="/user/:id">
-            <UserUpdate />
+            <UserUpdate socket={socket} />
           </Route>
           <Route exact path="/schedule">
-            <CreateSchedule />
+            <CreateSchedule socket={socket} />
           </Route>
           <Route exact path="/schedule/:id">
-            <UpdateSchedule />
+            <UpdateSchedule socket={socket} />
           </Route>
           <Route exact path="/temp-schedule">
-            <TempCreateSchedule />
+            <TempCreateSchedule socket={socket} />
           </Route>
           <Route exact path="/temp-schedule-solo">
-            <TempSoloCreateSched />
+            <TempSoloCreateSched socket={socket} />
           </Route>
           <Route exact path="/timetable">
-            <AllTimetable />
+            <AllTimetable userNotif={userNotif} socket={socket} />
           </Route>
-
           <Route exact path="/children">
-            <ParentSortSchedule />
+            <ParentSortSchedule socket={socket} />
           </Route>
         </Switch>
       </Router>

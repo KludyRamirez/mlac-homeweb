@@ -12,7 +12,7 @@ const reducer = (state = initState, action) => {
         userDetails: action.userDetails,
       };
     case "LOGOUT":
-      return action.payload;
+      return initState;
     default:
       return state;
   }

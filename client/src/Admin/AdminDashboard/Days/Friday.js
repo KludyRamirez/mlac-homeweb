@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
-import WatchLaterIcon from "@mui/icons-material/WatchLater";
-import EditIcon from "@mui/icons-material/Edit";
-import PersonIcon from "@mui/icons-material/Person";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseSharpIcon from "@mui/icons-material/CloseSharp";
-import BlockIcon from "@mui/icons-material/Block";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import TimerIcon from "@mui/icons-material/Timer";
 import Tilt from "react-parallax-tilt";
+import PermanentCell from "./Cells/PermanentCell";
+import TemporaryCell from "./Cells/TemporaryCell";
 
 const FridayWrapper = styled("div")({});
 
@@ -31,14 +23,6 @@ const TableTitle = styled("div")({
   justifyContent: "space-between",
   margin: "0",
   padding: "10px 0px 0px 0px",
-  width: "100%",
-});
-
-const TableTitle2 = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  marginTop: "-24px",
-  padding: "0px 0px 4px 0px",
   width: "100%",
 });
 
@@ -75,73 +59,9 @@ const CellCon2 = styled("div")({
   justifyContent: "center",
 });
 
-const Cell = styled("div")({
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  border: "1px dashed #007bff",
-  borderRadius: "10px",
-  width: "176px",
-  height: "106px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "space-between",
-  fontSize: "16px",
-  fontWeight: "600",
-  padding: "10px",
-  cursor: "pointer",
-  "&:hover": {
-    background: "white",
-    transform: "translateY(-3px)",
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 4px",
-  },
-});
-
-const CellTemp = styled("div")({
-  backgroundImage:
-    "radial-gradient(100% 0% at 0% 100%, #5468ff 0, #5adaff 100%)",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  backdropFilter: "blur(20px)",
-  WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid #5adaff",
-  borderRadius: "10px",
-  width: "176px",
-  height: "106px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "space-between",
-  fontSize: "16px",
-  fontWeight: "600",
-  padding: "10px",
-  cursor: "pointer",
-  listStyle: "none",
-  overflow: "hidden",
-  position: "relative",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  "&:focus": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 8px",
-  },
-  "&:hover": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 8px",
-    transform: "translateY(-3px)",
-  },
-  "&:active": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 8px",
-    transform: "translateY(3px)",
-  },
-});
-
 const Cell2 = styled("div")({
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  border: "1px dashed #007bff",
+  background: "rgba(0, 0, 0, 0.02)",
+  border: "1px solid rgba(0, 0, 0, 0.05)",
   borderRadius: "10px",
   width: "176px",
   height: "106px",
@@ -155,125 +75,13 @@ const Cell2 = styled("div")({
   cursor: "pointer",
   "&:hover": {
     background: "white",
-  },
-});
-
-const LowerIconDiv = styled("div")({
-  background: "#007bff",
-  color: "#007bff",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
-const LowerIconDiv2 = styled("div")({
-  background: "#FFBF00",
-  color: "#FFBF00",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
-const LowerIconDiv3 = styled("div")({
-  background: "#7CFC00",
-  color: "#7CFC00",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
-const LowerIconDiv4 = styled("div")({
-  background: "#FF3131",
-  color: "#FF3131",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
   },
 });
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const Friday = () => {
+const Friday = ({ socket, user }) => {
   const [schedules, setSchedules] = useState([]);
   const [tempSchedules, setTempSchedules] = useState([]);
   const [nextSixDays, setNextSixDays] = useState([]);
@@ -466,13 +274,13 @@ const Friday = () => {
               >
                 <h5
                   style={{
-                    color: "#EBEBE4",
+                    color: "rgba(0, 0, 0, 0.06)",
                     margin: "0",
                     padding: "0",
                     fontWeight: "400",
                   }}
                 >
-                  *Permanent
+                  Permanent
                 </h5>
               </div>
             </TableTitle>
@@ -491,135 +299,13 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <Cell key={schedule.id}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#007bff",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        <CloseSharpIcon
-                          sx={{
-                            color: "#FF3131",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => deleteOneSched(schedule._id)}
-                        />
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "500",
-                            color: "#1434AF",
-                          }}
-                        >
-                          {schedule.timing}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          {schedule.studentType}
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon
-                                sx={{
-                                  fontSize: "14px",
-                                }}
-                              />
-                            </LowerIconDiv>
-                            {auth &&
-                              auth.userDetails.role === "Administrator" && (
-                                <>
-                                  <LowerIconDiv2
-                                    onClick={() => navigateUpdate(schedule._id)}
-                                  >
-                                    <EditIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv2>
-                                  <LowerIconDiv3>
-                                    <CheckIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv3>
-                                  <LowerIconDiv4>
-                                    <BlockIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv4>
-                                </>
-                              )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "#007bff" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "#007bff" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Cell>
+                    <PermanentCell
+                      socket={socket}
+                      user={user}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -667,136 +353,13 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <Cell key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "white",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        <CloseSharpIcon
-                          sx={{
-                            color: "white",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => deleteOneSched(schedule._id)}
-                        />
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "500",
-                            color: "#1434AF",
-                          }}
-                        >
-                          {schedule.timing}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          {schedule.studentType}
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon
-                                sx={{
-                                  fontSize: "14px",
-                                }}
-                              />
-                            </LowerIconDiv>
-                            {auth &&
-                              auth.userDetails.role === "Administrator" && (
-                                <>
-                                  <LowerIconDiv2
-                                    onClick={() => navigateUpdate(schedule._id)}
-                                  >
-                                    <EditIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv2>
-                                  <LowerIconDiv3>
-                                    <CheckIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv3>
-                                  <LowerIconDiv4>
-                                    <BlockIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv4>
-                                </>
-                              )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Cell>
+                    <PermanentCell
+                      socket={socket}
+                      user={user}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -844,136 +407,13 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <Cell key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "white",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        <CloseSharpIcon
-                          sx={{
-                            color: "white",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => deleteOneSched(schedule._id)}
-                        />
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "500",
-                            color: "#1434AF",
-                          }}
-                        >
-                          {schedule.timing}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          {schedule.studentType}
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon
-                                sx={{
-                                  fontSize: "14px",
-                                }}
-                              />
-                            </LowerIconDiv>
-                            {auth &&
-                              auth.userDetails.role === "Administrator" && (
-                                <>
-                                  <LowerIconDiv2
-                                    onClick={() => navigateUpdate(schedule._id)}
-                                  >
-                                    <EditIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv2>
-                                  <LowerIconDiv3>
-                                    <CheckIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv3>
-                                  <LowerIconDiv4>
-                                    <BlockIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv4>
-                                </>
-                              )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Cell>
+                    <PermanentCell
+                      socket={socket}
+                      user={user}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -1021,136 +461,13 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <Cell key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "white",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        <CloseSharpIcon
-                          sx={{
-                            color: "white",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => deleteOneSched(schedule._id)}
-                        />
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "500",
-                            color: "#1434AF",
-                          }}
-                        >
-                          {schedule.timing}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          {schedule.studentType}
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon
-                                sx={{
-                                  fontSize: "14px",
-                                }}
-                              />
-                            </LowerIconDiv>
-                            {auth &&
-                              auth.userDetails.role === "Administrator" && (
-                                <>
-                                  <LowerIconDiv2
-                                    onClick={() => navigateUpdate(schedule._id)}
-                                  >
-                                    <EditIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv2>
-                                  <LowerIconDiv3>
-                                    <CheckIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv3>
-                                  <LowerIconDiv4>
-                                    <BlockIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv4>
-                                </>
-                              )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Cell>
+                    <PermanentCell
+                      socket={socket}
+                      user={user}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -1196,13 +513,13 @@ const Friday = () => {
               >
                 <h5
                   style={{
-                    color: "#EBEBE4",
+                    color: "rgba(0, 0, 0, 0.06)",
                     margin: "0",
                     padding: "0",
                     fontWeight: "400",
                   }}
                 >
-                  *Temporary
+                  Temporary
                 </h5>
               </div>
             </TableTitle>
@@ -1218,116 +535,10 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <CellTemp key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "white",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        {auth && auth.userDetails.role === "Administrator" && (
-                          <CloseSharpIcon
-                            sx={{
-                              color: "#ff3131",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => deleteOneSched(schedule._id)}
-                          />
-                        )}
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          [
-                          {schedule.permanentSched &&
-                            schedule.permanentSched.nameOfStudent}
-                          ]
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
-                                fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CellTemp>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {tempSchedules.filter(
@@ -1369,106 +580,10 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <CellTemp key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#007bff",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        {auth && auth.userDetails.role === "Administrator" && (
-                          <CloseSharpIcon
-                            sx={{
-                              color: "white",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => deleteOneSched(schedule._id)}
-                          />
-                        )}
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.studentType}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "orange" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CellTemp>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {tempSchedules.filter(
@@ -1510,116 +625,10 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <CellTemp key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#5D3FD3",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        {auth && auth.userDetails.role === "Administrator" && (
-                          <CloseSharpIcon
-                            sx={{
-                              color: "white",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => deleteOneSched(schedule._id)}
-                          />
-                        )}
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          [
-                          {schedule.permanentSched &&
-                            schedule.permanentSched.nameOfStudent}
-                          ]
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
-                                fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CellTemp>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {tempSchedules.filter(
@@ -1661,116 +670,10 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <CellTemp key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#5D3FD3",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        {auth && auth.userDetails.role === "Administrator" && (
-                          <CloseSharpIcon
-                            sx={{
-                              color: "white",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => deleteOneSched(schedule._id)}
-                          />
-                        )}
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          [
-                          {schedule.permanentSched &&
-                            schedule.permanentSched.nameOfStudent}
-                          ]
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
-                                fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CellTemp>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {tempSchedules.filter(
@@ -1821,7 +724,7 @@ const Friday = () => {
                     fontWeight: "400",
                   }}
                 >
-                  *Permanent
+                  Permanent
                 </h5>
               </div>
             </TableTitle>
@@ -1840,136 +743,13 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <Cell key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "white",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        <CloseSharpIcon
-                          sx={{
-                            color: "white",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => deleteOneSched(schedule._id)}
-                        />
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "500",
-                            color: "#1434AF",
-                          }}
-                        >
-                          {schedule.timing}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          {schedule.studentType}
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon
-                                sx={{
-                                  fontSize: "14px",
-                                }}
-                              />
-                            </LowerIconDiv>
-                            {auth &&
-                              auth.userDetails.role === "Administrator" && (
-                                <>
-                                  <LowerIconDiv2
-                                    onClick={() => navigateUpdate(schedule._id)}
-                                  >
-                                    <EditIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv2>
-                                  <LowerIconDiv3>
-                                    <CheckIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv3>
-                                  <LowerIconDiv4>
-                                    <BlockIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv4>
-                                </>
-                              )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Cell>
+                    <PermanentCell
+                      socket={socket}
+                      user={user}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -2017,136 +797,13 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <Cell key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "white",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        <CloseSharpIcon
-                          sx={{
-                            color: "white",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => deleteOneSched(schedule._id)}
-                        />
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "500",
-                            color: "#1434AF",
-                          }}
-                        >
-                          {schedule.timing}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          {schedule.studentType}
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon
-                                sx={{
-                                  fontSize: "14px",
-                                }}
-                              />
-                            </LowerIconDiv>
-                            {auth &&
-                              auth.userDetails.role === "Administrator" && (
-                                <>
-                                  <LowerIconDiv2
-                                    onClick={() => navigateUpdate(schedule._id)}
-                                  >
-                                    <EditIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv2>
-                                  <LowerIconDiv3>
-                                    <CheckIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv3>
-                                  <LowerIconDiv4>
-                                    <BlockIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv4>
-                                </>
-                              )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Cell>
+                    <PermanentCell
+                      socket={socket}
+                      user={user}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -2194,136 +851,13 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <Cell key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "white",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        <CloseSharpIcon
-                          sx={{
-                            color: "white",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => deleteOneSched(schedule._id)}
-                        />
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "500",
-                            color: "#1434AF",
-                          }}
-                        >
-                          {schedule.timing}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          {schedule.studentType}
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon
-                                sx={{
-                                  fontSize: "14px",
-                                }}
-                              />
-                            </LowerIconDiv>
-                            {auth &&
-                              auth.userDetails.role === "Administrator" && (
-                                <>
-                                  <LowerIconDiv2
-                                    onClick={() => navigateUpdate(schedule._id)}
-                                  >
-                                    <EditIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv2>
-                                  <LowerIconDiv3>
-                                    <CheckIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv3>
-                                  <LowerIconDiv4>
-                                    <BlockIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv4>
-                                </>
-                              )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Cell>
+                    <PermanentCell
+                      socket={socket}
+                      user={user}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -2371,136 +905,13 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <Cell key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "white",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        <CloseSharpIcon
-                          sx={{
-                            color: "white",
-                            fontSize: "16px",
-                          }}
-                          onClick={() => deleteOneSched(schedule._id)}
-                        />
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "500",
-                            color: "#1434AF",
-                          }}
-                        >
-                          {schedule.timing}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          {schedule.studentType}
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon
-                                sx={{
-                                  fontSize: "14px",
-                                }}
-                              />
-                            </LowerIconDiv>
-                            {auth &&
-                              auth.userDetails.role === "Administrator" && (
-                                <>
-                                  <LowerIconDiv2
-                                    onClick={() => navigateUpdate(schedule._id)}
-                                  >
-                                    <EditIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv2>
-                                  <LowerIconDiv3>
-                                    <CheckIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv3>
-                                  <LowerIconDiv4>
-                                    <BlockIcon
-                                      sx={{
-                                        fontSize: "14px",
-                                      }}
-                                    />
-                                  </LowerIconDiv4>
-                                </>
-                              )}
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <TimerIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            ) : (
-                              <BookmarkAddedIcon
-                                fontSize="small"
-                                sx={{ color: "white" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </Cell>
+                    <PermanentCell
+                      socket={socket}
+                      user={user}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -2568,116 +979,10 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <CellTemp key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#5D3FD3",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        {auth && auth.userDetails.role === "Administrator" && (
-                          <CloseSharpIcon
-                            sx={{
-                              color: "white",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => deleteOneSched(schedule._id)}
-                          />
-                        )}
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          [
-                          {schedule.permanentSched &&
-                            schedule.permanentSched.nameOfStudent}
-                          ]
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
-                                fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CellTemp>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -2719,116 +1024,10 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <CellTemp key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#5D3FD3",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        {auth && auth.userDetails.role === "Administrator" && (
-                          <CloseSharpIcon
-                            sx={{
-                              color: "white",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => deleteOneSched(schedule._id)}
-                          />
-                        )}
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          [
-                          {schedule.permanentSched &&
-                            schedule.permanentSched.nameOfStudent}
-                          ]
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
-                                fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CellTemp>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -2870,116 +1069,10 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <CellTemp key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#5D3FD3",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        {auth && auth.userDetails.role === "Administrator" && (
-                          <CloseSharpIcon
-                            sx={{
-                              color: "white",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => deleteOneSched(schedule._id)}
-                          />
-                        )}
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          [
-                          {schedule.permanentSched &&
-                            schedule.permanentSched.nameOfStudent}
-                          ]
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
-                                fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CellTemp>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(
@@ -3021,116 +1114,10 @@ const Friday = () => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <CellTemp key={schedule.id}>
-                      <div
-                        style={{
-                          color: "white",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#5D3FD3",
-                            padding: "0px 0 0 3px",
-                          }}
-                        >
-                          {schedule.nameOfStudent}
-                          {schedule.tempStudentName &&
-                            schedule.tempStudentName.nameOfStudent}
-                        </div>
-                        {auth && auth.userDetails.role === "Administrator" && (
-                          <CloseSharpIcon
-                            sx={{
-                              color: "white",
-                              fontSize: "16px",
-                            }}
-                            onClick={() => deleteOneSched(schedule._id)}
-                          />
-                        )}
-                      </div>
-                      <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            color: "white",
-                          }}
-                        >
-                          {schedule.dateTime
-                            ? schedule.dateTime.slice(0, -5)
-                            : ""}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "400",
-                            color: "#1434A4",
-                          }}
-                        >
-                          [
-                          {schedule.permanentSched &&
-                            schedule.permanentSched.nameOfStudent}
-                          ]
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-end",
-                          width: "100%",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            {schedule.schedType === "Temporary" ? (
-                              <WatchLaterIcon
-                                fontSize="small"
-                                sx={{ color: "#FFBF00" }}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {schedule.isActive ? (
-                              <CheckCircleIcon
-                                fontSize="small"
-                                sx={{ color: "#1434A4" }}
-                              />
-                            ) : (
-                              <CancelIcon
-                                fontSize="small"
-                                sx={{ color: "#FF3131" }}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CellTemp>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneSched={deleteOneSched}
+                    />
                   </Tilt>
                 ))}
               {schedules.filter(

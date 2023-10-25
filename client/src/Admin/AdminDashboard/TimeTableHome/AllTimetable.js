@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createSelector } from "reselect";
+import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import SideBar from "../SideBar/SideBar";
 import Monday from "../Days/Monday";
@@ -7,6 +9,7 @@ import Wednesday from "../Days/Wednesday";
 import Friday from "../Days/Friday";
 import Thursday from "../Days/Thursday";
 import Saturday from "../Days/Saturday";
+import axios from "axios";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -46,12 +49,40 @@ const WeekContainer = styled("div")(({ theme }) => ({
   marginLeft: "-8px",
 }));
 
-const AllTimetable = () => {
+const selectAuth = (state) => state.auth;
+const authSelector = createSelector([selectAuth], (auth) => auth);
+
+const AllTimetable = ({ socket, userNotif }) => {
   const today = new Date();
   const dayOfWeek = today.toLocaleDateString("en-US", {
     weekday: "long",
   });
   const [activeDay, setActiveDay] = useState(dayOfWeek);
+  const [users, setUsers] = useState([]);
+
+  const auth = useSelector(authSelector);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const res = await axios.get(`${process.env.REACT_APP_API}/user`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+      setUsers(res.data);
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
+  };
 
   const handleDayChange = (day) => {
     setActiveDay(day);
@@ -334,7 +365,9 @@ const AllTimetable = () => {
           {activeDay === "Tuesday" && <Tuesday />}
           {activeDay === "Wednesday" && <Wednesday />}
           {activeDay === "Thursday" && <Thursday />}
-          {activeDay === "Friday" && <Friday />}
+          {activeDay === "Friday" && (
+            <Friday socket={socket} userNotif={userNotif} users={users} />
+          )}
           {activeDay === "Saturday" && <Saturday />}
         </Flexer>
       </TimeTableCon>

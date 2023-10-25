@@ -8,11 +8,11 @@ import { connect } from "react-redux";
 import { getActions } from "../../store/actions/authActions";
 import { useHistory } from "react-router-dom";
 
-const LoginPage = ({ login }) => {
-  const history = useHistory();
+const LoginPage = ({ login, setUserNotif }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     setIsFormValid(validateLoginForm({ password, username }));
@@ -23,20 +23,23 @@ const LoginPage = ({ login }) => {
       password,
       username,
     };
+    setUserNotif(username);
     login(userDetails, history);
   };
 
   return (
-    <AuthBox>
-      <LoginPageHeader />
-      <LoginPageInputs
-        username={username}
-        setUsername={setUsername}
-        password={password}
-        setPassword={setPassword}
-      />
-      <LoginPageFooter isFormValid={isFormValid} handleLogin={handleLogin} />
-    </AuthBox>
+    <>
+      <AuthBox>
+        <LoginPageHeader />
+        <LoginPageInputs
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+        />
+        <LoginPageFooter isFormValid={isFormValid} handleLogin={handleLogin} />
+      </AuthBox>
+    </>
   );
 };
 
