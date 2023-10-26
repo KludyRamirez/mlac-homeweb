@@ -5,16 +5,7 @@ const uniqid = require("uniqid");
 
 const postRegister = async (req, res) => {
   try {
-    console.log("register came");
-    const { username, lastname, password, role, firstname, cardId } = req.body;
-    // check if user exists - kluds - 1st comment
-    // const userExists = await User.exists({
-    //   cardId: cardId,
-    // });
-
-    // if (userExists) {
-    //   return res.status(409).send("Account already exists");
-    // }
+    const { username, lastname, password, role, firstname } = req.body;
 
     const usernameExists = await User.exists({
       username: username,

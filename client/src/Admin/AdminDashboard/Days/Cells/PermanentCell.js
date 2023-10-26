@@ -157,17 +157,26 @@ const PermanentCell = ({
   navigateUpdate,
   deleteOneSched,
   socket,
-  user,
+  userNotif,
 }) => {
+  const [notifications, setNotifications] = useState("");
   const auth = useSelector(authSelector);
 
   const handleNotifs = (type) => {
     socket.emit("sendNotification", {
-      senderName: user,
+      senderName: userNotif,
       receiverName: schedule.parent,
       type,
     });
   };
+
+  useEffect(() => {
+    socket?.on("getNotification", (data) => {
+      setNotifications((prev) => [...prev, data]);
+    });
+  }, [socket]);
+
+  console.log(notifications);
 
   return (
     <Cell key={schedule._id}>

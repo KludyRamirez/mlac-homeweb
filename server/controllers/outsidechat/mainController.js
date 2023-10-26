@@ -1,16 +1,20 @@
-// permanent schedule
+// schedule
 const { createSchedule } = require("../outsidechat/schedule");
 const { getSchedule } = require("../outsidechat/schedule");
 const { getOneSchedule } = require("../outsidechat/schedule");
 const { updateOneSchedule } = require("../outsidechat/schedule");
-const { deleteTempSchedules } = require("../outsidechat/schedule");
-const { deleteTempSoloSchedules } = require("../outsidechat/schedule");
 const { deleteOneSchedule } = require("../outsidechat/schedule");
-const { deleteOneTempSchedule } = require("../outsidechat/schedule");
+// temporary schedule
 const { createTempSchedule } = require("../outsidechat/schedule");
-const { createTempSoloSchedule } = require("../outsidechat/schedule");
 const { getTempSchedule } = require("../outsidechat/schedule");
-const { setActive } = require("../outsidechat/schedule");
+const { deleteOneTempSchedule } = require("../outsidechat/schedule");
+const { deleteTempSchedules } = require("../outsidechat/schedule");
+// temporary solo schedule
+const { createTempSoloSchedule } = require("../outsidechat/schedule");
+const { getTempSoloSchedule } = require("../outsidechat/schedule");
+const { deleteOneTempSoloSchedule } = require("../outsidechat/schedule");
+const { deleteTempSoloSchedules } = require("../outsidechat/schedule");
+
 // user
 const { getUser } = require("./user");
 const { deleteUser } = require("./user");
@@ -26,21 +30,28 @@ const { userOrders } = require("./user");
 const { createSchedOrder } = require("./user");
 
 // holiday
-const { postHoliday } = require("./holiday");
+const { createHoliday } = require("./holiday");
 const { getHoliday } = require("./holiday");
+
+const { setActive } = require("../outsidechat/schedule");
 
 exports.controllers = {
   createSchedule,
   getSchedule,
   getOneSchedule,
   updateOneSchedule,
-  deleteTempSchedules,
-  deleteTempSoloSchedules,
   deleteOneSchedule,
-  deleteOneTempSchedule,
+
   createTempSchedule,
-  createTempSoloSchedule,
   getTempSchedule,
+  deleteOneTempSchedule,
+  deleteTempSchedules,
+
+  createTempSoloSchedule,
+  getTempSoloSchedule,
+  deleteOneTempSoloSchedule,
+  deleteTempSoloSchedules,
+
   getUser,
   deleteUser,
   editUser,
@@ -51,6 +62,6 @@ exports.controllers = {
   emptyCon,
   userOrders,
   createSchedOrder,
-  postHoliday,
+  createHoliday,
   getHoliday,
 };

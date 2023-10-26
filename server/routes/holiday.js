@@ -7,7 +7,7 @@ const { verifyToken, adminCheck } = require("../middleware/auth");
 const auth = verifyToken;
 const admin = adminCheck;
 
-router.post("/holiday", auth, admin, mainController.controllers.postHoliday);
+router.post("/holiday", auth, admin, mainController.controllers.createHoliday);
 router.get("/holiday", auth, admin, mainController.controllers.getHoliday);
 
 // test route to verify middleware if working

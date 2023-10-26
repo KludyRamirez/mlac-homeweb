@@ -23,8 +23,8 @@ const LoginPage = ({ login, setUserNotif }) => {
       password,
       username,
     };
-    setUserNotif(username);
     login(userDetails, history);
+    setUserNotif(username);
   };
 
   return (

@@ -156,16 +156,36 @@ const ParentSortSchedule = () => {
 
   useEffect(() => {
     deleteExpiredTemporarySchedule();
+    deleteExpiredTemporarySoloSchedule();
     getSchedules();
   }, []);
 
   const deleteExpiredTemporarySchedule = async () => {
     try {
-      const res = await axios.delete(`${process.env.REACT_APP_API}/schedule`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error deleting schedules:", error);
+    }
+  };
+
+  const deleteExpiredTemporarySoloSchedule = async () => {
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API}/temp-soloschedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
       console.log(res.data);
     } catch (error) {
       console.error("Error deleting schedules:", error);
@@ -351,7 +371,7 @@ const ParentSortSchedule = () => {
               )
               .map((schedule) => (
                 <Tilt>
-                  <Cell key={schedule.id}>
+                  <Cell key={schedule._id}>
                     <div
                       style={{
                         display: "flex",
@@ -495,7 +515,7 @@ const ParentSortSchedule = () => {
               )
               .map((schedule) => (
                 <Tilt style={{ height: "fit-content" }}>
-                  <Cell key={schedule.id}>
+                  <Cell key={schedule._id}>
                     <div
                       style={{
                         display: "flex",

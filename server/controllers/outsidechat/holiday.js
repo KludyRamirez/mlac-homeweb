@@ -1,7 +1,7 @@
 const Holiday = require("../../models/holiday");
 const Schedule = require("../../models/scheds");
 
-const postHoliday = async (req, res) => {
+const createHoliday = async (req, res) => {
   try {
     const holiday = await new Holiday({
       ...req.body,
@@ -45,4 +45,4 @@ const getHoliday = async (req, res) => {
   }
 };
 
-module.exports = { postHoliday, getHoliday };
+module.exports = { createHoliday, getHoliday };

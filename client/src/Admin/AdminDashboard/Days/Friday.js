@@ -81,9 +81,10 @@ const Cell2 = styled("div")({
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const Friday = ({ socket, user }) => {
+const Friday = ({ socket, userNotif }) => {
   const [schedules, setSchedules] = useState([]);
   const [tempSchedules, setTempSchedules] = useState([]);
+  const [tempSoloSchedules, setTempSoloSchedules] = useState([]);
   const [nextSixDays, setNextSixDays] = useState([]);
   const [cell2Count, setCell2Count] = useState(0);
   const auth = useSelector(authSelector);
@@ -93,7 +94,8 @@ const Friday = ({ socket, user }) => {
     handleNextSixDays();
     getSchedules();
     getTempSchedules();
-  }, [auth]);
+    getTempSoloSchedules();
+  }, []);
 
   useEffect(() => {
     handleEmptyScheduleCount();
@@ -166,6 +168,27 @@ const Friday = ({ socket, user }) => {
     }
   };
 
+  const getTempSoloSchedules = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/temp-soloschedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      setTempSoloSchedules(res.data);
+    } catch (err) {
+      console.error("Error fetching schedules:", err);
+    }
+  };
+
   const deleteOneSched = async (id) => {
     if (!auth.userDetails.token) {
       // Handle the case where the token is missing
@@ -196,7 +219,28 @@ const Friday = ({ socket, user }) => {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
       });
-      getSchedules();
+      getTempSchedules();
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
+  };
+
+  const deleteOneTempSoloSched = async (id) => {
+    if (!auth.userDetails.token) {
+      // Handle the case where the token is missing
+      console.error("Authentication token not found.");
+      return;
+    }
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_API}/temp-soloschedule/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      getTempSoloSchedules();
     } catch (err) {
       console.error("Error fetching users:", err);
     }
@@ -288,20 +332,16 @@ const Friday = ({ socket, user }) => {
               {schedules
                 .filter(
                   (schedule) =>
-                    (schedule.day === "Friday" &&
-                      schedule.timing === "8 AM to 9 AM" &&
-                      schedule.schedType === "Permanent" &&
-                      schedule.isActive === true) ||
-                    (schedule.tempSoloDay === "Friday" &&
-                      schedule.timing === "8 AM to 9 AM" &&
-                      schedule.schedType === "Temporary" &&
-                      schedule.isActive === true)
+                    schedule.day === "Friday" &&
+                    schedule.timing === "8 AM to 9 AM" &&
+                    schedule.schedType === "Permanent" &&
+                    schedule.isActive === true
                 )
                 .map((schedule) => (
                   <Tilt>
                     <PermanentCell
                       socket={socket}
-                      user={user}
+                      userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
                       deleteOneSched={deleteOneSched}
@@ -355,7 +395,7 @@ const Friday = ({ socket, user }) => {
                   <Tilt>
                     <PermanentCell
                       socket={socket}
-                      user={user}
+                      userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
                       deleteOneSched={deleteOneSched}
@@ -409,7 +449,7 @@ const Friday = ({ socket, user }) => {
                   <Tilt>
                     <PermanentCell
                       socket={socket}
-                      user={user}
+                      userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
                       deleteOneSched={deleteOneSched}
@@ -463,7 +503,7 @@ const Friday = ({ socket, user }) => {
                   <Tilt>
                     <PermanentCell
                       socket={socket}
-                      user={user}
+                      userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
                       deleteOneSched={deleteOneSched}
@@ -527,11 +567,14 @@ const Friday = ({ socket, user }) => {
               {tempSchedules
                 .filter(
                   (schedule) =>
-                    (schedule.permanentSched && schedule.permanentSched.day) ===
-                      "Friday" &&
-                    (schedule.permanentSched &&
-                      schedule.permanentSched.timing) === "8 AM to 9 AM" &&
-                    schedule.schedType === "Temporary"
+                    ((schedule.permanentSched &&
+                      schedule.permanentSched.day) === "Friday" &&
+                      (schedule.permanentSched &&
+                        schedule.permanentSched.timing) === "8 AM to 9 AM" &&
+                      schedule.schedType === "Temporary") ||
+                    (schedule.tempSoloDay === "Friday" &&
+                      schedule.timing === "8 AM to 9 AM" &&
+                      schedule.schedType === "Temporary")
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -745,7 +788,7 @@ const Friday = ({ socket, user }) => {
                   <Tilt>
                     <PermanentCell
                       socket={socket}
-                      user={user}
+                      userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
                       deleteOneSched={deleteOneSched}
@@ -799,7 +842,7 @@ const Friday = ({ socket, user }) => {
                   <Tilt>
                     <PermanentCell
                       socket={socket}
-                      user={user}
+                      userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
                       deleteOneSched={deleteOneSched}
@@ -853,7 +896,7 @@ const Friday = ({ socket, user }) => {
                   <Tilt>
                     <PermanentCell
                       socket={socket}
-                      user={user}
+                      userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
                       deleteOneSched={deleteOneSched}
@@ -907,7 +950,7 @@ const Friday = ({ socket, user }) => {
                   <Tilt>
                     <PermanentCell
                       socket={socket}
-                      user={user}
+                      userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
                       deleteOneSched={deleteOneSched}

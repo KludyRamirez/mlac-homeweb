@@ -257,11 +257,14 @@ const TempSoloSchedule = () => {
         return;
       }
 
-      const res = await axios.get(`${process.env.REACT_APP_API}/schedule`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
       const filteredSchedules = res.data.filter(
         (schedule) =>
           schedule.schedType === "Temporary" &&
@@ -281,7 +284,7 @@ const TempSoloSchedule = () => {
       return;
     }
     try {
-      await axios.delete(`${process.env.REACT_APP_API}/schedule/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API}/temp-schedule/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },

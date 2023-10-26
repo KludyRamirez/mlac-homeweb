@@ -1,6 +1,9 @@
 const Schedule = require("../../models/scheds");
 const TempSchedule = require("../../models/tempSchedules");
+const TempSolo = require("../../models/tempSoloScheds");
 const moment = require("moment");
+
+// schedule
 
 const createSchedule = async (req, res) => {
   try {
@@ -9,34 +12,16 @@ const createSchedule = async (req, res) => {
     }).save();
     res.json(newSchedule);
   } catch (error) {
-    return res.status(400).send("Schedule exists.");
-  }
-};
-
-const createTempSoloSchedule = async (req, res) => {
-  try {
-    const formattedDateTime = moment(req.body.dateTime).format("MMMM Do YYYY");
-    const newSchedule = await new Schedule({
-      ...req.body,
-      dateTime: formattedDateTime,
-    }).save();
-    res.json(newSchedule);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json("Temporary schedule create error.");
+    return res.status(400).send("schedule exists!");
   }
 };
 
 const getSchedule = async (req, res) => {
   try {
-    const scheds = await Schedule.find()
-      .populate("parent", "firstname lastname")
-      .populate("permanentSched", "day timing parent nameOfStudent")
-      .populate("tempStudentName", "parent nameOfStudent studentType schedType")
-      .exec();
+    const scheds = await Schedule.find();
     res.json(scheds);
   } catch (error) {
-    return res.status(500).send("Error occured. Please try again");
+    return res.status(500).send("error occured, please try again!");
   }
 };
 
@@ -62,7 +47,7 @@ const updateOneSchedule = async (req, res) => {
     }).exec();
 
     if (!schedule) {
-      return res.status(404).json("Schedule not found.");
+      return res.status(404).json("Schedule not found!");
     }
     res.json(schedule);
   } catch (error) {
@@ -82,19 +67,7 @@ const deleteOneSchedule = async (req, res) => {
   }
 };
 
-const deleteOneTempSchedule = async (req, res) => {
-  try {
-    const deletedTempSched = await TempSchedule.findByIdAndDelete(
-      req.params.id
-    );
-    if (!deletedTempSched) {
-      return res.status(404).json({ error: "Item not found" });
-    }
-    res.json({ success: true });
-  } catch (err) {
-    res.status(400).json("Deletion failed.");
-  }
-};
+// temporary schedule
 
 const createTempSchedule = async (req, res) => {
   try {
@@ -120,6 +93,20 @@ const getTempSchedule = async (req, res) => {
     res.json(tempScheds);
   } catch (error) {
     return res.status(500).send("Error occured. Please try again");
+  }
+};
+
+const deleteOneTempSchedule = async (req, res) => {
+  try {
+    const deletedTempSched = await TempSchedule.findByIdAndDelete(
+      req.params.id
+    );
+    if (!deletedTempSched) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    res.json({ success: true });
+  } catch (err) {
+    res.status(400).json("Deletion failed.");
   }
 };
 
@@ -157,6 +144,47 @@ const deleteTempSchedules = async (req, res) => {
   }
 };
 
+// temporary solo schedule
+
+const createTempSoloSchedule = async (req, res) => {
+  try {
+    const formattedDateTime = moment(req.body.dateTime).format("MMMM Do YYYY");
+    const newSchedule = await new TempSolo({
+      ...req.body,
+      dateTime: formattedDateTime,
+    }).save();
+    res.json(newSchedule);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json("Temporary schedule create error.");
+  }
+};
+
+const getTempSoloSchedule = async (req, res) => {
+  try {
+    const tempScheds = await TempSolo.find()
+      .populate("permanentSched", "day timing parent nameOfStudent")
+      .populate("tempStudentName", "parent nameOfStudent studentType schedType")
+      .exec();
+
+    res.json(tempScheds);
+  } catch (error) {
+    return res.status(500).send("Error occured. Please try again");
+  }
+};
+
+const deleteOneTempSoloSchedule = async (req, res) => {
+  try {
+    const deletedTempSched = await TempSolo.findByIdAndDelete(req.params.id);
+    if (!deletedTempSched) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    res.json({ success: true });
+  } catch (err) {
+    res.status(400).json("Deletion failed.");
+  }
+};
+
 const deleteTempSoloSchedules = async (req, res) => {
   try {
     const currentDate = new Date();
@@ -164,13 +192,13 @@ const deleteTempSoloSchedules = async (req, res) => {
       .add(1, "days")
       .format("MMMM Do YYYY");
 
-    const schedulesToDelete = await Schedule.find({
+    const schedulesToDelete = await TempSolo.find({
       dateTime: { $eq: formattedDate },
     }).select("tempStudentName");
 
     console.log("Schedules to be deleted:", schedulesToDelete);
 
-    const deleteResult = await Schedule.deleteMany({
+    const deleteResult = await TempSolo.deleteMany({
       dateTime: { $eq: formattedDate },
     });
 
@@ -191,6 +219,8 @@ const deleteTempSoloSchedules = async (req, res) => {
   }
 };
 
+// setting isActive state
+
 const setActive = async (req, res) => {
   try {
     const { isActive } = req.body;
@@ -203,15 +233,20 @@ const setActive = async (req, res) => {
 
 module.exports = {
   createSchedule,
-  createTempSoloSchedule,
   getSchedule,
   getOneSchedule,
   updateOneSchedule,
   deleteOneSchedule,
-  deleteOneTempSchedule,
+
   createTempSchedule,
   getTempSchedule,
+  deleteOneTempSchedule,
   deleteTempSchedules,
+
+  createTempSoloSchedule,
+  getTempSoloSchedule,
+  deleteOneTempSoloSchedule,
   deleteTempSoloSchedules,
+
   setActive,
 };

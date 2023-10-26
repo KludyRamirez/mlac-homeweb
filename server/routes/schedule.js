@@ -7,35 +7,15 @@ const { verifyToken, adminCheck } = require("../middleware/auth");
 const auth = verifyToken;
 const admin = adminCheck;
 
+// schedule
+
 router.post(
   "/schedule",
   auth,
   admin,
   mainController.controllers.createSchedule
 );
-
-router.post(
-  "/temp-schedule",
-  auth,
-  admin,
-  mainController.controllers.createTempSchedule
-);
-
-router.post(
-  "/temp-soloschedule",
-  auth,
-  admin,
-  mainController.controllers.createTempSoloSchedule
-);
-
 router.get("/schedule", auth, admin, mainController.controllers.getSchedule);
-router.get(
-  "/temp-schedule",
-  auth,
-  admin,
-  mainController.controllers.getTempSchedule
-);
-
 router.get(
   "/schedule/:id",
   auth,
@@ -48,18 +28,29 @@ router.put(
   admin,
   mainController.controllers.updateOneSchedule
 );
-router.patch(
-  "/schedule/:id/setActive",
-  auth,
-  admin,
-  mainController.controllers.setActive
-);
 router.delete(
   "/schedule/:id",
   auth,
   admin,
   mainController.controllers.deleteOneSchedule
 );
+
+// temporary schedule
+
+router.post(
+  "/temp-schedule",
+  auth,
+  admin,
+  mainController.controllers.createTempSchedule
+);
+
+router.get(
+  "/temp-schedule",
+  auth,
+  admin,
+  mainController.controllers.getTempSchedule
+);
+
 router.delete(
   "/temp-schedule/:id",
   auth,
@@ -73,13 +64,44 @@ router.delete(
   admin,
   mainController.controllers.deleteTempSchedules
 );
+
+// Temporary Solo Schedule
+
+router.post(
+  "/temp-soloschedule",
+  auth,
+  admin,
+  mainController.controllers.createTempSoloSchedule
+);
+
+router.get(
+  "/temp-soloschedule",
+  auth,
+  admin,
+  mainController.controllers.getTempSoloSchedule
+);
+
 router.delete(
-  "/schedule",
+  "/temp-soloschedule/:id",
+  auth,
+  admin,
+  mainController.controllers.deleteOneTempSoloSchedule
+);
+
+router.delete(
+  "/temp-soloschedule",
   auth,
   admin,
   mainController.controllers.deleteTempSoloSchedules
 );
 
-// test route to verify middleware if working
+// isActive status
+
+router.patch(
+  "/schedule/:id/setActive",
+  auth,
+  admin,
+  mainController.controllers.setActive
+);
 
 module.exports = router;

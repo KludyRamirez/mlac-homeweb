@@ -11,6 +11,7 @@ let onlineUsers = [];
 const addNewUser = (username, socketId) => {
   !onlineUsers.some((user) => user.username === username) &&
     onlineUsers.push({ username, socketId });
+  console.log("=====>xxxx", onlineUsers);
 };
 
 const removeUser = (socketId) => {
@@ -29,8 +30,9 @@ io.on("connection", (socket) => {
   socket.on("sendNotification", ({ senderName, receiverName, type }) => {
     const receiver = getUser(receiverName);
 
-    if (receiver && receiver.socketId) {
+    if (receiver.socketId) {
       io.to(receiver.socketId).emit("getNotification", { senderName, type });
+      console.log(receiver.socketId);
     } else {
       console.error("Receiver not found or missing socketId:", receiverName);
     }

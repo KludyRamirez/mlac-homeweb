@@ -17,9 +17,5 @@ code {
   background: rgba(255, 255, 255, 0.25);
   border: none;
   padding: 8px;
-  backdrop-filter: 6px;
-  -webkit-backdrop-filter: 6px;
   border-radius: 50%;
-  /* box-shadow: rgba(255, 255, 255, 0.06) 0px 1px 1px 0px,
-    rgba(255, 255, 255, 0.06) 0px 1px 1px 0px; */
 }

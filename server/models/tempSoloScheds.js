@@ -1,25 +1,16 @@
 const mongoose = require("mongoose");
 
-const schedsSchema = new mongoose.Schema(
+const tempSoloSchedsSchema = new mongoose.Schema(
   {
-    nameOfStudent: {
+    tempStudentName: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "scheds",
+      unique: true,
+    },
+    dateTime: {
       type: String,
-      trim: true,
-      maxlength: 32,
     },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-    schedType: {
-      type: String,
-      enum: ["Permanent", "Temporary"],
-    },
-    studentType: {
-      type: String,
-      enum: ["Solo", "Dyad"],
-    },
-    parent: {
+    tempSoloDay: {
       type: String,
     },
     timing: {
@@ -37,19 +28,6 @@ const schedsSchema = new mongoose.Schema(
         "4 PM to 5 PM",
       ],
     },
-
-    day: {
-      type: String,
-      enum: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ],
-    },
-
     absentReason: {
       type: String,
       default: "Busy",
@@ -67,5 +45,5 @@ const schedsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-schedsSchema.index({ day: 1, timing: 1 }, { unique: true });
-module.exports = mongoose.model("scheds", schedsSchema);
+tempSoloSchedsSchema.index({ tempSoloDay: 1, timing: 1 }, { unique: true });
+module.exports = mongoose.model("tempsoloscheds", tempSoloSchedsSchema);

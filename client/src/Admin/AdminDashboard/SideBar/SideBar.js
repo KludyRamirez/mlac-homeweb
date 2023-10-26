@@ -9,29 +9,23 @@ import IconButton from "@mui/material/IconButton";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
 import LocalLibraryOutlinedIcon from "@mui/icons-material/LocalLibraryOutlined";
-import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
-import ForumRoundedIcon from "@mui/icons-material/ForumRounded";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
-import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 
-import { socket } from "../../../authPages/LoginPage/LoginPage";
-
 const drawerWidth = 240;
 
 const IconContainer = styled("div")(({ theme }) => ({
-  background: "rgba(255, 255, 255, 0.4)",
+  background: "rgba(255, 255, 255, 0.3)",
   backdropFilter: "blur(6px)",
   WebkitBackdropFilter: "blur(6px)",
   borderRight: "1px solid #007bff",
@@ -70,6 +64,28 @@ const IconContainer = styled("div")(({ theme }) => ({
     boxShadow: `rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px`,
     transform: "translateY(2px)",
   },
+  "@media (max-width: 768px)": {
+    background: "none",
+    border: "none",
+    padding: "0px",
+    width: "16px",
+    height: "16px",
+    borderRadius: "none",
+    backdropFilter: "none",
+    WebkitBackdropFilter: "none",
+    touchAction: "none",
+    "&:focus": {
+      boxShadow: "none",
+    },
+    "&:hover": {
+      boxShadow: "none",
+      transform: "translateY(0px)",
+    },
+    "&:active": {
+      boxShadow: "none",
+      transform: "translateY(1px)",
+    },
+  },
 }));
 
 const HorizontalNavBar = styled("div")({
@@ -86,25 +102,17 @@ const AppNavBar = styled(AppBar)({
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   width: { sm: `calc(100% - ${drawerWidth}px)` },
   ml: { sm: `${drawerWidth}px` },
-  maxHeight: "40px",
+  height: "36px",
 });
 
-function ResponsiveDrawer(props, { socket }) {
+function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
-  const [notifications, setNotifications] = useState("");
+
   const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    socket?.on("getNotification", (data) => {
-      setNotifications((prev) => [...prev, data]);
-    });
-  }, [socket]);
-
-  console.log("-------->", notifications);
 
   useEffect(() => {
     setActiveItem(pathname);
@@ -139,12 +147,14 @@ function ResponsiveDrawer(props, { socket }) {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: "25%",
+            width: "22%",
             background: "#007bff",
-            gap: "14px",
+            gap: "12px",
           }}
         >
-          <Toolbar />
+          <Toolbar>
+            <BubbleChartIcon sx={{ color: "#07bbff" }} />
+          </Toolbar>
           <div
             style={{
               display: "flex",
@@ -156,14 +166,14 @@ function ResponsiveDrawer(props, { socket }) {
               {activeItem === "/timetable" ? (
                 <DashboardOutlinedIcon
                   className={activeItem === "/timetable" ? "icon-active" : ""}
-                  sx={{ fontSize: "20px", fontWeight: "100" }}
+                  sx={{ fontSize: "18px", fontWeight: "100" }}
                 />
               ) : (
                 <DashboardOutlinedIcon
                   sx={{
                     color: "white",
-                    padding: "6px",
-                    fontSize: "20px",
+                    padding: "8px",
+                    fontSize: "18px",
                     fontWeight: "100",
                   }}
                 />
@@ -181,15 +191,15 @@ function ResponsiveDrawer(props, { socket }) {
               {activeItem === "/user" ? (
                 <GroupsIcon
                   className={activeItem === "/user" ? "icon-active" : ""}
-                  sx={{ fontSize: "20px", fontWeight: "300" }}
+                  sx={{ fontSize: "18px", fontWeight: "100" }}
                 />
               ) : (
                 <GroupsOutlinedIcon
                   sx={{
                     color: "white",
-                    padding: "6px",
-                    fontSize: "20px",
-                    fontWeight: "300",
+                    padding: "8px",
+                    fontSize: "18px",
+                    fontWeight: "100",
                   }}
                 />
               )}
@@ -207,14 +217,14 @@ function ResponsiveDrawer(props, { socket }) {
               {activeItem === "/children" ? (
                 <LocalLibraryOutlinedIcon
                   className={activeItem === "/children" ? "icon-active" : ""}
-                  sx={{ fontSize: "20px", fontWeight: "300" }}
+                  sx={{ fontSize: "18px", fontWeight: "100" }}
                 />
               ) : (
                 <LocalLibraryOutlinedIcon
                   sx={{
                     color: "white",
-                    padding: "6px",
-                    fontSize: "20px",
+                    padding: "8px",
+                    fontSize: "18px",
                     fontWeight: "100",
                   }}
                 />
@@ -232,14 +242,14 @@ function ResponsiveDrawer(props, { socket }) {
               {activeItem === "/chat" ? (
                 <ForumOutlinedIcon
                   className={activeItem === "/chat" ? "icon-active" : ""}
-                  sx={{ fontSize: "20px", fontWeight: "300" }}
+                  sx={{ fontSize: "18px", fontWeight: "300" }}
                 />
               ) : (
                 <ForumOutlinedIcon
                   sx={{
                     color: "white",
-                    padding: "6px",
-                    fontSize: "20px",
+                    padding: "8px",
+                    fontSize: "18px",
                     fontWeight: "100",
                   }}
                 />
@@ -255,16 +265,16 @@ function ResponsiveDrawer(props, { socket }) {
           >
             <Link to="/schedule">
               {activeItem === "/schedule" ? (
-                <CalendarMonthOutlinedIcon
+                <EventNoteOutlinedIcon
                   className={activeItem === "/schedule" ? "icon-active" : ""}
-                  sx={{ fontSize: "20px", fontWeight: "300" }}
+                  sx={{ fontSize: "18px", fontWeight: "300" }}
                 />
               ) : (
-                <CalendarMonthOutlinedIcon
+                <EventNoteOutlinedIcon
                   sx={{
                     color: "white",
-                    padding: "6px",
-                    fontSize: "20px",
+                    padding: "8px",
+                    fontSize: "18px",
                     fontWeight: "300",
                   }}
                 />
@@ -290,18 +300,22 @@ function ResponsiveDrawer(props, { socket }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppNavBar position="fixed">
+      <AppNavBar position="fixed" sx={{ boxShadow: "none" }}>
         <Toolbar sx={{ minHeight: "0px" }}>
           <IconButton
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" }, color: "white" }}
+            sx={{
+              mr: 2,
+              display: { sm: "none" },
+              color: "white",
+            }}
           >
-            <MenuIcon />
+            <MenuIcon fontSize="small" />
           </IconButton>
           <HorizontalNavBar>
-            <IconContainer>
+            <IconContainer sx={{ zIndex: "2" }}>
               <NotificationsNoneRoundedIcon
                 fontSize="small"
                 sx={{ color: "#FAFAFA" }}

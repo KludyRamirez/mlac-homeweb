@@ -90,7 +90,7 @@ const TempSoloCreateSched = () => {
         return;
       }
       const res = await axios.post(
-        `${process.env.REACT_APP_API}/temp-soloschedule`,
+        `${process.env.REACT_APP_API}/temp-schedule`,
         values,
         {
           headers: {

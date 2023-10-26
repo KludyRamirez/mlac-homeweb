@@ -28,8 +28,11 @@ const TimeTableCon = styled("div")({
   backgroundColor: "#FAFAFA",
   padding: "40px 20px",
   marginTop: "30px",
-  overflow: "hidden",
-  overflowX: "scroll",
+
+  "@media (max-width: 768px)": {
+    overflow: "hidden",
+    overflowX: "scroll",
+  },
 });
 
 const Flexer = styled("div")({
@@ -58,31 +61,6 @@ const AllTimetable = ({ socket, userNotif }) => {
     weekday: "long",
   });
   const [activeDay, setActiveDay] = useState(dayOfWeek);
-  const [users, setUsers] = useState([]);
-
-  const auth = useSelector(authSelector);
-
-  useEffect(() => {
-    getUsers();
-  }, []);
-
-  const getUsers = async () => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
-
-      const res = await axios.get(`${process.env.REACT_APP_API}/user`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
-      setUsers(res.data);
-    } catch (err) {
-      console.error("Error fetching users:", err);
-    }
-  };
 
   const handleDayChange = (day) => {
     setActiveDay(day);
@@ -366,7 +344,7 @@ const AllTimetable = ({ socket, userNotif }) => {
           {activeDay === "Wednesday" && <Wednesday />}
           {activeDay === "Thursday" && <Thursday />}
           {activeDay === "Friday" && (
-            <Friday socket={socket} userNotif={userNotif} users={users} />
+            <Friday socket={socket} userNotif={userNotif} />
           )}
           {activeDay === "Saturday" && <Saturday />}
         </Flexer>
