@@ -54,47 +54,25 @@ const DateTimeInput = styled("input")({
   color: "darkgray",
 });
 
-const TempCreateScheduleForm = ({
+const IndTempCreateScheduleForm = ({
   handleSubmit,
   handleNameOfStudentChange,
   values,
-  handlePermanentChange,
-  handleTempSoloDayChange,
   handleChange,
+  handleTempSoloDayChange,
 }) => {
   // destructure
   const {
     tempStudentNames,
     tempStudentName,
     schedType,
-    permanentScheds,
-    permanentSched,
     dateTime,
     tempSoloDay,
     timings,
     timing,
   } = values;
 
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [showDiv, setShowDiv] = useState(true);
-
-  let selectedDay = "";
-
-  const selectedPermanentSched = permanentScheds.find(
-    (ps) => ps._id === permanentSched
-  );
-
-  if (selectedPermanentSched) {
-    selectedDay = selectedPermanentSched.day;
-  }
-
-  useEffect(() => {
-    if (tempSoloDay === selectedDay) {
-      setIsButtonEnabled(true);
-    } else {
-      setIsButtonEnabled(false);
-    }
-  }, [tempSoloDay, permanentSched]);
 
   const todaym = moment();
   const minDate = todaym.add(1, "days").format("YYYY-MM-DD");
@@ -153,29 +131,20 @@ const TempCreateScheduleForm = ({
 
         <br />
 
-        <FormControl variant="standard" sx={{ width: "100%" }}>
-          <InputLabel id="demo-simple-select-label" sx={{}}>
-            Schedule With
-          </InputLabel>
+        <FormControl variant="standard" sx={{ width: "90%" }}>
+          <InputLabel id="demo-simple-select-label">Timings</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            name="permanentSched"
-            value={permanentSched}
-            onChange={handlePermanentChange}
+            name="timing"
+            value={timing}
+            onChange={handleChange}
           >
-            {permanentScheds
-              .filter(
-                (ps) =>
-                  ps.isActive === true &&
-                  ps.studentType === "Dyad" &&
-                  ps.day === tempSoloDay
-              )
-              .map((ps) => (
-                <MenuItem key={ps._id} value={ps._id}>
-                  {ps.nameOfStudent} - {ps.day} [{ps.timing}]
-                </MenuItem>
-              ))}
+            {timings.map((t) => (
+              <MenuItem key={t} value={t}>
+                {t}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <br />
@@ -201,13 +170,7 @@ const TempCreateScheduleForm = ({
               variant="outlined"
               sx={{ fontWeight: "600" }}
               onClick={handleSubmit}
-              disabled={
-                !tempStudentName ||
-                !schedType ||
-                !permanentSched ||
-                !dateTime ||
-                !isButtonEnabled
-              }
+              disabled={!tempStudentName || !schedType || !timing || !dateTime}
             >
               Submit
             </Button>
@@ -227,4 +190,4 @@ const TempCreateScheduleForm = ({
   );
 };
 
-export default TempCreateScheduleForm;
+export default IndTempCreateScheduleForm;

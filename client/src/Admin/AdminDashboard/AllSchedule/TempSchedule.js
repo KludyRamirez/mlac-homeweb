@@ -294,11 +294,6 @@ const TempSchedule = () => {
     }
   };
 
-  //   const navigateUpdate = (id) => {
-  //     history.push(`/temp-schedule/${id}`);
-  //     window.location.reload();
-  //   };
-
   return (
     <AllScheduleContainer>
       <ContentCon>
@@ -387,9 +382,6 @@ const TempSchedule = () => {
           <BDetailsCon>
             {schedules.map((schedule) => (
               <MapCon key={schedule._id}>
-                {/* <ActionEdit onClick={() => navigateUpdate(schedule._id)}>
-                  <EditNoteIcon fontSize="small" />
-                </ActionEdit> */}
                 <ActionDel onClick={() => deleteOneTempSched(schedule._id)}>
                   <DeleteOutlineIcon fontSize="small" />
                 </ActionDel>

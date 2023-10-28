@@ -1,41 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { styled } from "@mui/system";
 import { toast } from "react-toastify";
-import SideBar from "../SideBar/SideBar";
-
 import axios from "axios";
-import TempCreateScheduleForm from "./TempCreateScheduleForm";
-
-import TempSchedule from "../AllSchedule/TempSchedule";
-import IndTempCreateSchedule from "./IndTempCreateSchedule";
-
-const Wrapper = styled("div")({
-  width: "100%",
-  height: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  backgroundColor: "#ffffff",
-});
-
-const TempCreateScheduleContainer = styled("div")({
-  display: "flex",
-  justifyContent: "space-around",
-  alignItems: "flex-start",
-  padding: "80px 20px",
-  flexWrap: "wrap",
-  width: "100%",
-});
-
-const Flexer = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  flexWrap: "wrap",
-  width: "100%",
-});
+import IndTempCreateScheduleForm from "./IndTempCreateScheduleForm";
 
 const initialState = {
   tempStudentNames: [],
@@ -44,16 +12,24 @@ const initialState = {
   tempSoloDay: "",
   schedTypes: ["Temporary"],
   schedType: "Temporary",
-  permanentScheds: [],
-  permanentSched: "",
+  timings: [
+    "8 AM to 9 AM",
+    "9 AM to 10 AM",
+    "10 AM to 11 AM",
+    "11 AM to 12 NN",
+    "1 PM to 2 PM",
+    "2 PM to 3 PM",
+    "3 PM to 4 PM",
+    "4 PM to 5 PM",
+  ],
+  timing: "",
 };
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const TempCreateSchedule = () => {
+const IndTempCreateSchedule = () => {
   const [values, setValues] = useState(initialState);
-  const [showDiv, setShowDiv] = useState(true);
   const auth = useSelector(authSelector);
 
   useEffect(() => {
@@ -74,7 +50,6 @@ const TempCreateSchedule = () => {
       });
       setValues({
         ...values,
-        permanentScheds: res.data,
         tempStudentNames: res.data,
       });
     } catch (err) {
@@ -114,11 +89,6 @@ const TempCreateSchedule = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handlePermanentChange = (e) => {
-    e.preventDefault();
-    setValues({ ...values, permanentSched: e.target.value });
-  };
-
   const handleNameOfStudentChange = (e) => {
     e.preventDefault();
     setValues({ ...values, tempStudentName: e.target.value });
@@ -136,32 +106,16 @@ const TempCreateSchedule = () => {
     });
   };
 
-  const toggleDiv = () => {
-    setShowDiv(!showDiv);
-  };
-
   return (
-    <Wrapper>
-      <SideBar />
-      <TempCreateScheduleContainer>
-        {showDiv ? (
-          <TempCreateScheduleForm
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-            handlePermanentChange={handlePermanentChange}
-            handleNameOfStudentChange={handleNameOfStudentChange}
-            handleTempSoloDayChange={handleTempSoloDayChange}
-            setValues={setValues}
-            values={values}
-          />
-        ) : (
-          <IndTempCreateSchedule />
-        )}
-        <TempSchedule />
-        <button onClick={toggleDiv}>kludy</button>
-      </TempCreateScheduleContainer>
-    </Wrapper>
+    <IndTempCreateScheduleForm
+      handleSubmit={handleSubmit}
+      handleChange={handleChange}
+      handleNameOfStudentChange={handleNameOfStudentChange}
+      handleTempSoloDayChange={handleTempSoloDayChange}
+      setValues={setValues}
+      values={values}
+    />
   );
 };
 
-export default TempCreateSchedule;
+export default IndTempCreateSchedule;

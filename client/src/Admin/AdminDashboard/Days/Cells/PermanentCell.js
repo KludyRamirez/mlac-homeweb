@@ -198,7 +198,7 @@ const PermanentCell = ({
         </div>
         <CloseSharpIcon
           sx={{
-            color: "#FF3131",
+            color: "#1434A4",
             fontSize: "16px",
           }}
           onClick={() => deleteOneSched(schedule._id)}

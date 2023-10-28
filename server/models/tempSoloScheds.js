@@ -7,6 +7,10 @@ const tempSoloSchedsSchema = new mongoose.Schema(
       ref: "scheds",
       unique: true,
     },
+    schedType: {
+      type: String,
+      enum: ["Permanent", "Temporary"],
+    },
     dateTime: {
       type: String,
     },
@@ -16,12 +20,10 @@ const tempSoloSchedsSchema = new mongoose.Schema(
     timing: {
       type: String,
       enum: [
-        "7 AM to 8 AM",
         "8 AM to 9 AM",
         "9 AM to 10 AM",
         "10 AM to 11 AM",
         "11 AM to 12 NN",
-        "12 NN to 1 PM",
         "1 PM to 2 PM",
         "2 PM to 3 PM",
         "3 PM to 4 PM",

@@ -6,6 +6,16 @@ const moment = require("moment");
 // schedule
 
 const createSchedule = async (req, res) => {
+  const { day, timing } = req.body;
+
+  const scheduleExists = await Schedule.exists({
+    $and: [{ studentType: "Solo" }, { day: day }, { timing: timing }],
+  });
+
+  if (scheduleExists) {
+    return res.status(409).send("Schedule already exists");
+  }
+
   try {
     const newSchedule = await new Schedule({
       ...req.body,
@@ -113,18 +123,16 @@ const deleteOneTempSchedule = async (req, res) => {
 const deleteTempSchedules = async (req, res) => {
   try {
     const currentDate = new Date();
-    const formattedDate = moment(currentDate)
-      .add(1, "days")
-      .format("MMMM Do YYYY");
+    const formattedDate = moment(currentDate).format("MMMM Do YYYY");
 
     const schedulesToDelete = await TempSchedule.find({
-      dateTime: { $eq: formattedDate },
+      dateTime: { $gt: formattedDate },
     }).select("tempStudentName");
 
     console.log("Schedules to be deleted:", schedulesToDelete);
 
     const deleteResult = await TempSchedule.deleteMany({
-      dateTime: { $eq: formattedDate },
+      dateTime: { $gt: formattedDate },
     });
 
     console.log("Schedules to be deleted:", deleteResult);
@@ -147,6 +155,24 @@ const deleteTempSchedules = async (req, res) => {
 // temporary solo schedule
 
 const createTempSoloSchedule = async (req, res) => {
+  const { day, timing, tempSoloDay } = req.body;
+
+  const scheduleExists = await Schedule.exists({
+    $and: [{ isActive: true }, { day: day }, { timing: timing }],
+  });
+
+  if (scheduleExists) {
+    return res.status(409).send("Schedule already exists");
+  }
+
+  const tempScheduleExists = await TempSchedule.exists({
+    $and: [{ tempSoloDay: tempSoloDay }, { timing: timing }],
+  });
+
+  if (tempScheduleExists) {
+    return res.status(409).send("Schedule already exists");
+  }
+
   try {
     const formattedDateTime = moment(req.body.dateTime).format("MMMM Do YYYY");
     const newSchedule = await new TempSolo({
@@ -163,7 +189,6 @@ const createTempSoloSchedule = async (req, res) => {
 const getTempSoloSchedule = async (req, res) => {
   try {
     const tempScheds = await TempSolo.find()
-      .populate("permanentSched", "day timing parent nameOfStudent")
       .populate("tempStudentName", "parent nameOfStudent studentType schedType")
       .exec();
 
@@ -193,13 +218,13 @@ const deleteTempSoloSchedules = async (req, res) => {
       .format("MMMM Do YYYY");
 
     const schedulesToDelete = await TempSolo.find({
-      dateTime: { $eq: formattedDate },
+      dateTime: { $gt: formattedDate },
     }).select("tempStudentName");
 
     console.log("Schedules to be deleted:", schedulesToDelete);
 
     const deleteResult = await TempSolo.deleteMany({
-      dateTime: { $eq: formattedDate },
+      dateTime: { $gt: formattedDate },
     });
 
     console.log("Schedules to be deleted:", deleteResult);

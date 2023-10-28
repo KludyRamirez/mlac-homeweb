@@ -149,7 +149,7 @@ const CreateScheduleForm = ({
             {parents
               .filter((p) => p.role === "Administrator")
               .map((p) => (
-                <MenuItem key={p._id} value={`${p.firstname} ${p.lastname}`}>
+                <MenuItem key={p._id} value={p.fullname}>
                   {p.firstname} {p.lastname}
                 </MenuItem>
               ))}

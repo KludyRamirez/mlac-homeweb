@@ -18,6 +18,19 @@ const tempScheduleSchema = new mongoose.Schema(
     dateTime: {
       type: String,
     },
+    timing: {
+      type: String,
+      enum: [
+        "8 AM to 9 AM",
+        "9 AM to 10 AM",
+        "10 AM to 11 AM",
+        "11 AM to 12 NN",
+        "1 PM to 2 PM",
+        "2 PM to 3 PM",
+        "3 PM to 4 PM",
+        "4 PM to 5 PM",
+      ],
+    },
     tempSoloDay: {
       type: String,
     },

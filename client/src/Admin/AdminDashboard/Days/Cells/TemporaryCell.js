@@ -18,12 +18,12 @@ import Tilt from "react-parallax-tilt";
 
 const CellTemp = styled("div")({
   backgroundImage:
-    "radial-gradient(100% 0% at 0% 100%, #5468ff 0, #5adaff 100%)",
+    "radial-gradient(at bottom left, rgba(117, 255, 220, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(255, 255, 255, 0.15) 87.8%)",
   boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 1px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px",
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid #5adaff",
+  border: "1px dashed #007bff",
   borderRadius: "10px",
   width: "176px",
   height: "106px",
@@ -31,10 +31,10 @@ const CellTemp = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   justifyContent: "space-between",
+  color: "white",
   fontSize: "16px",
   fontWeight: "600",
   padding: "10px",
-  color: "white",
   cursor: "pointer",
   listStyle: "none",
   overflow: "hidden",
@@ -46,10 +46,8 @@ const CellTemp = styled("div")({
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
   "&:hover": {
-    background: "white",
+    boxShadow: "rgba(0, 0, 0, 0.06) 0px 2px 4px",
     transform: "translateY(-1px)",
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 4px",
-    color: "#07bbff",
   },
 });
 
@@ -174,7 +172,6 @@ const TemporaryCell = ({ schedule, deleteOneSched }) => {
     <CellTemp key={schedule._id}>
       <div
         style={{
-          color: "white",
           display: "flex",
           justifyContent: "space-between",
           width: "100%",
@@ -192,7 +189,7 @@ const TemporaryCell = ({ schedule, deleteOneSched }) => {
         {auth && auth.userDetails.role === "Administrator" && (
           <CloseSharpIcon
             sx={{
-              color: "white",
+              color: "#ff3131",
               fontSize: "16px",
             }}
             onClick={() => deleteOneSched(schedule._id)}
@@ -204,6 +201,7 @@ const TemporaryCell = ({ schedule, deleteOneSched }) => {
           style={{
             fontSize: "11px",
             fontWeight: "500",
+            color: "#1434A4",
           }}
         >
           {schedule.dateTime ? schedule.dateTime.slice(0, -5) : ""}
@@ -212,7 +210,7 @@ const TemporaryCell = ({ schedule, deleteOneSched }) => {
           style={{
             fontSize: "11px",
             fontWeight: "400",
-            color: "white",
+            color: "#1434A4",
           }}
         >
           {schedule.tempStudentName && schedule.tempStudentName.studentType}
@@ -244,6 +242,20 @@ const TemporaryCell = ({ schedule, deleteOneSched }) => {
             <LowerIconDiv>
               <PersonIcon sx={{ fontSize: "14px" }} />
             </LowerIconDiv>
+            <LowerIconDiv3>
+              <CheckIcon
+                sx={{
+                  fontSize: "14px",
+                }}
+              />
+            </LowerIconDiv3>
+            <LowerIconDiv4>
+              <BlockIcon
+                sx={{
+                  fontSize: "14px",
+                }}
+              />
+            </LowerIconDiv4>
           </div>
           <div
             style={{
