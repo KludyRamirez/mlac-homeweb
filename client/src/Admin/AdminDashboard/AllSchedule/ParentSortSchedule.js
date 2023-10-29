@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
-import SideBar from "../SideBar/SideBar";
+import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import TimerIcon from "@mui/icons-material/Timer";
@@ -329,7 +329,7 @@ const ParentSortSchedule = () => {
   };
   return (
     <Wrapper>
-      <SideBar />
+      <ResponsiveDrawer />
       <StudentParentCon>
         {/* <div
           style={{

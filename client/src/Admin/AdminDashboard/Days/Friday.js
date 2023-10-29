@@ -8,8 +8,8 @@ import axios from "axios";
 import Tilt from "react-parallax-tilt";
 import PermanentCell from "./Cells/PermanentCell";
 import TemporaryCell from "./Cells/TemporaryCell";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
+import { FaCircleCheck } from "react-icons/fa6";
+import { FaCircleXmark } from "react-icons/fa6";
 
 const FridayWrapper = styled("div")({});
 
@@ -382,14 +382,14 @@ const Friday = ({ socket, userNotif }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           fontWeight: "500",
                           letterSpacing: "0.3px",
                         }}
                       >
                         Available
-                        <TaskAltIcon
-                          sx={{ fontSize: "18px", color: "#007bff" }}
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
                         />
                       </div>
                     ) : (
@@ -400,14 +400,14 @@ const Friday = ({ socket, userNotif }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           fontWeight: "500",
                           letterSpacing: "0.3px",
                         }}
                       >
                         Occupied
-                        <DoDisturbIcon
-                          sx={{ fontSize: "18px", color: "#ff3131" }}
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
                         />
                       </div>
                     )}
@@ -419,14 +419,10 @@ const Friday = ({ socket, userNotif }) => {
               {schedules
                 .filter(
                   (schedule) =>
-                    (schedule.day === "Friday" &&
-                      schedule.timing === "9 AM to 10 AM" &&
-                      schedule.schedType === "Permanent" &&
-                      schedule.isActive === true) ||
-                    (schedule.tempSoloDay === "Friday" &&
-                      schedule.timing === "9 AM to 10 AM" &&
-                      schedule.schedType === "Temporary" &&
-                      schedule.isActive === true)
+                    schedule.day === "Friday" &&
+                    schedule.timing === "9 AM to 10 AM" &&
+                    schedule.schedType === "Permanent" &&
+                    schedule.isActive === true
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -453,39 +449,41 @@ const Friday = ({ socket, userNotif }) => {
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "9 AM to 10 AM" &&
                         schedule.schedType === "Temporary"
-                    ).length === 0 &&
-                    tempSchedules.filter(
-                      (schedule) =>
-                        schedule.tempSoloDay === "Friday" &&
-                        schedule.timing === "9 AM to 10 AM" &&
-                        schedule.schedType === "Temporary"
                     ).length === 0 ? (
                       <div
                         style={{
-                          color: "#07bbff",
+                          color: "#007bff",
                           display: "flex",
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
-                          fontWeight: "bold",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
                         }}
                       >
                         Available
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
+                        />
                       </div>
                     ) : (
                       <div
                         style={{
-                          color: "#07bbff",
+                          color: "#ff3131",
                           display: "flex",
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
-                          fontWeight: "bold",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
                         }}
                       >
-                        Not Available
+                        Occupied
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
+                        />
                       </div>
                     )}
                   </Cell2>
@@ -496,14 +494,10 @@ const Friday = ({ socket, userNotif }) => {
               {schedules
                 .filter(
                   (schedule) =>
-                    (schedule.day === "Friday" &&
-                      schedule.timing === "10 AM to 11 AM" &&
-                      schedule.schedType === "Permanent" &&
-                      schedule.isActive === true) ||
-                    (schedule.tempSoloDay === "Friday" &&
-                      schedule.timing === "10 AM to 11 AM" &&
-                      schedule.schedType === "Temporary" &&
-                      schedule.isActive === true)
+                    schedule.day === "Friday" &&
+                    schedule.timing === "10 AM to 11 AM" &&
+                    schedule.schedType === "Permanent" &&
+                    schedule.isActive === true
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -518,30 +512,55 @@ const Friday = ({ socket, userNotif }) => {
                 ))}
               {schedules.filter(
                 (schedule) =>
-                  (schedule.day === "Friday" &&
-                    schedule.timing === "10 AM to 11 AM" &&
-                    schedule.schedType === "Permanent" &&
-                    schedule.isActive === true) ||
-                  (schedule.tempSoloDay === "Friday" &&
-                    schedule.timing === "10 AM to 11 AM" &&
-                    schedule.schedType === "Temporary" &&
-                    schedule.isActive === true)
+                  schedule.day === "Friday" &&
+                  schedule.timing === "10 AM to 11 AM" &&
+                  schedule.schedType === "Permanent" &&
+                  schedule.isActive === true
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
-                    <div
-                      style={{
-                        color: "#07bbff",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                        padding: "0",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Empty
-                    </div>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "10 AM to 11 AM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
+                        />
+                      </div>
+                    )}
                   </Cell2>
                 </Tilt>
               )}
@@ -550,14 +569,10 @@ const Friday = ({ socket, userNotif }) => {
               {schedules
                 .filter(
                   (schedule) =>
-                    (schedule.day === "Friday" &&
-                      schedule.timing === "11 AM to 12 NN" &&
-                      schedule.schedType === "Permanent" &&
-                      schedule.isActive === true) ||
-                    (schedule.tempSoloDay === "Friday" &&
-                      schedule.timing === "11 AM to 12 NN" &&
-                      schedule.schedType === "Temporary" &&
-                      schedule.isActive === true)
+                    schedule.day === "Friday" &&
+                    schedule.timing === "11 AM to 12 NN" &&
+                    schedule.schedType === "Permanent" &&
+                    schedule.isActive === true
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -572,30 +587,55 @@ const Friday = ({ socket, userNotif }) => {
                 ))}
               {schedules.filter(
                 (schedule) =>
-                  (schedule.day === "Friday" &&
-                    schedule.timing === "11 AM to 12 NN" &&
-                    schedule.schedType === "Permanent" &&
-                    schedule.isActive === true) ||
-                  (schedule.tempSoloDay === "Friday" &&
-                    schedule.timing === "11 AM to 12 NN" &&
-                    schedule.schedType === "Temporary" &&
-                    schedule.isActive === true)
+                  schedule.day === "Friday" &&
+                  schedule.timing === "11 AM to 12 NN" &&
+                  schedule.schedType === "Permanent" &&
+                  schedule.isActive === true
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
-                    <div
-                      style={{
-                        color: "#07bbff",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                        padding: "0",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Empty
-                    </div>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "11 AM to 12 NN" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
+                        />
+                      </div>
+                    )}
                   </Cell2>
                 </Tilt>
               )}
@@ -670,14 +710,14 @@ const Friday = ({ socket, userNotif }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           fontWeight: "500",
                           letterSpacing: "0.3px",
                         }}
                       >
                         Available
-                        <TaskAltIcon
-                          sx={{ fontSize: "18px", color: "#007bff" }}
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
                         />
                       </div>
                     ) : (
@@ -688,14 +728,14 @@ const Friday = ({ socket, userNotif }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           fontWeight: "500",
                           letterSpacing: "0.3px",
                         }}
                       >
                         Occupied
-                        <DoDisturbIcon
-                          sx={{ fontSize: "18px", color: "#ff3131" }}
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
                         />
                       </div>
                     )}
@@ -724,7 +764,7 @@ const Friday = ({ socket, userNotif }) => {
                 ))}
               {tempSoloSchedules.filter(
                 (schedule) =>
-                  schedule.day === "Friday" &&
+                  schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "9 AM to 10 AM" &&
                   schedule.schedType === "Temporary"
               ).length === 0 && (
@@ -734,7 +774,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.day === "Friday" &&
                         schedule.timing === "9 AM to 10 AM" &&
-                        schedule.schedType === "Permanent"
+                        schedule.schedType === "Permanent" &&
+                        schedule.isActive === true
                     ).length === 0 &&
                     tempSchedules.filter(
                       (schedule) =>
@@ -749,14 +790,14 @@ const Friday = ({ socket, userNotif }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           fontWeight: "500",
                           letterSpacing: "0.3px",
                         }}
                       >
                         Available
-                        <TaskAltIcon
-                          sx={{ fontSize: "18px", color: "#007bff" }}
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
                         />
                       </div>
                     ) : (
@@ -767,14 +808,174 @@ const Friday = ({ socket, userNotif }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           fontWeight: "500",
                           letterSpacing: "0.3px",
                         }}
                       >
                         Occupied
-                        <DoDisturbIcon
-                          sx={{ fontSize: "18px", color: "#ff3131" }}
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
+                        />
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+            <CellCon2>
+              {tempSoloSchedules
+                .filter(
+                  (schedule) =>
+                    schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "10 AM to 11 AM" &&
+                    schedule.schedType === "Temporary"
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <PermanentCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSoloSchedules.filter(
+                (schedule) =>
+                  schedule.tempSoloDay === "Friday" &&
+                  schedule.timing === "10 AM to 11 AM" &&
+                  schedule.schedType === "Temporary"
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "10 AM to 11 AM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.isActive === true
+                    ).length === 0 &&
+                    tempSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "10 AM to 11 AM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
+                        />
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+            <CellCon2>
+              {tempSoloSchedules
+                .filter(
+                  (schedule) =>
+                    schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "11 AM to 12 NN" &&
+                    schedule.schedType === "Temporary"
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <PermanentCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSoloSchedules.filter(
+                (schedule) =>
+                  schedule.tempSoloDay === "Friday" &&
+                  schedule.timing === "11 AM to 12 NN" &&
+                  schedule.schedType === "Temporary"
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "11 AM to 12 NN" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.isActive === true
+                    ).length === 0 &&
+                    tempSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "11 AM to 12 NN" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
                         />
                       </div>
                     )}
@@ -844,6 +1045,14 @@ const Friday = ({ socket, userNotif }) => {
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "8 AM to 9 AM" &&
                         schedule.schedType === "Temporary"
+                    ).length === 0 &&
+                    schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "8 AM to 9 AM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.studentType === "Solo" &&
+                        schedule.isActive === true
                     ).length === 0 ? (
                       <div
                         style={{
@@ -852,14 +1061,14 @@ const Friday = ({ socket, userNotif }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           fontWeight: "500",
                           letterSpacing: "0.3px",
                         }}
                       >
                         Available
-                        <TaskAltIcon
-                          sx={{ fontSize: "18px", color: "#007bff" }}
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
                         />
                       </div>
                     ) : (
@@ -870,14 +1079,14 @@ const Friday = ({ socket, userNotif }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           fontWeight: "500",
                           letterSpacing: "0.3px",
                         }}
                       >
                         Occupied
-                        <DoDisturbIcon
-                          sx={{ fontSize: "18px", color: "#ff3131" }}
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
                         />
                       </div>
                     )}
@@ -908,11 +1117,14 @@ const Friday = ({ socket, userNotif }) => {
                 ))}
               {tempSchedules.filter(
                 (schedule) =>
-                  (schedule.permanentSched && schedule.permanentSched.day) ===
+                  ((schedule.permanentSched && schedule.permanentSched.day) ===
                     "Friday" &&
-                  (schedule.permanentSched &&
-                    schedule.permanentSched.timing) === "9 AM to 10 AM" &&
-                  schedule.schedType === "Temporary"
+                    (schedule.permanentSched &&
+                      schedule.permanentSched.timing) === "9 AM to 10 AM" &&
+                    schedule.schedType === "Temporary") ||
+                  (schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "8 AM to 9 AM" &&
+                    schedule.schedType === "Temporary")
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -921,33 +1133,49 @@ const Friday = ({ socket, userNotif }) => {
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "9 AM to 10 AM" &&
                         schedule.schedType === "Temporary"
+                    ).length === 0 &&
+                    schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "9 AM to 10 AM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.studentType === "Solo" &&
+                        schedule.isActive === true
                     ).length === 0 ? (
                       <div
                         style={{
-                          color: "#07bbff",
+                          color: "#007bff",
                           display: "flex",
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
-                          fontWeight: "bold",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
                         }}
                       >
                         Available
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
+                        />
                       </div>
                     ) : (
                       <div
                         style={{
-                          color: "#07bbff",
+                          color: "#ff3131",
                           display: "flex",
                           justifyContent: "space-between",
                           width: "100%",
                           padding: "0",
-                          fontSize: "12px",
-                          fontWeight: "bold",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
                         }}
                       >
-                        Not Available
+                        Occupied
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
+                        />
                       </div>
                     )}
                   </Cell2>
@@ -958,11 +1186,14 @@ const Friday = ({ socket, userNotif }) => {
               {tempSchedules
                 .filter(
                   (schedule) =>
-                    (schedule.permanentSched && schedule.permanentSched.day) ===
-                      "Friday" &&
-                    (schedule.permanentSched &&
-                      schedule.permanentSched.timing) === "10 AM to 11 AM" &&
-                    schedule.schedType === "Temporary"
+                    ((schedule.permanentSched &&
+                      schedule.permanentSched.day) === "Friday" &&
+                      (schedule.permanentSched &&
+                        schedule.permanentSched.timing) === "10 AM to 11 AM" &&
+                      schedule.schedType === "Temporary") ||
+                    (schedule.tempSoloDay === "Friday" &&
+                      schedule.timing === "10 AM to 11 AM" &&
+                      schedule.schedType === "Temporary")
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -974,27 +1205,67 @@ const Friday = ({ socket, userNotif }) => {
                 ))}
               {tempSchedules.filter(
                 (schedule) =>
-                  (schedule.permanentSched && schedule.permanentSched.day) ===
+                  ((schedule.permanentSched && schedule.permanentSched.day) ===
                     "Friday" &&
-                  (schedule.permanentSched &&
-                    schedule.permanentSched.timing) === "10 AM to 11 AM" &&
-                  schedule.schedType === "Temporary"
+                    (schedule.permanentSched &&
+                      schedule.permanentSched.timing) === "10 AM to 11 AM" &&
+                    schedule.schedType === "Temporary") ||
+                  (schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "10 AM to 11 AM" &&
+                    schedule.schedType === "Temporary")
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
-                    <div
-                      style={{
-                        color: "#07bbff",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                        padding: "0",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Empty
-                    </div>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "10 AM to 11 AM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 &&
+                    schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "10 AM to 11 AM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.studentType === "Solo" &&
+                        schedule.isActive === true
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
+                        />
+                      </div>
+                    )}
                   </Cell2>
                 </Tilt>
               )}
@@ -1003,11 +1274,14 @@ const Friday = ({ socket, userNotif }) => {
               {tempSchedules
                 .filter(
                   (schedule) =>
-                    (schedule.permanentSched && schedule.permanentSched.day) ===
-                      "Friday" &&
-                    (schedule.permanentSched &&
-                      schedule.permanentSched.timing) === "11 AM to 12 NN" &&
-                    schedule.schedType === "Temporary"
+                    ((schedule.permanentSched &&
+                      schedule.permanentSched.day) === "Friday" &&
+                      (schedule.permanentSched &&
+                        schedule.permanentSched.timing) === "11 AM to 12 NN" &&
+                      schedule.schedType === "Temporary") ||
+                    (schedule.tempSoloDay === "Friday" &&
+                      schedule.timing === "11 AM to 12 NN" &&
+                      schedule.schedType === "Temporary")
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1019,27 +1293,67 @@ const Friday = ({ socket, userNotif }) => {
                 ))}
               {tempSchedules.filter(
                 (schedule) =>
-                  (schedule.permanentSched && schedule.permanentSched.day) ===
+                  ((schedule.permanentSched && schedule.permanentSched.day) ===
                     "Friday" &&
-                  (schedule.permanentSched &&
-                    schedule.permanentSched.timing) === "11 AM to 12 NN" &&
-                  schedule.schedType === "Temporary"
+                    (schedule.permanentSched &&
+                      schedule.permanentSched.timing) === "11 AM to 12 NN" &&
+                    schedule.schedType === "Temporary") ||
+                  (schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "11 AM to 12 NN" &&
+                    schedule.schedType === "Temporary")
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
-                    <div
-                      style={{
-                        color: "#07bbff",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                        padding: "0",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Empty
-                    </div>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "11 AM to 12 NN" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 &&
+                    schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "11 AM to 12 NN" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.studentType === "Solo" &&
+                        schedule.isActive === true
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                        <FaCircleCheck
+                          style={{ fontSize: "14px", color: "#007bff" }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                        <FaCircleXmark
+                          style={{ fontSize: "14px", color: "#ff3131" }}
+                        />
+                      </div>
+                    )}
                   </Cell2>
                 </Tilt>
               )}

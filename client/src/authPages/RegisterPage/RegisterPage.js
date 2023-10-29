@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../../Admin/AdminDashboard/SideBar/SideBar";
+import { ResponsiveDrawer } from "../../Admin/AdminDashboard/SideBar/SideBar";
 import RegisterPageInputs from "./RegisterPageInputs";
 import { validateRegisterForm } from "../../shared/utils/validators";
 import { connect } from "react-redux";
@@ -61,7 +61,7 @@ const RegisterPage = ({ register }) => {
 
   return (
     <Wrapper>
-      <SideBar />
+      <ResponsiveDrawer />
       <CreateUserContainer>
         <RegisterPageInputs
           firstname={firstname}

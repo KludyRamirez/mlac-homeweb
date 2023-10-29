@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { createSelector } from "reselect";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
-import SideBar from "../SideBar/SideBar";
+import { ResponsiveDrawer } from "../SideBar/SideBar";
 import Monday from "../Days/Monday";
 import Tuesday from "../Days/Tuesday";
 import Wednesday from "../Days/Wednesday";
@@ -10,6 +10,7 @@ import Friday from "../Days/Friday";
 import Thursday from "../Days/Thursday";
 import Saturday from "../Days/Saturday";
 import axios from "axios";
+import TopBar from "../AppBar/AppBar";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -26,12 +27,15 @@ const TimeTableCon = styled("div")({
   alignItems: "flex-start",
   width: "100%",
   backgroundColor: "#FAFAFA",
-  padding: "40px 20px",
+  padding: "40px 10px",
   marginTop: "30px",
+  overflow: "hidden",
+  overflowX: "scroll",
 
-  "@media (max-width: 768px)": {
-    overflow: "hidden",
-    overflowX: "scroll",
+  "@media (max-width: 767px)": {
+    padding: "40px 0px",
+    marginTop: "20px",
+    marginLeft: "-30px",
   },
 });
 
@@ -68,7 +72,8 @@ const AllTimetable = ({ socket, userNotif }) => {
 
   return (
     <Wrapper>
-      <SideBar />
+      <TopBar />
+      <ResponsiveDrawer />
       <TimeTableCon>
         <Flexer>
           <WeekContainer>

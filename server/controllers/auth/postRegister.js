@@ -42,8 +42,10 @@ const postRegister = async (req, res) => {
 
     res.status(201).json({
       userDetails: {
+        _id: user._id,
         token: token,
         cardId: user.cardId,
+        role: user.role,
         fullname: user.fullname,
         username: user.username,
       },

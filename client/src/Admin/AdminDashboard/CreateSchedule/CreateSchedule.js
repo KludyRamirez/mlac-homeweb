@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
 import { toast } from "react-toastify";
-import SideBar from "../SideBar/SideBar";
+import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
 import AllSchedule from "../AllSchedule/AllSchedule";
@@ -120,7 +120,7 @@ const CreateSchedule = () => {
 
   return (
     <Wrapper>
-      <SideBar />
+      <ResponsiveDrawer />
       <CreateScheduleContainer>
         <CreateScheduleForm
           handleSubmit={handleSubmit}

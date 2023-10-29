@@ -62,32 +62,32 @@ function App() {
           <Route exact path="/login">
             <LoginPage setUserNotif={setUserNotif} />
           </Route>
-          <Route exact path="/dashboard">
-            <Dashboard socket={socket} />
+          <Route exact path="/chat">
+            <Dashboard />
           </Route>
           <Route exact path="/user">
-            <RegisterPage socket={socket} />
+            <RegisterPage />
           </Route>
           <Route exact path="/user/:id">
-            <UserUpdate socket={socket} />
+            <UserUpdate />
           </Route>
           <Route exact path="/schedule">
-            <CreateSchedule socket={socket} />
+            <CreateSchedule />
           </Route>
           <Route exact path="/schedule/:id">
-            <UpdateSchedule socket={socket} />
+            <UpdateSchedule />
           </Route>
           <Route exact path="/temp-schedule">
-            <TempCreateSchedule socket={socket} />
+            <TempCreateSchedule />
           </Route>
           <Route exact path="/temp-schedule-solo">
-            <TempSoloCreateSched socket={socket} />
+            <TempSoloCreateSched />
           </Route>
           <Route exact path="/timetable">
             <AllTimetable userNotif={userNotif} socket={socket} />
           </Route>
           <Route exact path="/children">
-            <ParentSortSchedule socket={socket} />
+            <ParentSortSchedule />
           </Route>
         </Switch>
       </Router>

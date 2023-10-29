@@ -3,10 +3,9 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
-import SideBar from "../SideBar/SideBar";
+import { ResponsiveDrawer } from "../SideBar/SideBar";
 import EditUser from "./AllUser";
 import UserUpdateForm from "./UserUpdateForm";
-import { validateRegisterForm } from "../../../shared/utils/validators";
 
 import axios from "axios";
 
@@ -103,7 +102,7 @@ const UpdateUserPage = () => {
 
   return (
     <Wrapper>
-      <SideBar />
+      <ResponsiveDrawer />
       <UpdateUserContainer>
         <UserUpdateForm
           handleSubmit={handleSubmit}

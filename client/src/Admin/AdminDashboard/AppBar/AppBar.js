@@ -1,22 +1,27 @@
 import React from "react";
 import { styled } from "@mui/system";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
-const MainContainer = styled("div")({
+const TopNavBar = styled("div")({
   position: "absolute",
-  right: "0",
   top: "0",
-  height: "60px",
-  backgroundColor: "#ffffff",
-  width: "calc(100% - 92px)",
-  alignItems: "center",
-  padding: "0px 15px",
-  border: "none",
+  left: "50%",
+  width: "50%",
+  height: "34px",
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  borderCollapse: "collapse",
+  zIndex: "2",
 });
 
-const AppBar = () => {
-  return <MainContainer></MainContainer>;
-};
+function TopBar() {
+  return (
+    <TopNavBar>
+      <BubbleChartIcon sx={{ color: "#07bbff", padding: "0 10px" }} />
+    </TopNavBar>
+  );
+}
 
-export default AppBar;
+export default TopBar;

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/system";
 import PropTypes from "prop-types";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 
-import MenuIcon from "@mui/icons-material/Menu";
+import { CgMenuLeft } from "react-icons/cg";
 import Toolbar from "@mui/material/Toolbar";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -15,7 +15,6 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
 import LocalLibraryOutlinedIcon from "@mui/icons-material/LocalLibraryOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
-import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
 import { useHistory } from "react-router-dom";
@@ -24,85 +23,14 @@ import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 
-const IconContainer = styled("div")(({ theme }) => ({
-  background: "rgba(255, 255, 255, 0.3)",
-  backdropFilter: "blur(6px)",
-  WebkitBackdropFilter: "blur(6px)",
-  borderRight: "1px solid #007bff",
-  borderLeft: "1px solid #007bff",
-  borderBottom: "1px solid #007bff",
-  borderRadius: "20px",
-  padding: "6px",
-  boxSizing: "border-box",
-  cursor: "pointer",
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "14px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  fontWeight: "600",
-  "&:focus": {
-    boxShadow: `rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px`,
-  },
-  "&:hover": {
-    boxShadow:
-      "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
-    transform: "translateY(-2px)",
-  },
-  "&:active": {
-    boxShadow: `rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px`,
-    transform: "translateY(2px)",
-  },
-  "@media (max-width: 768px)": {
-    background: "none",
-    border: "none",
-    padding: "0px",
-    width: "16px",
-    height: "16px",
-    borderRadius: "none",
-    backdropFilter: "none",
-    WebkitBackdropFilter: "none",
-    touchAction: "none",
-    "&:focus": {
-      boxShadow: "none",
-    },
-    "&:hover": {
-      boxShadow: "none",
-      transform: "translateY(0px)",
-    },
-    "&:active": {
-      boxShadow: "none",
-      transform: "translateY(1px)",
-    },
-  },
-}));
-
-const HorizontalNavBar = styled("div")({
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  color: "#007bff",
-  width: "100%",
-});
-
 const AppNavBar = styled(AppBar)({
   background: "#007bff",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  width: { sm: `calc(100% - ${drawerWidth}px)` },
-  ml: { sm: `${drawerWidth}px` },
+  width: { sm: "calc(100% - 240px)" },
+  ml: { sm: "240px" },
   height: "36px",
+  zIndex: "1",
 });
 
 function ResponsiveDrawer(props) {
@@ -288,7 +216,8 @@ function ResponsiveDrawer(props) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            width: "75%",
+            width: "78%",
+            background: "rgba(7, 187, 255, 0.06)",
           }}
         ></div>
       </div>
@@ -300,8 +229,14 @@ function ResponsiveDrawer(props) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppNavBar position="fixed" sx={{ boxShadow: "none" }}>
-        <Toolbar sx={{ minHeight: "0px" }}>
+      <AppNavBar>
+        <Toolbar
+          sx={{
+            minHeight: "0px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <IconButton
             aria-label="open drawer"
             edge="start"
@@ -312,16 +247,8 @@ function ResponsiveDrawer(props) {
               color: "white",
             }}
           >
-            <MenuIcon fontSize="small" />
+            <CgMenuLeft />
           </IconButton>
-          <HorizontalNavBar>
-            <IconContainer sx={{ zIndex: "2" }}>
-              <NotificationsNoneRoundedIcon
-                fontSize="small"
-                sx={{ color: "#FAFAFA" }}
-              />
-            </IconContainer>
-          </HorizontalNavBar>
         </Toolbar>
       </AppNavBar>
       <Box
@@ -348,7 +275,7 @@ function ResponsiveDrawer(props) {
               width: drawerWidth,
               border: "none",
               boxShadow:
-                "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                "rgba(7,187,255, 0.06) 0px 1px 2px 0px, rgba(7,187,255, 0.06) 0px 1px 2px 0px",
             },
           }}
         >
@@ -363,7 +290,7 @@ function ResponsiveDrawer(props) {
               width: drawerWidth,
               border: "none",
               boxShadow:
-                "rgba(0, 0, 0, 0.06) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                "rgba(7,187,255, 0.06) 0px 1px 2px 0px, rgba(7,187,255, 0.06) 0px 1px 2px 0px",
             },
           }}
           open
@@ -383,4 +310,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export { ResponsiveDrawer };

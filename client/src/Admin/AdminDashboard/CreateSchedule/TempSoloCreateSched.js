@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
 import { toast } from "react-toastify";
-import AppBar from "../AppBar/AppBar";
-import SideBar from "../SideBar/SideBar";
+import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import TempSoloCreateSchedForm from "./TempSoloCreateSchedForm";
 import TempSoloSchedule from "../AllSchedule/TempSoloSchedule";
@@ -131,8 +130,8 @@ const TempSoloCreateSched = () => {
 
   return (
     <Wrapper>
-      <SideBar />
-      <AppBar />
+      <ResponsiveDrawer />
+
       <TempCreateScheduleContainer>
         <TempSoloCreateSchedForm
           handleSubmit={handleSubmit}

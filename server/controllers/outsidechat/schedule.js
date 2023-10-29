@@ -6,23 +6,29 @@ const moment = require("moment");
 // schedule
 
 const createSchedule = async (req, res) => {
-  const { day, timing } = req.body;
+  const { day, timing, studentType } = req.body;
 
   const scheduleExists = await Schedule.exists({
     $and: [{ studentType: "Solo" }, { day: day }, { timing: timing }],
   });
 
+  const dyadExists = await Schedule.exists({
+    $and: [{ studentType: "Dyad" }, { day: day }, { timing: timing }],
+  });
+
   if (scheduleExists) {
     return res.status(409).send("Schedule already exists");
-  }
-
-  try {
-    const newSchedule = await new Schedule({
-      ...req.body,
-    }).save();
-    res.json(newSchedule);
-  } catch (error) {
-    return res.status(400).send("schedule exists!");
+  } else if (dyadExists && studentType === "Solo") {
+    return res.status(409).send("Not Allowed");
+  } else {
+    try {
+      const dyadComboSchedule = await new Schedule({
+        ...req.body,
+      }).save();
+      res.json(dyadComboSchedule);
+    } catch (error) {
+      return res.status(400).send("schedule exists!");
+    }
   }
 };
 
@@ -80,6 +86,16 @@ const deleteOneSchedule = async (req, res) => {
 // temporary schedule
 
 const createTempSchedule = async (req, res) => {
+  const { tempSoloDay, timing } = req.body;
+
+  const scheduleExists = await Schedule.exists({
+    $and: [{ studentType: "Solo" }, { day: tempSoloDay }, { timing: timing }],
+  });
+
+  if (scheduleExists) {
+    return res.status(409).send("Schedule already exists new");
+  }
+
   try {
     const formattedDateTime = moment(req.body.dateTime).format("MMMM Do YYYY");
     const newSchedule = await new TempSchedule({
@@ -162,7 +178,7 @@ const createTempSoloSchedule = async (req, res) => {
   });
 
   if (scheduleExists) {
-    return res.status(409).send("Schedule already exists");
+    return res.status(409).send("Slot Occupied!");
   }
 
   const tempScheduleExists = await TempSchedule.exists({

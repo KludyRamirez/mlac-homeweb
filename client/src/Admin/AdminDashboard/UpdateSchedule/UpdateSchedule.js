@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { styled } from "@mui/system";
-import AppBar from "../AppBar/AppBar";
-import SideBar from "../SideBar/SideBar";
+import { ResponsiveDrawer } from "../SideBar/SideBar";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
@@ -158,8 +157,7 @@ const UpdateSchedule = () => {
 
   return (
     <Wrapper>
-      <SideBar />
-      <AppBar />
+      <ResponsiveDrawer />
       <UpdateScheduleContainer>
         <UpdateScheduleForm
           handleSubmit={handleSubmit}
