@@ -14,8 +14,11 @@ code {
 
 .icon-active {
   color: white;
-  background: rgba(255, 255, 255, 0.25);
-  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  border: rgba(33, 36, 39, 0.2);
   padding: 8px;
-  border-radius: 50%;
+  border-top-left-radius: 30%;
+  border-bottom-left-radius: 30%;
+  border-top-right-radius: 30%;
+  border-bottom-right-radius: 5%;
 }

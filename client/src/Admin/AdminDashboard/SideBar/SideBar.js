@@ -8,13 +8,19 @@ import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 
 import { CgMenuLeft } from "react-icons/cg";
+import {
+  PiHouseBold,
+  PiChatCenteredDotsBold,
+  PiCalendarPlusBold,
+  PiUserCircleBold,
+  PiBabyBold,
+  PiHouseFill,
+  PiChatCenteredDotsFill,
+  PiCalendarPlusFill,
+  PiUserCircleFill,
+  PiBabyFill,
+} from "react-icons/pi";
 import Toolbar from "@mui/material/Toolbar";
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import GroupsIcon from "@mui/icons-material/Groups";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
-import LocalLibraryOutlinedIcon from "@mui/icons-material/LocalLibraryOutlined";
-import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
 import { useHistory } from "react-router-dom";
@@ -92,38 +98,13 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/timetable">
               {activeItem === "/timetable" ? (
-                <DashboardOutlinedIcon
+                <PiHouseFill
                   className={activeItem === "/timetable" ? "icon-active" : ""}
-                  sx={{ fontSize: "18px", fontWeight: "100" }}
+                  style={{ fontSize: "18px", fontWeight: "100" }}
                 />
               ) : (
-                <DashboardOutlinedIcon
-                  sx={{
-                    color: "white",
-                    padding: "8px",
-                    fontSize: "18px",
-                    fontWeight: "100",
-                  }}
-                />
-              )}
-            </Link>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Link to="/user">
-              {activeItem === "/user" ? (
-                <GroupsIcon
-                  className={activeItem === "/user" ? "icon-active" : ""}
-                  sx={{ fontSize: "18px", fontWeight: "100" }}
-                />
-              ) : (
-                <GroupsOutlinedIcon
-                  sx={{
+                <PiHouseBold
+                  style={{
                     color: "white",
                     padding: "8px",
                     fontSize: "18px",
@@ -143,13 +124,41 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/children">
               {activeItem === "/children" ? (
-                <LocalLibraryOutlinedIcon
+                <PiBabyFill
                   className={activeItem === "/children" ? "icon-active" : ""}
-                  sx={{ fontSize: "18px", fontWeight: "100" }}
+                  style={{ fontSize: "18px" }}
                 />
               ) : (
-                <LocalLibraryOutlinedIcon
-                  sx={{
+                <PiBabyBold
+                  style={{
+                    color: "white",
+                    padding: "8px",
+                    fontSize: "18px",
+                  }}
+                />
+              )}
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/chat">
+              {activeItem === "/chat" ? (
+                <PiChatCenteredDotsFill
+                  className={activeItem === "/chat" ? "icon-active" : ""}
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "100",
+                    color: "white",
+                  }}
+                />
+              ) : (
+                <PiChatCenteredDotsBold
+                  style={{
                     color: "white",
                     padding: "8px",
                     fontSize: "18px",
@@ -166,15 +175,15 @@ function ResponsiveDrawer(props) {
               alignItems: "center",
             }}
           >
-            <Link to="/chat">
-              {activeItem === "/chat" ? (
-                <ForumOutlinedIcon
-                  className={activeItem === "/chat" ? "icon-active" : ""}
-                  sx={{ fontSize: "18px", fontWeight: "300" }}
+            <Link to="/user">
+              {activeItem === "/user" ? (
+                <PiUserCircleFill
+                  className={activeItem === "/user" ? "icon-active" : ""}
+                  style={{ fontSize: "18px", fontWeight: "100" }}
                 />
               ) : (
-                <ForumOutlinedIcon
-                  sx={{
+                <PiUserCircleBold
+                  style={{
                     color: "white",
                     padding: "8px",
                     fontSize: "18px",
@@ -193,17 +202,17 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/schedule">
               {activeItem === "/schedule" ? (
-                <EventNoteOutlinedIcon
+                <PiCalendarPlusFill
                   className={activeItem === "/schedule" ? "icon-active" : ""}
-                  sx={{ fontSize: "18px", fontWeight: "300" }}
+                  style={{ fontSize: "18px", fontWeight: "100" }}
                 />
               ) : (
-                <EventNoteOutlinedIcon
-                  sx={{
+                <PiCalendarPlusBold
+                  style={{
                     color: "white",
                     padding: "8px",
                     fontSize: "18px",
-                    fontWeight: "300",
+                    fontWeight: "100",
                   }}
                 />
               )}
