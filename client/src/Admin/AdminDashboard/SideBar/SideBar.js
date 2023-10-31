@@ -7,18 +7,11 @@ import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 
-import { CgMenuLeft } from "react-icons/cg";
+import { CgBoy, CgMenuLeft, CgProfile } from "react-icons/cg";
 import {
   PiHouseBold,
   PiChatCenteredDotsBold,
-  PiCalendarPlusBold,
-  PiUserCircleBold,
-  PiBabyBold,
-  PiHouseFill,
-  PiChatCenteredDotsFill,
-  PiCalendarPlusFill,
-  PiUserCircleFill,
-  PiBabyFill,
+  PiCalendarBlankBold,
 } from "react-icons/pi";
 import Toolbar from "@mui/material/Toolbar";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
@@ -26,17 +19,32 @@ import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
+import FriendSidebar from "../../../Dashboard/FriendSidebar/FriendSidebar";
 
 const drawerWidth = 240;
 
 const AppNavBar = styled(AppBar)({
   background: "#007bff",
   boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+    "rgba(0, 0, 0, 0.1) 0px 1px 1px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px",
   width: { sm: "calc(100% - 240px)" },
   ml: { sm: "240px" },
   height: "36px",
   zIndex: "1",
+});
+
+const FatBar = styled("div")({
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "78%",
+  background: "#FEFEFE",
+  borderRight: "1px solid #007bff",
+  "@media (max-width: 767px)": {
+    borderRight: "none",
+  },
 });
 
 function ResponsiveDrawer(props) {
@@ -98,9 +106,9 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/timetable">
               {activeItem === "/timetable" ? (
-                <PiHouseFill
+                <PiHouseBold
                   className={activeItem === "/timetable" ? "icon-active" : ""}
-                  style={{ fontSize: "18px", fontWeight: "100" }}
+                  style={{ fontSize: "18px" }}
                 />
               ) : (
                 <PiHouseBold
@@ -108,7 +116,6 @@ function ResponsiveDrawer(props) {
                     color: "white",
                     padding: "8px",
                     fontSize: "18px",
-                    fontWeight: "100",
                   }}
                 />
               )}
@@ -124,12 +131,12 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/children">
               {activeItem === "/children" ? (
-                <PiBabyFill
+                <CgBoy
                   className={activeItem === "/children" ? "icon-active" : ""}
                   style={{ fontSize: "18px" }}
                 />
               ) : (
-                <PiBabyBold
+                <CgBoy
                   style={{
                     color: "white",
                     padding: "8px",
@@ -148,11 +155,11 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/chat">
               {activeItem === "/chat" ? (
-                <PiChatCenteredDotsFill
+                <PiChatCenteredDotsBold
                   className={activeItem === "/chat" ? "icon-active" : ""}
                   style={{
                     fontSize: "18px",
-                    fontWeight: "100",
+
                     color: "white",
                   }}
                 />
@@ -162,7 +169,6 @@ function ResponsiveDrawer(props) {
                     color: "white",
                     padding: "8px",
                     fontSize: "18px",
-                    fontWeight: "100",
                   }}
                 />
               )}
@@ -177,17 +183,16 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/user">
               {activeItem === "/user" ? (
-                <PiUserCircleFill
+                <CgProfile
                   className={activeItem === "/user" ? "icon-active" : ""}
-                  style={{ fontSize: "18px", fontWeight: "100" }}
+                  style={{ fontSize: "18px" }}
                 />
               ) : (
-                <PiUserCircleBold
+                <CgProfile
                   style={{
                     color: "white",
                     padding: "8px",
                     fontSize: "18px",
-                    fontWeight: "100",
                   }}
                 />
               )}
@@ -202,33 +207,25 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/schedule">
               {activeItem === "/schedule" ? (
-                <PiCalendarPlusFill
+                <PiCalendarBlankBold
                   className={activeItem === "/schedule" ? "icon-active" : ""}
-                  style={{ fontSize: "18px", fontWeight: "100" }}
+                  style={{ fontSize: "18px" }}
                 />
               ) : (
-                <PiCalendarPlusBold
+                <PiCalendarBlankBold
                   style={{
                     color: "white",
                     padding: "8px",
                     fontSize: "18px",
-                    fontWeight: "100",
                   }}
                 />
               )}
             </Link>
           </div>
         </div>
-        <div
-          style={{
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            width: "78%",
-            background: "rgba(7, 187, 255, 0.06)",
-          }}
-        ></div>
+        <FatBar>
+          <FriendSidebar />
+        </FatBar>
       </div>
     </div>
   );

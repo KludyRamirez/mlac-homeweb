@@ -9,13 +9,12 @@ import Wednesday from "../Days/Wednesday";
 import Friday from "../Days/Friday";
 import Thursday from "../Days/Thursday";
 import Saturday from "../Days/Saturday";
-import axios from "axios";
 import TopBar from "../AppBar/AppBar";
 
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
-  backgroundColor: "#FAFAFA",
+  backgroundColor: "#FCFCFC",
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",
@@ -26,11 +25,11 @@ const TimeTableCon = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   width: "100%",
-  backgroundColor: "#FAFAFA",
+  backgroundColor: "#FCFCFC",
   padding: "40px 10px",
   marginTop: "30px",
-  overflow: "hidden",
-  overflowX: "scroll",
+  // overflow: "hidden",
+  // overflowX: "scroll",
 
   "@media (max-width: 767px)": {
     padding: "40px 0px",
@@ -52,8 +51,12 @@ const Flexer = styled("div")({
 const WeekContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
+  alignItems: "center",
   gap: "10px",
-  marginLeft: "-8px",
+  marginLeft: "-7px",
+  // border: "1px solid rgba(0, 0, 0, 0.06)",
+  // padding: "6px",
+  // borderRadius: "10px",
 }));
 
 const selectAuth = (state) => state.auth;
@@ -84,25 +87,22 @@ const AllTimetable = ({ socket, userNotif }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "4px",
-                width: "28px",
-                height: "28px",
+                width: "25px",
+                height: "25px",
                 borderRadius: "50%",
                 marginTop: activeDay === "Monday" ? "-1px" : "0px",
-                backgroundColor:
-                  activeDay === "Monday" ? "white" : "transparent",
-                color: "#07bbff",
-                borderBottom:
-                  activeDay === "Monday" ? "1px solid #007bff" : "none",
-                borderTop:
-                  activeDay === "Monday" ? "1px solid #007bff" : "none",
-                borderLeft:
-                  activeDay === "Monday" ? "1px solid #007bff" : "none",
+                background:
+                  activeDay === "Monday"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeDay === "Monday" ? "white" : "#07bbff",
+
                 cursor: "pointer",
                 textDecoration: "none",
                 transition: "box-shadow .15s, transform .15s",
                 touchAction: "manipulation",
                 willChange: "box-shadow, transform",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: "bold",
                 ":focus": {
                   boxShadow:
@@ -129,25 +129,22 @@ const AllTimetable = ({ socket, userNotif }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "4px",
-                width: "28px",
-                height: "28px",
+                width: "25px",
+                height: "25px",
                 borderRadius: "50%",
                 marginTop: activeDay === "Tuesday" ? "-1px" : "0px",
-                backgroundColor:
-                  activeDay === "Tuesday" ? "white" : "transparent",
-                color: "#07bbff",
-                borderBottom:
-                  activeDay === "Tuesday" ? "1px solid #007bff" : "none",
-                borderTop:
-                  activeDay === "Tuesday" ? "1px solid #007bff" : "none",
-                borderLeft:
-                  activeDay === "Tuesday" ? "1px solid #007bff" : "none",
+                background:
+                  activeDay === "Tuesday"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeDay === "Tuesday" ? "white" : "#07bbff",
+
                 cursor: "pointer",
                 textDecoration: "none",
                 transition: "box-shadow .15s, transform .15s",
                 touchAction: "manipulation",
                 willChange: "box-shadow, transform",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: "bold",
                 ":focus": {
                   boxShadow:
@@ -173,25 +170,22 @@ const AllTimetable = ({ socket, userNotif }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "4px",
-                width: "28px",
-                height: "28px",
+                width: "25px",
+                height: "25px",
                 borderRadius: "50%",
                 marginTop: activeDay === "Wednesday" ? "-1px" : "0px",
-                backgroundColor:
-                  activeDay === "Wednesday" ? "white" : "transparent",
-                color: "#07bbff",
-                borderBottom:
-                  activeDay === "Wednesday" ? "1px solid #007bff" : "none",
-                borderTop:
-                  activeDay === "Wednesday" ? "1px solid #007bff" : "none",
-                borderLeft:
-                  activeDay === "Wednesday" ? "1px solid #007bff" : "none",
+                background:
+                  activeDay === "Wednesday"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeDay === "Wednesday" ? "white" : "#07bbff",
+
                 cursor: "pointer",
                 textDecoration: "none",
                 transition: "box-shadow .15s, transform .15s",
                 touchAction: "manipulation",
                 willChange: "box-shadow, transform",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: "bold",
                 ":focus": {
                   boxShadow:
@@ -217,25 +211,22 @@ const AllTimetable = ({ socket, userNotif }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "4px",
-                width: "28px",
-                height: "28px",
+                width: "25px",
+                height: "25px",
                 borderRadius: "50%",
                 marginTop: activeDay === "Thursday" ? "-1px" : "0px",
-                backgroundColor:
-                  activeDay === "Thursday" ? "white" : "transparent",
-                color: "#07bbff",
-                borderBottom:
-                  activeDay === "Thursday" ? "1px solid #007bff" : "none",
-                borderTop:
-                  activeDay === "Thursday" ? "1px solid #007bff" : "none",
-                borderLeft:
-                  activeDay === "Thursday" ? "1px solid #007bff" : "none",
+                background:
+                  activeDay === "Thursday"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeDay === "Thursday" ? "white" : "#07bbff",
+
                 cursor: "pointer",
                 textDecoration: "none",
                 transition: "box-shadow .15s, transform .15s",
                 touchAction: "manipulation",
                 willChange: "box-shadow, transform",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: "bold",
                 ":focus": {
                   boxShadow:
@@ -261,25 +252,22 @@ const AllTimetable = ({ socket, userNotif }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "4px",
-                width: "28px",
-                height: "28px",
+                width: "25px",
+                height: "25px",
                 borderRadius: "50%",
                 marginTop: activeDay === "Friday" ? "-1px" : "0px",
-                backgroundColor:
-                  activeDay === "Friday" ? "white" : "transparent",
-                color: "#07bbff",
-                borderBottom:
-                  activeDay === "Friday" ? "1px solid #007bff" : "none",
-                borderTop:
-                  activeDay === "Friday" ? "1px solid #007bff" : "none",
-                borderLeft:
-                  activeDay === "Friday" ? "1px solid #007bff" : "none",
+                background:
+                  activeDay === "Friday"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeDay === "Friday" ? "white" : "#07bbff",
+
                 cursor: "pointer",
                 textDecoration: "none",
                 transition: "box-shadow .15s, transform .15s",
                 touchAction: "manipulation",
                 willChange: "box-shadow, transform",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: "bold",
                 ":focus": {
                   boxShadow:
@@ -305,25 +293,22 @@ const AllTimetable = ({ socket, userNotif }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "4px",
-                width: "28px",
-                height: "28px",
+                width: "25px",
+                height: "25px",
                 borderRadius: "50%",
                 marginTop: activeDay === "Saturday" ? "-1px" : "0px",
-                backgroundColor:
-                  activeDay === "Saturday" ? "white" : "transparent",
-                color: "#07bbff",
-                borderBottom:
-                  activeDay === "Saturday" ? "1px solid #007bff" : "none",
-                borderTop:
-                  activeDay === "Saturday" ? "1px solid #007bff" : "none",
-                borderLeft:
-                  activeDay === "Saturday" ? "1px solid #007bff" : "none",
+                background:
+                  activeDay === "Saturday"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeDay === "Saturday" ? "white" : "#07bbff",
+
                 cursor: "pointer",
                 textDecoration: "none",
                 transition: "box-shadow .15s, transform .15s",
                 touchAction: "manipulation",
                 willChange: "box-shadow, transform",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: "bold",
                 ":focus": {
                   boxShadow:

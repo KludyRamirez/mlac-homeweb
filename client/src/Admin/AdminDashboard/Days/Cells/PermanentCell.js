@@ -9,12 +9,12 @@ import axios from "axios";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
-import CheckIcon from "@mui/icons-material/Check";
 import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import BlockIcon from "@mui/icons-material/Block";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import TimerIcon from "@mui/icons-material/Timer";
-
+import { ImCheckmark } from "react-icons/im";
+import { RxDash } from "react-icons/rx";
 const Cell = styled("div")({
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 1px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px",
@@ -94,8 +94,8 @@ const LowerIconDiv2 = styled("div")({
 });
 
 const LowerIconDiv3 = styled("div")({
-  background: "#7CFC00",
-  color: "#7CFC00",
+  background: "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
+  color: "transparent",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -265,14 +265,14 @@ const PermanentCell = ({
                   />
                 </LowerIconDiv2>
                 <LowerIconDiv3>
-                  <CheckIcon
-                    sx={{
+                  <ImCheckmark
+                    style={{
                       fontSize: "14px",
                     }}
                   />
                 </LowerIconDiv3>
                 <LowerIconDiv4 onClick={() => handleNotifs(1)}>
-                  <BlockIcon
+                  <RxDash
                     sx={{
                       fontSize: "14px",
                     }}

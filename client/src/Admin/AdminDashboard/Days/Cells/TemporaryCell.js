@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { styled } from "@mui/material/styles";
+import { styled } from "@mui/system";
+import { keyframes } from "@mui/styled-engine";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { createSelector } from "reselect";
@@ -16,13 +17,29 @@ import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import TimerIcon from "@mui/icons-material/Timer";
 import Tilt from "react-parallax-tilt";
 
+const flowyBackground = keyframes`
+  0% {
+   background-image: rgba(255, 255, 255, 1);
+}
+  25% {
+    background-image: radial-gradient(at bottom left, rgba(7, 187, 255, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(255, 255, 255, 0.15) 87.8%);
+  }
+  50% {
+    background-image: radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%);
+  }
+  75% {
+    background-image: radial-gradient(at bottom left, rgba(204, 251, 241, 0.15) 6%, rgba(255, 255, 255, 0.15) 47.6%, rgba(7, 187, 255, 0.20) 87.8%);
+  }
+  100% {
+    background-image: radial-gradient(at bottom left, rgba(7, 187, 255, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(255, 255, 255, 0.15) 87.8%);
+  }
+`;
+
 const CellTemp = styled("div")({
   backgroundImage:
-    "radial-gradient(at bottom left, rgba(117, 255, 220, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(255, 255, 255, 0.15) 87.8%)",
+    "radial-gradient(at bottom left, rgba(7,187,255, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(255, 255, 255, 0.15) 87.8%)",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  backdropFilter: "blur(20px)",
-  WebkitBackdropFilter: "blur(20px)",
   border: "1px dashed #007bff",
   borderRadius: "10px",
   width: "176px",
@@ -40,12 +57,14 @@ const CellTemp = styled("div")({
   overflow: "hidden",
   position: "relative",
   textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
   userSelect: "none",
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
+  transition: "box-shadow .15s, transform .15s",
+
   "&:hover": {
+    animation: `${flowyBackground} 0.1s ease-in-out`,
     boxShadow: "rgba(0, 0, 0, 0.06) 0px 2px 4px",
     transform: "translateY(-1px)",
   },
@@ -79,37 +98,9 @@ const LowerIconDiv = styled("div")({
   },
 });
 
-const LowerIconDiv2 = styled("div")({
-  background: "#FFBF00",
-  color: "#FFBF00",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
 const LowerIconDiv3 = styled("div")({
-  background: "#7CFC00",
-  color: "#7CFC00",
+  background: "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
+  color: "transparent",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -189,7 +180,7 @@ const TemporaryCell = ({ schedule, deleteOneSched }) => {
         {auth && auth.userDetails.role === "Administrator" && (
           <CloseSharpIcon
             sx={{
-              color: "#ff3131",
+              color: "#007bff",
               fontSize: "16px",
             }}
             onClick={() => deleteOneSched(schedule._id)}
@@ -264,7 +255,7 @@ const TemporaryCell = ({ schedule, deleteOneSched }) => {
             }}
           >
             {schedule.schedType === "Temporary" ? (
-              <TimerIcon fontSize="small" sx={{ color: "#007bff" }} />
+              <TimerIcon fontSize="small" sx={{ color: "#07bbff" }} />
             ) : (
               <BookmarkAddedIcon fontSize="small" sx={{ color: "white" }} />
             )}
