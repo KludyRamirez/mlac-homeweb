@@ -20,39 +20,28 @@ const Wrapper = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",
+  backgroundColor: "#FAFAFA",
 });
 
 const StudentParentCon = styled("div")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-start",
-  alignItems: "center",
-  width: "100%",
-  height: "inherit",
-  backgroundColor: "#FAFAFA",
-  marginTop: "40px",
+  padding: "10px 40px",
   gap: "20px",
-  flexWrap: "wrap",
+  backgroundColor: "#FAFAFA",
+  marginTop: "70px",
+  width: "100%",
+  overflow: "hidden",
+  overflowX: "scroll",
 });
 
-const Cell = styled("div")({
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  border: "1px dashed #007bff",
-  borderRadius: "10px",
-  width: "176px",
-  height: "106px",
+const Flexer = styled("div")({
   display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "space-between",
-  fontSize: "16px",
-  fontWeight: "600",
-  padding: "10px",
-  cursor: "pointer",
-  "&:hover": {
-    background: "white",
-  },
+  width: "100%",
+  justifyContent: "center",
+  gap: "40px",
+  flexWrap: "wrap",
 });
 
 const LowerIconDiv = styled("div")({
@@ -331,308 +320,37 @@ const ParentSortSchedule = () => {
     <Wrapper>
       <ResponsiveDrawer />
       <StudentParentCon>
-        {/* <div
-          style={{
-            color: "#07bbff",
-            fontSize: "48px",
-            fontWeight: "600",
-            padding: "30px 0 0 0",
-          }}
-        >
-          Children
-        </div> */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "20px",
-            flexWrap: "wrap",
-            width: "100%",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "20px",
-              flexWrap: "wrap",
-
-              width: "700px",
-              height: "fit-content",
-              padding: "40px",
-              borderRadius: "10px",
-            }}
-          >
-            {schedules
-              .filter(
-                (schedule) =>
-                  schedule.parent === (auth && auth.userDetails.fullname) &&
-                  schedule.schedType === "Permanent"
-              )
-              .map((schedule) => (
-                <Tilt>
-                  <Cell key={schedule._id}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: "0px 0 0 3px",
-                        }}
-                      >
-                        {schedule.nameOfStudent}
-                        {schedule.tempStudentName &&
-                          schedule.tempStudentName.nameOfStudent}
-                      </div>
-                    </div>
-                    <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                      <div
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "500",
-                          color: "#1434AF",
-                        }}
-                      >
-                        {schedule.timing}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "400",
-                          color: "#1434A4",
-                        }}
-                      >
-                        {schedule.studentType}
-                        {schedule.dateTime
-                          ? schedule.dateTime.slice(0, -5)
-                          : ""}
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-end",
-                        width: "100%",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            gap: "4px",
-                          }}
-                        >
-                          <LowerIconDiv>
-                            <PersonIcon
-                              sx={{
-                                fontSize: "14px",
-                              }}
-                            />
-                          </LowerIconDiv>
-                          {auth &&
-                            auth.userDetails.role === "Administrator" && (
-                              <>
-                                <LowerIconDiv2
-                                // onClick={() => navigateUpdate(schedule._id)}
-                                >
-                                  <EditIcon
-                                    sx={{
-                                      fontSize: "14px",
-                                    }}
-                                  />
-                                </LowerIconDiv2>
-                                <LowerIconDiv3>
-                                  <CheckIcon
-                                    sx={{
-                                      fontSize: "14px",
-                                    }}
-                                  />
-                                </LowerIconDiv3>
-                                <LowerIconDiv4
-                                  onClick={() =>
-                                    handleSetActiveToFalse(schedule._id)
-                                  }
-                                >
-                                  <BlockIcon
-                                    sx={{
-                                      fontSize: "14px",
-                                    }}
-                                  />
-                                </LowerIconDiv4>
-                              </>
-                            )}
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            color: "#007bff",
-                            fontSize: "12px",
-                          }}
-                        >
-                          {schedule.day}
-                        </div>
-                      </div>
-                    </div>
-                  </Cell>
-                </Tilt>
-              ))}
-          </div>
+        <Flexer>
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "20px",
-              flexWrap: "wrap",
-              border: "1px solid #07bbff",
-              width: "416px",
-              padding: "40px",
-              background: "#FCFCFC",
+              alignItems: "center",
+              width: "600px",
+              height: "300px",
+              border: "1px solid black",
+              fontSize: "100px",
+              whiteSpace: "nowrap",
             }}
           >
-            {schedules
-              .filter(
-                (schedule) =>
-                  (schedule.parent === (auth && auth.userDetails.fullname) &&
-                    schedule.schedType === "Temporary") ||
-                  (schedule.tempStudentName &&
-                    schedule.tempStudentName.parent ===
-                      (auth && auth.userDetails.fullname) &&
-                    schedule.schedType === "Temporary")
-              )
-              .map((schedule) => (
-                <Tilt style={{ height: "fit-content" }}>
-                  <Cell key={schedule._id}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: "0px 0 0 3px",
-                        }}
-                      >
-                        {schedule.nameOfStudent}
-                        {schedule.tempStudentName &&
-                          schedule.tempStudentName.nameOfStudent}
-                      </div>
-                    </div>
-                    <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
-                      <div
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "500",
-                          color: "#1434AF",
-                        }}
-                      >
-                        {schedule.timing}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: "400",
-                          color: "#1434A4",
-                        }}
-                      >
-                        {schedule.studentType}
-                        {schedule.dateTime
-                          ? schedule.dateTime.slice(0, -5)
-                          : ""}
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-end",
-                        width: "100%",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "0 0 1px 0",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            gap: "4px",
-                          }}
-                        >
-                          <LowerIconDiv>
-                            <PersonIcon
-                              sx={{
-                                fontSize: "14px",
-                              }}
-                            />
-                          </LowerIconDiv>
-                          {auth &&
-                            auth.userDetails.role === "Administrator" && (
-                              <>
-                                <LowerIconDiv2
-                                // onClick={() => navigateUpdate(schedule._id)}
-                                >
-                                  <EditIcon
-                                    sx={{
-                                      fontSize: "14px",
-                                    }}
-                                  />
-                                </LowerIconDiv2>
-                                <LowerIconDiv3>
-                                  <CheckIcon
-                                    sx={{
-                                      fontSize: "14px",
-                                    }}
-                                  />
-                                </LowerIconDiv3>
-                                <LowerIconDiv4>
-                                  <BlockIcon
-                                    sx={{
-                                      fontSize: "14px",
-                                    }}
-                                  />
-                                </LowerIconDiv4>
-                              </>
-                            )}
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            color: "#007bff",
-                            fontSize: "12px",
-                          }}
-                        >
-                          {schedule.day}
-                        </div>
-                      </div>
-                    </div>
-                  </Cell>
-                </Tilt>
-              ))}
+            Kludy Kludy
           </div>
-        </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "600px",
+              height: "300px",
+              border: "1px solid black",
+              fontSize: "100px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Kludy Kludy
+          </div>
+        </Flexer>
       </StudentParentCon>
     </Wrapper>
   );

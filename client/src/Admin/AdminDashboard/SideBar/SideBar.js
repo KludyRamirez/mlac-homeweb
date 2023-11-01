@@ -24,9 +24,9 @@ import FriendSidebar from "../../../Dashboard/FriendSidebar/FriendSidebar";
 const drawerWidth = 240;
 
 const AppNavBar = styled(AppBar)({
-  background: "#007bff",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 1px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px",
+  background: "transparent",
+
+  boxShadow: "none",
   width: { sm: "calc(100% - 240px)" },
   ml: { sm: "240px" },
   height: "36px",
@@ -41,7 +41,6 @@ const FatBar = styled("div")({
   alignItems: "center",
   width: "78%",
   background: "#FEFEFE",
-  borderRight: "1px solid #007bff",
   "@media (max-width: 767px)": {
     borderRight: "none",
   },

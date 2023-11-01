@@ -39,14 +39,14 @@ const Permanent = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  gap: "10px",
+  gap: "12px",
 });
 
 const Solo = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  gap: "10px",
+  gap: "12px",
   padding: "0 0px 10px 10px",
 });
 
@@ -55,7 +55,7 @@ const Temporary = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  gap: "10px",
+  gap: "12px",
   padding: "0 0px 10px 10px",
 });
 

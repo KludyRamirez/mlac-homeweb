@@ -26,12 +26,12 @@ const TimeTableCon = styled("div")({
   alignItems: "flex-start",
   width: "100%",
   backgroundColor: "#FCFCFC",
-  padding: "40px 10px",
-  marginTop: "30px",
-  // overflow: "hidden",
-  // overflowX: "scroll",
+  padding: "0px 10px",
+  marginTop: "70px",
 
   "@media (max-width: 767px)": {
+    overflow: "hidden",
+    overflowX: "scroll",
     padding: "40px 0px",
     marginTop: "20px",
     marginLeft: "-30px",
@@ -52,11 +52,14 @@ const WeekContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
-  gap: "10px",
+  gap: "14px",
   marginLeft: "-7px",
-  // border: "1px solid rgba(0, 0, 0, 0.06)",
-  // padding: "6px",
-  // borderRadius: "10px",
+  border: "1px solid rgba(0, 0, 0, 0.06)",
+  padding: "6px",
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  borderBottomRightRadius: "20px",
+  borderBottomLeftRadius: "2px",
 }));
 
 const selectAuth = (state) => state.auth;
@@ -104,6 +107,12 @@ const AllTimetable = ({ socket, userNotif }) => {
                 willChange: "box-shadow, transform",
                 fontSize: "11px",
                 fontWeight: "bold",
+                // borderBottom:
+                //   activeDay === "Monday" ? "none" : "1px solid #007bff",
+                // borderTop:
+                //   activeDay === "Monday" ? "none" : "1px solid #007bff",
+                // borderLeft:
+                //   activeDay === "Monday" ? "none" : "1px solid #007bff",
                 ":focus": {
                   boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
@@ -112,9 +121,7 @@ const AllTimetable = ({ socket, userNotif }) => {
                   boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
                   transform: "translateY(-2px)",
-                  borderBottom: "1px solid #007bff",
-                  borderTop: "1px solid #007bff",
-                  borderLeft: "1px solid #007bff",
+
                   background: "white",
                 },
               }}
@@ -146,6 +153,12 @@ const AllTimetable = ({ socket, userNotif }) => {
                 willChange: "box-shadow, transform",
                 fontSize: "11px",
                 fontWeight: "bold",
+                // borderBottom:
+                //   activeDay === "Tuesday" ? "none" : "1px solid #007bff",
+                // borderTop:
+                //   activeDay === "Tuesday" ? "none" : "1px solid #007bff",
+                // borderLeft:
+                //   activeDay === "Tuesday" ? "none" : "1px solid #007bff",
                 ":focus": {
                   boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
@@ -187,6 +200,12 @@ const AllTimetable = ({ socket, userNotif }) => {
                 willChange: "box-shadow, transform",
                 fontSize: "11px",
                 fontWeight: "bold",
+                // borderBottom:
+                //   activeDay === "Wednesday" ? "none" : "1px solid #007bff",
+                // borderTop:
+                //   activeDay === "Wednesday" ? "none" : "1px solid #007bff",
+                // borderLeft:
+                //   activeDay === "Wednesday" ? "none" : "1px solid #007bff",
                 ":focus": {
                   boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
@@ -228,6 +247,12 @@ const AllTimetable = ({ socket, userNotif }) => {
                 willChange: "box-shadow, transform",
                 fontSize: "11px",
                 fontWeight: "bold",
+                // borderBottom:
+                //   activeDay === "Thursday" ? "none" : "1px solid #007bff",
+                // borderTop:
+                //   activeDay === "Thursday" ? "none" : "1px solid #007bff",
+                // borderLeft:
+                //   activeDay === "Thursday" ? "none" : "1px solid #007bff",
                 ":focus": {
                   boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
@@ -269,6 +294,12 @@ const AllTimetable = ({ socket, userNotif }) => {
                 willChange: "box-shadow, transform",
                 fontSize: "11px",
                 fontWeight: "bold",
+                // borderBottom:
+                //   activeDay === "Friday" ? "none" : "1px solid #007bff",
+                // borderTop:
+                //   activeDay === "Friday" ? "none" : "1px solid #007bff",
+                // borderLeft:
+                //   activeDay === "Friday" ? "none" : "1px solid #007bff",
                 ":focus": {
                   boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
@@ -310,6 +341,12 @@ const AllTimetable = ({ socket, userNotif }) => {
                 willChange: "box-shadow, transform",
                 fontSize: "11px",
                 fontWeight: "bold",
+                // borderBottom:
+                //   activeDay === "Saturday" ? "none" : "1px solid #007bff",
+                // borderTop:
+                //   activeDay === "Saturday" ? "none" : "1px solid #007bff",
+                // borderLeft:
+                //   activeDay === "Saturday" ? "none" : "1px solid #007bff",
                 ":focus": {
                   boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
