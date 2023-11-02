@@ -20,31 +20,95 @@ const Wrapper = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",
-  backgroundColor: "#FAFAFA",
+  backgroundColor: "#FEFEFE",
 });
 
 const StudentParentCon = styled("div")({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "flex-start",
-  padding: "10px 40px",
+  alignItems: "center",
   gap: "20px",
-  backgroundColor: "#FAFAFA",
+  backgroundColor: "#FEFEFE",
   marginTop: "70px",
   width: "100%",
-  overflow: "hidden",
-  overflowX: "scroll",
+  "@media (max-width: 767px)": {
+    alignItems: "flex-start",
+    overflow: "hidden",
+    overflowX: "scroll",
+  },
 });
 
 const Flexer = styled("div")({
   display: "flex",
-  width: "100%",
   justifyContent: "center",
   gap: "40px",
   flexWrap: "wrap",
 });
 
+const Cell = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px solid #007bff",
+  width: "100%",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const Cell2 = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px solid #07bbff",
+  width: "100%",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const Cell3 = styled("div")({
+  padding: "10px",
+  color: "white",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "transparent",
+  borderBottom: "1px solid white",
+  width: "100%",
+
+  "&:last-child": {
+    border: "none",
+    borderRadius: "10px",
+  },
+});
+
+const Cell4 = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px solid #007bff",
+  width: "100%",
+  display: "flex",
+  justifyContent: "flex-start",
+  gap: "4px",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
 const LowerIconDiv = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
   background: "#007bff",
   color: "#007bff",
   boxShadow:
@@ -65,6 +129,8 @@ const LowerIconDiv = styled("div")({
 });
 
 const LowerIconDiv2 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
   background: "#FFBF00",
   color: "#FFBF00",
   boxShadow:
@@ -85,6 +151,8 @@ const LowerIconDiv2 = styled("div")({
 });
 
 const LowerIconDiv3 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
   background: "#7CFC00",
   color: "#7CFC00",
   boxShadow:
@@ -105,6 +173,8 @@ const LowerIconDiv3 = styled("div")({
 });
 
 const LowerIconDiv4 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
   background: "#FF3131",
   color: "#FF3131",
   boxShadow:
@@ -325,30 +395,310 @@ const ParentSortSchedule = () => {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
-              width: "600px",
-              height: "300px",
-              border: "1px solid black",
-              fontSize: "100px",
+              alignItems: "flex-start",
+              borderTop: "1px solid rgba(0, 0, 0, 0.03)",
               whiteSpace: "nowrap",
+              background: "rgba(0, 0, 0, 0.006)",
+              padding: "20px",
+              gap: "6px",
             }}
           >
-            Kludy Kludy
-          </div>
+            <div
+              style={{
+                height: "100%",
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                gap: "6px",
+              }}
+            >
+              <div
+                style={{
+                  width: "50px",
+                  borderTopLeftRadius: "10px",
+                  // borderTopRightRadius: "6px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "white",
+                  color: "#007bff",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  letterSpacing: "0.3px",
+                  border: "1px solid #07bbff",
+                }}
+              >
+                <div style={{ padding: "10px" }}>ID</div>
+              </div>
+              <div
+                style={{
+                  width: "50px",
+                  height: "100%",
+                  borderBottomLeftRadius: "10px",
+                  // borderBottomRightRadius: "6px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "#07bbff",
+                  color: "white",
+                  fontWeight: "500",
+                  fontSize: "12px",
+                  border: "1px solid #07bbff",
+                }}
+              ></div>
+            </div>
+            <div
+              style={{
+                height: "100%",
+                borderRadius: "6px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                gap: "6px",
+              }}
+            >
+              <div
+                style={{
+                  width: "200px",
+                  borderTopRightRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "#007bff",
+                  color: "white",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  letterSpacing: "0.3px",
+                  border: "1px solid #007bff",
+                }}
+              >
+                <div style={{ padding: "10px" }}>Name</div>
+              </div>
+              <div
+                style={{
+                  width: "180px",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "white",
+                  border: "1px solid #007bff",
+                  padding: "10px 10px 0px 10px",
+                  gap: "10px",
+                }}
+              >
+                {schedules.map((schedule) => (
+                  <Cell key={schedule._id}>{schedule.nameOfStudent}</Cell>
+                ))}
+              </div>
+            </div>
+            <div
+              style={{
+                height: "100%",
+                borderRadius: "6px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                gap: "6px",
+              }}
+            >
+              <div
+                style={{
+                  width: "200px",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "#07bbff",
+                  color: "white",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  letterSpacing: "0.3px",
+                  border: "1px solid #07bbff",
+                }}
+              >
+                <div style={{ padding: "10px" }}>Day</div>
+              </div>
+              <div
+                style={{
+                  width: "180px",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "white",
+                  border: "1px solid #07bbff",
+                  padding: "10px 10px 0px 10px",
+                  gap: "10px",
+                }}
+              >
+                {schedules.map((schedule) => (
+                  <Cell2 key={schedule._id}>{schedule.day}</Cell2>
+                ))}
+              </div>
+            </div>
+            <div
+              style={{
+                // width: "100px",
+                height: "100%",
+                borderRadius: "6px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                gap: "6px",
+              }}
+            >
+              <div
+                style={{
+                  width: "200px",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "#007bff",
+                  color: "white",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  letterSpacing: "0.3px",
+                  border: "1px solid #007bff",
+                }}
+              >
+                <div style={{ padding: "10px" }}>Time</div>
+              </div>
+              <div
+                style={{
+                  width: "180px",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "white",
+                  border: "1px solid #007bff",
+                  padding: "10px 10px 0px 10px",
+                  gap: "10px",
+                }}
+              >
+                {schedules.map((schedule) => (
+                  <Cell key={schedule._id}>{schedule.timing}</Cell>
+                ))}
+              </div>
+            </div>
+            <div
+              style={{
+                // width: "100px",
+                height: "100%",
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                gap: "6px",
+              }}
+            >
+              <div
+                style={{
+                  width: "200px",
+                  borderTopLeftRadius: "10px",
+                  // borderTopRightRadius: "6px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "white",
+                  color: "#007bff",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  letterSpacing: "0.3px",
+                  border: "1px solid #007bff",
+                }}
+              >
+                <div style={{ padding: "10px" }}>Type</div>
+              </div>
+              <div
+                style={{
+                  width: "180px",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "#07bbff",
+                  border: "1px solid #07bbff",
+                  padding: "10px 10px 0px 10px",
+                  gap: "10px",
+                  borderBottomLeftRadius: "10px",
+                  borderBottomRightRadius: "10px",
+                }}
+              >
+                {schedules.map((schedule) => (
+                  <Cell3 key={schedule._id}>{schedule.studentType}</Cell3>
+                ))}
+              </div>
+            </div>
+            <div
+              style={{
+                // width: "100px",
+                height: "100%",
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                gap: "6px",
+              }}
+            >
+              <div
+                style={{
+                  width: "125px",
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "600px",
-              height: "300px",
-              border: "1px solid black",
-              fontSize: "100px",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Kludy Kludy
+                  // borderTopLeftRadius: "6px",
+                  borderTopRightRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "#007bff",
+                  color: "white",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  letterSpacing: "0.3px",
+                  border: "1px solid #007bff",
+                }}
+              >
+                <div style={{ padding: "10px" }}>Actions</div>
+              </div>
+              <div
+                style={{
+                  width: "105px",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  background: "white",
+                  border: "1px solid #07bbff",
+                  padding: "10px 10px 0px 10px",
+                  gap: "10px",
+                }}
+              >
+                {schedules.map((schedule) => (
+                  <Cell4 key={schedule._id}>
+                    <LowerIconDiv></LowerIconDiv>
+                    <LowerIconDiv2></LowerIconDiv2>
+                    <LowerIconDiv3></LowerIconDiv3>
+                    <LowerIconDiv4></LowerIconDiv4>
+                  </Cell4>
+                ))}
+              </div>
+            </div>
           </div>
         </Flexer>
       </StudentParentCon>
