@@ -15,6 +15,7 @@ import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import TimerIcon from "@mui/icons-material/Timer";
 import { ImCheckmark } from "react-icons/im";
 import { RxDash } from "react-icons/rx";
+
 const Cell = styled("div")({
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 1px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px",

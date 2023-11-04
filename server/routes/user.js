@@ -14,12 +14,12 @@ router.put("/user/:id", mainController.controllers.editUser);
 
 // usercart
 
-router.post("/user/con", mainController.controllers.userCon);
-router.get("/user/con", mainController.controllers.getUserCon);
-router.delete("/user/con", mainController.controllers.emptyCon);
+router.post("/con", auth, mainController.controllers.userCon);
+router.get("/con", auth, mainController.controllers.getUserCon);
+router.delete("/con", auth, mainController.controllers.emptyCon);
 
 // user sched order
 
-router.post("/user/sched-order", mainController.controllers.createSchedOrder);
+router.post("/sched-order", auth, mainController.controllers.createSchedOrder);
 
 module.exports = router;

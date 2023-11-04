@@ -1,6 +1,7 @@
 const User = require("../../models/user");
 const Container = require("../../models/container");
 const Order = require("../../models/order");
+const uniqid = require("uniqid");
 
 const getUser = async (req, res) => {
   try {
@@ -27,7 +28,8 @@ const deleteUser = async (req, res) => {
 
 const userCon = async (req, res) => {
   try {
-    const { container } = req.body;
+    const { con } = req.body;
+
     let schedules = [];
 
     const user = await User.findOne({ username: req.user.username }).exec();
@@ -41,29 +43,29 @@ const userCon = async (req, res) => {
       console.log("Removed floating schedules");
     }
 
-    for (let i = 0; i < container.length; i++) {
+    for (let i = 0; i < con.length; i++) {
       let object = {};
 
-      object.schedule = container[i]._id;
-      object.absentReason = container[i].absentReason;
+      object.schedule = con[i]._id;
+      object.absentReason = con[i].absentReason;
 
       schedules.push(object);
     }
 
-    let containerTotal = 0;
+    let conTotal = 0;
     for (let i = 0; i < schedules.length; i++) {
-      containerTotal = containerTotal + schedules[i].price * schedules[i].count;
+      conTotal = conTotal + schedules[i].price * schedules[i].count;
     }
 
-    console.log("containerTotal", containerTotal);
+    console.log("containerTotal", conTotal);
 
-    let newContainer = await new Container({
+    let newCon = await new Container({
       schedules,
-      containerTotal,
+      conTotal,
       orderdBy: user._id,
     }).save();
 
-    console.log("newContainer", newContainer);
+    console.log("newContainer", newCon);
     res.json({ ok: true });
   } catch (error) {
     console.error("An error occurred:", error);
@@ -96,19 +98,10 @@ const getUserCon = async (req, res) => {
 
 const emptyCon = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.user.username }).exec();
-    const container = await Container.findOneAndRemove({
-      orderdBy: user._id,
-    }).exec();
-
-    if (!container) {
-      throw new Error("Container not found for this user.");
-    }
-
-    res.json(container);
+    let container = await Container.deleteMany({});
+    res.json({ deletedCount: container.deletedCount });
   } catch (error) {
-    console.error("An error occurred:", error);
-    res.status(500).json({ error: "An error occurred" });
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -130,16 +123,16 @@ const userOrders = async (req, res) => {
 
 const createSchedOrder = async (req, res) => {
   try {
-    const { COD } = req.body;
+    const { audit } = req.body;
 
-    if (!COD) throw new Error("Create cash order failed");
+    if (!audit) return res.status(400).send("Create cash order failed");
 
     const user = await User.findOne({ username: req.user.username }).exec();
 
     let userCon = await Container.findOne({ orderdBy: user._id }).exec();
 
     let newOrder = await new Order({
-      products: userCon.schedules,
+      schedules: userCon.schedules,
       paymentIntent: {
         id: uniqid(),
         currency: "PHP",

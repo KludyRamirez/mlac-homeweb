@@ -72,8 +72,8 @@ const CellCon2 = styled("div")({
 });
 
 const Cell2 = styled("div")({
-  background: "rgba(0, 0, 0, 0.02)",
-  border: "1px solid rgba(0, 0, 0, 0.05)",
+  background: "rgba(0, 0, 0, 0.014)",
+  border: "1px solid rgba(0, 123, 255, 0.1)",
   borderRadius: "10px",
   width: "176px",
   height: "106px",

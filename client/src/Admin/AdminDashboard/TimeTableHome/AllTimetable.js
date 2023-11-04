@@ -14,7 +14,7 @@ import TopBar from "../AppBar/AppBar";
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
-  backgroundColor: "#FCFCFC",
+  background: "white",
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",
@@ -23,9 +23,9 @@ const Wrapper = styled("div")({
 const TimeTableCon = styled("div")({
   display: "flex",
   flexDirection: "column",
-  alignItems: "flex-start",
+  alignItems: "center",
   width: "100%",
-  backgroundColor: "#FCFCFC",
+  background: "transparent",
   padding: "0px 10px",
   marginTop: "70px",
 
@@ -35,6 +35,7 @@ const TimeTableCon = styled("div")({
     padding: "40px 0px",
     marginTop: "20px",
     marginLeft: "-30px",
+    alignItems: "flex-start",
   },
 });
 
@@ -54,7 +55,7 @@ const WeekContainer = styled("div")(({ theme }) => ({
   alignItems: "center",
   gap: "14px",
   marginLeft: "-7px",
-  border: "1px solid rgba(0, 0, 0, 0.06)",
+  border: "1px solid rgba(0, 123, 255, 0.1)",
   padding: "6px",
   borderTopLeftRadius: "20px",
   borderTopRightRadius: "20px",
