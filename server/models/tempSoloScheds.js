@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const tempSoloSchedsSchema = new mongoose.Schema(
   {
+    cardId: {
+      type: String,
+    },
     tempStudentName: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "scheds",

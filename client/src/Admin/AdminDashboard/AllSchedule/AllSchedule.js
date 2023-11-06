@@ -1,288 +1,494 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
-import { Button } from "@mui/material";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
+import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditNoteIcon from "@mui/icons-material/EditNote";
+import EditIcon from "@mui/icons-material/Edit";
+import PersonIcon from "@mui/icons-material/Person";
+import DeleteIcon from "@mui/icons-material/Delete";
+import BlockIcon from "@mui/icons-material/Block";
+import { BsCheckLg } from "react-icons/bs";
+import Tilt from "react-parallax-tilt";
+import { HiSortDescending, HiSortAscending } from "react-icons/hi";
+import { RiSearchLine } from "react-icons/ri";
+import TopBar from "../AppBar/AppBar";
+import Modal from "@mui/material/Modal";
+import AbsentScheduleCard from "./AbsentScheduleCard";
+import AuditModal from "./AuditModal";
+import { toast } from "react-toastify";
 
-import FaceIcon from "@mui/icons-material/Face";
-import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-import TodayIcon from "@mui/icons-material/Today";
-import Face2Icon from "@mui/icons-material/Face2";
-import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-import TouchAppIcon from "@mui/icons-material/TouchApp";
-import arrow from "../../../images/arrow.svg";
-
-const AllScheduleContainer = styled("div")({
+const LowerBox = styled("div")({
   display: "flex",
-  boxShadow: "rgba(0, 123, 255, 0.20) 0px 25px 50px -12px",
-  padding: "40px",
-  "@media (max-width: 1366px)": {
-    width: "555px",
+  alignSelf: "flex-start",
+  justifyContent: "center",
+  width: "100%",
+  height: "400px",
+  borderTopRightRadius: "25px",
+  borderBottomRightRadius: "25px",
+  borderBottomLeftRadius: "25px",
+  background:
+    "radial-gradient(at bottom left, rgba(204, 251, 241, 0.15) 6%, rgba(255, 255, 255, 0.15) 47.6%, rgba(67, 207, 255, 0.20) 87.8%)",
+  "@media (max-width: 767px)": {
+    justifyContent: "flex-start",
+    overflow: "hidden",
+  },
+});
+
+const StudentParentCon = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  marginTop: "40px",
+  gap: "20px",
+  padding: "20px",
+  "@media (max-width: 767px)": {
+    justifyContent: "flex-start",
+    overflow: "hidden",
+    marginTop: "30px",
+  },
+});
+
+const Flexer = styled("div")({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  gap: "40px",
+  paddingTop: "10px",
+  flexWrap: "wrap",
+  "@media (max-width: 767px)": {
+    justifyContent: "flex-start",
     overflow: "hidden",
     overflowX: "scroll",
   },
 });
 
-const ContentCon = styled("div")({
+const Cell = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "600",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px dashed #007bff",
+  width: "100%",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const Cell2 = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "600",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px dashed #07bbff",
+  width: "100%",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const Cell3 = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "600",
+  letterSpacing: "0.3px",
+  background: "transparent",
+  borderBottom: "1px dashed #007bff",
+  width: "100%",
+
+  "&:last-child": {
+    border: "none",
+    borderRadius: "10px",
+  },
+});
+
+const Cell4 = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "600",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px dashed #007bff",
+  width: "100%",
   display: "flex",
   justifyContent: "flex-start",
-  gap: "10px",
+  gap: "4px",
+  "&:last-child": {
+    border: "none",
+  },
 });
 
-export const StyledButton = styled("div")(({ theme }) => ({
-  alignItems: "center",
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
-  border: 0,
-  borderRadius: "25px",
-  boxShadow:
-    "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset",
-  boxSizing: "border-box",
-  color: "#fff",
-  cursor: "pointer",
-  display: "inline-flex",
-  width: "50px",
-  height: "50px",
-  justifyContent: "center",
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  paddingLeft: "16px",
-  paddingRight: "16px",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "18px",
-  "&:focus": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px inset, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset`,
-  },
-  "&:hover": {
-    boxShadow:
-      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px -3px, rgba(0, 123, 255, 0.25) 0 -3px 0 inset",
-    transform: "translateY(-2px)",
-  },
-  "&:active": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 3px 7px inset`,
-    transform: "translateY(2px)",
-  },
-}));
-
-const TitleCon = styled("div")(({ theme }) => ({
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #FFFFFF, #FFFFFF  100%)",
-  border: 0,
-  borderRadius: "34px",
-  boxShadow:
-    "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0",
-  boxSizing: "border-box",
-  cursor: "pointer",
-  width: "34px",
-  height: "34px",
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "14px",
-  zIndex: "2",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+const CellId = styled("div")({
+  padding: "10px",
   color: "white",
+  fontSize: "13px",
   fontWeight: "600",
-  "&:focus": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0`,
-  },
-  "&:hover": {
-    boxShadow:
-      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0 ",
-    transform: "translateY(-2px)",
-  },
-  "&:active": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 3px 7px`,
-    transform: "translateY(2px)",
-  },
-}));
-
-const TitleCon2 = styled("div")(({ theme }) => ({
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
-  border: 0,
-  borderRadius: "6px",
-  boxShadow:
-    "rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0",
-  boxSizing: "border-box",
-  cursor: "pointer",
-  width: "90px",
-  height: "34px",
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "14px",
+  letterSpacing: "0.3px",
+  background: "transparent",
+  borderBottom: "1px dashed white",
+  width: "100%",
   textTransform: "uppercase",
-  textAlign: "center",
-  paddingTop: "10px",
-  color: "white",
-  fontWeight: "bold",
-  "&:focus": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 0 0 1.5px, rgba(0, 123, 255, 0.25) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0`,
+
+  "&:last-child": {
+    border: "none",
+    borderRadius: "10px",
   },
+});
+
+const LowerIconDiv = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#007bff",
+  color: "#007bff",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
-    boxShadow:
-      "rgba(0, 123, 255, 0.25) 0 4px 8px, rgba(0, 123, 255, 0.25) 0 7px 13px 0px, rgba(0, 123, 255, 0.25) 0 0px 0 ",
-    transform: "translateY(-2px)",
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
   },
   "&:active": {
-    boxShadow: `rgba(0, 123, 255, 0.25) 0 3px 7px`,
-    transform: "translateY(2px)",
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv2 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#FDDA0D",
+  color: "#FDDA0D",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv3 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#00FF7F",
+  color: "#00FF7F",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv4 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#FF7F50",
+  color: "#FF7F50",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv5 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#FF3131",
+  color: "#FF3131",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const IconSortContainer = styled("div")({
+  width: "26px",
+  height: "26px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "50%",
+  cursor: "pointer",
+  "&:hover": {
+    background: "rgba(0, 0, 0, 0.06)",
+  },
+});
+
+const TableContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: "12px",
+  border: "1px solid rgba(0, 123, 255, 0.3)",
+  padding: "6px",
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  borderBottomRightRadius: "20px",
+  borderBottomLeftRadius: "2px",
+}));
+
+const SearchMainCon = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  alignSelf: "flex-end",
+  position: "relative",
+  "@media (max-width: 767px)": {
+    width: "100%",
   },
 }));
 
-const ActionDel = styled(Button)({
-  color: "#007bff",
-});
-
-const ActionEdit = styled(Button)({
-  color: "#007bff",
-});
-
-const Columner = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "165px",
-  gap: "10px",
-});
-
-const DetailsCon = styled("div")({
+const SearchBar = styled("input")(({ theme }) => ({
   width: "100%",
-  // height: "75vh",
-  // borderTop: "2px solid #B6D0E2",
-  // borderLeft: "2px solid #B6D0E2",
-  // borderBottom: "2px solid #B6D0E2",
-  display: "flex",
-  alignItems: "center",
-  flexDirection: "column",
-  textAlign: "center",
-});
-const TDetailsCon = styled("div")({
-  width: "100%",
-  // height: "75vh",
-  // borderTop: "2px solid #B6D0E2",
-  // borderBottom: "2px solid #B6D0E2",
-  borderLeft: "1px solid #B6D0E2",
-  // borderRight: "1px solid #B6D0E2",
-  display: "flex",
-  alignItems: "center",
-  textAlign: "center",
-  flexDirection: "column",
-});
-const BDetailsCon = styled("div")({
-  width: "100%",
-  // height: "75vh",
-  // borderTop: "2px solid #B6D0E2",
-  // borderRight: "2px solid #B6D0E2",
-  // borderBottom: "2px solid #B6D0E2",
-  borderRadius: "1px",
-  display: "flex",
-  alignItems: "center",
-  flexDirection: "column",
-  textAlign: "center",
-});
-
-const MapCon = styled("div")({
-  height: "40px",
-  width: "120%",
-  color: "#007bff",
-  paddingLeft: "8px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  borderBottom: "1px solid #B6D0E2",
-  fontSize: "13px",
+  height: "26px",
+  background: "white",
+  border: "1px solid rgba(0, 123, 255, 0.3)",
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  borderBottomLeftRadius: "20px",
+  zIndex: "1",
+  padding: "6px 0px 6px 42px",
+  fontSize: "12px",
   fontWeight: "600",
-  textAlign: "center",
-  "&:last-child": {
+  letterSpacing: "0.3px",
+  color: "#007bff",
+  "&:focus": {
+    outline: "none",
+  },
+  "&::placeholder": {
+    color: "rgba(0, 0, 0, 0.1)",
+  },
+  "@media (max-width: 767px)": {
+    borderRadius: "20px",
+  },
+}));
+
+const ModalBox = styled("div")({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  width: "34%",
+  height: "600px",
+  transform: "translate(-50%, -50%)",
+  background: "white",
+  borderRadius: "20px",
+  fontSize: "12px",
+  fontWeight: "600",
+  color: "#007bff",
+  border: "none",
+  outline: "none",
+
+  "&:focus": {
     border: "none",
   },
-});
 
-const MapCon1 = styled("div")({
-  height: "40px",
-  width: "100%",
-  color: "#007bff",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  borderBottom: "1px solid #B6D0E2",
-  fontSize: "13px",
-  fontWeight: "600",
-  textAlign: "center",
-  "&:last-child": {
+  "@media (max-width: 767px)": {
+    width: "100%",
+    height: "100%",
+    borderRadius: "0px",
     border: "none",
   },
-});
-
-const MapCon2 = styled("div")({
-  height: "40px",
-  width: "100%",
-  color: "#007bff",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  borderBottom: "1px solid #B6D0E2",
-  fontSize: "13px",
-  fontWeight: "600",
-  textAlign: "center",
-  "&:last-child": {
-    border: "none",
-  },
-});
-
-const Flexer = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  width: "100%",
 });
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const AllSchedule = () => {
+const selectCon = (state) => state.con;
+const conSelector = createSelector([selectCon], (con) => con);
+
+const selectAudit = (state) => state.audit;
+const auditSelector = createSelector([selectAudit], (audit) => audit);
+
+const ParentSortSchedule = () => {
   const [schedules, setSchedules] = useState([]);
+  const [activeSchedType, setActiveSchedType] = useState("Permanent");
+  const [isNameDesc, setIsNameDesc] = useState(false);
+  const [isDayDesc, setIsDayDesc] = useState(false);
+  const [isTimeDesc, setIsTimeDesc] = useState(false);
+  const [isTypeDesc, setIsTypeDesc] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredSchedules, setFilteredSchedules] = useState([]);
+  //modals
+  const [showModal, setShowModal] = useState(false);
+  const [showSecModal, setShowSecModal] = useState(false);
+
   const auth = useSelector(authSelector);
+  const con = useSelector(conSelector);
+  const audit = useSelector(auditSelector);
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    deleteExpiredTemporarySchedule();
+    deleteExpiredTemporarySoloSchedule();
+  }, []);
 
   useEffect(() => {
     getSchedules();
-  }, []);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const filtered = schedules.filter((schedule) => {
+      return (
+        schedule.nameOfStudent
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        schedule.day.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        schedule.timing.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        schedule.studentType
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        schedule.cardId
+          ?.slice(-4)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      );
+    });
+    setFilteredSchedules(filtered);
+  }, [searchQuery, schedules]);
+
+  const handleDayChange = (day) => {
+    setActiveSchedType(day);
+  };
+
+  const deleteExpiredTemporarySchedule = async () => {
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error deleting schedules:", error);
+    }
+  };
+
+  const deleteExpiredTemporarySoloSchedule = async () => {
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API}/temp-soloschedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error deleting schedules:", error);
+    }
+  };
+
+  const handleDeleteCon = async () => {
+    try {
+      const res = await axios.delete(`${process.env.REACT_APP_API}/con`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error deleting schedules:", error);
+    }
+  };
 
   const getSchedules = async () => {
     try {
@@ -291,15 +497,19 @@ const AllSchedule = () => {
         return;
       }
 
-      const res = await axios.get(`${process.env.REACT_APP_API}/schedule`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
-      const filteredSchedules = res.data.filter(
+      const url = `${process.env.REACT_APP_API}/schedule`;
+      const headers = {
+        Authorization: `Bearer ${auth.userDetails.token}`,
+      };
+
+      // Send the search query as a parameter to the API
+      const params = { searchQuery }; // Modify this based on your API's requirements
+      const res = await axios.get(url, { headers, params });
+
+      const permanentFilter = res.data.filter(
         (schedule) => schedule.schedType === "Permanent"
       );
-      setSchedules(filteredSchedules);
+      setSchedules(permanentFilter);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
@@ -328,136 +538,935 @@ const AllSchedule = () => {
     window.location.reload();
   };
 
+  const handleSetActiveToFalse = async (id) => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      await axios.patch(
+        `${process.env.REACT_APP_API}/schedule/${id}/setActive`,
+        {
+          isActive: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching schedules:", error);
+    }
+  };
+
+  const handleAddToContainer = async (schedule) => {
+    handleOpenModal();
+
+    let updatedContainer = [];
+    if (localStorage.getItem("con")) {
+      updatedContainer = JSON.parse(localStorage.getItem("con"));
+    }
+
+    const existingScheduleIndex = updatedContainer.findIndex(
+      (s) => s._id === schedule._id
+    );
+    if (existingScheduleIndex !== -1) {
+      updatedContainer[existingScheduleIndex] = {
+        ...schedule,
+        count: updatedContainer[existingScheduleIndex].count + 1,
+      };
+    } else {
+      updatedContainer = [];
+      updatedContainer.push({
+        ...schedule,
+        count: 1,
+      });
+    }
+
+    localStorage.setItem("con", JSON.stringify(updatedContainer));
+
+    dispatch({
+      type: "ADD_TO_CON",
+      payload: updatedContainer,
+    });
+    console.log("success");
+  };
+
+  const saveOrderedSchedToDb = async () => {
+    handleOpenSecModal();
+
+    dispatch({
+      type: "AUDIT",
+      payload: true,
+    });
+
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/con`,
+        { con },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      console.log("Con POST RES", res);
+    } catch (err) {
+      console.log("con save err", err);
+    }
+  };
+
+  const createSchedOrder = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/sched-order`,
+        { audit },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+
+      console.log("USER CASH ORDER CREATED RES ", res);
+
+      if (res.data.ok) {
+        localStorage.removeItem("con");
+
+        dispatch({
+          type: "ADD_TO_CON",
+          payload: [],
+        });
+
+        dispatch({
+          type: "AUDIT",
+          payload: false,
+        });
+
+        handleDeleteCon();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const showConItems = () => (
+    <div>
+      {con.map((s) => (
+        <AbsentScheduleCard
+          key={s._id}
+          s={s}
+          saveOrderedSchedToDb={saveOrderedSchedToDb}
+        />
+      ))}
+    </div>
+  );
+
+  const TermsAndCondi = () => (
+    <div>
+      <AuditModal handleCloseSecModal={handleCloseSecModal} />
+    </div>
+  );
+
+  const sortAlphabeticallyDesc = () => {
+    const sortedSchedules = [...filteredSchedules].sort((a, b) =>
+      a.nameOfStudent.localeCompare(b.nameOfStudent)
+    );
+    setSchedules(sortedSchedules);
+  };
+
+  const sortAlphabetically = () => {
+    const sortedSchedules = [...filteredSchedules].sort((a, b) =>
+      b.nameOfStudent.localeCompare(a.nameOfStudent)
+    );
+    setSchedules(sortedSchedules);
+  };
+
+  //
+
+  const sortByDayOfWeekDesc = () => {
+    const daysOrder = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const sortedSchedules = [...filteredSchedules].sort((a, b) => {
+      const dayA = daysOrder.indexOf(a.day);
+      const dayB = daysOrder.indexOf(b.day);
+      return dayA - dayB;
+    });
+
+    setSchedules(sortedSchedules);
+  };
+
+  const sortByDayOfWeek = () => {
+    const daysOrder = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const sortedSchedules = [...filteredSchedules].sort((a, b) => {
+      const dayA = daysOrder.indexOf(a.day);
+      const dayB = daysOrder.indexOf(b.day);
+      return dayB - dayA;
+    });
+
+    setSchedules(sortedSchedules);
+  };
+
+  //
+
+  const sortByTimeDesc = () => {
+    const timeOrder = [
+      "8 AM to 9 AM",
+      "9 AM to 10 AM",
+      "10 AM to 11 AM",
+      "11 AM to 12 NN",
+      "1 PM to 2 PM",
+      "2 PM to 3 PM",
+      "3 PM to 4 PM",
+      "4 PM to 5 PM",
+    ];
+
+    const sortedSchedules = [...filteredSchedules].sort((a, b) => {
+      const timeA = timeOrder.indexOf(a.timing);
+      const timeB = timeOrder.indexOf(b.timing);
+      return timeA - timeB;
+    });
+
+    setSchedules(sortedSchedules);
+  };
+
+  const sortByTime = () => {
+    const timeOrder = [
+      "8 AM to 9 AM",
+      "9 AM to 10 AM",
+      "10 AM to 11 AM",
+      "11 AM to 12 NN",
+      "1 PM to 2 PM",
+      "2 PM to 3 PM",
+      "3 PM to 4 PM",
+      "4 PM to 5 PM",
+    ];
+
+    const sortedSchedules = [...filteredSchedules].sort((a, b) => {
+      const timeA = timeOrder.indexOf(a.timing);
+      const timeB = timeOrder.indexOf(b.timing);
+      return timeB - timeA;
+    });
+
+    setSchedules(sortedSchedules);
+  };
+
+  //
+
+  const sortByTypeDesc = () => {
+    const typeOrder = ["Solo", "Dyad"];
+
+    const sortedSchedules = [...filteredSchedules].sort((a, b) => {
+      const typeA = typeOrder.indexOf(a.studentType);
+      const typeB = typeOrder.indexOf(b.studentType);
+      return typeA - typeB;
+    });
+
+    setSchedules(sortedSchedules);
+  };
+
+  const sortByType = () => {
+    const typeOrder = ["Solo", "Dyad"];
+
+    const sortedSchedules = [...filteredSchedules].sort((a, b) => {
+      const typeA = typeOrder.indexOf(a.studentType);
+      const typeB = typeOrder.indexOf(b.studentType);
+      return typeB - typeA;
+    });
+
+    setSchedules(sortedSchedules);
+  };
+
+  const toggleFilterName = () => {
+    setIsNameDesc(!isNameDesc);
+  };
+
+  const toggleFilterDay = () => {
+    setIsDayDesc(!isDayDesc);
+  };
+
+  const toggleFilterTime = () => {
+    setIsTimeDesc(!isTimeDesc);
+  };
+
+  const toggleFilterType = () => {
+    setIsTypeDesc(!isTypeDesc);
+  };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleOpenSecModal = () => {
+    setShowSecModal(true);
+    handleCloseModal();
+  };
+
+  const handleAttemptCloseSecModal = () => {
+    setShowSecModal(false);
+  };
+
+  const handleCloseSecModal = () => {
+    createSchedOrder();
+    setShowSecModal(false);
+    window.location.reload();
+  };
+
   return (
-    <AllScheduleContainer>
-      <ContentCon>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <FaceIcon fontSize="small" sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <img
-              src={arrow}
-              alt=""
-              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
+    <>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showModal}
+        onClose={handleCloseModal}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <ModalBox>{showConItems()}</ModalBox>
+      </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showSecModal}
+        onClose={handleAttemptCloseSecModal}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <ModalBox>{TermsAndCondi()}</ModalBox>
+      </Modal>
+
+      <TopBar />
+      <ResponsiveDrawer />
+
+      <StudentParentCon>
+        <SearchMainCon>
+          <div
+            style={{
+              position: "absolute",
+              top: "7px",
+              left: "8px",
+              width: "26px",
+              height: "26px",
+              zIndex: "2",
+              background:
+                "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
+              borderRadius: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <RiSearchLine
+              style={{
+                color: "white",
+                fontSize: "12px",
+              }}
             />
-            <TitleCon2>Student</TitleCon2>
-          </Flexer>
-          <DetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon1 key={schedule._id}>{schedule.nameOfStudent}</MapCon1>
-            ))}
-          </DetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <TodayIcon fontSize="small" sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <img
-              src={arrow}
-              alt=""
-              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
-            />
-            <TitleCon2>Day</TitleCon2>
-          </Flexer>
-          <TDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.day}</MapCon>
-            ))}
-          </TDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <AccessTimeFilledIcon
-                fontSize="small"
-                sx={{ color: "#007bff" }}
-              />
-            </TitleCon>
-            <img
-              src={arrow}
-              alt=""
-              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
-            />
-            <TitleCon2>Time</TitleCon2>
-          </Flexer>
-          <TDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.timing}</MapCon>
-            ))}
-          </TDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <Face2Icon fontSize="small" sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <img
-              src={arrow}
-              alt=""
-              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
-            />
-            <TitleCon2>Parent</TitleCon2>
-          </Flexer>
-          <TDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.parent}</MapCon>
-            ))}
-          </TDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <ConnectWithoutContactIcon
-                fontSize="small"
-                sx={{ color: "#007bff" }}
-              />
-            </TitleCon>
-            <img
-              src={arrow}
-              alt=""
-              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
-            />
-            <TitleCon2>Type</TitleCon2>
-          </Flexer>
-          <TDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>
-                {schedule.studentType}/
-                {schedule.isActive ? "Present" : "Absent"}
-              </MapCon>
-            ))}
-          </TDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <TouchAppIcon fontSize="small" sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <img
-              src={arrow}
-              alt=""
-              style={{ margin: "12px 0 0 2px", transform: "rotate(30deg)" }}
-            />
-            <TitleCon2>Action</TitleCon2>
-          </Flexer>
-          <TDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon2 key={schedule._id}>
-                <ActionEdit onClick={() => navigateUpdate(schedule._id)}>
-                  <EditNoteIcon fontSize="small" />
-                </ActionEdit>
-                <ActionDel onClick={() => deleteOneSched(schedule._id)}>
-                  <DeleteOutlineIcon fontSize="small" sx={{ color: "red" }} />
-                </ActionDel>
-              </MapCon2>
-            ))}
-          </TDetailsCon>
-        </Columner>
-      </ContentCon>
-    </AllScheduleContainer>
+          </div>
+          <SearchBar
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </SearchMainCon>
+        <h2
+          style={{
+            display: "flex",
+            alignSelf: "flex-start",
+            padding: "0",
+            margin: "0",
+            color: "#007bff",
+            marginTop: "10px",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Permanent
+        </h2>
+        <div
+          style={{
+            display: "flex",
+            alignSelf: "flex-start",
+            padding: "0",
+            margin: "0",
+            color: "#07bbff",
+            fontSize: "56px",
+            fontWeight: "300",
+            marginTop: "-3px",
+            marginLeft: "-4px",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Schedules
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            width: "100%",
+            alignItems: "flex-end",
+            gap: "20px",
+            marginTop: "4px",
+          }}
+        >
+          <TableContainer>
+            <div
+              onClick={() => handleDayChange("Permanent")}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "4px",
+                width: "25px",
+                height: "25px",
+                borderRadius: "50%",
+                marginTop: activeSchedType === "Permanent" ? "0px" : "0px",
+                background:
+                  activeSchedType === "Permanent"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeSchedType === "Permanent" ? "white" : "#07bbff",
+
+                cursor: "pointer",
+                textDecoration: "none",
+                transition: "box-shadow .15s, transform .15s",
+                touchAction: "manipulation",
+                willChange: "box-shadow, transform",
+                fontSize: "11px",
+                fontWeight: "bold",
+
+                ":focus": {
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                },
+                ":hover": {
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  transform: "translateY(-2px)",
+
+                  background: "white",
+                },
+              }}
+            >
+              P
+            </div>
+
+            <div
+              onClick={() => handleDayChange("Temporary")}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "4px",
+                width: "25px",
+                height: "25px",
+                borderRadius: "50%",
+                marginTop: activeSchedType === "Temporary" ? "0px" : "0px",
+                background:
+                  activeSchedType === "Temporary"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeSchedType === "Temporary" ? "white" : "#07bbff",
+
+                cursor: "pointer",
+                textDecoration: "none",
+                transition: "box-shadow .15s, transform .15s",
+                touchAction: "manipulation",
+                willChange: "box-shadow, transform",
+                fontSize: "11px",
+                fontWeight: "bold",
+
+                ":focus": {
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                },
+                ":hover": {
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  transform: "translateY(-2px)",
+                  borderBottom: "1px solid #007bff",
+                  borderTop: "1px solid #007bff",
+                  borderLeft: "1px solid #007bff",
+                  background: "white",
+                },
+              }}
+            >
+              T
+            </div>
+          </TableContainer>
+        </div>
+
+        {activeSchedType === "Permanent" && (
+          <>
+            <Flexer>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "flex-start",
+                  whiteSpace: "nowrap",
+                  gap: "6px",
+                }}
+              >
+                <div
+                  style={{
+                    height: "100%",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "50px",
+                      borderTopLeftRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      color: "#007bff",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #07bbff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>ID</div>
+                      <div style={{ width: "26px", height: "26px" }}></div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "30px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#07bbff",
+                      border: "1px solid #07bbff",
+                      padding: "11px 10px 0px 10px",
+                      borderBottomLeftRadius: "10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredSchedules.map((schedule) => (
+                      <CellId key={schedule._id}>
+                        {schedule.cardId ? schedule.cardId.slice(-2) : ""}
+                      </CellId>
+                    ))}
+                  </div>
+                </div>
+                <Tilt>
+                  <div
+                    style={{
+                      height: "100%",
+                      borderRadius: "6px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      gap: "6px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "200px",
+                        borderTopRightRadius: "10px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        background: "#007bff",
+                        color: "white",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                        letterSpacing: "0.3px",
+                        border: "1px solid #007bff",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "8px 10px",
+                        }}
+                      >
+                        <div>Name</div>
+                        {isNameDesc ? (
+                          <div onClick={toggleFilterName}>
+                            <IconSortContainer onClick={sortAlphabetically}>
+                              <HiSortAscending style={{ fontSize: "16px" }} />
+                            </IconSortContainer>
+                          </div>
+                        ) : (
+                          <div onClick={toggleFilterName}>
+                            <IconSortContainer onClick={sortAlphabeticallyDesc}>
+                              <HiSortDescending style={{ fontSize: "16px" }} />
+                            </IconSortContainer>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        width: "180px",
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        background: "white",
+                        border: "1px solid #007bff",
+                        padding: "11px 10px 0px 10px",
+                        gap: "10px",
+                      }}
+                    >
+                      {filteredSchedules.map((schedule) => (
+                        <Cell key={schedule._id}>{schedule.nameOfStudent}</Cell>
+                      ))}
+                    </div>
+                  </div>
+                </Tilt>
+                <div
+                  style={{
+                    height: "100%",
+                    borderRadius: "6px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#07bbff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #07bbff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Day</div>
+                      {isDayDesc ? (
+                        <div onClick={toggleFilterDay}>
+                          <IconSortContainer onClick={sortByDayOfWeek}>
+                            <HiSortAscending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      ) : (
+                        <div onClick={toggleFilterDay}>
+                          <IconSortContainer onClick={sortByDayOfWeekDesc}>
+                            <HiSortDescending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      border: "1px solid #07bbff",
+                      padding: "11px 10px 0px 10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredSchedules.map((schedule) => (
+                      <Cell2 key={schedule._id}>{schedule.day}</Cell2>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    // width: "100px",
+                    height: "100%",
+                    borderRadius: "6px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#007bff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #007bff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Time</div>
+                      {isTimeDesc ? (
+                        <div onClick={toggleFilterTime}>
+                          <IconSortContainer onClick={sortByTime}>
+                            <HiSortAscending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      ) : (
+                        <div onClick={toggleFilterTime}>
+                          <IconSortContainer onClick={sortByTimeDesc}>
+                            <HiSortDescending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      border: "1px solid #007bff",
+                      padding: "11px 10px 0px 10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredSchedules.map((schedule) => (
+                      <Cell key={schedule._id}>{schedule.timing}</Cell>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    // width: "100px",
+                    height: "100%",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      borderTopLeftRadius: "10px",
+                      // borderTopRightRadius: "6px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#07bbff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #07bbff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Type</div>
+                      {isTypeDesc ? (
+                        <div onClick={toggleFilterType}>
+                          <IconSortContainer onClick={sortByType}>
+                            <HiSortAscending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      ) : (
+                        <div onClick={toggleFilterType}>
+                          <IconSortContainer onClick={sortByTypeDesc}>
+                            <HiSortDescending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      border: "1px solid #07bbff",
+                      padding: "11px 10px 0px 10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredSchedules.map((schedule) => (
+                      <Cell3 key={schedule._id}>{schedule.studentType}</Cell3>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    // width: "100px",
+                    height: "100%",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "140px",
+                      // borderTopLeftRadius: "6px",
+                      borderTopRightRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#007bff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #007bff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Actions</div>
+                      <div style={{ width: "26px", height: "26px" }}></div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "120px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      border: "1px solid #07bbff",
+                      padding: "11px 10px 0px 10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredSchedules.map((schedule) => (
+                      <Cell4 key={schedule._id}>
+                        <LowerIconDiv>
+                          <PersonIcon sx={{ fontSize: "14px" }} />
+                        </LowerIconDiv>
+                        <LowerIconDiv2
+                          onClick={() => navigateUpdate(schedule._id)}
+                        >
+                          <EditIcon sx={{ fontSize: "14px" }} />
+                        </LowerIconDiv2>
+                        <LowerIconDiv3>
+                          <BsCheckLg style={{ fontSize: "14px" }} />
+                        </LowerIconDiv3>
+                        <LowerIconDiv4
+                          onClick={() => handleAddToContainer(schedule)}
+                        >
+                          <BlockIcon sx={{ fontSize: "14px" }} />
+                        </LowerIconDiv4>
+                        <LowerIconDiv5
+                          onClick={() => deleteOneSched(schedule._id)}
+                        >
+                          <DeleteIcon sx={{ fontSize: "14px" }} />
+                        </LowerIconDiv5>
+                      </Cell4>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Flexer>
+          </>
+        )}
+
+        <LowerBox></LowerBox>
+      </StudentParentCon>
+    </>
   );
 };
-
-export default AllSchedule;
+export default ParentSortSchedule;

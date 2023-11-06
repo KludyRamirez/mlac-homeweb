@@ -1,253 +1,489 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
-import { Button } from "@mui/material";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { useParams } from "react-router-dom";
+import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
-import FaceIcon from "@mui/icons-material/Face";
-import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-import TodayIcon from "@mui/icons-material/Today";
-import Face2Icon from "@mui/icons-material/Face2";
-import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-import TouchAppIcon from "@mui/icons-material/TouchApp";
+import EditIcon from "@mui/icons-material/Edit";
+import PersonIcon from "@mui/icons-material/Person";
+import BlockIcon from "@mui/icons-material/Block";
+import Tilt from "react-parallax-tilt";
+import { HiSortDescending, HiSortAscending } from "react-icons/hi";
+import { RiSearchLine } from "react-icons/ri";
+import TopBar from "../AppBar/AppBar";
+import Modal from "@mui/material/Modal";
+import AbsentScheduleCard from "./AbsentScheduleCard";
+import AuditModal from "./AuditModal";
+import { BsCheckLg } from "react-icons/bs";
+import { MdVideocam } from "react-icons/md";
+import { toast } from "react-toastify";
 
-const AllScheduleContainer = styled("div")({
+const LowerBox = styled("div")({
   display: "flex",
+  alignSelf: "flex-start",
   justifyContent: "center",
-  boxShadow: "rgba(0, 123, 255, 0.25) 0px 25px 50px -12px",
-  height: "100%",
-  width: "70%",
-});
-
-const ContentCon = styled("div")({
   width: "100%",
-  display: "flex",
-  justifyContent: "space-around",
-  alignItems: "start",
-  padding: "35px 30px",
-  gap: "10px",
-  flexWrap: "wrap",
+  height: "400px",
+  borderTopRightRadius: "25px",
+  borderBottomRightRadius: "25px",
+  borderBottomLeftRadius: "25px",
+  background:
+    "radial-gradient(at bottom left, rgba(204, 251, 241, 0.15) 6%, rgba(255, 255, 255, 0.15) 47.6%, rgba(67, 207, 255, 0.20) 87.8%)",
+  "@media (max-width: 767px)": {
+    justifyContent: "flex-start",
+    overflow: "hidden",
+  },
 });
 
-export const StyledButton = styled("div")(({ theme }) => ({
-  alignItems: "center",
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
-  border: 0,
-  borderRadius: "25px",
-  boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
-  boxSizing: "border-box",
-  color: "#fff",
-  cursor: "pointer",
-  display: "inline-flex",
-  width: "50px",
-  height: "50px",
-  justifyContent: "center",
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  paddingLeft: "16px",
-  paddingRight: "16px",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "18px",
-  "&:focus": {
-    boxShadow: `${theme.palette.primary.main} 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, ${theme.palette.primary.main} 0 -3px 0 inset`,
-  },
-  "&:hover": {
-    boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, " +
-      theme.palette.primary.main +
-      " 0 -3px 0 inset",
-    transform: "translateY(-2px)",
-  },
-  "&:active": {
-    boxShadow: `${theme.palette.primary.main} 0 3px 7px inset`,
-    transform: "translateY(2px)",
-  },
-}));
-
-const TitleCon = styled("div")(({ theme }) => ({
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #FFFFFF, #FFFFFF  100%)",
-  border: 0,
-  borderRadius: "5px",
-  boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, rgba(58, 65, 111, .5) 0 0px 0",
-  boxSizing: "border-box",
-  cursor: "pointer",
-  width: "40px",
-  height: "40px",
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  paddingLeft: "16px",
-  paddingRight: "16px",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "14px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "white",
-  fontWeight: "600",
-  "&:focus": {
-    boxShadow: `#B6D0E2 0 0 0 1.5px, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 -3px 0 inset`,
-  },
-  "&:hover": {
-    boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px 0px, #B6D0E2 0 0px 0",
-    transform: "translateY(-2px)",
-  },
-  "&:active": {
-    boxShadow: `#B6D0E2 0 3px 7px`,
-    transform: "translateY(2px)",
-  },
-}));
-
-const TitleCon2 = styled(Button)(({ theme }) => ({
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
-  border: 0,
-  borderRadius: "5px",
-  boxShadow:
-    "rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset",
-  boxSizing: "border-box",
-  cursor: "pointer",
-  width: "115px",
-  height: "40px",
-  lineHeight: 1,
-  listStyle: "none",
-  overflow: "hidden",
-  paddingLeft: "16px",
-  paddingRight: "16px",
-  position: "relative",
-  textAlign: "left",
-  textDecoration: "none",
-  transition: "box-shadow .15s, transform .15s",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  whiteSpace: "nowrap",
-  willChange: "box-shadow, transform",
-  fontSize: "1 4px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "white",
-  fontWeight: "600",
-  "&:focus": {
-    boxShadow: `${theme.palette.primary.main} 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, ${theme.palette.primary.main} 0 -3px 0 inset`,
-  },
-  "&:hover": {
-    boxShadow:
-      "rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, " +
-      theme.palette.primary.main +
-      " 0 -3px 0 inset",
-    transform: "translateY(-2px)",
-  },
-  "&:active": {
-    boxShadow: `${theme.palette.primary.main} 0 3px 7px inset`,
-    transform: "translateY(2px)",
-  },
-}));
-
-const ActionDel = styled(Button)({
-  color: "#007bff",
-});
-
-const ActionEdit = styled(Button)({
-  color: "#007bff",
-});
-
-const Columner = styled("div")({
+const StudentParentCon = styled("div")({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
   alignItems: "center",
-  height: "100%",
-  width: "165px",
+  backgroundColor: "#FEFEFE",
+  marginTop: "40px",
   gap: "20px",
-});
-
-const DetailsCon = styled("div")({
-  height: "100%",
-  width: "100%",
-  border: "2px solid #B6D0E2",
-  borderRadius: "1px",
-  display: "flex",
-  alignItems: "center",
-  flexDirection: "column",
-  textAlign: "center",
-});
-const TDetailsCon = styled("div")({
-  height: "100%",
-  width: "100%",
-  border: "2px solid #B6D0E2",
-  borderRadius: "1px",
-  display: "flex",
-  alignItems: "center",
-  textAlign: "center",
-  flexDirection: "column",
-});
-const BDetailsCon = styled("div")({
-  height: "100%",
-  width: "100%",
-  border: "2px solid #B6D0E2",
-  borderRadius: "1px",
-  display: "flex",
-  alignItems: "center",
-  flexDirection: "column",
-  textAlign: "center",
-});
-
-const MapCon = styled("div")({
-  height: "40px",
-  width: "130px",
-  color: "#007bff",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  borderBottom: "1px solid #B6D0E2",
-  fontSize: "13px",
-  fontWeight: "600",
-  textAlign: "center",
+  padding: "20px",
+  "@media (max-width: 767px)": {
+    justifyContent: "flex-start",
+    overflow: "hidden",
+    marginTop: "30px",
+  },
 });
 
 const Flexer = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
   width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  gap: "40px",
+  paddingTop: "10px",
+  flexWrap: "wrap",
+  "@media (max-width: 767px)": {
+    justifyContent: "flex-start",
+    overflow: "hidden",
+    overflowX: "scroll",
+  },
+});
+
+const Cell = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px dashed #007bff",
+  width: "100%",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const Cell2 = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px dashed #07bbff",
+  width: "100%",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const Cell3 = styled("div")({
+  padding: "10px",
+  color: "white",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "transparent",
+  borderBottom: "1px dashed white",
+  width: "100%",
+
+  "&:last-child": {
+    border: "none",
+    borderRadius: "10px",
+  },
+});
+
+const Cell4 = styled("div")({
+  padding: "10px",
+  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "white",
+  borderBottom: "1px dashed #007bff",
+  width: "100%",
+  display: "flex",
+  justifyContent: "flex-start",
+  gap: "4px",
+  "&:last-child": {
+    border: "none",
+  },
+});
+
+const CellId = styled("div")({
+  padding: "10px",
+  color: "white",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "transparent",
+  borderBottom: "1px dashed white",
+  width: "100%",
+  textTransform: "uppercase",
+
+  "&:last-child": {
+    border: "none",
+    borderRadius: "10px",
+  },
+});
+
+const LowerIconDiv = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#007bff",
+  color: "#007bff",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv2 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#FDDA0D",
+  color: "#FDDA0D",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv3 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#00FF7F",
+  color: "#00FF7F",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv4 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#FF7F50",
+  color: "#FF7F50",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv5 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#800020",
+  color: "#800020",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const IconSortContainer = styled("div")({
+  width: "26px",
+  height: "26px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "50%",
+  cursor: "pointer",
+  "&:hover": {
+    background: "rgba(0, 0, 0, 0.06)",
+  },
+});
+
+const TableContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: "12px",
+  border: "1px solid rgba(0, 123, 255, 0.3)",
+  padding: "6px",
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  borderBottomRightRadius: "20px",
+  borderBottomLeftRadius: "2px",
+}));
+
+const SearchMainCon = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  alignSelf: "flex-end",
+  position: "relative",
+  "@media (max-width: 767px)": {
+    width: "100%",
+  },
+}));
+
+const SearchBar = styled("input")(({ theme }) => ({
+  width: "100%",
+  height: "26px",
+  background: "white",
+  border: "1px solid rgba(0, 123, 255, 0.3)",
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  borderBottomLeftRadius: "20px",
+  zIndex: "1",
+  padding: "6px 0px 6px 42px",
+  fontSize: "12px",
+  fontWeight: "600",
+  letterSpacing: "0.3px",
+  color: "#007bff",
+  "&:focus": {
+    outline: "none",
+  },
+  "&::placeholder": {
+    color: "rgba(0, 0, 0, 0.1)",
+  },
+  "@media (max-width: 767px)": {
+    borderRadius: "20px",
+  },
+}));
+
+const ModalBox = styled("div")({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  width: "34%",
+  height: "600px",
+  transform: "translate(-50%, -50%)",
+  background: "white",
+  borderRadius: "20px",
+  fontSize: "12px",
+  fontWeight: "600",
+  color: "#007bff",
+  border: "none",
+  outline: "none",
+
+  "&:focus": {
+    border: "none",
+  },
+
+  "@media (max-width: 767px)": {
+    width: "100%",
+    height: "100%",
+    borderRadius: "0px",
+    border: "none",
+  },
 });
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const TempSchedule = () => {
-  const [schedules, setSchedules] = useState([]);
+const selectCon = (state) => state.con;
+const conSelector = createSelector([selectCon], (con) => con);
+
+const selectAudit = (state) => state.audit;
+const auditSelector = createSelector([selectAudit], (audit) => audit);
+
+const ParentSortSchedule = () => {
+  const [tempSchedules, setTempSchedules] = useState([]);
+  const [activeSchedType, setActiveSchedType] = useState("Temporary");
+  const [isNameDesc, setIsNameDesc] = useState(false);
+  const [isDayDesc, setIsDayDesc] = useState(false);
+  const [isTimeDesc, setIsTimeDesc] = useState(false);
+  const [isTypeDesc, setIsTypeDesc] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredTempSchedules, setFilteredTempSchedules] = useState([]);
+  //modals
+  const [showModal, setShowModal] = useState(false);
+  const [showSecModal, setShowSecModal] = useState(false);
+
   const auth = useSelector(authSelector);
+  const con = useSelector(conSelector);
+  const audit = useSelector(auditSelector);
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    deleteExpiredTemporarySchedule();
+    deleteExpiredTemporarySoloSchedule();
+  }, []);
 
   useEffect(() => {
     getTempSchedules();
-  }, [auth]);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const tempFiltered = tempSchedules.filter((schedule) => {
+      return (
+        (schedule.tempStudentName && schedule.tempStudentName.nameOfStudent)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        schedule.cardId
+          ?.slice(-4)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      );
+    });
+    setFilteredTempSchedules(tempFiltered);
+  }, [searchQuery, tempSchedules]);
+
+  const handleDayChange = (day) => {
+    setActiveSchedType(day);
+  };
+
+  const deleteExpiredTemporarySchedule = async () => {
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API}/temp-schedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error deleting schedules:", error);
+    }
+  };
+
+  const deleteExpiredTemporarySoloSchedule = async () => {
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API}/temp-soloschedule`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error deleting schedules:", error);
+    }
+  };
+
+  const handleDeleteCon = async () => {
+    try {
+      const res = await axios.delete(`${process.env.REACT_APP_API}/con`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error deleting schedules:", error);
+    }
+  };
 
   const getTempSchedules = async () => {
     try {
@@ -256,142 +492,963 @@ const TempSchedule = () => {
         return;
       }
 
-      const res = await axios.get(
-        `${process.env.REACT_APP_API}/temp-schedule`,
+      const url = `${process.env.REACT_APP_API}/temp-schedule`;
+      const headers = {
+        Authorization: `Bearer ${auth.userDetails.token}`,
+      };
+
+      const res = await axios.get(url, { headers });
+
+      const tempSchedFilter = res.data.filter(
+        (schedule) =>
+          schedule.schedType === "Temporary" && schedule.studentType === "Dyad"
+      );
+      setTempSchedules(tempSchedFilter);
+    } catch (err) {
+      console.error("Error fetching schedules:", err);
+    }
+  };
+
+  const handleSetActiveToFalse = async (id) => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      await axios.patch(
+        `${process.env.REACT_APP_API}/schedule/${id}/setActive`,
+        {
+          isActive: false,
+        },
         {
           headers: {
             Authorization: `Bearer ${auth.userDetails.token}`,
           },
         }
       );
-      const filteredSchedules = res.data.filter(
-        (schedule) =>
-          schedule.schedType === "Temporary" &&
-          schedule.tempStudentName &&
-          schedule.tempStudentName.studentType === "Dyad"
-      );
-      setSchedules(filteredSchedules);
-    } catch (err) {
-      console.error("Error fetching schedules:", err);
+    } catch (error) {
+      console.error("Error fetching schedules:", error);
     }
   };
 
-  const deleteOneTempSched = async (id) => {
-    if (!auth.userDetails.token) {
-      // Handle the case where the token is missing
-      console.error("Authentication token not found.");
-      return;
+  const handleAddToContainer = async (schedule) => {
+    handleOpenModal();
+
+    let updatedContainer = [];
+    if (localStorage.getItem("con")) {
+      updatedContainer = JSON.parse(localStorage.getItem("con"));
     }
-    try {
-      await axios.delete(`${process.env.REACT_APP_API}/temp-schedule/${id}`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
+
+    const existingScheduleIndex = updatedContainer.findIndex(
+      (s) => s._id === schedule._id
+    );
+    if (existingScheduleIndex !== -1) {
+      updatedContainer[existingScheduleIndex] = {
+        ...schedule,
+        count: updatedContainer[existingScheduleIndex].count + 1,
+      };
+    } else {
+      updatedContainer = [];
+      updatedContainer.push({
+        ...schedule,
+        count: 1,
       });
-      getTempSchedules();
-    } catch (err) {
-      console.error("Error fetching users:", err);
     }
+
+    localStorage.setItem("con", JSON.stringify(updatedContainer));
+
+    dispatch({
+      type: "ADD_TO_CON",
+      payload: updatedContainer,
+    });
+    console.log("success");
+  };
+
+  const saveOrderedSchedToDb = async () => {
+    handleOpenSecModal();
+
+    dispatch({
+      type: "AUDIT",
+      payload: true,
+    });
+
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/con`,
+        { con },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+      console.log("Con POST RES", res);
+    } catch (err) {
+      console.log("con save err", err);
+    }
+  };
+
+  const createSchedOrder = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/sched-order`,
+        { audit },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+
+      console.log("USER CASH ORDER CREATED RES ", res);
+
+      if (res.data.ok) {
+        localStorage.removeItem("con");
+
+        dispatch({
+          type: "ADD_TO_CON",
+          payload: [],
+        });
+
+        dispatch({
+          type: "AUDIT",
+          payload: false,
+        });
+
+        handleDeleteCon();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const showConItems = () => (
+    <div>
+      {con.map((s) => (
+        <AbsentScheduleCard
+          key={s._id}
+          s={s}
+          saveOrderedSchedToDb={saveOrderedSchedToDb}
+        />
+      ))}
+    </div>
+  );
+
+  const TermsAndCondi = () => (
+    <div>
+      <AuditModal handleCloseSecModal={handleCloseSecModal} />
+    </div>
+  );
+
+  //
+
+  const sortTempAlphabeticallyDesc = () => {
+    const sortedTempSchedules = [...filteredTempSchedules].sort((a, b) =>
+      (a.tempStudentName && a.tempStudentName.nameOfStudent).localeCompare(
+        b.tempStudentName && b.tempStudentName.nameOfStudent
+      )
+    );
+    setTempSchedules(sortedTempSchedules);
+  };
+
+  const sortTempAlphabetically = () => {
+    const sortedTempSchedules = [...filteredTempSchedules].sort((a, b) =>
+      (b.tempStudentName && b.tempStudentName.nameOfStudent).localeCompare(
+        a.tempStudentName && a.tempStudentName.nameOfStudent
+      )
+    );
+    setTempSchedules(sortedTempSchedules);
+  };
+
+  //
+
+  const sortTempByDayOfWeekDesc = () => {
+    const daysOrder = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const sortedSchedules = [...filteredTempSchedules].sort((a, b) => {
+      const dayA = daysOrder.indexOf(a.permanentSched && a.permanentSched.day);
+      const dayB = daysOrder.indexOf(b.permanentSched && b.permanentSched.day);
+      return dayA - dayB;
+    });
+
+    setTempSchedules(sortedSchedules);
+  };
+
+  const sortTempByDayOfWeek = () => {
+    const daysOrder = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const sortedSchedules = [...filteredTempSchedules].sort((a, b) => {
+      const dayA = daysOrder.indexOf(a.permanentSched && a.permanentSched.day);
+      const dayB = daysOrder.indexOf(b.permanentSched && b.permanentSched.day);
+      return dayB - dayA;
+    });
+
+    setTempSchedules(sortedSchedules);
+  };
+
+  //
+
+  const sortTempByTimeDesc = () => {
+    const timeOrder = [
+      "8 AM to 9 AM",
+      "9 AM to 10 AM",
+      "10 AM to 11 AM",
+      "11 AM to 12 NN",
+      "1 PM to 2 PM",
+      "2 PM to 3 PM",
+      "3 PM to 4 PM",
+      "4 PM to 5 PM",
+    ];
+
+    const sortedTempSchedules = [...filteredTempSchedules].sort((a, b) => {
+      const timeA = timeOrder.indexOf(
+        a.timing || (a.permanentSched && a.permanentSched.timing)
+      );
+      const timeB = timeOrder.indexOf(
+        b.timing || (b.permanentSched && b.permanentSched.timing)
+      );
+      return timeA - timeB;
+    });
+
+    setTempSchedules(sortedTempSchedules);
+  };
+
+  const sortTempByTime = () => {
+    const timeOrder = [
+      "8 AM to 9 AM",
+      "9 AM to 10 AM",
+      "10 AM to 11 AM",
+      "11 AM to 12 NN",
+      "1 PM to 2 PM",
+      "2 PM to 3 PM",
+      "3 PM to 4 PM",
+      "4 PM to 5 PM",
+    ];
+
+    const sortedTempSchedules = [...filteredTempSchedules].sort((a, b) => {
+      const timeA = timeOrder.indexOf(
+        a.timing || (a.permanentSched && a.permanentSched.timing)
+      );
+      const timeB = timeOrder.indexOf(
+        b.timing || (b.permanentSched && b.permanentSched.timing)
+      );
+      return timeB - timeA;
+    });
+
+    setTempSchedules(sortedTempSchedules);
+  };
+
+  const sortTempByTypeDesc = () => {
+    const typeOrder = ["Solo", "Dyad"];
+
+    const sortedSchedules = [...filteredTempSchedules].sort((a, b) => {
+      const typeA = typeOrder.indexOf(
+        a.studentType || (a.tempStudentName && a.tempStudentName.studentType)
+      );
+      const typeB = typeOrder.indexOf(
+        b.studentType || (b.tempStudentName && b.tempStudentName.studentType)
+      );
+      return typeA - typeB;
+    });
+
+    setTempSchedules(sortedSchedules);
+  };
+
+  const sortTempByType = () => {
+    const typeOrder = ["Solo", "Dyad"];
+
+    const sortedSchedules = [...filteredTempSchedules].sort((a, b) => {
+      const typeA = typeOrder.indexOf(
+        a.studentType || (a.tempStudentName && a.tempStudentName.studentType)
+      );
+      const typeB = typeOrder.indexOf(
+        b.studentType || (b.tempStudentName && b.tempStudentName.studentType)
+      );
+      return typeB - typeA;
+    });
+
+    setTempSchedules(sortedSchedules);
+  };
+
+  const toggleFilterName = () => {
+    setIsNameDesc(!isNameDesc);
+  };
+
+  const toggleFilterDay = () => {
+    setIsDayDesc(!isDayDesc);
+  };
+
+  const toggleFilterTime = () => {
+    setIsTimeDesc(!isTimeDesc);
+  };
+
+  const toggleFilterType = () => {
+    setIsTypeDesc(!isTypeDesc);
+  };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleOpenSecModal = () => {
+    setShowSecModal(true);
+    handleCloseModal();
+  };
+
+  const handleAttemptCloseSecModal = () => {
+    setShowSecModal(false);
+  };
+
+  const handleCloseSecModal = () => {
+    createSchedOrder();
+    setShowSecModal(false);
+    // window.location.reload();
   };
 
   return (
-    <AllScheduleContainer>
-      <ContentCon>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <FaceIcon sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <TitleCon2>Student</TitleCon2>
-          </Flexer>
-          <DetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>
-                {schedule.tempStudentName &&
-                  schedule.tempStudentName.nameOfStudent}
-              </MapCon>
-            ))}
-          </DetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <TodayIcon sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <TitleCon2>Day</TitleCon2>
-          </Flexer>
-          <BDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>
-                {schedule.permanentSched && schedule.permanentSched.day}
-              </MapCon>
-            ))}
-          </BDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <AccessTimeFilledIcon sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <TitleCon2>Time</TitleCon2>
-          </Flexer>
-          <TDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>
-                {schedule.permanentSched && schedule.permanentSched.timing}
-              </MapCon>
-            ))}
-          </TDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <Face2Icon sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <TitleCon2>Date</TitleCon2>
-          </Flexer>
-          <BDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>{schedule.dateTime}</MapCon>
-            ))}
-          </BDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <ConnectWithoutContactIcon sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <TitleCon2>With</TitleCon2>
-          </Flexer>
-          <TDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>
-                {schedule.permanentSched &&
-                  schedule.permanentSched.nameOfStudent}
-              </MapCon>
-            ))}
-          </TDetailsCon>
-        </Columner>
-        <Columner>
-          <Flexer>
-            <TitleCon>
-              <TouchAppIcon sx={{ color: "#007bff" }} />
-            </TitleCon>
-            <TitleCon2>Action</TitleCon2>
-          </Flexer>
-          <BDetailsCon>
-            {schedules.map((schedule) => (
-              <MapCon key={schedule._id}>
-                <ActionDel onClick={() => deleteOneTempSched(schedule._id)}>
-                  <DeleteOutlineIcon fontSize="small" />
-                </ActionDel>
-              </MapCon>
-            ))}
-          </BDetailsCon>
-        </Columner>
-      </ContentCon>
-    </AllScheduleContainer>
+    <>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showModal}
+        onClose={handleCloseModal}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <ModalBox>{showConItems()}</ModalBox>
+      </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showSecModal}
+        onClose={handleAttemptCloseSecModal}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <ModalBox>{TermsAndCondi()}</ModalBox>
+      </Modal>
+
+      <TopBar />
+      <ResponsiveDrawer />
+
+      <StudentParentCon>
+        <SearchMainCon>
+          <div
+            style={{
+              position: "absolute",
+              top: "7px",
+              left: "8px",
+              width: "26px",
+              height: "26px",
+              zIndex: "2",
+              background:
+                "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
+              borderRadius: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <RiSearchLine
+              style={{
+                color: "white",
+                fontSize: "12px",
+              }}
+            />
+          </div>
+          <SearchBar
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </SearchMainCon>
+        <h2
+          style={{
+            display: "flex",
+            alignSelf: "flex-start",
+            padding: "0",
+            margin: "0",
+            color: "#007bff",
+            marginTop: "10px",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Children's
+        </h2>
+        <div
+          style={{
+            display: "flex",
+            alignSelf: "flex-start",
+            padding: "0",
+            margin: "0",
+            color: "#07bbff",
+            fontSize: "56px",
+            fontWeight: "300",
+            marginTop: "-3px",
+            marginLeft: "-4px",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Schedules
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            width: "100%",
+            alignItems: "flex-end",
+            gap: "20px",
+            marginTop: "4px",
+          }}
+        >
+          <TableContainer>
+            <div
+              onClick={() => handleDayChange("Permanent")}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "4px",
+                width: "25px",
+                height: "25px",
+                borderRadius: "50%",
+                marginTop: activeSchedType === "Permanent" ? "0px" : "0px",
+                background:
+                  activeSchedType === "Permanent"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeSchedType === "Permanent" ? "white" : "#07bbff",
+
+                cursor: "pointer",
+                textDecoration: "none",
+                transition: "box-shadow .15s, transform .15s",
+                touchAction: "manipulation",
+                willChange: "box-shadow, transform",
+                fontSize: "11px",
+                fontWeight: "bold",
+
+                ":focus": {
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                },
+                ":hover": {
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  transform: "translateY(-2px)",
+
+                  background: "white",
+                },
+              }}
+            >
+              P
+            </div>
+
+            <div
+              onClick={() => handleDayChange("Temporary")}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "4px",
+                width: "25px",
+                height: "25px",
+                borderRadius: "50%",
+                marginTop: activeSchedType === "Temporary" ? "0px" : "0px",
+                background:
+                  activeSchedType === "Temporary"
+                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    : "transparent",
+                color: activeSchedType === "Temporary" ? "white" : "#07bbff",
+
+                cursor: "pointer",
+                textDecoration: "none",
+                transition: "box-shadow .15s, transform .15s",
+                touchAction: "manipulation",
+                willChange: "box-shadow, transform",
+                fontSize: "11px",
+                fontWeight: "bold",
+
+                ":focus": {
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                },
+                ":hover": {
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  transform: "translateY(-2px)",
+                  borderBottom: "1px solid #007bff",
+                  borderTop: "1px solid #007bff",
+                  borderLeft: "1px solid #007bff",
+                  background: "white",
+                },
+              }}
+            >
+              T
+            </div>
+          </TableContainer>
+        </div>
+
+        {activeSchedType === "Temporary" && (
+          <>
+            <Flexer>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "flex-start",
+                  whiteSpace: "nowrap",
+                  gap: "6px",
+                }}
+              >
+                <div
+                  style={{
+                    height: "100%",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "50px",
+                      borderTopLeftRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      color: "#007bff",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #07bbff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>ID</div>
+                      <div style={{ width: "26px", height: "26px" }}></div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "50px",
+                      height: "100%",
+                      borderBottomLeftRadius: "10px",
+                      // borderBottomRightRadius: "6px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: "#07bbff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "12px",
+                      border: "1px solid #07bbff",
+                    }}
+                  ></div>
+                </div>
+                <div
+                  style={{
+                    height: "100%",
+                    borderRadius: "6px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      borderTopRightRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#007bff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #007bff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Name</div>
+                      {isNameDesc ? (
+                        <div onClick={toggleFilterName}>
+                          <IconSortContainer onClick={sortTempAlphabetically}>
+                            <HiSortAscending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      ) : (
+                        <div onClick={toggleFilterName}>
+                          <IconSortContainer
+                            onClick={sortTempAlphabeticallyDesc}
+                          >
+                            <HiSortDescending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      border: "1px solid #007bff",
+                      padding: "11px 10px 0px 10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredTempSchedules.map((schedule) => (
+                      <Cell key={schedule._id}>
+                        {schedule.tempStudentName &&
+                          schedule.tempStudentName.nameOfStudent}
+                      </Cell>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    height: "100%",
+                    borderRadius: "6px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#07bbff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #07bbff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Date</div>
+                      {isDayDesc ? (
+                        <div onClick={toggleFilterDay}>
+                          <IconSortContainer onClick={sortTempByDayOfWeek}>
+                            <HiSortAscending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      ) : (
+                        <div onClick={toggleFilterDay}>
+                          <IconSortContainer onClick={sortTempByDayOfWeekDesc}>
+                            <HiSortDescending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      border: "1px solid #07bbff",
+                      padding: "11px 10px 0px 10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredTempSchedules.map((schedule) => (
+                      <Cell key={schedule._id}>
+                        {schedule.dateTime
+                          ? schedule.dateTime.slice(0, -5)
+                          : ""}
+                        , {schedule.tempSoloDay}
+                      </Cell>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    // width: "100px",
+                    height: "100%",
+                    borderRadius: "6px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#007bff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #007bff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Time</div>
+                      {isTimeDesc ? (
+                        <div onClick={toggleFilterTime}>
+                          <IconSortContainer onClick={sortTempByTime}>
+                            <HiSortAscending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      ) : (
+                        <div onClick={toggleFilterTime}>
+                          <IconSortContainer onClick={sortTempByTimeDesc}>
+                            <HiSortDescending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      border: "1px solid #007bff",
+                      padding: "10px 10px 0px 10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredTempSchedules.map((schedule) => (
+                      <Cell key={schedule._id}>
+                        {schedule.permanentSched &&
+                          schedule.permanentSched.timing}
+                        {schedule.timing}
+                      </Cell>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    // width: "100px",
+                    height: "100%",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      borderTopLeftRadius: "10px",
+                      // borderTopRightRadius: "6px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      color: "#007bff",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #007bff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Type</div>
+                      {isTypeDesc ? (
+                        <div onClick={toggleFilterType}>
+                          <IconSortContainer onClick={sortTempByType}>
+                            <HiSortAscending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      ) : (
+                        <div onClick={toggleFilterType}>
+                          <IconSortContainer onClick={sortTempByTypeDesc}>
+                            <HiSortDescending style={{ fontSize: "16px" }} />
+                          </IconSortContainer>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#07bbff",
+                      border: "1px solid #07bbff",
+                      padding: "10px 10px 0px 10px",
+                      gap: "10px",
+                      borderBottomLeftRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    }}
+                  >
+                    {filteredTempSchedules.map((schedule) => (
+                      <Cell3 key={schedule._id}>
+                        {schedule.tempStudentName &&
+                          schedule.tempStudentName.studentType}
+                      </Cell3>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    // width: "100px",
+                    height: "100%",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "6px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "125px",
+                      // borderTopLeftRadius: "6px",
+                      borderTopRightRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "#007bff",
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      letterSpacing: "0.3px",
+                      border: "1px solid #007bff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 10px",
+                      }}
+                    >
+                      <div>Actions</div>
+                      <div style={{ width: "26px", height: "26px" }}></div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "105px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      background: "white",
+                      border: "1px solid #07bbff",
+                      padding: "10px 10px 0px 10px",
+                      gap: "10px",
+                    }}
+                  >
+                    {filteredTempSchedules.map((schedule) => (
+                      <Cell4 key={schedule._id}>
+                        <LowerIconDiv4></LowerIconDiv4>
+                      </Cell4>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Flexer>
+          </>
+        )}
+        <LowerBox></LowerBox>
+      </StudentParentCon>
+    </>
   );
 };
-
-export default TempSchedule;
+export default ParentSortSchedule;

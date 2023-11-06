@@ -6,20 +6,19 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import TimerIcon from "@mui/icons-material/Timer";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
-import CheckIcon from "@mui/icons-material/Check";
 import BlockIcon from "@mui/icons-material/Block";
 import Tilt from "react-parallax-tilt";
 import { HiSortDescending, HiSortAscending } from "react-icons/hi";
 import { RiSearchLine } from "react-icons/ri";
 import TopBar from "../AppBar/AppBar";
 import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import AbsentScheduleCard from "./AbsentScheduleCard";
+import AuditModal from "./AuditModal";
+import { BsCheckLg } from "react-icons/bs";
+import { MdVideocam } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -36,11 +35,11 @@ const LowerBox = styled("div")({
   justifyContent: "center",
   width: "100%",
   height: "400px",
-  border: "1px solid rgba(0, 123, 255, 0.1)",
   borderTopRightRadius: "25px",
   borderBottomRightRadius: "25px",
   borderBottomLeftRadius: "25px",
-  background: "rgba(0, 123, 255, 0.04)",
+  background:
+    "radial-gradient(at bottom left, rgba(204, 251, 241, 0.15) 6%, rgba(255, 255, 255, 0.15) 47.6%, rgba(67, 207, 255, 0.20) 87.8%)",
   "@media (max-width: 767px)": {
     justifyContent: "flex-start",
     overflow: "hidden",
@@ -52,7 +51,7 @@ const StudentParentCon = styled("div")({
   flexDirection: "column",
   alignItems: "center",
   backgroundColor: "#FEFEFE",
-  marginTop: "70px",
+  marginTop: "40px",
   gap: "20px",
   padding: "20px",
   "@media (max-width: 767px)": {
@@ -67,6 +66,7 @@ const Flexer = styled("div")({
   display: "flex",
   justifyContent: "center",
   gap: "40px",
+  paddingTop: "10px",
   flexWrap: "wrap",
   "@media (max-width: 767px)": {
     justifyContent: "flex-start",
@@ -136,6 +136,23 @@ const Cell4 = styled("div")({
   },
 });
 
+const CellId = styled("div")({
+  padding: "10px",
+  color: "white",
+  fontSize: "13px",
+  fontWeight: "400",
+  letterSpacing: "0.3px",
+  background: "transparent",
+  borderBottom: "1px dashed white",
+  width: "100%",
+  textTransform: "uppercase",
+
+  "&:last-child": {
+    border: "none",
+    borderRadius: "10px",
+  },
+});
+
 const LowerIconDiv = styled("div")({
   marginTop: "1px",
   cursor: "pointer",
@@ -149,20 +166,28 @@ const LowerIconDiv = styled("div")({
   width: "16px",
   height: "16px",
   borderRadius: "16px",
-  transition: "width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
     width: "24px",
     height: "24px",
     borderRadius: "24px",
     color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
   },
 });
 
 const LowerIconDiv2 = styled("div")({
   marginTop: "1px",
   cursor: "pointer",
-  background: "#FFBF00",
-  color: "#FFBF00",
+  background: "#FDDA0D",
+  color: "#FDDA0D",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -171,20 +196,28 @@ const LowerIconDiv2 = styled("div")({
   width: "16px",
   height: "16px",
   borderRadius: "16px",
-  transition: "width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
     width: "24px",
     height: "24px",
     borderRadius: "24px",
     color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
   },
 });
 
 const LowerIconDiv3 = styled("div")({
   marginTop: "1px",
   cursor: "pointer",
-  background: "#7CFC00",
-  color: "#7CFC00",
+  background: "#00FF7F",
+  color: "#00FF7F",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -193,20 +226,28 @@ const LowerIconDiv3 = styled("div")({
   width: "16px",
   height: "16px",
   borderRadius: "16px",
-  transition: "width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
     width: "24px",
     height: "24px",
     borderRadius: "24px",
     color: "white",
   },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
 });
 
 const LowerIconDiv4 = styled("div")({
   marginTop: "1px",
   cursor: "pointer",
-  background: "#FF3131",
-  color: "#FF3131",
+  background: "#FF7F50",
+  color: "#FF7F50",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -215,12 +256,50 @@ const LowerIconDiv4 = styled("div")({
   width: "16px",
   height: "16px",
   borderRadius: "16px",
-  transition: "width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
     width: "24px",
     height: "24px",
     borderRadius: "24px",
     color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const LowerIconDiv5 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "#800020",
+  color: "#800020",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
   },
 });
 
@@ -241,7 +320,7 @@ const TableContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
-  gap: "14px",
+  gap: "12px",
   border: "1px solid rgba(0, 123, 255, 0.3)",
   padding: "6px",
   borderTopLeftRadius: "20px",
@@ -250,38 +329,67 @@ const TableContainer = styled("div")(({ theme }) => ({
   borderBottomLeftRadius: "2px",
 }));
 
+const SearchMainCon = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  alignSelf: "flex-end",
+  position: "relative",
+  "@media (max-width: 767px)": {
+    width: "100%",
+  },
+}));
+
 const SearchBar = styled("input")(({ theme }) => ({
-  width: "140px",
-  height: "25px",
-  background: "rgba(0, 0, 0, 0.006)",
+  width: "100%",
+  height: "26px",
+  background: "white",
   border: "1px solid rgba(0, 123, 255, 0.3)",
-  borderTopLeftRadius: "24px",
-  borderTopRightRadius: "24px",
-  borderBottomLeftRadius: "24px",
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  borderBottomLeftRadius: "20px",
   zIndex: "1",
-  padding: "6px 0px 6px 38px",
+  padding: "6px 0px 6px 42px",
   fontSize: "12px",
   fontWeight: "600",
   letterSpacing: "0.3px",
   color: "#007bff",
   "&:focus": {
-    border: "1px dashed rgba(0, 123, 255, 1)",
+    outline: "none",
+  },
+  "&::placeholder": {
+    color: "rgba(0, 0, 0, 0.1)",
+  },
+  "@media (max-width: 767px)": {
+    borderRadius: "20px",
   },
 }));
 
-const style = {
+const ModalBox = styled("div")({
   position: "absolute",
   top: "50%",
   left: "50%",
+  width: "34%",
+  height: "600px",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
+  background: "white",
+  borderRadius: "20px",
+  fontSize: "12px",
+  fontWeight: "600",
+  color: "#007bff",
+  border: "none",
+  outline: "none",
+
+  "&:focus": {
+    border: "none",
+  },
+
+  "@media (max-width: 767px)": {
+    width: "100%",
+    height: "100%",
+    borderRadius: "0px",
+    border: "none",
+  },
+});
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
@@ -337,7 +445,13 @@ const ParentSortSchedule = () => {
           .includes(searchQuery.toLowerCase()) ||
         schedule.day.toLowerCase().includes(searchQuery.toLowerCase()) ||
         schedule.timing.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        schedule.studentType.toLowerCase().includes(searchQuery.toLowerCase())
+        schedule.studentType
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        schedule.cardId
+          ?.slice(-4)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
       );
     });
     setFilteredSchedules(filtered);
@@ -346,10 +460,14 @@ const ParentSortSchedule = () => {
   useEffect(() => {
     const mixedTempFiltered = mixedTempSchedules.filter((schedule) => {
       return (
-        schedule.tempStudentName && schedule.tempStudentName.nameOfStudent
-      )
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+        (schedule.tempStudentName && schedule.tempStudentName.nameOfStudent)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        schedule.cardId
+          ?.slice(-4)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      );
     });
     setFilteredMixedSchedules(mixedTempFiltered);
   }, [searchQuery, mixedTempSchedules]);
@@ -429,10 +547,15 @@ const ParentSortSchedule = () => {
 
       const parentFilter = res.data.filter(
         (schedule) =>
-          (schedule.parent === (auth && auth.userDetails.fullname) &&
+          (schedule.parent ===
+            `${auth && auth.userDetails.fullname} ${
+              auth && auth.userDetails.username
+            }` &&
             schedule.isActive === true) ||
           (schedule.tempStudent && schedule.tempStudent.parent) ===
-            (auth && auth.userDetails.fullname)
+            `${auth && auth.userDetails.fullname} ${
+              auth && auth.userDetails.username
+            }`
       );
       setSchedules(parentFilter);
     } catch (err) {
@@ -598,9 +721,6 @@ const ParentSortSchedule = () => {
         });
 
         handleDeleteCon();
-        // setTimeout(() => {
-        //   history.push("/timetable");
-        // }, 1000);
       }
     } catch (err) {
       console.log(err);
@@ -610,8 +730,18 @@ const ParentSortSchedule = () => {
   const showConItems = () => (
     <div>
       {con.map((s) => (
-        <AbsentScheduleCard key={s._id} s={s} />
+        <AbsentScheduleCard
+          key={s._id}
+          s={s}
+          saveOrderedSchedToDb={saveOrderedSchedToDb}
+        />
       ))}
+    </div>
+  );
+
+  const TermsAndCondi = () => (
+    <div>
+      <AuditModal handleCloseSecModal={handleCloseSecModal} />
     </div>
   );
 
@@ -923,30 +1053,59 @@ const ParentSortSchedule = () => {
   return (
     <Wrapper>
       <Modal
+        sx={{ border: "none", outline: "none" }}
         open={showModal}
         onClose={handleCloseModal}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
-          {showConItems()}
-          <Button onClick={saveOrderedSchedToDb}>Open Child Modal</Button>
-        </Box>
+        <ModalBox>{showConItems()}</ModalBox>
       </Modal>
       <Modal
+        sx={{ border: "none", outline: "none" }}
         open={showSecModal}
         onClose={handleAttemptCloseSecModal}
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
-          <Button onClick={handleCloseSecModal}>Close Child Modal</Button>
-        </Box>
+        <ModalBox>{TermsAndCondi()}</ModalBox>
       </Modal>
 
       <TopBar />
       <ResponsiveDrawer />
+
       <StudentParentCon>
+        <SearchMainCon>
+          <div
+            style={{
+              position: "absolute",
+              top: "7px",
+              left: "8px",
+              width: "26px",
+              height: "26px",
+              zIndex: "2",
+              background:
+                "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
+              borderRadius: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <RiSearchLine
+              style={{
+                color: "white",
+                fontSize: "12px",
+              }}
+            />
+          </div>
+          <SearchBar
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </SearchMainCon>
         <h2
           style={{
             display: "flex",
@@ -954,18 +1113,37 @@ const ParentSortSchedule = () => {
             padding: "0",
             margin: "0",
             color: "#007bff",
-
             marginTop: "10px",
+            letterSpacing: "0.5px",
           }}
         >
-          Children,
+          Children's
         </h2>
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            alignSelf: "flex-start",
+            padding: "0",
+            margin: "0",
+            color: "#07bbff",
+            fontSize: "56px",
+            fontWeight: "300",
+            marginTop: "-3px",
+            marginLeft: "-4px",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Schedules
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
             width: "100%",
             alignItems: "flex-end",
+            gap: "20px",
+            marginTop: "4px",
           }}
         >
           <TableContainer>
@@ -1053,27 +1231,6 @@ const ParentSortSchedule = () => {
               T
             </div>
           </TableContainer>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <RiSearchLine
-              style={{
-                color: "white",
-                fontSize: "12px",
-                zIndex: "2",
-                marginRight: "-32px",
-                padding: "6px",
-                background:
-                  "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
-                borderRadius: "50%",
-              }}
-            />
-
-            <SearchBar
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
         </div>
 
         {activeSchedType === "Permanent" && (
@@ -1129,20 +1286,25 @@ const ParentSortSchedule = () => {
                   </div>
                   <div
                     style={{
-                      width: "50px",
+                      width: "30px",
                       height: "100%",
-                      borderBottomLeftRadius: "10px",
-                      // borderBottomRightRadius: "6px",
                       display: "flex",
+                      flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center",
+                      justifyContent: "flex-start",
                       background: "#07bbff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "12px",
                       border: "1px solid #07bbff",
+                      padding: "11px 10px 0px 10px",
+                      borderBottomLeftRadius: "10px",
+                      gap: "10px",
                     }}
-                  ></div>
+                  >
+                    {filteredSchedules.map((schedule) => (
+                      <CellId key={schedule._id}>
+                        {schedule.cardId ? schedule.cardId.slice(-2) : ""}
+                      </CellId>
+                    ))}
+                  </div>
                 </div>
                 <div
                   style={{
@@ -1488,12 +1650,21 @@ const ParentSortSchedule = () => {
                   >
                     {filteredSchedules.map((schedule) => (
                       <Cell4 key={schedule._id}>
-                        <LowerIconDiv></LowerIconDiv>
-                        <LowerIconDiv2></LowerIconDiv2>
-                        <LowerIconDiv3></LowerIconDiv3>
+                        <LowerIconDiv>
+                          <PersonIcon sx={{ fontSize: "14px" }} />
+                        </LowerIconDiv>
+
+                        <LowerIconDiv3>
+                          <BsCheckLg style={{ fontSize: "14px" }} />
+                        </LowerIconDiv3>
                         <LowerIconDiv4
                           onClick={() => handleAddToContainer(schedule)}
-                        ></LowerIconDiv4>
+                        >
+                          <BlockIcon sx={{ fontSize: "14px" }} />
+                        </LowerIconDiv4>
+                        <LowerIconDiv5>
+                          <MdVideocam style={{ fontSize: "14px" }} />
+                        </LowerIconDiv5>
                       </Cell4>
                     ))}
                   </div>

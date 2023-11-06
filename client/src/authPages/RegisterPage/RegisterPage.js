@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { getActions } from "../../store/actions/authActions";
 import { useHistory } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import EditUser from "../../Admin/AdminDashboard/FunctionPages/AllUser";
+import EditUser from "../../Admin/AdminDashboard/UserPages/AllUser";
 
 const Wrapper = styled("div")({
   width: "100%",

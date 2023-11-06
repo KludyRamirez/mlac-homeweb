@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
-import { StyledButton } from "../AllSchedule/AllSchedule";
 
 const FormContainer = styled("div")({
   boxShadow:
@@ -72,9 +71,9 @@ const UpdateScheduleForm = ({
       <FormContainer>
         <TitleCon>
           <FormTitle>Update Schedule</FormTitle>
-          <StyledButton>
+          <div>
             <EditCalendarIcon fontSize="small" />
-          </StyledButton>
+          </div>
         </TitleCon>
         <FormControl
           sx={{

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
-import { StyledButton } from "../AllSchedule/AllSchedule";
+
 import AddchartIcon from "@mui/icons-material/Addchart";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -77,9 +77,9 @@ const CreateScheduleForm = ({
       <FormContainer>
         <TitleCon>
           <FormTitle>Create Schedule</FormTitle>
-          <StyledButton>
+          <div>
             <AddchartIcon />
-          </StyledButton>
+          </div>
         </TitleCon>
         <FormControl
           sx={{
@@ -149,8 +149,8 @@ const CreateScheduleForm = ({
             {parents
               .filter((p) => p.role === "Administrator")
               .map((p) => (
-                <MenuItem key={p._id} value={p.fullname}>
-                  {p.firstname} {p.lastname}
+                <MenuItem key={p._id} value={`${p.fullname} ${p.username}`}>
+                  {p.fullname}
                 </MenuItem>
               ))}
           </Select>

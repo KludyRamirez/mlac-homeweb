@@ -46,6 +46,7 @@ const initialState = {
     "4 PM to 5 PM",
   ],
   timing: "",
+  notifLocator: "",
 };
 
 const selectAuth = (state) => state.auth;
@@ -114,8 +115,12 @@ const CreateSchedule = () => {
 
   const handleParentChange = (e) => {
     e.preventDefault();
-    console.log("CLICKED Parent", e.target.value);
-    setValues({ ...values, parent: e.target.value });
+    const parentName = e.target.value;
+    console.log(parentName);
+    setValues({
+      ...values,
+      parent: parentName,
+    });
   };
 
   return (

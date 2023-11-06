@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const schedsSchema = new mongoose.Schema(
   {
+    cardId: {
+      type: String,
+    },
     nameOfStudent: {
       type: String,
       trim: true,

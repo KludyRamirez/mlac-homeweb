@@ -2,6 +2,7 @@ const Schedule = require("../../models/scheds");
 const TempSchedule = require("../../models/tempSchedules");
 const TempSolo = require("../../models/tempSoloScheds");
 const moment = require("moment");
+const uniqid = require("uniqid");
 
 // schedule
 
@@ -24,6 +25,7 @@ const createSchedule = async (req, res) => {
     try {
       const dyadComboSchedule = await new Schedule({
         ...req.body,
+        cardId: uniqid(),
       }).save();
       res.json(dyadComboSchedule);
     } catch (error) {
@@ -100,6 +102,7 @@ const createTempSchedule = async (req, res) => {
     const formattedDateTime = moment(req.body.dateTime).format("MMMM Do YYYY");
     const newSchedule = await new TempSchedule({
       ...req.body,
+      cardId: uniqid(),
       dateTime: formattedDateTime,
     }).save();
     res.json(newSchedule);
@@ -194,6 +197,7 @@ const createTempSoloSchedule = async (req, res) => {
     const newSchedule = await new TempSolo({
       ...req.body,
       dateTime: formattedDateTime,
+      cardId: uniqid(),
     }).save();
     res.json(newSchedule);
   } catch (err) {

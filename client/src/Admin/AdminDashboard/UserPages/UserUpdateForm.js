@@ -3,7 +3,6 @@ import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Button, FormControl, FormGroup, TextField } from "@mui/material";
 import { styled } from "@mui/system";
-import { StyledButton } from "../AllSchedule/AllSchedule";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -53,9 +52,9 @@ const UserUpdateForm = ({
       <FormContainer>
         <TitleCon>
           <FormTitle>Update User</FormTitle>
-          <StyledButton>
+          <div>
             <PersonAddAltIcon />
-          </StyledButton>
+          </div>
         </TitleCon>
         <FormControl
           sx={{

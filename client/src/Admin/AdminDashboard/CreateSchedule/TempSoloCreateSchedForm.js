@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
-import { StyledButton } from "../AllSchedule/AllSchedule";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import moment from "moment";
@@ -93,9 +92,9 @@ const TempSoloCreateSchedForm = ({
       <FormContainer>
         <TitleCon>
           <FormTitle>Temporary Schedule</FormTitle>
-          <StyledButton>
+          <div>
             <HourglassBottomIcon fontSize="small" />
-          </StyledButton>
+          </div>
         </TitleCon>
         <FormControl variant="standard" sx={{ width: "50%" }}>
           <InputLabel id="demo-simple-select-standard-label">

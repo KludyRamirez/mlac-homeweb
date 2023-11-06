@@ -18,7 +18,7 @@ import AlertNotificationComponents from "./shared/components/AlertNotificationCo
 //admin
 
 import "./App.css";
-import UserUpdate from "./Admin/AdminDashboard/FunctionPages/UserUpdate";
+import UserUpdate from "./Admin/AdminDashboard/UserPages/UserUpdate";
 import CreateSchedule from "./Admin/AdminDashboard/CreateSchedule/CreateSchedule";
 import UpdateSchedule from "./Admin/AdminDashboard/UpdateSchedule/UpdateSchedule";
 import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreateSchedule";

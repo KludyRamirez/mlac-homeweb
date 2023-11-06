@@ -3,7 +3,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { styled } from "@mui/system";
-import { StyledButton } from "../../Admin/AdminDashboard/AllSchedule/AllSchedule";
 import { FormControl, TextField, Button, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
@@ -66,9 +65,9 @@ const RegisterPageInputs = (props) => {
       <FormContainer>
         <TitleCon>
           <FormTitle>Create User</FormTitle>
-          <StyledButton>
+          <div>
             <PersonAddAltIcon />
-          </StyledButton>
+          </div>
         </TitleCon>
         <FormControl
           sx={{

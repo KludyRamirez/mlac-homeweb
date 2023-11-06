@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { BsCheckLg } from "react-icons/bs";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
@@ -67,8 +66,8 @@ const LowerIconDiv = styled("div")({
 });
 
 const LowerIconDiv2 = styled("div")({
-  background: "#FFBF00",
-  color: "#FFBF00",
+  background: "#FDDA0D",
+  color: "#FDDA0D",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -95,8 +94,9 @@ const LowerIconDiv2 = styled("div")({
 });
 
 const LowerIconDiv3 = styled("div")({
-  background: "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
-  color: "transparent",
+  cursor: "pointer",
+  background: "#00FF7F",
+  color: "#00FF7F",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -266,18 +266,10 @@ const PermanentCell = ({
                   />
                 </LowerIconDiv2>
                 <LowerIconDiv3>
-                  <ImCheckmark
-                    style={{
-                      fontSize: "14px",
-                    }}
-                  />
+                  <BsCheckLg style={{ fontSize: "14px" }} />
                 </LowerIconDiv3>
                 <LowerIconDiv4 onClick={() => handleNotifs(1)}>
-                  <RxDash
-                    sx={{
-                      fontSize: "14px",
-                    }}
-                  />
+                  <BlockIcon sx={{ fontSize: "14px" }} />
                 </LowerIconDiv4>
               </>
             )}

@@ -1,8 +1,103 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { FaCircleXmark } from "react-icons/fa6";
+import { styled } from "@mui/material/styles";
+import InputLabel from "@mui/material/InputLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import {
+  Button,
+  FormControl,
+  FormGroup,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { FaArrowRight } from "react-icons/fa6";
 
-const AbsentScheduleCard = ({ s }) => {
+const AsCard = styled("div")({
+  width: "100%",
+  height: "430px",
+  background: "#122C8E",
+  color: "black",
+  borderRadius: "20px",
+
+  "@media (max-width: 767px)": {
+    borderTopLeftRadius: "0px",
+    borderTopRightRadius: "0px",
+  },
+});
+
+const MainContainer = styled("div")({
+  padding: "50px 60px",
+  color: "white",
+
+  "@media (max-width: 767px)": { padding: "60px 36px" },
+});
+
+const ModalTitle = styled("div")({
+  paddingBottom: "24px",
+  fontSize: "36px",
+  fontWeight: "400",
+  color: "#FAFAFA",
+  marginLeft: "-2px",
+
+  "@media (max-width: 767px)": {},
+});
+
+const ModalSubTitle = styled("div")({
+  width: "100%",
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "rgba(255, 255, 255, 0.4)",
+
+  "@media (max-width: 767px)": {},
+});
+
+const MeshGradientCard = styled("div")({
+  border: "none",
+  padding: "30px 34px 0px 34px",
+  width: "81%",
+  height: "290px",
+  borderRadius: "20px",
+  backgroundColor: "#FFFFFF",
+  // backgroundImage: `
+  // radial-gradient(at bottom left, rgba(204, 251, 241, 0.15) 6%, rgba(255, 255, 255, 0.15) 47.6%, rgba(7, 187, 255, 0.20) 87.8%)`,
+  outline: "none",
+  "@media (max-width: 767px)": {
+    width: "80%",
+    padding: "28px 26px 10px 26px",
+  },
+});
+
+const NextButton = styled("div")({
+  background: "#122C8E",
+  color: "white",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "24px",
+  height: "24px",
+  borderRadius: "24px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "32px",
+    height: "32px",
+    borderRadius: "32px",
+    color: "white",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const AbsentScheduleCard = ({ s, saveOrderedSchedToDb }) => {
   const absentReasons = [
     "Busy",
     "Sickness",
@@ -62,55 +157,97 @@ const AbsentScheduleCard = ({ s }) => {
 
   return (
     <>
-      <div
-        style={{
-          width: "200px",
-          height: "200px",
-          background: "#fff",
-          color: "black",
-          borderRadius: "20px",
-        }}
-      >
-        <div>
-          <div style={{ background: "#408cfc", fontSize: "14px" }}>
-            {s.nameOfStudent}
-          </div>
-        </div>
+      <AsCard>
+        <MainContainer>
+          <ModalTitle>Be gone for a day</ModalTitle>
+          <ModalSubTitle>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a
+            ante fermentum enim mattis ullamcorper a vitae ligula. Cras blandit
+            urna iaculis, interdum velit at, dictum ligula.
+          </ModalSubTitle>
+        </MainContainer>
 
-        <div>
-          <div style={{ background: "#FFBF00", fontSize: "12px" }}>
-            {s.schedType}
-          </div>
-          <div className="fw-bolder  px-3" style={{ fontSize: "12px" }}>
-            {s.day}
-          </div>
-          <div className="fw-bolder  px-3" style={{ fontSize: "12px" }}>
-            {s.timing}
-          </div>
-          <div className=" d-flex justify-content-end pe-2 pb-2">
-            <FaCircleXmark onClick={handleRemove} />
-          </div>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            background: "transparent",
+            borderRadius: "20px",
+          }}
+        >
+          <MeshGradientCard>
+            <h1
+              style={{
+                color: "#122C8E",
+                margin: "0",
+                padding: "0px 0px 26px 0px",
+                fontWeight: "600",
+              }}
+            >
+              Tell us the reason
+            </h1>
+            <div
+              style={{
+                padding: "20px",
+                border: "1px solid #007bff",
+                borderRadius: "10px",
+              }}
+            >
+              <FormControl variant="standard" sx={{ width: "100%" }}>
+                <InputLabel id="demo-simple-select-label">Reasons</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  name="absentReason"
+                  onChange={handleAbsentReasonChange}
+                  value={s.absentReason}
+                >
+                  {s.absentReason ? (
+                    <MenuItem value={s.absentReason}>{s.absentReason}</MenuItem>
+                  ) : (
+                    <MenuItem>Select</MenuItem>
+                  )}
+                  {absentReasons
+                    .filter((a) => a !== s.absentReason)
+                    .map((a) => (
+                      <MenuItem key={a} value={a}>
+                        {a}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </div>
+
+            <div
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+                paddingTop: "26px",
+              }}
+            >
+              <p style={{ fontSize: "14px", margin: "0", color: "#007bff" }}>
+                {s.nameOfStudent} dolor sit amet, consectetur adipiscing elit.
+                Maecenas a ante fermentum enim mattis ullamcorper a vitae
+                ligula. Cras blandit urna iaculis, interdum velit at, dictum
+                ligula.
+              </p>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                width: "100%",
+                paddingTop: "26px",
+              }}
+            >
+              <NextButton onClick={saveOrderedSchedToDb}>
+                <FaArrowRight />
+              </NextButton>
+            </div>
+          </MeshGradientCard>
         </div>
-      </div>
-      <br />
-      <div>
-        <div>
-          <select onChange={handleAbsentReasonChange} name="absentReason">
-            {s.absentReason ? (
-              <option value={s.absentReason}>{s.absentReason}</option>
-            ) : (
-              <option>Select</option>
-            )}
-            {absentReasons
-              .filter((a) => a !== s.absentReason)
-              .map((a) => (
-                <option key={a} value={a}>
-                  {a}
-                </option>
-              ))}
-          </select>
-        </div>
-      </div>
+      </AsCard>
     </>
   );
 };
