@@ -7,22 +7,23 @@ import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
 import AllSchedule from "../AllSchedule/AllSchedule";
+import Modal from "@mui/material/Modal";
 
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
-  backgroundColor: "#ffffff",
+  backgroundColor: "#FAFAFA",
 });
 
 const CreateScheduleContainer = styled("div")({
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "space-between",
   alignItems: "flex-start",
-  marginTop: "80px",
-  width: "100%",
-  gap: "40px 20px",
+  gap: "12px",
+  padding: "20px 40px",
   flexWrap: "wrap",
+  width: "100%",
 });
 
 const initialState = {
@@ -49,11 +50,32 @@ const initialState = {
   notifLocator: "",
 };
 
+const ModalBox = styled("div")({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  width: "34%",
+  height: "600px",
+  transform: "translate(-50%, -50%)",
+  background: "white",
+  borderRadius: "20px",
+  fontSize: "12px",
+  fontWeight: "600",
+  color: "#007bff",
+  border: "none",
+  outline: "none",
+
+  "&:focus": {
+    border: "none",
+  },
+});
+
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
 const CreateSchedule = () => {
   const [values, setValues] = useState(initialState);
+  const [showModal, setShowModal] = useState(false);
   const auth = useSelector(authSelector);
 
   useEffect(() => {
@@ -63,7 +85,6 @@ const CreateSchedule = () => {
   const getParents = async () => {
     try {
       if (!auth.userDetails.token) {
-        // Handle the case where the token is missing
         console.error("Authentication token not found.");
         return;
       }
@@ -121,6 +142,13 @@ const CreateSchedule = () => {
       ...values,
       parent: parentName,
     });
+  };
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (

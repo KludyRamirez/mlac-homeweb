@@ -14,11 +14,10 @@ code {
 
 .icon-active {
   color: white;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: none;
-  padding: 8px;
-  border-top-left-radius: 50%;
-  border-bottom-left-radius: 50%;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
+  padding: 10px 10px;
+  border-radius: 25%;
 }

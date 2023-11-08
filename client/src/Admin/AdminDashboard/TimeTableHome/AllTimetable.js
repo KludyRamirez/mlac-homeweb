@@ -23,19 +23,17 @@ const Wrapper = styled("div")({
 const TimeTableCon = styled("div")({
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
+  alignItems: "flex-start",
   width: "100%",
   background: "transparent",
-  padding: "0px 10px",
-  marginTop: "70px",
+  marginTop: "0px",
 
   "@media (max-width: 767px)": {
+    padding: "20px 0px",
+    marginTop: "10px",
+    alignItems: "flex-start",
     overflow: "hidden",
     overflowX: "scroll",
-    padding: "40px 0px",
-    marginTop: "20px",
-    marginLeft: "-30px",
-    alignItems: "flex-start",
   },
 });
 
@@ -46,7 +44,7 @@ const Flexer = styled("div")({
   alignItems: "flex-start",
   gap: "12px",
   height: "inherit",
-  padding: "0px 40px",
+  padding: "0 40px",
 });
 
 const WeekContainer = styled("div")(({ theme }) => ({
@@ -55,12 +53,8 @@ const WeekContainer = styled("div")(({ theme }) => ({
   alignItems: "center",
   gap: "14px",
   marginLeft: "-7px",
-  border: "1px solid rgba(0, 123, 255, 0.1)",
-  padding: "6px",
-  borderTopLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomRightRadius: "20px",
-  borderBottomLeftRadius: "2px",
+  alignSelf: "flex-start",
+  paddingTop: "30px",
 }));
 
 const selectAuth = (state) => state.auth;
@@ -81,7 +75,28 @@ const AllTimetable = ({ socket, userNotif }) => {
     <Wrapper>
       <TopBar />
       <ResponsiveDrawer />
+
       <TimeTableCon>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            borderBottom: "1px solid rgba(0, 123, 255, 0.1)",
+          }}
+        >
+          <h1
+            style={{
+              margin: "0",
+              padding: "30px 0px 20px 36px",
+              fontWeight: "600",
+              color: "#007bff",
+              fontSize: "24px",
+              letterSpacing: "1px",
+            }}
+          >
+            Timetable
+          </h1>
+        </div>
         <Flexer>
           <WeekContainer>
             <div
@@ -366,6 +381,7 @@ const AllTimetable = ({ socket, userNotif }) => {
               S
             </div>
           </WeekContainer>
+
           {activeDay === "Sunday" && <Monday />}
           {activeDay === "Monday" && <Monday />}
           {activeDay === "Tuesday" && <Tuesday />}

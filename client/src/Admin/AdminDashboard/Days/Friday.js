@@ -25,7 +25,7 @@ const TableTitle = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   margin: "0",
-  padding: "22px 0px 0px 0px",
+  padding: "24px 0px 0px 0px",
   width: "100%",
 });
 
@@ -33,6 +33,7 @@ const Flexer = styled("div")({
   display: "flex",
   justifyContent: "center",
   gap: "10px",
+  width: "100%",
 });
 
 const Permanent = styled("div")({
@@ -68,11 +69,11 @@ const CellCon = styled("div")({
 const CellCon2 = styled("div")({
   display: "flex",
   justifyContent: "center",
-  gap: "8px",
+  gap: "16px",
 });
 
 const Cell2 = styled("div")({
-  background: "rgba(0, 0, 0, 0.014)",
+  background: "rgba(0, 0, 0, 0.02)",
   border: "1px solid rgba(0, 123, 255, 0.1)",
   borderRadius: "10px",
   width: "176px",
@@ -88,6 +89,17 @@ const Cell2 = styled("div")({
   "&:hover": {
     background: "white",
   },
+});
+
+const IniFlex = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
+  gap: "40px",
+
+  // "@media (max-width: 767px)": {
+  //   overflow: "hidden",
+  //   overflowX: "scroll",
+  // },
 });
 
 const selectAuth = (state) => state.auth;
@@ -293,9 +305,8 @@ const Friday = ({ socket, userNotif }) => {
 
   return (
     <FridayWrapper>
-      {/* <div> {cell2Count}</div> */}
       <FormTitle>
-        <h2 style={{ color: "#007bff", margin: "9px 0 0 0", padding: "0" }}>
+        <h2 style={{ color: "#007bff", margin: "14px 0 0 0", padding: "0" }}>
           Friday,
         </h2>
       </FormTitle>
@@ -307,7 +318,7 @@ const Friday = ({ socket, userNotif }) => {
             style={{
               fontSize: "52px",
               color: "#07bbff",
-              marginTop: "8px",
+              marginTop: "10px",
               marginLeft: "-5px",
               fontWeight: "300",
             }}
@@ -315,9 +326,7 @@ const Friday = ({ socket, userNotif }) => {
             {date.date}
           </div>
         ))}
-      <div
-        style={{ display: "flex", justifyContent: "flex-start", gap: "40px" }}
-      >
+      <IniFlex>
         <Flexer>
           <Permanent>
             <TableTitle>
@@ -1291,7 +1300,7 @@ const Friday = ({ socket, userNotif }) => {
             </CellCon2>
           </Solo>
         </Flexer>
-      </div>
+      </IniFlex>
     </FridayWrapper>
   );
 };

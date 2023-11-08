@@ -1,147 +1,150 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { styled } from "@mui/material/styles";
+import { styled } from "@mui/system";
+import PaginationItem from "@mui/material/PaginationItem";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
-import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
-import DeleteIcon from "@mui/icons-material/Delete";
 import BlockIcon from "@mui/icons-material/Block";
-import { BsCheckLg } from "react-icons/bs";
 import Tilt from "react-parallax-tilt";
 import { HiSortDescending, HiSortAscending } from "react-icons/hi";
 import { RiSearchLine } from "react-icons/ri";
-import TopBar from "../AppBar/AppBar";
 import Modal from "@mui/material/Modal";
 import AbsentScheduleCard from "./AbsentScheduleCard";
 import AuditModal from "./AuditModal";
+import { BsCheckLg } from "react-icons/bs";
+import { MdVideocam } from "react-icons/md";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import {
+  AiOutlineSortDescending,
+  AiOutlineSortAscending,
+} from "react-icons/ai";
 import { toast } from "react-toastify";
+import { HiOutlineFilter } from "react-icons/hi";
+import { PiWarning, PiWarningFill } from "react-icons/pi";
+import { Pagination } from "@mui/material";
 
-const LowerBox = styled("div")({
-  display: "flex",
-  alignSelf: "flex-start",
-  justifyContent: "center",
-  width: "100%",
-  height: "400px",
-  borderTopRightRadius: "25px",
-  borderBottomRightRadius: "25px",
-  borderBottomLeftRadius: "25px",
-  background:
-    "radial-gradient(at bottom left, rgba(204, 251, 241, 0.15) 6%, rgba(255, 255, 255, 0.15) 47.6%, rgba(67, 207, 255, 0.20) 87.8%)",
-  "@media (max-width: 767px)": {
-    justifyContent: "flex-start",
-    overflow: "hidden",
+const CustomPaginationItem = styled(PaginationItem)(({ theme }) => ({
+  border: "none",
+  borderRadius: "10px",
+  color: "white",
+  background: "#5468ff",
+  "&:hover": {
+    border: "1px solid #5468ff",
+    backgroundColor: "white",
+    color: "#5468ff",
   },
-});
+}));
 
 const StudentParentCon = styled("div")({
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  backgroundColor: "transparent",
-  marginTop: "40px",
-  gap: "20px",
-  padding: "20px",
-  "@media (max-width: 767px)": {
-    justifyContent: "flex-start",
-    overflow: "hidden",
-    marginTop: "30px",
-  },
-});
+  alignItems: "flex-start",
+  background: "transparent",
+  marginTop: "0px",
+  zIndex: "2",
 
-const Flexer = styled("div")({
-  width: "100%",
-  display: "flex",
-  justifyContent: "center",
-  gap: "40px",
-  paddingTop: "10px",
-  flexWrap: "wrap",
   "@media (max-width: 767px)": {
-    justifyContent: "flex-start",
+    padding: "10px",
+    marginTop: "10px",
+    alignItems: "flex-start",
     overflow: "hidden",
     overflowX: "scroll",
   },
 });
 
+const Flexer = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "10px 0px",
+});
+
 const Cell = styled("div")({
   padding: "10px",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "180px",
+  height: "26px",
   color: "#007bff",
   fontSize: "13px",
   fontWeight: "600",
   letterSpacing: "0.3px",
-  background: "white",
-  borderBottom: "1px dashed #007bff",
-  width: "100%",
-  "&:last-child": {
-    border: "none",
-  },
+  border: "1px solid #007bff",
+  borderRadius: "6px",
+  gap: "4px",
 });
 
 const Cell2 = styled("div")({
   padding: "10px",
-  color: "#007bff",
-  fontSize: "13px",
-  fontWeight: "600",
-  letterSpacing: "0.3px",
-  background: "white",
-  borderBottom: "1px dashed #07bbff",
-  width: "100%",
-  "&:last-child": {
-    border: "none",
-  },
-});
-
-const Cell3 = styled("div")({
-  padding: "10px",
-  color: "#007bff",
-  fontSize: "13px",
-  fontWeight: "600",
-  letterSpacing: "0.3px",
-  background: "transparent",
-  borderBottom: "1px dashed #007bff",
-  width: "100%",
-
-  "&:last-child": {
-    border: "none",
-    borderRadius: "10px",
-  },
-});
-
-const Cell4 = styled("div")({
-  padding: "10px",
-  color: "#007bff",
-  fontSize: "13px",
-  fontWeight: "600",
-  letterSpacing: "0.3px",
-  background: "white",
-  borderBottom: "1px dashed #007bff",
-  width: "100%",
   display: "flex",
   justifyContent: "flex-start",
-  gap: "4px",
-  "&:last-child": {
-    border: "none",
-  },
-});
-
-const CellId = styled("div")({
-  padding: "10px",
+  alignItems: "center",
+  width: "180px",
+  height: "26px",
   color: "white",
   fontSize: "13px",
   fontWeight: "600",
   letterSpacing: "0.3px",
-  background: "transparent",
-  borderBottom: "1px dashed white",
-  width: "100%",
-  textTransform: "uppercase",
+  background: "#007bff",
+  border: "1px solid #007bff",
+  borderRadius: "4px",
+  gap: "4px",
+});
 
-  "&:last-child": {
-    border: "none",
-    borderRadius: "10px",
-  },
+const Cell3 = styled("div")({
+  padding: "10px",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "180px",
+  height: "26px",
+  color: "white",
+  fontSize: "13px",
+  fontWeight: "600",
+  letterSpacing: "0.3px",
+  background: "#007bff",
+  border: "1px solid #007bff",
+  borderRadius: "4px",
+  gap: "4px",
+});
+
+const Cell4 = styled("div")({
+  padding: "10px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "130px",
+  height: "26px",
+  color: "white",
+  fontSize: "13px",
+  fontWeight: "600",
+  letterSpacing: "0.3px",
+  background: "white",
+  border: "1px solid #007bff",
+  borderRadius: "4px",
+  gap: "4px",
+});
+
+const CellId = styled("div")({
+  padding: "10px",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "30px",
+  height: "26px",
+  color: "white",
+  fontSize: "13px",
+  fontWeight: "600",
+  letterSpacing: "0.3px",
+  background: "#007bff",
+  border: "1px solid #007bff",
+  borderRadius: "4px",
+  textTransform: "uppercase",
 });
 
 const LowerIconDiv = styled("div")({
@@ -237,8 +240,8 @@ const LowerIconDiv3 = styled("div")({
 const LowerIconDiv4 = styled("div")({
   marginTop: "1px",
   cursor: "pointer",
-  background: "#FF7F50",
-  color: "#FF7F50",
+  background: "#FF3131",
+  color: "#FF3131",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -267,8 +270,8 @@ const LowerIconDiv4 = styled("div")({
 const LowerIconDiv5 = styled("div")({
   marginTop: "1px",
   cursor: "pointer",
-  background: "#FF3131",
-  color: "#FF3131",
+  background: "#800020",
+  color: "#800020",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -295,15 +298,15 @@ const LowerIconDiv5 = styled("div")({
 });
 
 const IconSortContainer = styled("div")({
-  width: "26px",
-  height: "26px",
+  width: "32px",
+  height: "32px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   borderRadius: "50%",
   cursor: "pointer",
   "&:hover": {
-    background: "rgba(0, 0, 0, 0.06)",
+    background: "rgba(255, 255, 255, 0.25)",
   },
 });
 
@@ -311,47 +314,45 @@ const TableContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
-  gap: "12px",
-  border: "1px solid rgba(0, 123, 255, 0.3)",
-  padding: "6px",
-  borderTopLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomRightRadius: "20px",
-  borderBottomLeftRadius: "2px",
+  gap: "14px",
+  marginLeft: "-7px",
+  alignSelf: "flex-start",
+  paddingTop: "30px",
 }));
 
 const SearchMainCon = styled("div")(({ theme }) => ({
+  width: "100%",
   display: "flex",
   alignItems: "center",
-  alignSelf: "flex-end",
+  justifyContent: "space-between",
   position: "relative",
+  marginTop: "18px",
   "@media (max-width: 767px)": {
     width: "100%",
   },
 }));
 
 const SearchBar = styled("input")(({ theme }) => ({
-  width: "100%",
+  width: "28%",
   height: "26px",
-  background: "white",
-  border: "1px solid rgba(0, 123, 255, 0.3)",
-  borderTopLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomLeftRadius: "20px",
+  background: "rgba(7, 187, 255, 0.04)",
+  border: "1px solid rgba(7, 187, 255, 0.2)",
+  borderRadius: "10px",
   zIndex: "1",
   padding: "6px 0px 6px 42px",
   fontSize: "12px",
   fontWeight: "600",
-  letterSpacing: "0.3px",
   color: "#007bff",
+
   "&:focus": {
-    outline: "none",
+    outline: "2px solid #5468ff",
+    border: "1px solid transparent",
   },
   "&::placeholder": {
-    color: "rgba(0, 0, 0, 0.1)",
+    color: "rgba(0, 0, 0, 0.4)",
   },
   "@media (max-width: 767px)": {
-    borderRadius: "20px",
+    width: "100%",
   },
 }));
 
@@ -382,6 +383,65 @@ const ModalBox = styled("div")({
   },
 });
 
+const FlexerSwitch = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  gap: "12px",
+  height: "inherit",
+  // padding: "0 40px",
+});
+
+const FormTitle = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-end",
+  margin: "0",
+  padding: "0",
+});
+
+const ZebraDiv = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+
+  "&:nth-child(even)": {
+    background: "rgba(255, 255, 255, 0.6)",
+    borderRadius: "10px",
+    boxShadow:
+      "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+  },
+
+  "&:nth-child(odd)": {
+    background: "transparent",
+  },
+});
+
+const FilterButton = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "38px",
+  height: "36px",
+  background: "rgba(0, 123, 255, 0.08)",
+  boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
+  borderRadius: "10px",
+  cursor: "pointer",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    transform: "translateY(-1px)",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
@@ -391,8 +451,11 @@ const conSelector = createSelector([selectCon], (con) => con);
 const selectAudit = (state) => state.audit;
 const auditSelector = createSelector([selectAudit], (audit) => audit);
 
-const ParentSortSchedule = () => {
+const AllSchedule = () => {
   const [schedules, setSchedules] = useState([]);
+  const [tempSchedules, setTempSchedules] = useState([]);
+  const [tempSoloSchedules, setTempSoloSchedules] = useState([]);
+  const [mixedTempSchedules, setMixedTempSchedules] = useState([]);
   const [activeSchedType, setActiveSchedType] = useState("Permanent");
   const [isNameDesc, setIsNameDesc] = useState(false);
   const [isDayDesc, setIsDayDesc] = useState(false);
@@ -400,9 +463,16 @@ const ParentSortSchedule = () => {
   const [isTypeDesc, setIsTypeDesc] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSchedules, setFilteredSchedules] = useState([]);
+  const [filteredMixedSchedules, setFilteredMixedSchedules] = useState([]);
+  const [showExtraFunc, setShowExtraFunc] = useState(false);
   //modals
   const [showModal, setShowModal] = useState(false);
   const [showSecModal, setShowSecModal] = useState(false);
+
+  //pagination
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const itemsPerPage = 7;
 
   const auth = useSelector(authSelector);
   const con = useSelector(conSelector);
@@ -415,11 +485,17 @@ const ParentSortSchedule = () => {
   useEffect(() => {
     deleteExpiredTemporarySchedule();
     deleteExpiredTemporarySoloSchedule();
+    handleDeleteCon();
   }, []);
 
   useEffect(() => {
-    getSchedules();
+    getTempSchedules();
+    getTempSoloSchedules();
   }, [searchQuery]);
+
+  useEffect(() => {
+    getSchedules();
+  }, [page, auth, searchQuery]);
 
   useEffect(() => {
     const filtered = schedules.filter((schedule) => {
@@ -441,8 +517,35 @@ const ParentSortSchedule = () => {
     setFilteredSchedules(filtered);
   }, [searchQuery, schedules]);
 
+  useEffect(() => {
+    const mixedTempFiltered = mixedTempSchedules.filter((schedule) => {
+      return (
+        (schedule.tempStudentName && schedule.tempStudentName.nameOfStudent)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        schedule.cardId
+          ?.slice(-4)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      );
+    });
+    setFilteredMixedSchedules(mixedTempFiltered);
+  }, [searchQuery, mixedTempSchedules]);
+
+  useEffect(() => {
+    if (tempSchedules.length >= 0 && tempSoloSchedules.length >= 0) {
+      const mixedTempSchedulesVar = [...tempSchedules, ...tempSoloSchedules];
+      setMixedTempSchedules(mixedTempSchedulesVar);
+      console.log(mixedTempSchedulesVar);
+    }
+  }, [tempSchedules, tempSoloSchedules]);
+
   const handleDayChange = (day) => {
     setActiveSchedType(day);
+  };
+
+  const toggleExtraFunc = () => {
+    setShowExtraFunc(!showExtraFunc);
   };
 
   const deleteExpiredTemporarySchedule = async () => {
@@ -506,36 +609,83 @@ const ParentSortSchedule = () => {
       const params = { searchQuery }; // Modify this based on your API's requirements
       const res = await axios.get(url, { headers, params });
 
-      const permanentFilter = res.data.filter(
-        (schedule) => schedule.schedType === "Permanent"
+      const parentFilter = res.data.filter(
+        (schedule) =>
+          (schedule.parent ===
+            `${auth && auth.userDetails.fullname} ${
+              auth && auth.userDetails.username
+            }` &&
+            schedule.isActive === true) ||
+          (schedule.tempStudent && schedule.tempStudent.parent) ===
+            `${auth && auth.userDetails.fullname} ${
+              auth && auth.userDetails.username
+            }`
       );
-      setSchedules(permanentFilter);
+
+      setTotalPages(Math.ceil(parentFilter.length / itemsPerPage));
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const slicedData = parentFilter.slice(startIndex, endIndex);
+
+      setSchedules(slicedData);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
   };
 
-  const deleteOneSched = async (id) => {
-    if (!auth.userDetails.token) {
-      // Handle the case where the token is missing
-      console.error("Authentication token not found.");
-      return;
-    }
+  const getTempSchedules = async () => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API}/schedule/${id}`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
-      getSchedules();
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const url = `${process.env.REACT_APP_API}/temp-schedule`;
+      const headers = {
+        Authorization: `Bearer ${auth.userDetails.token}`,
+      };
+
+      const res = await axios.get(url, { headers });
+
+      const parentFilter = res.data.filter(
+        (schedule) =>
+          (schedule.tempStudentName && schedule.tempStudentName.parent) ===
+          (auth && auth.userDetails.fullname)
+      );
+      setTempSchedules(parentFilter);
     } catch (err) {
-      console.error("Error fetching users:", err);
+      console.error("Error fetching schedules:", err);
     }
   };
 
-  const navigateUpdate = (id) => {
-    history.push(`/schedule/${id}`);
-    window.location.reload();
+  const getTempSoloSchedules = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const url = `${process.env.REACT_APP_API}/temp-soloschedule`;
+      const headers = {
+        Authorization: `Bearer ${auth.userDetails.token}`,
+      };
+
+      const res = await axios.get(url, { headers });
+
+      const parentFilter = res.data.filter(
+        (schedule) =>
+          (schedule.tempStudentName && schedule.tempStudentName.parent) ===
+          (auth && auth.userDetails.fullname)
+      );
+      setTempSoloSchedules(parentFilter);
+    } catch (err) {
+      console.error("Error fetching schedules:", err);
+    }
+  };
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+    getSchedules();
   };
 
   const handleSetActiveToFalse = async (id) => {
@@ -670,6 +820,7 @@ const ParentSortSchedule = () => {
     </div>
   );
 
+  //
   const sortAlphabeticallyDesc = () => {
     const sortedSchedules = [...filteredSchedules].sort((a, b) =>
       a.nameOfStudent.localeCompare(b.nameOfStudent)
@@ -677,11 +828,29 @@ const ParentSortSchedule = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedAlphabeticallyDesc = () => {
+    const sortedMixedSchedules = [...filteredMixedSchedules].sort((a, b) =>
+      (a.tempStudentName && a.tempStudentName.nameOfStudent).localeCompare(
+        b.tempStudentName && b.tempStudentName.nameOfStudent
+      )
+    );
+    setMixedTempSchedules(sortedMixedSchedules);
+  };
+
   const sortAlphabetically = () => {
     const sortedSchedules = [...filteredSchedules].sort((a, b) =>
       b.nameOfStudent.localeCompare(a.nameOfStudent)
     );
     setSchedules(sortedSchedules);
+  };
+
+  const sortMixedAlphabetically = () => {
+    const sortedMixedSchedules = [...filteredMixedSchedules].sort((a, b) =>
+      (b.tempStudentName && b.tempStudentName.nameOfStudent).localeCompare(
+        a.tempStudentName && a.tempStudentName.nameOfStudent
+      )
+    );
+    setMixedTempSchedules(sortedMixedSchedules);
   };
 
   //
@@ -706,6 +875,26 @@ const ParentSortSchedule = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedByDayOfWeekDesc = () => {
+    const daysOrder = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const sortedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const dayA = daysOrder.indexOf(a.permanentSched && a.permanentSched.day);
+      const dayB = daysOrder.indexOf(b.permanentSched && b.permanentSched.day);
+      return dayA - dayB;
+    });
+
+    setMixedTempSchedules(sortedSchedules);
+  };
+
   const sortByDayOfWeek = () => {
     const daysOrder = [
       "Sunday",
@@ -724,6 +913,26 @@ const ParentSortSchedule = () => {
     });
 
     setSchedules(sortedSchedules);
+  };
+
+  const sortMixedByDayOfWeek = () => {
+    const daysOrder = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const sortedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const dayA = daysOrder.indexOf(a.permanentSched && a.permanentSched.day);
+      const dayB = daysOrder.indexOf(b.permanentSched && b.permanentSched.day);
+      return dayB - dayA;
+    });
+
+    setMixedTempSchedules(sortedSchedules);
   };
 
   //
@@ -749,6 +958,31 @@ const ParentSortSchedule = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedByTimeDesc = () => {
+    const timeOrder = [
+      "8 AM to 9 AM",
+      "9 AM to 10 AM",
+      "10 AM to 11 AM",
+      "11 AM to 12 NN",
+      "1 PM to 2 PM",
+      "2 PM to 3 PM",
+      "3 PM to 4 PM",
+      "4 PM to 5 PM",
+    ];
+
+    const sortedMixedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const timeA = timeOrder.indexOf(
+        a.timing || (a.permanentSched && a.permanentSched.timing)
+      );
+      const timeB = timeOrder.indexOf(
+        b.timing || (b.permanentSched && b.permanentSched.timing)
+      );
+      return timeA - timeB;
+    });
+
+    setMixedTempSchedules(sortedMixedSchedules);
+  };
+
   const sortByTime = () => {
     const timeOrder = [
       "8 AM to 9 AM",
@@ -770,6 +1004,31 @@ const ParentSortSchedule = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedByTime = () => {
+    const timeOrder = [
+      "8 AM to 9 AM",
+      "9 AM to 10 AM",
+      "10 AM to 11 AM",
+      "11 AM to 12 NN",
+      "1 PM to 2 PM",
+      "2 PM to 3 PM",
+      "3 PM to 4 PM",
+      "4 PM to 5 PM",
+    ];
+
+    const sortedMixedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const timeA = timeOrder.indexOf(
+        a.timing || (a.permanentSched && a.permanentSched.timing)
+      );
+      const timeB = timeOrder.indexOf(
+        b.timing || (b.permanentSched && b.permanentSched.timing)
+      );
+      return timeB - timeA;
+    });
+
+    setMixedTempSchedules(sortedMixedSchedules);
+  };
+
   //
 
   const sortByTypeDesc = () => {
@@ -784,6 +1043,22 @@ const ParentSortSchedule = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedByTypeDesc = () => {
+    const typeOrder = ["Solo", "Dyad"];
+
+    const sortedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const typeA = typeOrder.indexOf(
+        a.studentType || (a.tempStudentName && a.tempStudentName.studentType)
+      );
+      const typeB = typeOrder.indexOf(
+        b.studentType || (b.tempStudentName && b.tempStudentName.studentType)
+      );
+      return typeA - typeB;
+    });
+
+    setMixedTempSchedules(sortedSchedules);
+  };
+
   const sortByType = () => {
     const typeOrder = ["Solo", "Dyad"];
 
@@ -794,6 +1069,22 @@ const ParentSortSchedule = () => {
     });
 
     setSchedules(sortedSchedules);
+  };
+
+  const sortMixedByType = () => {
+    const typeOrder = ["Solo", "Dyad"];
+
+    const sortedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const typeA = typeOrder.indexOf(
+        a.studentType || (a.tempStudentName && a.tempStudentName.studentType)
+      );
+      const typeB = typeOrder.indexOf(
+        b.studentType || (b.tempStudentName && b.tempStudentName.studentType)
+      );
+      return typeB - typeA;
+    });
+
+    setMixedTempSchedules(sortedSchedules);
   };
 
   const toggleFilterName = () => {
@@ -831,7 +1122,7 @@ const ParentSortSchedule = () => {
   const handleCloseSecModal = () => {
     createSchedOrder();
     setShowSecModal(false);
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
@@ -855,81 +1146,8 @@ const ParentSortSchedule = () => {
         <ModalBox>{TermsAndCondi()}</ModalBox>
       </Modal>
 
-      <TopBar />
-      <ResponsiveDrawer />
-
       <StudentParentCon>
-        <SearchMainCon>
-          <div
-            style={{
-              position: "absolute",
-              top: "7px",
-              left: "8px",
-              width: "26px",
-              height: "26px",
-              zIndex: "2",
-              background:
-                "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
-              borderRadius: "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <RiSearchLine
-              style={{
-                color: "white",
-                fontSize: "12px",
-              }}
-            />
-          </div>
-          <SearchBar
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </SearchMainCon>
-        <h2
-          style={{
-            display: "flex",
-            alignSelf: "flex-start",
-            padding: "0",
-            margin: "0",
-            color: "#007bff",
-            marginTop: "10px",
-            letterSpacing: "0.5px",
-          }}
-        >
-          Permanent
-        </h2>
-        <div
-          style={{
-            display: "flex",
-            alignSelf: "flex-start",
-            padding: "0",
-            margin: "0",
-            color: "#07bbff",
-            fontSize: "56px",
-            fontWeight: "300",
-            marginTop: "-3px",
-            marginLeft: "-4px",
-            letterSpacing: "0.5px",
-          }}
-        >
-          Schedules
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            width: "100%",
-            alignItems: "flex-end",
-            gap: "20px",
-            marginTop: "4px",
-          }}
-        >
+        <FlexerSwitch>
           <TableContainer>
             <div
               onClick={() => handleDayChange("Permanent")}
@@ -944,7 +1162,7 @@ const ParentSortSchedule = () => {
                 marginTop: activeSchedType === "Permanent" ? "0px" : "0px",
                 background:
                   activeSchedType === "Permanent"
-                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    ? "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)"
                     : "transparent",
                 color: activeSchedType === "Permanent" ? "white" : "#07bbff",
 
@@ -985,7 +1203,7 @@ const ParentSortSchedule = () => {
                 marginTop: activeSchedType === "Temporary" ? "0px" : "0px",
                 background:
                   activeSchedType === "Temporary"
-                    ? "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)"
+                    ? "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)"
                     : "transparent",
                 color: activeSchedType === "Temporary" ? "white" : "#07bbff",
 
@@ -1015,458 +1233,338 @@ const ParentSortSchedule = () => {
               T
             </div>
           </TableContainer>
-        </div>
 
-        {activeSchedType === "Permanent" && (
-          <>
-            <Flexer>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                  whiteSpace: "nowrap",
-                  gap: "6px",
-                }}
-              >
+          {activeSchedType === "Permanent" && (
+            <>
+              <FormTitle>
+                <h2
+                  style={{
+                    color: "#007bff",
+                    margin: "14px 0 0 0",
+                    padding: "0",
+                  }}
+                >
+                  Original,
+                </h2>
+              </FormTitle>
+
+              <SearchMainCon>
                 <div
                   style={{
-                    height: "100%",
-                    borderRadius: "10px",
+                    position: "absolute",
+                    top: "6px",
+                    left: "8px",
+                    width: "26px",
+                    height: "26px",
+                    zIndex: "2",
+                    borderRadius: "50%",
                     display: "flex",
-                    flexDirection: "column",
+                    justifyContent: "center",
                     alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
+                  }}
+                >
+                  <RiSearchLine
+                    style={{
+                      color: "#007bff",
+                      fontSize: "16px",
+                    }}
+                  />
+                </div>
+                <SearchBar
+                  type="text"
+                  placeholder="Search.."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <div style={{ display: "flex", gap: "8px" }}>
+                  {isNameDesc ? (
+                    <div onClick={toggleFilterName}>
+                      <FilterButton onClick={sortAlphabetically}>
+                        <AiOutlineSortAscending
+                          style={{ fontSize: "18px", color: "#122c8e" }}
+                        />
+                      </FilterButton>
+                    </div>
+                  ) : (
+                    <div onClick={toggleFilterName}>
+                      <FilterButton onClick={sortAlphabeticallyDesc}>
+                        <AiOutlineSortDescending
+                          style={{ fontSize: "18px", color: "#122c8e" }}
+                        />
+                      </FilterButton>
+                    </div>
+                  )}
+
+                  {isDayDesc ? (
+                    <div onClick={toggleFilterDay}>
+                      <FilterButton onClick={sortByDayOfWeek}>
+                        <HiOutlineFilter
+                          style={{ fontSize: "18px", color: "#122c8e" }}
+                        />
+                      </FilterButton>
+                    </div>
+                  ) : (
+                    <div onClick={toggleFilterDay}>
+                      <FilterButton onClick={sortByDayOfWeekDesc}>
+                        <HiOutlineFilter
+                          style={{ fontSize: "18px", color: "#122c8e" }}
+                        />
+                      </FilterButton>
+                    </div>
+                  )}
+                </div>
+              </SearchMainCon>
+
+              <Flexer>
+                <div
+                  style={{
+                    background: "rgba(7, 187, 255, 0.2)",
+                    borderRadius: "12px",
+                    padding: "4px 4px 4px 4px",
+                    boxShadow:
+                      "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
                   }}
                 >
                   <div
                     style={{
-                      width: "50px",
-                      borderTopLeftRadius: "10px",
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      color: "#007bff",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #07bbff",
+                      justifyContent: "center",
+                      borderRadius: "10px",
+                      width: "1050px",
                     }}
                   >
                     <div
                       style={{
-                        width: "100%",
                         display: "flex",
                         justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>ID</div>
-                      <div style={{ width: "26px", height: "26px" }}></div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "30px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#07bbff",
-                      border: "1px solid #07bbff",
-                      padding: "11px 10px 0px 10px",
-                      borderBottomLeftRadius: "10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <CellId key={schedule._id}>
-                        {schedule.cardId ? schedule.cardId.slice(-2) : ""}
-                      </CellId>
-                    ))}
-                  </div>
-                </div>
-                <Tilt>
-                  <div
-                    style={{
-                      height: "100%",
-                      borderRadius: "6px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      gap: "6px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "200px",
-                        borderTopRightRadius: "10px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        background: "#007bff",
-                        color: "white",
-                        fontWeight: "600",
-                        fontSize: "14px",
-                        letterSpacing: "0.3px",
-                        border: "1px solid #007bff",
+                        background: "rgba(255, 255, 255, 0.8)",
+                        padding: "13px 16px",
+                        borderTopLeftRadius: "10px",
+                        width: "70%",
+                        boxShadow:
+                          "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
                       }}
                     >
                       <div
                         style={{
-                          width: "100%",
                           display: "flex",
                           justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "8px 10px",
+                          width: "70%",
                         }}
                       >
-                        <div>Name</div>
-                        {isNameDesc ? (
-                          <div onClick={toggleFilterName}>
-                            <IconSortContainer onClick={sortAlphabetically}>
-                              <HiSortAscending style={{ fontSize: "16px" }} />
-                            </IconSortContainer>
-                          </div>
-                        ) : (
-                          <div onClick={toggleFilterName}>
-                            <IconSortContainer onClick={sortAlphabeticallyDesc}>
-                              <HiSortDescending style={{ fontSize: "16px" }} />
-                            </IconSortContainer>
-                          </div>
-                        )}
+                        <h5
+                          style={{
+                            color: "#007bff",
+                            margin: "0",
+                            letterSpacing: "0.2px",
+                            fontWeight: "600",
+                          }}
+                        >
+                          Student's Info
+                        </h5>
+                        <h5
+                          style={{
+                            color: "#007bff",
+                            margin: "0",
+                            letterSpacing: "0.2px",
+                            fontWeight: "600",
+                          }}
+                        >
+                          Status
+                        </h5>
                       </div>
                     </div>
                     <div
                       style={{
-                        width: "180px",
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        background: "white",
-                        border: "1px solid #007bff",
-                        padding: "11px 10px 0px 10px",
-                        gap: "10px",
+                        backgroundImage:
+                          "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5468ff 100%)",
+                        padding: "13px 14px",
+                        boxShadow:
+                          "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+                        borderTopRightRadius: "10px",
+                        width: "30%",
                       }}
                     >
-                      {filteredSchedules.map((schedule) => (
-                        <Cell key={schedule._id}>{schedule.nameOfStudent}</Cell>
-                      ))}
+                      <h5
+                        style={{
+                          color: "white",
+                          margin: "0",
+                          letterSpacing: "0.2px",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Actions
+                      </h5>
                     </div>
                   </div>
-                </Tilt>
-                <div
-                  style={{
-                    height: "100%",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#07bbff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #07bbff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Day</div>
-                      {isDayDesc ? (
-                        <div onClick={toggleFilterDay}>
-                          <IconSortContainer onClick={sortByDayOfWeek}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterDay}>
-                          <IconSortContainer onClick={sortByDayOfWeekDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #07bbff",
-                      padding: "11px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell2 key={schedule._id}>{schedule.day}</Cell2>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#007bff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Time</div>
-                      {isTimeDesc ? (
-                        <div onClick={toggleFilterTime}>
-                          <IconSortContainer onClick={sortByTime}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterTime}>
-                          <IconSortContainer onClick={sortByTimeDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #007bff",
-                      padding: "11px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell key={schedule._id}>{schedule.timing}</Cell>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      // borderTopRightRadius: "6px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#07bbff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #07bbff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Type</div>
-                      {isTypeDesc ? (
-                        <div onClick={toggleFilterType}>
-                          <IconSortContainer onClick={sortByType}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterType}>
-                          <IconSortContainer onClick={sortByTypeDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #07bbff",
-                      padding: "11px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell3 key={schedule._id}>{schedule.studentType}</Cell3>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "140px",
-                      // borderTopLeftRadius: "6px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#007bff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Actions</div>
-                      <div style={{ width: "26px", height: "26px" }}></div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "120px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #07bbff",
-                      padding: "11px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell4 key={schedule._id}>
-                        <LowerIconDiv>
-                          <PersonIcon sx={{ fontSize: "14px" }} />
-                        </LowerIconDiv>
-                        <LowerIconDiv2
-                          onClick={() => navigateUpdate(schedule._id)}
-                        >
-                          <EditIcon sx={{ fontSize: "14px" }} />
-                        </LowerIconDiv2>
-                        <LowerIconDiv3>
-                          <BsCheckLg style={{ fontSize: "14px" }} />
-                        </LowerIconDiv3>
-                        <LowerIconDiv4
-                          onClick={() => handleAddToContainer(schedule)}
-                        >
-                          <BlockIcon sx={{ fontSize: "14px" }} />
-                        </LowerIconDiv4>
-                        <LowerIconDiv5
-                          onClick={() => deleteOneSched(schedule._id)}
-                        >
-                          <DeleteIcon sx={{ fontSize: "14px" }} />
-                        </LowerIconDiv5>
-                      </Cell4>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Flexer>
-          </>
-        )}
 
-        <LowerBox></LowerBox>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {filteredSchedules.map((schedule) => (
+                      <ZebraDiv>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            padding: "16px",
+                            width: "70%",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              width: "71.5%",
+                            }}
+                          >
+                            <h5
+                              style={{
+                                margin: "0px",
+                                color: "#122c8e",
+                                fontWeight: "600",
+                                lineHeight: "22px",
+                              }}
+                            >
+                              {schedule.nameOfStudent},{" "}
+                              {schedule.cardId ? schedule.cardId.slice(-2) : ""}{" "}
+                              |{" "}
+                              <span
+                                style={{
+                                  wordSpacing: "0px",
+                                  textTransform: "lowercase",
+                                }}
+                              >
+                                {schedule.timing}
+                              </span>{" "}
+                              <br /> {schedule.day}, {schedule.studentType}{" "}
+                              <br />
+                            </h5>
+                            <div
+                              style={{
+                                display: "flex",
+                                height: "100%",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                gap: "8px",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: "10px",
+                                  height: "10px",
+                                  background: "#00FF7F",
+                                  borderRadius: "50%",
+                                }}
+                              ></div>
+                              <h5
+                                style={{
+                                  margin: "0px",
+                                  color: "#122c8e",
+                                  fontWeight: "600",
+                                  lineHeight: "22px",
+                                  wordSpacing: "1px",
+                                }}
+                              >
+                                Enrolled
+                              </h5>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "30%",
+                            padding: "16px 14px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              gap: "4px",
+                            }}
+                          >
+                            <LowerIconDiv></LowerIconDiv>
+                            <LowerIconDiv2></LowerIconDiv2>
+                            <LowerIconDiv3></LowerIconDiv3>
+                            <LowerIconDiv4
+                              onClick={() => handleAddToContainer(schedule)}
+                            >
+                              <BlockIcon sx={{ fontSize: "14px" }} />
+                            </LowerIconDiv4>
+                          </div>
+
+                          {showExtraFunc ? (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <IconSortContainer>
+                                <MdVideocam
+                                  style={{ color: "#122c8e", fontSize: "18px" }}
+                                />
+                              </IconSortContainer>
+                              <IconSortContainer>
+                                <PiWarningFill
+                                  style={{ color: "#E49B0F", fontSize: "18px" }}
+                                />
+                              </IconSortContainer>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+
+                          <BiDotsVerticalRounded
+                            onClick={toggleExtraFunc}
+                            style={{
+                              fontSize: "24px",
+                              color: "rgba(0, 0, 0, 0.2)",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </div>
+                      </ZebraDiv>
+                    ))}
+                  </div>
+                </div>
+              </Flexer>
+              <Pagination
+                count={Math.ceil(
+                  schedules.map((schedule) => schedule.length) / itemsPerPage
+                )}
+                page={page}
+                onChange={handlePageChange}
+                variant="outlined"
+                shape="rounded"
+                color="primary"
+                renderItem={(item) => (
+                  <CustomPaginationItem
+                    {...item}
+                    label={
+                      item.type === "previous"
+                        ? "Previous"
+                        : item.type === "next"
+                        ? "Next"
+                        : item.page
+                    }
+                  />
+                )}
+              />
+            </>
+          )}
+        </FlexerSwitch>
       </StudentParentCon>
     </>
   );
 };
-export default ParentSortSchedule;
+export default AllSchedule;

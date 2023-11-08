@@ -18,7 +18,7 @@ import { RxDash } from "react-icons/rx";
 const Cell = styled("div")({
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 1px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px",
-  border: "1px dashed #007bff",
+  border: "1px solid rgba(0, 123, 255, 0.6)",
   borderRadius: "10px",
   width: "176px",
   height: "106px",

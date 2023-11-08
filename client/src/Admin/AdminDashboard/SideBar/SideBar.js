@@ -6,20 +6,18 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
-
-import { CgBoy, CgMenuLeft, CgProfile } from "react-icons/cg";
-import {
-  PiHouseBold,
-  PiChatCenteredDotsBold,
-  PiCalendarBlankBold,
-} from "react-icons/pi";
 import Toolbar from "@mui/material/Toolbar";
-import BubbleChartIcon from "@mui/icons-material/BubbleChart";
-
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 import FriendSidebar from "../../../Dashboard/FriendSidebar/FriendSidebar";
+import mlacLogo from "../../../images/mlac.svg";
+
+import { GoComment, GoSquirrel } from "react-icons/go";
+
+import { SlUserFollow, SlEvent, SlGrid, SlChart } from "react-icons/sl";
+
+import { CgMenuLeft } from "react-icons/cg";
 
 const drawerWidth = 240;
 
@@ -39,7 +37,7 @@ const FatBar = styled("div")({
   flexDirection: "column",
   justifyContent: "flex-start",
   alignItems: "center",
-  width: "78%",
+  width: "74%",
   background: "#FEFEFE",
   "@media (max-width: 767px)": {
     borderRight: "none",
@@ -88,13 +86,15 @@ function ResponsiveDrawer(props) {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: "22%",
+            width: "30%",
             background: "#007bff",
             gap: "12px",
           }}
         >
           <Toolbar>
-            <BubbleChartIcon sx={{ color: "#07bbff" }} />
+            <GoSquirrel
+              style={{ fontSize: "30px", color: "white", padding: "31px 0" }}
+            />
           </Toolbar>
           <div
             style={{
@@ -105,15 +105,15 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/timetable">
               {activeItem === "/timetable" ? (
-                <PiHouseBold
+                <SlGrid
                   className={activeItem === "/timetable" ? "icon-active" : ""}
                   style={{ fontSize: "18px" }}
                 />
               ) : (
-                <PiHouseBold
+                <SlGrid
                   style={{
                     color: "white",
-                    padding: "8px",
+                    padding: "10px",
                     fontSize: "18px",
                   }}
                 />
@@ -130,15 +130,15 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/children">
               {activeItem === "/children" ? (
-                <CgBoy
+                <SlChart
                   className={activeItem === "/children" ? "icon-active" : ""}
                   style={{ fontSize: "18px" }}
                 />
               ) : (
-                <CgBoy
+                <SlChart
                   style={{
                     color: "white",
-                    padding: "8px",
+                    padding: "10px",
                     fontSize: "18px",
                   }}
                 />
@@ -154,7 +154,7 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/chat">
               {activeItem === "/chat" ? (
-                <PiChatCenteredDotsBold
+                <GoComment
                   className={activeItem === "/chat" ? "icon-active" : ""}
                   style={{
                     fontSize: "18px",
@@ -163,10 +163,10 @@ function ResponsiveDrawer(props) {
                   }}
                 />
               ) : (
-                <PiChatCenteredDotsBold
+                <GoComment
                   style={{
                     color: "white",
-                    padding: "8px",
+                    padding: "10px",
                     fontSize: "18px",
                   }}
                 />
@@ -182,15 +182,15 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/user">
               {activeItem === "/user" ? (
-                <CgProfile
+                <SlUserFollow
                   className={activeItem === "/user" ? "icon-active" : ""}
                   style={{ fontSize: "18px" }}
                 />
               ) : (
-                <CgProfile
+                <SlUserFollow
                   style={{
                     color: "white",
-                    padding: "8px",
+                    padding: "10px",
                     fontSize: "18px",
                   }}
                 />
@@ -206,15 +206,15 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/schedule">
               {activeItem === "/schedule" ? (
-                <PiCalendarBlankBold
+                <SlEvent
                   className={activeItem === "/schedule" ? "icon-active" : ""}
                   style={{ fontSize: "18px" }}
                 />
               ) : (
-                <PiCalendarBlankBold
+                <SlEvent
                   style={{
                     color: "white",
-                    padding: "8px",
+                    padding: "10px",
                     fontSize: "18px",
                   }}
                 />
@@ -222,9 +222,7 @@ function ResponsiveDrawer(props) {
             </Link>
           </div>
         </div>
-        <FatBar>
-          <FriendSidebar />
-        </FatBar>
+        <FatBar>{/* <FriendSidebar /> */}</FatBar>
       </div>
     </div>
   );

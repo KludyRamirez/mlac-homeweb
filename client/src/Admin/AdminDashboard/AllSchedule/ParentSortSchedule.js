@@ -18,7 +18,14 @@ import AbsentScheduleCard from "./AbsentScheduleCard";
 import AuditModal from "./AuditModal";
 import { BsCheckLg } from "react-icons/bs";
 import { MdVideocam } from "react-icons/md";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import {
+  AiOutlineSortDescending,
+  AiOutlineSortAscending,
+} from "react-icons/ai";
 import { toast } from "react-toastify";
+import { HiOutlineFilter } from "react-icons/hi";
+import { PiWarning, PiWarningFill } from "react-icons/pi";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -49,108 +56,109 @@ const LowerBox = styled("div")({
 const StudentParentCon = styled("div")({
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  backgroundColor: "#FEFEFE",
-  marginTop: "40px",
-  gap: "20px",
-  padding: "20px",
-  "@media (max-width: 767px)": {
-    justifyContent: "flex-start",
-    overflow: "hidden",
-    marginTop: "30px",
-  },
-});
-
-const Flexer = styled("div")({
+  alignItems: "flex-start",
   width: "100%",
-  display: "flex",
-  justifyContent: "center",
-  gap: "40px",
-  paddingTop: "10px",
-  flexWrap: "wrap",
+  background: "transparent",
+  marginTop: "0px",
+
   "@media (max-width: 767px)": {
-    justifyContent: "flex-start",
+    padding: "20px 0px",
+    marginTop: "10px",
+    alignItems: "flex-start",
     overflow: "hidden",
     overflowX: "scroll",
   },
 });
 
+const Flexer = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "10px 0px",
+});
+
 const Cell = styled("div")({
   padding: "10px",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "180px",
+  height: "26px",
   color: "#007bff",
   fontSize: "13px",
-  fontWeight: "400",
+  fontWeight: "600",
   letterSpacing: "0.3px",
-  background: "white",
-  borderBottom: "1px dashed #007bff",
-  width: "100%",
-  "&:last-child": {
-    border: "none",
-  },
+  border: "1px solid #007bff",
+  borderRadius: "6px",
+  gap: "4px",
 });
 
 const Cell2 = styled("div")({
   padding: "10px",
-  color: "#007bff",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "180px",
+  height: "26px",
+  color: "white",
   fontSize: "13px",
-  fontWeight: "400",
+  fontWeight: "600",
   letterSpacing: "0.3px",
-  background: "white",
-  borderBottom: "1px dashed #07bbff",
-  width: "100%",
-  "&:last-child": {
-    border: "none",
-  },
+  background: "#007bff",
+  border: "1px solid #007bff",
+  borderRadius: "4px",
+  gap: "4px",
 });
 
 const Cell3 = styled("div")({
   padding: "10px",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "180px",
+  height: "26px",
   color: "white",
   fontSize: "13px",
-  fontWeight: "400",
+  fontWeight: "600",
   letterSpacing: "0.3px",
-  background: "transparent",
-  borderBottom: "1px dashed white",
-  width: "100%",
-
-  "&:last-child": {
-    border: "none",
-    borderRadius: "10px",
-  },
+  background: "#007bff",
+  border: "1px solid #007bff",
+  borderRadius: "4px",
+  gap: "4px",
 });
 
 const Cell4 = styled("div")({
   padding: "10px",
-  color: "#007bff",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "130px",
+  height: "26px",
+  color: "white",
   fontSize: "13px",
-  fontWeight: "400",
+  fontWeight: "600",
   letterSpacing: "0.3px",
   background: "white",
-  borderBottom: "1px dashed #007bff",
-  width: "100%",
-  display: "flex",
-  justifyContent: "flex-start",
+  border: "1px solid #007bff",
+  borderRadius: "4px",
   gap: "4px",
-  "&:last-child": {
-    border: "none",
-  },
 });
 
 const CellId = styled("div")({
   padding: "10px",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "30px",
+  height: "26px",
   color: "white",
   fontSize: "13px",
-  fontWeight: "400",
+  fontWeight: "600",
   letterSpacing: "0.3px",
-  background: "transparent",
-  borderBottom: "1px dashed white",
-  width: "100%",
+  background: "#007bff",
+  border: "1px solid #007bff",
+  borderRadius: "4px",
   textTransform: "uppercase",
-
-  "&:last-child": {
-    border: "none",
-    borderRadius: "10px",
-  },
 });
 
 const LowerIconDiv = styled("div")({
@@ -246,8 +254,8 @@ const LowerIconDiv3 = styled("div")({
 const LowerIconDiv4 = styled("div")({
   marginTop: "1px",
   cursor: "pointer",
-  background: "#FF7F50",
-  color: "#FF7F50",
+  background: "#FF3131",
+  color: "#FF3131",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -304,15 +312,15 @@ const LowerIconDiv5 = styled("div")({
 });
 
 const IconSortContainer = styled("div")({
-  width: "26px",
-  height: "26px",
+  width: "32px",
+  height: "32px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   borderRadius: "50%",
   cursor: "pointer",
   "&:hover": {
-    background: "rgba(0, 0, 0, 0.06)",
+    background: "rgba(255, 255, 255, 0.25)",
   },
 });
 
@@ -320,44 +328,41 @@ const TableContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
-  gap: "12px",
-  border: "1px solid rgba(0, 123, 255, 0.3)",
-  padding: "6px",
-  borderTopLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomRightRadius: "20px",
-  borderBottomLeftRadius: "2px",
+  gap: "14px",
+  marginLeft: "-7px",
+  alignSelf: "flex-start",
+  paddingTop: "30px",
 }));
 
 const SearchMainCon = styled("div")(({ theme }) => ({
+  width: "100%",
   display: "flex",
   alignItems: "center",
-  alignSelf: "flex-end",
+  justifyContent: "space-between",
   position: "relative",
+  marginTop: "18px",
   "@media (max-width: 767px)": {
     width: "100%",
   },
 }));
 
 const SearchBar = styled("input")(({ theme }) => ({
-  width: "100%",
+  width: "22%",
   height: "26px",
-  background: "white",
-  border: "1px solid rgba(0, 123, 255, 0.3)",
-  borderTopLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomLeftRadius: "20px",
+  background: "rgba(0, 123, 255, 0.08)",
+  border: "none",
+  borderRadius: "10px",
   zIndex: "1",
   padding: "6px 0px 6px 42px",
   fontSize: "12px",
   fontWeight: "600",
-  letterSpacing: "0.3px",
   color: "#007bff",
+
   "&:focus": {
-    outline: "none",
+    outline: "1px solid rgba(0, 123, 255, 0.8)",
   },
   "&::placeholder": {
-    color: "rgba(0, 0, 0, 0.1)",
+    color: "rgba(0, 0, 0, 0.4)",
   },
   "@media (max-width: 767px)": {
     borderRadius: "20px",
@@ -391,6 +396,65 @@ const ModalBox = styled("div")({
   },
 });
 
+const FlexerSwitch = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  gap: "12px",
+  height: "inherit",
+  padding: "0 40px",
+});
+
+const FormTitle = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-end",
+  margin: "0",
+  padding: "0",
+});
+
+const ZebraDiv = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+
+  "&:nth-child(even)": {
+    background: "rgba(255, 255, 255, 0.6)",
+    borderRadius: "10px",
+    boxShadow:
+      "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+  },
+
+  "&:nth-child(odd)": {
+    background: "transparent",
+  },
+});
+
+const FilterButton = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "38px",
+  height: "36px",
+  background: "rgba(0, 123, 255, 0.08)",
+  boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
+  borderRadius: "10px",
+  cursor: "pointer",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    transform: "translateY(-1px)",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
@@ -413,6 +477,7 @@ const ParentSortSchedule = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSchedules, setFilteredSchedules] = useState([]);
   const [filteredMixedSchedules, setFilteredMixedSchedules] = useState([]);
+  const [showExtraFunc, setShowExtraFunc] = useState(false);
   //modals
   const [showModal, setShowModal] = useState(false);
   const [showSecModal, setShowSecModal] = useState(false);
@@ -482,6 +547,10 @@ const ParentSortSchedule = () => {
 
   const handleDayChange = (day) => {
     setActiveSchedType(day);
+  };
+
+  const toggleExtraFunc = () => {
+    setShowExtraFunc(!showExtraFunc);
   };
 
   const deleteExpiredTemporarySchedule = async () => {
@@ -1073,79 +1142,28 @@ const ParentSortSchedule = () => {
 
       <TopBar />
       <ResponsiveDrawer />
-
       <StudentParentCon>
-        <SearchMainCon>
-          <div
+        <div
+          style={{
+            width: "100%",
+            borderBottom: "1px solid rgba(0, 123, 255, 0.1)",
+          }}
+        >
+          <h1
             style={{
-              position: "absolute",
-              top: "7px",
-              left: "8px",
-              width: "26px",
-              height: "26px",
-              zIndex: "2",
-              background:
-                "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5adaff 100%)",
-              borderRadius: "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              margin: "0",
+              padding: "30px 0px 20px 36px",
+              fontWeight: "600",
+              color: "#007bff",
+              fontSize: "24px",
+              letterSpacing: "1px",
             }}
           >
-            <RiSearchLine
-              style={{
-                color: "white",
-                fontSize: "12px",
-              }}
-            />
-          </div>
-          <SearchBar
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </SearchMainCon>
-        <h2
-          style={{
-            display: "flex",
-            alignSelf: "flex-start",
-            padding: "0",
-            margin: "0",
-            color: "#007bff",
-            marginTop: "10px",
-            letterSpacing: "0.5px",
-          }}
-        >
-          Children's
-        </h2>
-        <div
-          style={{
-            display: "flex",
-            alignSelf: "flex-start",
-            padding: "0",
-            margin: "0",
-            color: "#07bbff",
-            fontSize: "56px",
-            fontWeight: "300",
-            marginTop: "-3px",
-            marginLeft: "-4px",
-            letterSpacing: "0.5px",
-          }}
-        >
-          Schedules
+            Parent View
+          </h1>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            width: "100%",
-            alignItems: "flex-end",
-            gap: "20px",
-            marginTop: "4px",
-          }}
-        >
+        <FlexerSwitch>
           <TableContainer>
             <div
               onClick={() => handleDayChange("Permanent")}
@@ -1231,888 +1249,309 @@ const ParentSortSchedule = () => {
               T
             </div>
           </TableContainer>
-        </div>
 
-        {activeSchedType === "Permanent" && (
-          <>
-            <Flexer>
+          {activeSchedType === "Permanent" && (
+            <>
+              <FormTitle>
+                <h2
+                  style={{
+                    color: "#007bff",
+                    margin: "14px 0 0 0",
+                    padding: "0",
+                  }}
+                >
+                  Original,
+                </h2>
+              </FormTitle>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                  whiteSpace: "nowrap",
-                  gap: "6px",
+                  fontSize: "52px",
+                  color: "#07bbff",
+                  marginLeft: "-5px",
+                  fontWeight: "300",
                 }}
               >
-                <div
-                  style={{
-                    height: "100%",
-                    borderRadius: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "50px",
-                      borderTopLeftRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      color: "#007bff",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #07bbff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>ID</div>
-                      <div style={{ width: "26px", height: "26px" }}></div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "30px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#07bbff",
-                      border: "1px solid #07bbff",
-                      padding: "11px 10px 0px 10px",
-                      borderBottomLeftRadius: "10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <CellId key={schedule._id}>
-                        {schedule.cardId ? schedule.cardId.slice(-2) : ""}
-                      </CellId>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    height: "100%",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#007bff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Name</div>
-                      {isNameDesc ? (
-                        <div onClick={toggleFilterName}>
-                          <IconSortContainer onClick={sortAlphabetically}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterName}>
-                          <IconSortContainer onClick={sortAlphabeticallyDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #007bff",
-                      padding: "11px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell key={schedule._id}>{schedule.nameOfStudent}</Cell>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    height: "100%",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#07bbff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #07bbff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Day</div>
-                      {isDayDesc ? (
-                        <div onClick={toggleFilterDay}>
-                          <IconSortContainer onClick={sortByDayOfWeek}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterDay}>
-                          <IconSortContainer onClick={sortByDayOfWeekDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #07bbff",
-                      padding: "11px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell2 key={schedule._id}>{schedule.day}</Cell2>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#007bff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Time</div>
-                      {isTimeDesc ? (
-                        <div onClick={toggleFilterTime}>
-                          <IconSortContainer onClick={sortByTime}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterTime}>
-                          <IconSortContainer onClick={sortByTimeDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #007bff",
-                      padding: "10px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell key={schedule._id}>{schedule.timing}</Cell>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      // borderTopRightRadius: "6px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      color: "#007bff",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Type</div>
-                      {isTypeDesc ? (
-                        <div onClick={toggleFilterType}>
-                          <IconSortContainer onClick={sortByType}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterType}>
-                          <IconSortContainer onClick={sortByTypeDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#07bbff",
-                      border: "1px solid #07bbff",
-                      padding: "10px 10px 0px 10px",
-                      gap: "10px",
-                      borderBottomLeftRadius: "10px",
-                      borderBottomRightRadius: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell3 key={schedule._id}>{schedule.studentType}</Cell3>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "125px",
-                      // borderTopLeftRadius: "6px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#007bff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Actions</div>
-                      <div style={{ width: "26px", height: "26px" }}></div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "105px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #07bbff",
-                      padding: "10px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredSchedules.map((schedule) => (
-                      <Cell4 key={schedule._id}>
-                        <LowerIconDiv>
-                          <PersonIcon sx={{ fontSize: "14px" }} />
-                        </LowerIconDiv>
-
-                        <LowerIconDiv3>
-                          <BsCheckLg style={{ fontSize: "14px" }} />
-                        </LowerIconDiv3>
-                        <LowerIconDiv4
-                          onClick={() => handleAddToContainer(schedule)}
-                        >
-                          <BlockIcon sx={{ fontSize: "14px" }} />
-                        </LowerIconDiv4>
-                        <LowerIconDiv5>
-                          <MdVideocam style={{ fontSize: "14px" }} />
-                        </LowerIconDiv5>
-                      </Cell4>
-                    ))}
-                  </div>
-                </div>
+                Sunny Day
               </div>
-            </Flexer>
-          </>
-        )}
-
-        {activeSchedType === "Temporary" && (
-          <>
-            <Flexer>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                  whiteSpace: "nowrap",
-                  gap: "6px",
-                }}
-              >
+              <SearchMainCon>
                 <div
                   style={{
-                    height: "100%",
-                    borderRadius: "10px",
+                    position: "absolute",
+                    top: "6px",
+                    left: "8px",
+                    width: "26px",
+                    height: "26px",
+                    zIndex: "2",
+                    borderRadius: "50%",
                     display: "flex",
-                    flexDirection: "column",
+                    justifyContent: "center",
                     alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
+                  }}
+                >
+                  <RiSearchLine
+                    style={{
+                      color: "#007bff",
+                      fontSize: "16px",
+                    }}
+                  />
+                </div>
+                <SearchBar
+                  type="text"
+                  placeholder="Search.."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <div style={{ display: "flex", gap: "8px" }}>
+                  {isNameDesc ? (
+                    <div onClick={toggleFilterName}>
+                      <FilterButton onClick={sortAlphabetically}>
+                        <AiOutlineSortAscending
+                          style={{ fontSize: "18px", color: "#122c8e" }}
+                        />
+                      </FilterButton>
+                    </div>
+                  ) : (
+                    <div onClick={toggleFilterName}>
+                      <FilterButton onClick={sortAlphabeticallyDesc}>
+                        <AiOutlineSortDescending
+                          style={{ fontSize: "18px", color: "#122c8e" }}
+                        />
+                      </FilterButton>
+                    </div>
+                  )}
+
+                  <FilterButton>
+                    <HiOutlineFilter
+                      style={{ fontSize: "18px", color: "#122c8e" }}
+                    />
+                  </FilterButton>
+                </div>
+              </SearchMainCon>
+
+              <Flexer>
+                <div
+                  style={{
+                    background: "rgba(0, 123, 255, 0.3)",
+                    borderRadius: "12px",
+                    padding: "4px 4px 4px 4px",
+                    boxShadow:
+                      "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
                   }}
                 >
                   <div
                     style={{
-                      width: "50px",
-                      borderTopLeftRadius: "10px",
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      color: "#007bff",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #07bbff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>ID</div>
-                      <div style={{ width: "26px", height: "26px" }}></div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "50px",
-                      height: "100%",
-                      borderBottomLeftRadius: "10px",
-                      // borderBottomRightRadius: "6px",
-                      display: "flex",
-                      alignItems: "center",
                       justifyContent: "center",
-                      background: "#07bbff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "12px",
-                      border: "1px solid #07bbff",
-                    }}
-                  ></div>
-                </div>
-                <div
-                  style={{
-                    height: "100%",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#007bff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
+                      borderRadius: "10px",
+                      width: "1000px",
                     }}
                   >
                     <div
                       style={{
-                        width: "100%",
                         display: "flex",
                         justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
+                        background: "rgba(255, 255, 255, 0.8)",
+                        padding: "13px 16px",
+                        borderTopLeftRadius: "10px",
+                        width: "70%",
+                        boxShadow:
+                          "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
                       }}
                     >
-                      <div>Name</div>
-                      {isNameDesc ? (
-                        <div onClick={toggleFilterName}>
-                          <IconSortContainer onClick={sortMixedAlphabetically}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterName}>
-                          <IconSortContainer
-                            onClick={sortMixedAlphabeticallyDesc}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "70%",
+                        }}
+                      >
+                        <h5
+                          style={{
+                            color: "#007bff",
+                            margin: "0",
+                            letterSpacing: "0.2px",
+                            fontWeight: "600",
+                          }}
+                        >
+                          Student's Info
+                        </h5>
+                        <h5
+                          style={{
+                            color: "#007bff",
+                            margin: "0",
+                            letterSpacing: "0.2px",
+                            fontWeight: "600",
+                          }}
+                        >
+                          Status
+                        </h5>
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        background: "rgba(0, 123, 255, 0.9)",
+                        padding: "13px 14px",
+                        boxShadow:
+                          "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+                        borderTopRightRadius: "10px",
+                        width: "30%",
+                      }}
+                    >
+                      <h5
+                        style={{
+                          color: "white",
+                          margin: "0",
+                          letterSpacing: "0.2px",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Parent Actions
+                      </h5>
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {filteredSchedules.map((schedule) => (
+                      <ZebraDiv>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            padding: "16px",
+                            width: "70%",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              width: "71.5%",
+                            }}
                           >
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
+                            <h5
+                              style={{
+                                margin: "0px",
+                                color: "#122c8e",
+                                fontWeight: "600",
+                                lineHeight: "22px",
+                              }}
+                            >
+                              {schedule.nameOfStudent},{" "}
+                              {schedule.cardId ? schedule.cardId.slice(-2) : ""}{" "}
+                              |{" "}
+                              <span
+                                style={{
+                                  wordSpacing: "0px",
+                                  textTransform: "lowercase",
+                                }}
+                              >
+                                {schedule.timing}
+                              </span>{" "}
+                              <br /> {schedule.day}, {schedule.studentType}{" "}
+                              <br />
+                            </h5>
+                            <div
+                              style={{
+                                display: "flex",
+                                height: "100%",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                gap: "8px",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: "10px",
+                                  height: "10px",
+                                  background: "#00FF7F",
+                                  borderRadius: "50%",
+                                }}
+                              ></div>
+                              <h5
+                                style={{
+                                  margin: "0px",
+                                  color: "#122c8e",
+                                  fontWeight: "600",
+                                  lineHeight: "22px",
+                                  wordSpacing: "1px",
+                                }}
+                              >
+                                Enrolled
+                              </h5>
+                            </div>
+                          </div>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #007bff",
-                      padding: "11px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredMixedSchedules.map((schedule) => (
-                      <Cell key={schedule._id}>
-                        {schedule.tempStudentName &&
-                          schedule.tempStudentName.nameOfStudent}
-                      </Cell>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "30%",
+                            padding: "16px 14px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              gap: "4px",
+                            }}
+                          >
+                            <LowerIconDiv></LowerIconDiv>
+                            <LowerIconDiv3></LowerIconDiv3>
+                            <LowerIconDiv4
+                              onClick={() => handleAddToContainer(schedule)}
+                            >
+                              <BlockIcon sx={{ fontSize: "14px" }} />
+                            </LowerIconDiv4>
+                          </div>
+
+                          {showExtraFunc ? (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <IconSortContainer>
+                                <MdVideocam
+                                  style={{ color: "#122c8e", fontSize: "18px" }}
+                                />
+                              </IconSortContainer>
+                              <IconSortContainer>
+                                <PiWarningFill
+                                  style={{ color: "#E49B0F", fontSize: "18px" }}
+                                />
+                              </IconSortContainer>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+
+                          <BiDotsVerticalRounded
+                            onClick={toggleExtraFunc}
+                            style={{
+                              fontSize: "24px",
+                              color: "rgba(0, 0, 0, 0.2)",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </div>
+                      </ZebraDiv>
                     ))}
                   </div>
                 </div>
-                <div
-                  style={{
-                    height: "100%",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#07bbff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #07bbff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Date</div>
-                      {isDayDesc ? (
-                        <div onClick={toggleFilterDay}>
-                          <IconSortContainer onClick={sortMixedByDayOfWeek}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterDay}>
-                          <IconSortContainer onClick={sortMixedByDayOfWeekDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #07bbff",
-                      padding: "11px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredMixedSchedules.map((schedule) => (
-                      <Cell key={schedule._id}>
-                        {schedule.dateTime
-                          ? schedule.dateTime.slice(0, -5)
-                          : ""}
-                        , {schedule.tempSoloDay}
-                      </Cell>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#007bff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Time</div>
-                      {isTimeDesc ? (
-                        <div onClick={toggleFilterTime}>
-                          <IconSortContainer onClick={sortMixedByTime}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterTime}>
-                          <IconSortContainer onClick={sortMixedByTimeDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #007bff",
-                      padding: "10px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredMixedSchedules.map((schedule) => (
-                      <Cell key={schedule._id}>
-                        {schedule.permanentSched &&
-                          schedule.permanentSched.timing}
-                        {schedule.timing}
-                      </Cell>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "200px",
-                      borderTopLeftRadius: "10px",
-                      // borderTopRightRadius: "6px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      color: "#007bff",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Type</div>
-                      {isTypeDesc ? (
-                        <div onClick={toggleFilterType}>
-                          <IconSortContainer onClick={sortMixedByType}>
-                            <HiSortAscending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterType}>
-                          <IconSortContainer onClick={sortMixedByTypeDesc}>
-                            <HiSortDescending style={{ fontSize: "16px" }} />
-                          </IconSortContainer>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "180px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#07bbff",
-                      border: "1px solid #07bbff",
-                      padding: "10px 10px 0px 10px",
-                      gap: "10px",
-                      borderBottomLeftRadius: "10px",
-                      borderBottomRightRadius: "10px",
-                    }}
-                  >
-                    {filteredMixedSchedules.map((schedule) => (
-                      <Cell3 key={schedule._id}>
-                        {schedule.tempStudentName &&
-                          schedule.tempStudentName.studentType}
-                      </Cell3>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    // width: "100px",
-                    height: "100%",
-                    borderRadius: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "6px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "125px",
-                      // borderTopLeftRadius: "6px",
-                      borderTopRightRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "#007bff",
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      letterSpacing: "0.3px",
-                      border: "1px solid #007bff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 10px",
-                      }}
-                    >
-                      <div>Actions</div>
-                      <div style={{ width: "26px", height: "26px" }}></div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "105px",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      background: "white",
-                      border: "1px solid #07bbff",
-                      padding: "10px 10px 0px 10px",
-                      gap: "10px",
-                    }}
-                  >
-                    {filteredMixedSchedules.map((schedule) => (
-                      <Cell4 key={schedule._id}>
-                        <LowerIconDiv4></LowerIconDiv4>
-                      </Cell4>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Flexer>
-          </>
-        )}
-        <LowerBox></LowerBox>
+              </Flexer>
+            </>
+          )}
+        </FlexerSwitch>
       </StudentParentCon>
     </Wrapper>
   );
