@@ -36,7 +36,7 @@ const MainContainer = styled("div")({
 
 const ModalTitle = styled("div")({
   paddingBottom: "24px",
-  fontSize: "36px",
+  fontSize: "42px",
   fontWeight: "400",
   color: "#FAFAFA",
   marginLeft: "-2px",
@@ -97,69 +97,12 @@ const NextButton = styled("div")({
   },
 });
 
-const AbsentScheduleCard = ({ s, saveOrderedSchedToDb }) => {
-  const absentReasons = [
-    "Busy",
-    "Sickness",
-    "No Transportation",
-    "Family Matter",
-    "Tiredness",
-    "Conflict of Schedule",
-    "Bad Weather",
-  ];
-
-  let dispatch = useDispatch();
-
-  const handleAbsentReasonChange = (e) => {
-    console.log("Reason changed", e.target.value);
-
-    let con = [];
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("con")) {
-        con = JSON.parse(localStorage.getItem("con"));
-      }
-
-      con.map((schedule, i) => {
-        if (schedule._id === s._id) {
-          con[i].absentReason = e.target.value;
-        }
-      });
-
-      localStorage.setItem("con", JSON.stringify(con));
-      dispatch({
-        type: "ADD_TO_CON",
-        payload: con,
-      });
-    }
-  };
-
-  const handleRemove = () => {
-    let con = [];
-
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("con")) {
-        con = JSON.parse(localStorage.getItem("con"));
-      }
-
-      con.map((schedule, i) => {
-        if (schedule._id === s._id) {
-          con.splice(i, 1);
-        }
-      });
-
-      localStorage.setItem("con", JSON.stringify(con));
-      dispatch({
-        type: "ADD_TO_CON",
-        payload: con,
-      });
-    }
-  };
-
+const DeletionModal = ({ handleConfirmDelete }) => {
   return (
     <>
       <AsCard>
         <MainContainer>
-          <ModalTitle>Be gone for a day</ModalTitle>
+          <ModalTitle>Delete Schedule?</ModalTitle>
           <ModalSubTitle>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a
             ante fermentum enim mattis ullamcorper a vitae ligula. Cras blandit
@@ -187,38 +130,7 @@ const AbsentScheduleCard = ({ s, saveOrderedSchedToDb }) => {
             >
               Tell us the reason
             </h1>
-            <div
-              style={{
-                padding: "20px",
-                border: "1px solid #007bff",
-                borderRadius: "10px",
-              }}
-            >
-              <FormControl variant="standard" sx={{ width: "100%" }}>
-                <InputLabel id="demo-simple-select-label">Reasons</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  name="absentReason"
-                  onChange={handleAbsentReasonChange}
-                  value={s.absentReason}
-                >
-                  {s.absentReason ? (
-                    <MenuItem value={s.absentReason}>{s.absentReason}</MenuItem>
-                  ) : (
-                    <MenuItem>Select</MenuItem>
-                  )}
-                  {absentReasons
-                    .filter((a) => a !== s.absentReason)
-                    .map((a) => (
-                      <MenuItem key={a} value={a}>
-                        {a}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </div>
-
+            <button onClick={handleConfirmDelete}>Delete</button>
             <div
               style={{
                 width: "100%",
@@ -227,10 +139,9 @@ const AbsentScheduleCard = ({ s, saveOrderedSchedToDb }) => {
               }}
             >
               <p style={{ fontSize: "14px", margin: "0", color: "#007bff" }}>
-                {s.nameOfStudent} dolor sit amet, consectetur adipiscing elit.
-                Maecenas a ante fermentum enim mattis ullamcorper a vitae
-                ligula. Cras blandit urna iaculis, interdum velit at, dictum
-                ligula.
+                dolor sit amet, consectetur adipiscing elit. Maecenas a ante
+                fermentum enim mattis ullamcorper a vitae ligula. Cras blandit
+                urna iaculis, interdum velit at, dictum ligula.
               </p>
             </div>
             <div
@@ -240,11 +151,7 @@ const AbsentScheduleCard = ({ s, saveOrderedSchedToDb }) => {
                 width: "100%",
                 paddingTop: "26px",
               }}
-            >
-              <NextButton onClick={saveOrderedSchedToDb}>
-                <FaArrowRight />
-              </NextButton>
-            </div>
+            ></div>
           </MeshGradientCard>
         </div>
       </AsCard>
@@ -252,4 +159,4 @@ const AbsentScheduleCard = ({ s, saveOrderedSchedToDb }) => {
   );
 };
 
-export default AbsentScheduleCard;
+export default DeletionModal;

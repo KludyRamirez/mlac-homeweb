@@ -14,7 +14,7 @@ import TopBar from "../AppBar/AppBar";
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
-  background: "white",
+  background: "#fefefe",
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",

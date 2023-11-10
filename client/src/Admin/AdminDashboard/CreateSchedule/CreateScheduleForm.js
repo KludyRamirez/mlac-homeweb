@@ -9,62 +9,52 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-
+import { HiSelector } from "react-icons/hi";
+import Tilt from "react-parallax-tilt";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { BsCalendarWeek, BsHourglassSplit, BsPlus } from "react-icons/bs";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
 const Flexer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  marginTop: "20px",
-});
-
-const FormContainer = styled("div")({
-  width: "400px",
-  padding: "20px",
-  // background:
-  //   "radial-gradient(at bottom left, rgba(204, 251, 241, 0.15) 6%, rgba(255, 255, 255, 0.15) 47.6%, rgba(7, 187, 255, 0.20) 87.8%)",
-  borderRadius: "10px",
-  "@media (max-width: 1366px)": {
+  borderRadius: "14px",
+  padding: "40px",
+  // boxShadow:
+  //   "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+  background:
+    "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)",
+  "@media (max-width: 767px)": {
+    padding: "40px 20px",
+    borderRadius: "20px",
     boxShadow: "none",
-    border: "none",
-    padding: "30px 20px",
-    borderRadius: "0px",
+    borderBottomLeftRadius: "0px",
+    borderBottomRightRadius: "0px",
   },
 });
 
-const TitleCon = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  paddingBottom: "14px",
-});
+const FormContainer = styled("div")({
+  width: "100%",
+  borderRadius: "12px",
 
-const FormTitle = styled("h1")({
-  margin: "0px",
-  backgroundColor: "blue",
-  backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
-  backgroundSize: "100%",
-  backgroundRepeat: "repeat",
-  paddingBottom: "20px",
-  WebkitBackgroundClip: "text",
-  WebkitTextFillColor: "transparent",
-  MozBackgroundClip: "text",
-  MozTextFillColor: "transparent",
+  "@media (max-width: 767px)": {
+    borderRadius: "0px",
+  },
 });
 
 const FilterButton = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "38px",
-  height: "36px",
-  background: "rgba(7, 187, 255, 0.1)",
-  boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
-  borderRadius: "10px",
+  width: "40px",
+  height: "38px",
+  background: "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
+  boxShadow:
+    "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+  borderRadius: "50%",
   cursor: "pointer",
   userSelect: "none",
   WebkitUserSelect: "none",
@@ -83,15 +73,16 @@ const FilterButton = styled("div")({
 const FilterRealButton = styled("button")({
   padding: "0",
   border: "none",
-  background: "rgba(7, 187, 255, 0.1)",
+  background: "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+  boxShadow:
+    "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "2px",
-  width: "76px",
-  height: "36px",
-  boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
-  borderRadius: "8px",
+  width: "86px",
+  height: "42px",
+  borderRadius: "10px",
   cursor: "pointer",
   userSelect: "none",
   WebkitUserSelect: "none",
@@ -107,19 +98,19 @@ const FilterRealButton = styled("button")({
   },
 });
 
-const InputFieldName = styled("input")({
-  width: "280px",
-  background: "rgba(7, 187, 255, 0.04)",
-  border: "1px solid rgba(0, 123, 255, 0.1)",
-  borderRadius: "8px",
-  padding: "12px",
+const PermSchedLogo = styled("div")({
+  width: "80px",
+  background: "white",
+  border: "none",
+  borderRadius: "6px",
+  padding: "13px",
   fontSize: "12px",
   fontWeight: "600",
-  color: "black",
+  color: "#122c8e",
   letterSpacing: "0.4px",
 
   "&:focus": {
-    outline: "2px solid #5468ff",
+    outline: "2px solid #122c8e",
     border: "1px solid transparent",
   },
   "&::placeholder": {
@@ -132,20 +123,52 @@ const InputFieldName = styled("input")({
   },
 });
 
+const InputFieldName = styled("input")({
+  width: "100%",
+  background: "rgba(255, 255, 255, 0.6)",
+  backdropFilter: "blur(20px)",
+  WebkitBackdropFilter: "blur(20px)",
+  border: "1px solid transparent",
+  borderRadius: "10px",
+  height: "42px",
+  padding: "0px 0px 0px 12px",
+  fontSize: "12px",
+  fontWeight: "500",
+  color: "#122c8e",
+  letterSpacing: "0.4px",
+  outline: "none",
+
+  "&:focus": {
+    outline: "2px solid #122c8e",
+    border: "1px solid transparent",
+  },
+  "&::placeholder": {
+    color: "rgba(0, 123, 255, 0.4)",
+    fontSize: "12px",
+    fontWeight: "500",
+  },
+  "@media (max-width: 767px)": {
+    width: "80%",
+  },
+});
+
 const CustomSelectDay = styled("select")`
-  width: 240px;
-  background: rgba(7, 187, 255, 0.04);
-  border: 1px solid rgba(0, 123, 255, 0.1);
-  border-radius: 8px;
-  padding: 12px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid transparent;
+  border-radius: 10px;
+  height: 44px;
+  padding: 0px 0px 0px 12px;
   font-size: 12px;
-  font-weight: 600;
-  color: #5468ff;
+  font-weight: 500;
+  color: #122c8e;
   letter-spacing: 0.4px;
   appearance: none; /* Removes default dropdown arrow */
 
   &:focus {
-    outline: 2px solid #5468ff;
+    outline: 2px solid #122c8e;
     border: 1px solid transparent;
   }
 
@@ -160,25 +183,28 @@ const CustomSelectDay = styled("select")`
 `;
 
 const CustomSelectTime = styled("select")`
-  width: 140px;
-  background: rgba(7, 187, 255, 0.04);
-  border: 1px solid rgba(0, 123, 255, 0.1);
-  border-radius: 8px;
-  padding: 12px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  height: 44px;
+  padding: 0px 0px 0px 12px;
   font-size: 12px;
-  font-weight: 600;
-  color: #5468ff;
+  font-weight: 500;
+  color: #122c8e;
 
   letter-spacing: 0.4px;
   appearance: none; /* Removes default dropdown arrow */
 
   &:focus {
-    outline: 2px solid #5468ff;
+    outline: 2px solid #122c8e;
     border: 1px solid transparent;
   }
 
   &::placeholder {
-    color: rgba(0, 123, 255, 0.6);
+    color: transparent;
     font-size: 12px;
   }
 
@@ -188,24 +214,27 @@ const CustomSelectTime = styled("select")`
 `;
 
 const CustomSelectParent = styled("select")`
-  width: 360px;
-  background: rgba(7, 187, 255, 0.04);
-  border: 1px solid rgba(0, 123, 255, 0.1);
-  border-radius: 8px;
-  padding: 12px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  height: 44px;
+  padding: 0px 0px 0px 12px;
   font-size: 12px;
   font-weight: 500;
-
+  color: #122c8e;
   letter-spacing: 0.4px;
   appearance: none; /* Removes default dropdown arrow */
 
   &:focus {
-    outline: 2px solid #5468ff;
-    border: 1px solid transparent;
+    outline: 2px solid #122c8e;
+    border: 1px solid white;
   }
 
   &::placeholder {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.5);
     font-size: 12px;
   }
 
@@ -213,6 +242,77 @@ const CustomSelectParent = styled("select")`
     width: 100%;
   }
 `;
+
+const InputTitles = styled("div")({
+  width: "100px",
+  height: "20px",
+  fontSize: "11px",
+  margin: "0px",
+  color: "#007bff",
+  // backgroundColor: "blue",
+  // backgroundImage:
+  //   "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
+  // backgroundSize: "100%",
+  // backgroundRepeat: "repeat",
+  // WebkitBackgroundClip: "text",
+  // WebkitTextFillColor: "transparent",
+  // MozBackgroundClip: "text",
+  // MozTextFillColor: "transparent",
+  fontWeight: "800",
+  letterSpacing: "0px",
+  textTransform: "uppercase",
+});
+
+const FlexerRow = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  gap: "16px",
+  paddingTop: "8px",
+  paddingBottom: "32px",
+
+  "@media (max-width: 767px)": {
+    flexWrap: "wrap",
+  },
+});
+
+const StatsCard = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
+  width: "86px",
+  height: "72px",
+  borderRadius: "14px",
+  padding: "10px",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+});
+
+const TitleCon = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+});
+
+const FormTitle = styled("div")({
+  margin: "0px",
+  backgroundColor: "blue",
+  backgroundImage:
+    "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+  backgroundSize: "100%",
+  backgroundRepeat: "repeat",
+  padding: "0px 0px 30px 0",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  MozBackgroundClip: "text",
+  MozTextFillColor: "transparent",
+  fontSize: "24px",
+  fontWeight: "700",
+  letterSpacing: "-2.5px",
+  paddingRight: "2.5px",
+
+  "@media (max-width: 767px)": {},
+});
 
 const CreateScheduleForm = ({
   handleSubmit,
@@ -238,9 +338,119 @@ const CreateScheduleForm = ({
 
   return (
     <>
+      <FlexerRow>
+        <Tilt>
+          <StatsCard
+            sx={{
+              background:
+                "radial-gradient(100% 100% at 0% 0, #0073ff 0, #122c8e 100%)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "16px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+              }}
+            >
+              Total
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+                paddingTop: "3px",
+              }}
+            >
+              19
+            </div>
+          </StatsCard>
+        </Tilt>
+        <Tilt>
+          <StatsCard sx={{ background: "#ff3131" }}>
+            <div
+              style={{
+                fontSize: "16px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+              }}
+            >
+              Absent
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+                paddingTop: "3px",
+              }}
+            >
+              7
+            </div>
+          </StatsCard>
+        </Tilt>
+        <Tilt>
+          <StatsCard
+            sx={{ background: "radial-gradient(circle, #FFAA33, #0099CC)" }}
+          >
+            <div
+              style={{
+                fontSize: "16px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+              }}
+            >
+              Online
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+                paddingTop: "3px",
+              }}
+            >
+              12
+            </div>
+          </StatsCard>
+        </Tilt>
+        <Tilt>
+          <StatsCard
+            sx={{
+              background:
+                "radial-gradient(100% 100% at 0% 0, #122c8e 0, #0070ff 100%)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "16px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+              }}
+            >
+              Present
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+                paddingTop: "3px",
+              }}
+            >
+              5
+            </div>
+          </StatsCard>
+        </Tilt>
+      </FlexerRow>
       <Flexer>
         <TitleCon>
-          <FormTitle>Create Schedule</FormTitle>
+          <FormTitle>Add Permanent Schedule +</FormTitle>
         </TitleCon>
         <FormContainer>
           <div
@@ -249,25 +459,24 @@ const CreateScheduleForm = ({
               flexDirection: "column",
               alignItems: "flex-start",
               gap: "8px",
-              paddingBottom: "6px",
+              paddingBottom: "4px",
             }}
           >
+            <InputTitles>Name*</InputTitles>
             <div
               style={{
-                fontSize: "11px",
-                fontWeight: "700",
-                color: "#122c8e",
-                letterSpacing: "0.2px",
+                display: "flex",
+                justifyContent: "flex-start",
+                width: "100%",
               }}
             >
-              Name*
+              <InputFieldName
+                name="nameOfStudent"
+                value={nameOfStudent}
+                onChange={handleChange}
+                placeholder="Enter name"
+              />
             </div>
-            <InputFieldName
-              name="nameOfStudent"
-              value={nameOfStudent}
-              onChange={handleChange}
-              placeholder="Enter name"
-            />
           </div>
           <br />
           <div
@@ -275,6 +484,7 @@ const CreateScheduleForm = ({
               display: "flex",
               justifyContent: "flex-start",
               gap: "8px",
+              width: "100%",
             }}
           >
             <div
@@ -283,19 +493,35 @@ const CreateScheduleForm = ({
                 flexDirection: "column",
                 alignItems: "flex-start",
                 gap: "8px",
-                paddingBottom: "6px",
+                width: "50%",
               }}
             >
-              <div
-                style={{
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  color: "#122c8e",
-                  letterSpacing: "0.2px",
-                }}
+              <InputTitles>Time*</InputTitles>
+              <CustomSelectTime
+                name="timing"
+                value={timing}
+                onChange={handleChange}
               >
-                Day*
-              </div>
+                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
+                  Enter time
+                </option>
+                {timings.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </CustomSelectTime>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                width: "50%",
+              }}
+            >
+              <InputTitles>Day*</InputTitles>
 
               <CustomSelectDay name="day" value={day} onChange={handleChange}>
                 {days.map((d) => (
@@ -309,154 +535,112 @@ const CreateScheduleForm = ({
                 ))}
               </CustomSelectDay>
             </div>
-            <br />
+          </div>
+          <br />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: "8px",
+              width: "100%",
+            }}
+          >
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 gap: "8px",
-                paddingBottom: "6px",
+                width: "100%",
               }}
             >
-              <div
-                style={{
-                  fontSize: "11px",
-                  fontWeight: "700",
-                  color: "#122c8e",
-                  letterSpacing: "0.2px",
+              <InputTitles>Parent*</InputTitles>
+              <CustomSelectParent
+                name="parent"
+                value={parent}
+                onChange={handleParentChange}
+              >
+                {parents
+                  .filter((p) => p.role === "Administrator")
+                  .map((p) => (
+                    <option key={p._id} value={`${p.fullname} ${p.username}`}>
+                      {p.fullname}
+                    </option>
+                  ))}
+              </CustomSelectParent>
+            </div>
+          </div>
+          <InputTitles sx={{ marginTop: "26px" }}>Type*</InputTitles>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              marginTop: "8px",
+              width: "fit-content",
+              borderRadius: "12px",
+              padding: "5px 2px 5px 12px",
+              background:
+                "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+              // boxShadow:
+              //   "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+            }}
+          >
+            <div>
+              <FormGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                value={studentType}
+                onChange={handleStudentTypeChange}
+                sx={{
+                  padding: "0",
+                  background: "transparent",
+                  borderRadius: "12px",
+                  width: "100%",
                 }}
               >
-                Time*
-              </div>
-              <CustomSelectTime
-                name="timing"
-                value={timing}
-                onChange={handleChange}
-              >
-                {timings.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </CustomSelectTime>
-            </div>
-          </div>
-          <br />
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              gap: "8px",
-              paddingBottom: "6px",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "11px",
-                fontWeight: "700",
-                color: "#122c8e",
-                letterSpacing: "0.2px",
-              }}
-            >
-              Parent*
-            </div>
-            <CustomSelectParent
-              name="parent"
-              value={parent}
-              onChange={handleParentChange}
-            >
-              {parents
-                .filter((p) => p.role === "Administrator")
-                .map((p) => (
-                  <option key={p._id} value={`${p.fullname} ${p.username}`}>
-                    {p.fullname}
-                  </option>
-                ))}
-            </CustomSelectParent>
-          </div>
-          <br />
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              gap: "8px",
-              paddingBottom: "6px",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "11px",
-                fontWeight: "700",
-                color: "#122c8e",
-                letterSpacing: "0.2px",
-              }}
-            >
-              Type*
-            </div>
-
-            <FormGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-              value={studentType}
-              onChange={handleStudentTypeChange}
-              sx={{
-                marginBottom: "-8px",
-                padding: "2px 0px 2px 12px",
-                background: "#5468ff",
-                borderRadius: "8px",
-              }}
-            >
-              {studentTypes.map((st) => (
-                <FormControlLabel
-                  sx={{
-                    color: "white",
-                  }}
-                  key={st}
-                  value={st}
-                  checked={studentType === st}
-                  control={
-                    <Radio
-                      sx={{
-                        color: "#122c8e",
-                        "& .MuiSvgIcon-root": {
-                          fontSize: 18,
-                        },
-                        "&.Mui-checked": {
+                {studentTypes.map((st) => (
+                  <FormControlLabel
+                    key={st}
+                    value={st}
+                    checked={studentType === st}
+                    control={
+                      <Radio
+                        sx={{
                           color: "white",
-                        },
-                      }}
-                    />
-                  }
-                  label={
-                    <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "500",
-                        letterSpacing: "0.2px",
-                      }}
-                    >
-                      {st}
-                    </span>
-                  }
-                />
-              ))}
-            </FormGroup>
+                          "& .MuiSvgIcon-root": {
+                            fontSize: 20,
+                          },
+                          "&.Mui-checked": {
+                            color: "white",
+                          },
+                        }}
+                      />
+                    }
+                    label={
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "600",
+                          letterSpacing: "0.2px",
+                          color: "white",
+                        }}
+                      >
+                        {st}
+                      </span>
+                    }
+                  />
+                ))}
+              </FormGroup>
+            </div>
           </div>
-          <br />
-
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              height: "40px",
-              padding: "16px 0 0 0",
+              padding: "32px 0 0 0",
             }}
           >
             <div
@@ -470,14 +654,14 @@ const CreateScheduleForm = ({
               <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
                 <FilterButton>
                   <BsCalendarWeek
-                    style={{ fontSize: "18px", color: "#122c8e" }}
+                    style={{ fontSize: "18px", color: "white" }}
                   />
                 </FilterButton>
               </Link>
               <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
                 <FilterButton>
                   <BsHourglassSplit
-                    style={{ fontSize: "18px", color: "#122c8e" }}
+                    style={{ fontSize: "18px", color: "white" }}
                   />
                 </FilterButton>
               </Link>
@@ -488,12 +672,12 @@ const CreateScheduleForm = ({
                 !nameOfStudent || !studentType || !schedType || !day || !parent
               }
             >
-              <BsPlus style={{ fontSize: "16px", color: "#122c8e" }} />
+              <BsPlus style={{ fontSize: "18px", color: "white" }} />
               <div
                 style={{
                   fontWeight: "600",
                   fontSize: "12px",
-                  color: "#122c8e",
+                  color: "white",
                   paddingRight: "4px",
                 }}
               >

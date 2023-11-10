@@ -10,12 +10,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
 import BlockIcon from "@mui/icons-material/Block";
 import Tilt from "react-parallax-tilt";
-import { HiSortDescending, HiSortAscending } from "react-icons/hi";
 import { RiSearchLine } from "react-icons/ri";
 import Modal from "@mui/material/Modal";
 import AbsentScheduleCard from "./AbsentScheduleCard";
 import AuditModal from "./AuditModal";
-import { BsCheckLg } from "react-icons/bs";
+import DeletionModal from "./DeletionModal";
+import {
+  BsCheckLg,
+  BsCameraReels,
+  BsPatchMinus,
+  BsTrash,
+  BsFullscreenExit,
+  BsArrowsFullscreen,
+} from "react-icons/bs";
 import { MdVideocam } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import {
@@ -24,8 +31,6 @@ import {
 } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { HiOutlineFilter } from "react-icons/hi";
-import { PiWarning, PiWarningFill } from "react-icons/pi";
-import { Pagination } from "@mui/material";
 
 const CustomPaginationItem = styled(PaginationItem)(({ theme }) => ({
   border: "none",
@@ -39,12 +44,25 @@ const CustomPaginationItem = styled(PaginationItem)(({ theme }) => ({
   },
 }));
 
+const FormTitle = styled("div")({
+  backgroundColor: "blue",
+  backgroundImage:
+    "radial-gradient(100% 100% at 100% 0, #007bff 0, #007bff 100%)",
+  backgroundSize: "100%",
+  backgroundRepeat: "repeat",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  MozBackgroundClip: "text",
+  MozTextFillColor: "transparent",
+  alignSelf: "flex-end",
+});
+
 const StudentParentCon = styled("div")({
   display: "flex",
   flexDirection: "column",
-  alignItems: "flex-start",
+  alignItems: "center",
   background: "transparent",
-  marginTop: "0px",
+  width: "100%",
   zIndex: "2",
 
   "@media (max-width: 767px)": {
@@ -52,7 +70,6 @@ const StudentParentCon = styled("div")({
     marginTop: "10px",
     alignItems: "flex-start",
     overflow: "hidden",
-    overflowX: "scroll",
   },
 });
 
@@ -60,91 +77,7 @@ const Flexer = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "10px 0px",
-});
-
-const Cell = styled("div")({
-  padding: "10px",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  width: "180px",
-  height: "26px",
-  color: "#007bff",
-  fontSize: "13px",
-  fontWeight: "600",
-  letterSpacing: "0.3px",
-  border: "1px solid #007bff",
-  borderRadius: "6px",
-  gap: "4px",
-});
-
-const Cell2 = styled("div")({
-  padding: "10px",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  width: "180px",
-  height: "26px",
-  color: "white",
-  fontSize: "13px",
-  fontWeight: "600",
-  letterSpacing: "0.3px",
-  background: "#007bff",
-  border: "1px solid #007bff",
-  borderRadius: "4px",
-  gap: "4px",
-});
-
-const Cell3 = styled("div")({
-  padding: "10px",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  width: "180px",
-  height: "26px",
-  color: "white",
-  fontSize: "13px",
-  fontWeight: "600",
-  letterSpacing: "0.3px",
-  background: "#007bff",
-  border: "1px solid #007bff",
-  borderRadius: "4px",
-  gap: "4px",
-});
-
-const Cell4 = styled("div")({
-  padding: "10px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "130px",
-  height: "26px",
-  color: "white",
-  fontSize: "13px",
-  fontWeight: "600",
-  letterSpacing: "0.3px",
-  background: "white",
-  border: "1px solid #007bff",
-  borderRadius: "4px",
-  gap: "4px",
-});
-
-const CellId = styled("div")({
-  padding: "10px",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  width: "30px",
-  height: "26px",
-  color: "white",
-  fontSize: "13px",
-  fontWeight: "600",
-  letterSpacing: "0.3px",
-  background: "#007bff",
-  border: "1px solid #007bff",
-  borderRadius: "4px",
-  textTransform: "uppercase",
+  width: "100%",
 });
 
 const LowerIconDiv = styled("div")({
@@ -180,8 +113,8 @@ const LowerIconDiv = styled("div")({
 const LowerIconDiv2 = styled("div")({
   marginTop: "1px",
   cursor: "pointer",
-  background: "#FDDA0D",
-  color: "#FDDA0D",
+  background: "#FFBF00",
+  color: "#FFBF00",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   display: "flex",
@@ -312,47 +245,44 @@ const IconSortContainer = styled("div")({
 
 const TableContainer = styled("div")(({ theme }) => ({
   display: "flex",
-  justifyContent: "flex-end",
+  justifyContent: "space-around",
   alignItems: "center",
   gap: "14px",
-  marginLeft: "-7px",
-  alignSelf: "flex-start",
-  paddingTop: "30px",
+  alignSelf: "flex-end",
 }));
 
 const SearchMainCon = styled("div")(({ theme }) => ({
-  width: "100%",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   position: "relative",
-  marginTop: "18px",
-  "@media (max-width: 767px)": {
-    width: "100%",
-  },
+  marginTop: "24px",
+  width: "100%",
+  "@media (max-width: 767px)": {},
 }));
 
 const SearchBar = styled("input")(({ theme }) => ({
-  width: "28%",
+  width: "18%",
   height: "26px",
-  background: "rgba(7, 187, 255, 0.04)",
-  border: "1px solid rgba(7, 187, 255, 0.2)",
+  background: "rgba(7, 187, 255, 0.1)",
+  border: "1px solid transparent",
   borderRadius: "10px",
   zIndex: "1",
   padding: "6px 0px 6px 42px",
   fontSize: "12px",
   fontWeight: "600",
   color: "#007bff",
+  // outline: "1px solid #007bff",
 
   "&:focus": {
-    outline: "2px solid #5468ff",
+    outline: "2px solid #122c8e",
     border: "1px solid transparent",
   },
   "&::placeholder": {
-    color: "rgba(0, 0, 0, 0.4)",
+    color: "rgba(0, 123, 255, 0.4)",
   },
   "@media (max-width: 767px)": {
-    width: "100%",
+    // width: "50%",
   },
 }));
 
@@ -370,6 +300,9 @@ const ModalBox = styled("div")({
   color: "#007bff",
   border: "none",
   outline: "none",
+  backgroundColor: "#ffffff",
+  backgroundImage:
+    "url(data:image/png;base64,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)",
 
   "&:focus": {
     border: "none",
@@ -390,22 +323,13 @@ const FlexerSwitch = styled("div")({
   alignItems: "flex-start",
   gap: "12px",
   height: "inherit",
-  // padding: "0 40px",
-});
-
-const FormTitle = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-end",
-  margin: "0",
-  padding: "0",
+  width: "100%",
 });
 
 const ZebraDiv = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   width: "100%",
-
   "&:nth-child(even)": {
     background: "rgba(255, 255, 255, 0.6)",
     borderRadius: "10px",
@@ -424,7 +348,7 @@ const FilterButton = styled("div")({
   alignItems: "center",
   width: "38px",
   height: "36px",
-  background: "rgba(0, 123, 255, 0.08)",
+  background: "rgba(7, 187, 255, 0.1)",
   boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
   borderRadius: "10px",
   cursor: "pointer",
@@ -468,11 +392,11 @@ const AllSchedule = () => {
   //modals
   const [showModal, setShowModal] = useState(false);
   const [showSecModal, setShowSecModal] = useState(false);
-
-  //pagination
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const itemsPerPage = 7;
+  // delete modals
+  const [deleteId, setDeleteId] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  //
+  const [showViewModal, setShowViewModal] = useState(false);
 
   const auth = useSelector(authSelector);
   const con = useSelector(conSelector);
@@ -495,7 +419,7 @@ const AllSchedule = () => {
 
   useEffect(() => {
     getSchedules();
-  }, [page, auth, searchQuery]);
+  }, [auth, searchQuery]);
 
   useEffect(() => {
     const filtered = schedules.filter((schedule) => {
@@ -622,12 +546,7 @@ const AllSchedule = () => {
             }`
       );
 
-      setTotalPages(Math.ceil(parentFilter.length / itemsPerPage));
-      const startIndex = (page - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const slicedData = parentFilter.slice(startIndex, endIndex);
-
-      setSchedules(slicedData);
+      setSchedules(parentFilter);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
@@ -681,11 +600,6 @@ const AllSchedule = () => {
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-    getSchedules();
   };
 
   const handleSetActiveToFalse = async (id) => {
@@ -1122,7 +1036,45 @@ const AllSchedule = () => {
   const handleCloseSecModal = () => {
     createSchedOrder();
     setShowSecModal(false);
-    // window.location.reload();
+  };
+
+  const navigateUpdate = (id) => {
+    history.push(`/schedule/${id}`);
+  };
+
+  // delete modal
+  const deleteOneSchedule = async (id) => {
+    if (!auth.userDetails.token) {
+      // Handle the case where the token is missing
+      console.error("Authentication token not found.");
+      return;
+    }
+    try {
+      await axios.delete(`${process.env.REACT_APP_API}/schedule/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleClickDelete = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteId) {
+      deleteOneSchedule(deleteId);
+      getSchedules();
+    }
+    setShowDeleteModal(false);
   };
 
   return (
@@ -1145,109 +1097,133 @@ const AllSchedule = () => {
       >
         <ModalBox>{TermsAndCondi()}</ModalBox>
       </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showDeleteModal}
+        onClose={handleCloseDeleteModal}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <ModalBox>
+          <DeletionModal handleConfirmDelete={handleConfirmDelete} />
+        </ModalBox>
+      </Modal>
 
       <StudentParentCon>
         <FlexerSwitch>
-          <TableContainer>
-            <div
-              onClick={() => handleDayChange("Permanent")}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "4px",
-                width: "25px",
-                height: "25px",
-                borderRadius: "50%",
-                marginTop: activeSchedType === "Permanent" ? "0px" : "0px",
-                background:
-                  activeSchedType === "Permanent"
-                    ? "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)"
-                    : "transparent",
-                color: activeSchedType === "Permanent" ? "white" : "#07bbff",
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <TableContainer>
+              <div
+                onClick={() => handleDayChange("Permanent")}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "4px",
+                  width: "25px",
+                  height: "25px",
+                  borderRadius: "50%",
+                  marginTop: activeSchedType === "Permanent" ? "0px" : "0px",
+                  background:
+                    activeSchedType === "Permanent"
+                      ? "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)"
+                      : "transparent",
+                  color: activeSchedType === "Permanent" ? "white" : "#07bbff",
 
-                cursor: "pointer",
-                textDecoration: "none",
-                transition: "box-shadow .15s, transform .15s",
-                touchAction: "manipulation",
-                willChange: "box-shadow, transform",
-                fontSize: "11px",
-                fontWeight: "bold",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  transition: "box-shadow .15s, transform .15s",
+                  touchAction: "manipulation",
+                  willChange: "box-shadow, transform",
+                  fontSize: "11px",
+                  fontWeight: "bold",
 
-                ":focus": {
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                },
-                ":hover": {
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                  transform: "translateY(-2px)",
+                  ":focus": {
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  },
+                  ":hover": {
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    transform: "translateY(-2px)",
 
-                  background: "white",
-                },
-              }}
-            >
-              P
-            </div>
+                    background: "white",
+                  },
+                }}
+              >
+                <BsArrowsFullscreen />
+              </div>
 
-            <div
-              onClick={() => handleDayChange("Temporary")}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "4px",
-                width: "25px",
-                height: "25px",
-                borderRadius: "50%",
-                marginTop: activeSchedType === "Temporary" ? "0px" : "0px",
-                background:
-                  activeSchedType === "Temporary"
-                    ? "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)"
-                    : "transparent",
-                color: activeSchedType === "Temporary" ? "white" : "#07bbff",
+              <div
+                onClick={() => handleDayChange("Temporary")}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "4px",
+                  width: "25px",
+                  height: "25px",
+                  borderRadius: "50%",
+                  marginTop: activeSchedType === "Temporary" ? "0px" : "0px",
+                  background:
+                    activeSchedType === "Temporary"
+                      ? "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)"
+                      : "transparent",
+                  color: activeSchedType === "Temporary" ? "white" : "#07bbff",
 
-                cursor: "pointer",
-                textDecoration: "none",
-                transition: "box-shadow .15s, transform .15s",
-                touchAction: "manipulation",
-                willChange: "box-shadow, transform",
-                fontSize: "11px",
-                fontWeight: "bold",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  transition: "box-shadow .15s, transform .15s",
+                  touchAction: "manipulation",
+                  willChange: "box-shadow, transform",
+                  fontSize: "11px",
+                  fontWeight: "bold",
 
-                ":focus": {
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                },
-                ":hover": {
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                  transform: "translateY(-2px)",
-                  borderBottom: "1px solid #007bff",
-                  borderTop: "1px solid #007bff",
-                  borderLeft: "1px solid #007bff",
-                  background: "white",
-                },
-              }}
-            >
-              T
-            </div>
-          </TableContainer>
+                  ":focus": {
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  },
+                  ":hover": {
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    transform: "translateY(-2px)",
+                    borderBottom: "1px solid #007bff",
+                    borderTop: "1px solid #007bff",
+                    borderLeft: "1px solid #007bff",
+                    background: "white",
+                  },
+                }}
+              >
+                <BsFullscreenExit />
+              </div>
+            </TableContainer>
 
+            {activeSchedType === "Permanent" && (
+              <>
+                <FormTitle>
+                  <h2
+                    style={{
+                      color: "#007bff",
+                      margin: "0",
+                      fontWeight: "700",
+                      letterSpacing: "-2px",
+                      paddingRight: "2px",
+                    }}
+                  >
+                    Permanent
+                  </h2>
+                </FormTitle>
+              </>
+            )}
+          </div>
           {activeSchedType === "Permanent" && (
             <>
-              <FormTitle>
-                <h2
-                  style={{
-                    color: "#007bff",
-                    margin: "14px 0 0 0",
-                    padding: "0",
-                  }}
-                >
-                  Original,
-                </h2>
-              </FormTitle>
-
               <SearchMainCon>
                 <div
                   style={{
@@ -1314,95 +1290,103 @@ const AllSchedule = () => {
                   )}
                 </div>
               </SearchMainCon>
-
               <Flexer>
                 <div
                   style={{
-                    background: "rgba(7, 187, 255, 0.2)",
-                    borderRadius: "12px",
-                    padding: "4px 4px 4px 4px",
-                    boxShadow:
-                      "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+                    display: "flex",
+                    justifyContent: "center",
+                    borderRadius: "10px",
+                    width: "100%",
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "center",
-                      borderRadius: "10px",
-                      width: "1050px",
+                      justifyContent: "space-between",
+                      background: "rgba(255, 255, 255, 0.8)",
+                      padding: "13px 16px",
+                      borderTopLeftRadius: "10px",
+                      borderBottomLeftRadius: "10px",
+                      width: "70%",
+                      boxShadow:
+                        "rgba(0, 123, 255, 0.06) 0px 2px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 2px -1px",
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        background: "rgba(255, 255, 255, 0.8)",
-                        padding: "13px 16px",
-                        borderTopLeftRadius: "10px",
                         width: "70%",
-                        boxShadow:
-                          "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "70%",
-                        }}
-                      >
-                        <h5
-                          style={{
-                            color: "#007bff",
-                            margin: "0",
-                            letterSpacing: "0.2px",
-                            fontWeight: "600",
-                          }}
-                        >
-                          Student's Info
-                        </h5>
-                        <h5
-                          style={{
-                            color: "#007bff",
-                            margin: "0",
-                            letterSpacing: "0.2px",
-                            fontWeight: "600",
-                          }}
-                        >
-                          Status
-                        </h5>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        backgroundImage:
-                          "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5468ff 100%)",
-                        padding: "13px 14px",
-                        boxShadow:
-                          "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-                        borderTopRightRadius: "10px",
-                        width: "30%",
                       }}
                     >
                       <h5
                         style={{
-                          color: "white",
+                          color: "#007bff",
                           margin: "0",
                           letterSpacing: "0.2px",
                           fontWeight: "600",
                         }}
                       >
-                        Actions
+                        Student's Info
+                      </h5>
+                      <h5
+                        style={{
+                          color: "#007bff",
+                          margin: "0",
+                          letterSpacing: "0.2px",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Status
                       </h5>
                     </div>
                   </div>
+                  <div
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5468ff 100%)",
+                      padding: "13px 14px",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+                      borderTopRightRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                      width: "30%",
+                    }}
+                  >
+                    <h5
+                      style={{
+                        color: "white",
+                        margin: "0",
+                        letterSpacing: "0.2px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Actions
+                    </h5>
+                  </div>
+                </div>
+              </Flexer>
 
+              <Flexer>
+                <div
+                  style={{
+                    background: "rgba(7, 187, 255, 0.1)",
+                    borderRadius: "12px",
+                    padding: "4px 4px 4px 4px",
+                    boxShadow:
+                      "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+                    width: "1064px",
+                    height: "530px",
+                    overflow: "hidden",
+                    overflowY: "scroll",
+                  }}
+                >
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "flex-start",
+                      width: "100%",
                     }}
                   >
                     {filteredSchedules.map((schedule) => (
@@ -1492,9 +1476,17 @@ const AllSchedule = () => {
                               gap: "4px",
                             }}
                           >
-                            <LowerIconDiv></LowerIconDiv>
-                            <LowerIconDiv2></LowerIconDiv2>
-                            <LowerIconDiv3></LowerIconDiv3>
+                            <LowerIconDiv>
+                              <PersonIcon sx={{ fontSize: "14px" }} />
+                            </LowerIconDiv>
+                            <LowerIconDiv2
+                              onClick={() => navigateUpdate(schedule._id)}
+                            >
+                              <EditIcon sx={{ fontSize: "14px" }} />
+                            </LowerIconDiv2>
+                            <LowerIconDiv3>
+                              <BsCheckLg sx={{ fontSize: "14px" }} />
+                            </LowerIconDiv3>
                             <LowerIconDiv4
                               onClick={() => handleAddToContainer(schedule)}
                             >
@@ -1510,13 +1502,20 @@ const AllSchedule = () => {
                               }}
                             >
                               <IconSortContainer>
-                                <MdVideocam
-                                  style={{ color: "#122c8e", fontSize: "18px" }}
+                                <BsCameraReels
+                                  style={{ color: "#122c8e", fontSize: "20px" }}
                                 />
                               </IconSortContainer>
                               <IconSortContainer>
-                                <PiWarningFill
-                                  style={{ color: "#E49B0F", fontSize: "18px" }}
+                                <BsPatchMinus
+                                  style={{ color: "#F4BB44", fontSize: "20px" }}
+                                />
+                              </IconSortContainer>
+                              <IconSortContainer
+                                onClick={() => handleClickDelete(schedule._id)}
+                              >
+                                <BsTrash
+                                  style={{ color: "#Ff3131", fontSize: "20px" }}
                                 />
                               </IconSortContainer>
                             </div>
@@ -1538,28 +1537,6 @@ const AllSchedule = () => {
                   </div>
                 </div>
               </Flexer>
-              <Pagination
-                count={Math.ceil(
-                  schedules.map((schedule) => schedule.length) / itemsPerPage
-                )}
-                page={page}
-                onChange={handlePageChange}
-                variant="outlined"
-                shape="rounded"
-                color="primary"
-                renderItem={(item) => (
-                  <CustomPaginationItem
-                    {...item}
-                    label={
-                      item.type === "previous"
-                        ? "Previous"
-                        : item.type === "next"
-                        ? "Next"
-                        : item.page
-                    }
-                  />
-                )}
-              />
             </>
           )}
         </FlexerSwitch>
