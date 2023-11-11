@@ -13,11 +13,23 @@ import { useDispatch } from "react-redux";
 import FriendSidebar from "../../../Dashboard/FriendSidebar/FriendSidebar";
 import mlacLogo from "../../../images/mlac.svg";
 
-import { GoComment, GoSquirrel } from "react-icons/go";
+import { GoComment, GoFileBinary, GoSquirrel } from "react-icons/go";
 
-import { SlUserFollow, SlEvent, SlGrid, SlChart } from "react-icons/sl";
+import {
+  SlUserFollow,
+  SlEvent,
+  SlGrid,
+  SlChart,
+  SlList,
+  SlFolder,
+  SlFolderAlt,
+  SlDocs,
+  SlDoc,
+  SlBookOpen,
+} from "react-icons/sl";
 
 import { CgMenuLeft } from "react-icons/cg";
+import { BsCardList, BsListUl } from "react-icons/bs";
 
 const drawerWidth = 240;
 
@@ -212,6 +224,54 @@ function ResponsiveDrawer(props) {
                 />
               ) : (
                 <SlEvent
+                  style={{
+                    color: "white",
+                    padding: "10px",
+                    fontSize: "18px",
+                  }}
+                />
+              )}
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/waitlist">
+              {activeItem === "/waitlist" ? (
+                <SlFolderAlt
+                  className={activeItem === "/waitlist" ? "icon-active" : ""}
+                  style={{ fontSize: "18px" }}
+                />
+              ) : (
+                <SlFolderAlt
+                  style={{
+                    color: "white",
+                    padding: "10px",
+                    fontSize: "18px",
+                  }}
+                />
+              )}
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/logs">
+              {activeItem === "/logs" ? (
+                <SlBookOpen
+                  className={activeItem === "/logs" ? "icon-active" : ""}
+                  style={{ fontSize: "18px" }}
+                />
+              ) : (
+                <SlBookOpen
                   style={{
                     color: "white",
                     padding: "10px",

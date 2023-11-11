@@ -22,11 +22,7 @@ const Flexer = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   borderRadius: "14px",
-  padding: "40px",
-  // boxShadow:
-  //   "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-  background:
-    "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)",
+  background: "transparent",
   "@media (max-width: 767px)": {
     padding: "40px 20px",
     borderRadius: "20px",
@@ -98,31 +94,6 @@ const FilterRealButton = styled("button")({
   },
 });
 
-const PermSchedLogo = styled("div")({
-  width: "80px",
-  background: "white",
-  border: "none",
-  borderRadius: "6px",
-  padding: "13px",
-  fontSize: "12px",
-  fontWeight: "600",
-  color: "#122c8e",
-  letterSpacing: "0.4px",
-
-  "&:focus": {
-    outline: "2px solid #122c8e",
-    border: "1px solid transparent",
-  },
-  "&::placeholder": {
-    color: "rgba(0, 0, 0, 0.4)",
-    fontSize: "12px",
-    fontWeight: "500",
-  },
-  "@media (max-width: 767px)": {
-    width: "100%",
-  },
-});
-
 const InputFieldName = styled("input")({
   width: "100%",
   background: "rgba(255, 255, 255, 0.6)",
@@ -137,6 +108,7 @@ const InputFieldName = styled("input")({
   color: "#122c8e",
   letterSpacing: "0.4px",
   outline: "none",
+  position: "relative",
 
   "&:focus": {
     outline: "2px solid #122c8e",
@@ -146,9 +118,6 @@ const InputFieldName = styled("input")({
     color: "rgba(0, 123, 255, 0.4)",
     fontSize: "12px",
     fontWeight: "500",
-  },
-  "@media (max-width: 767px)": {
-    width: "80%",
   },
 });
 
@@ -258,9 +227,9 @@ const InputTitles = styled("div")({
   // WebkitTextFillColor: "transparent",
   // MozBackgroundClip: "text",
   // MozTextFillColor: "transparent",
-  fontWeight: "800",
+  fontWeight: "700",
   letterSpacing: "0px",
-  textTransform: "uppercase",
+  textTransform: "",
 });
 
 const FlexerRow = styled("div")({
@@ -463,6 +432,7 @@ const CreateScheduleForm = ({
             }}
           >
             <InputTitles>Name*</InputTitles>
+
             <div
               style={{
                 display: "flex",
@@ -470,6 +440,7 @@ const CreateScheduleForm = ({
                 width: "100%",
               }}
             >
+              <BsPlus style={{ position: "absolute" }} />
               <InputFieldName
                 name="nameOfStudent"
                 value={nameOfStudent}
@@ -640,7 +611,7 @@ const CreateScheduleForm = ({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              padding: "32px 0 0 0",
+              padding: "42px 0 0 0",
             }}
           >
             <div

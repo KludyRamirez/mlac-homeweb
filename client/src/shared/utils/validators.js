@@ -21,6 +21,22 @@ export const validateRegisterForm = ({
   );
 };
 
+export const validateWaitListForm = ({
+  role,
+  username,
+  firstname,
+  lastname,
+  mail,
+}) => {
+  return (
+    validateRole(role) &&
+    validateUsername(username) &&
+    validateLastname(lastname) &&
+    validateFirstname(firstname) &&
+    validateMail(mail)
+  );
+};
+
 const validatePassword = (password) => {
   return password.length > 6 && password.length < 24;
 };

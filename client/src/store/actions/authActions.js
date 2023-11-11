@@ -11,6 +11,8 @@ export const getActions = (dispatch) => {
     login: (userDetails, history) => dispatch(login(userDetails, history)),
     register: (userDetails, history) =>
       dispatch(register(userDetails, history)),
+    waitList: (userDetails, history) =>
+      dispatch(waitList(userDetails, history)),
   };
 };
 
@@ -49,6 +51,21 @@ const register = (userDetails) => {
       dispatch(openAlertMessage(response?.exception?.response?.data));
     } else {
       dispatch(openAlertMessage("Account Successfully Created!"));
+    }
+  };
+};
+
+const waitList = (userDetails, history) => {
+  return async (dispatch) => {
+    const response = await api.waitList(userDetails);
+    console.log(response);
+
+    if (response.error) {
+      // show message in alert
+      dispatch(openAlertMessage(response?.exception?.response?.data));
+    } else {
+      dispatch(openAlertMessage("Details Successfully Submitted!"));
+      history.push("/waitlist");
     }
   };
 };

@@ -25,6 +25,7 @@ import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreate
 import TempSoloCreateSched from "./Admin/AdminDashboard/CreateSchedule/TempSoloCreateSched";
 import ParentSortSchedule from "./Admin/AdminDashboard/AllSchedule/ParentSortSchedule";
 import AllTimetable from "./Admin/AdminDashboard/TimeTableHome/AllTimetable";
+import WaitList from "./Admin/AdminDashboard/Waitlist/WaitList";
 
 function App() {
   const [userNotif, setUserNotif] = useState("");
@@ -88,6 +89,9 @@ function App() {
           </Route>
           <Route exact path="/children">
             <ParentSortSchedule />
+          </Route>
+          <Route exact path="/waitlist">
+            <WaitList />
           </Route>
         </Switch>
       </Router>

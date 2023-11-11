@@ -366,6 +366,16 @@ const FilterButton = styled("div")({
   },
 });
 
+const PermanentTitle = styled("div")({
+  color: "#122c8e",
+  fontSize: "24px",
+  fontWeight: "700",
+  letterSpacing: "-1px",
+  paddingRight: "2.5px",
+
+  "@media (max-width: 767px)": {},
+});
+
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
@@ -1207,17 +1217,7 @@ const AllSchedule = () => {
             {activeSchedType === "Permanent" && (
               <>
                 <FormTitle>
-                  <h2
-                    style={{
-                      color: "#007bff",
-                      margin: "0",
-                      fontWeight: "700",
-                      letterSpacing: "-2px",
-                      paddingRight: "2px",
-                    }}
-                  >
-                    Permanent
-                  </h2>
+                  <PermanentTitle>Permanent</PermanentTitle>
                 </FormTitle>
               </>
             )}
