@@ -47,9 +47,9 @@ export const register = async (data) => {
   }
 };
 
-export const waitList = async (data) => {
+export const waitlist = async (data) => {
   try {
-    return await apiClient.post("/auth/register", data);
+    return await apiClient.post("/auth/waitlist", data);
   } catch (exception) {
     return {
       error: true,

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
-import RegisterPageInputs from "../../../authPages/RegisterPage/RegisterPageInputs";
 import { validateWaitListForm } from "../../../shared/utils/validators";
 import { connect } from "react-redux";
-import { getActions } from "../../../store/actions/alertActions";
+import { getActions } from "../../../store/actions/authActions";
 import { useHistory } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import EditUser from "../UserPages/AllUser";
 import WaitListInputs from "./WaitListInputs";
 import AllSchedule from "../AllSchedule/AllSchedule";
 
@@ -81,13 +79,13 @@ const FormCon1 = styled("div")({
 });
 
 const FormCon2 = styled("div")({
-  width: "56%",
+  width: "fit-content",
   "@media (max-width: 767px)": {
     width: "fit-content",
   },
 });
 
-const WaitList = ({ waitList }) => {
+const WaitList = ({ waitlist }) => {
   const history = useHistory();
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -100,24 +98,22 @@ const WaitList = ({ waitList }) => {
 
   useEffect(() => {
     setIsFormValid(
-      validateWaitListForm({ firstname, lastname, username, role, mail })
+      validateWaitListForm({ firstname, lastname, username, mail })
     );
-  }, [firstname, lastname, username, role, mail, setIsFormValid]);
+  }, [firstname, lastname, username, mail, setIsFormValid]);
 
   const handleWaitList = () => {
     const userDetails = {
       firstname,
       lastname,
       username,
-      role,
       mail,
     };
 
-    waitList(userDetails, history);
+    waitlist(userDetails, history);
     setUsername("");
     setFirstname("");
     setLastname("");
-    setRole("");
     setMail("");
     // window.location.reload();
   };

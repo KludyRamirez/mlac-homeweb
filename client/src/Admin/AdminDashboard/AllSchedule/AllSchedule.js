@@ -543,20 +543,7 @@ const AllSchedule = () => {
       const params = { searchQuery }; // Modify this based on your API's requirements
       const res = await axios.get(url, { headers, params });
 
-      const parentFilter = res.data.filter(
-        (schedule) =>
-          (schedule.parent ===
-            `${auth && auth.userDetails.fullname} ${
-              auth && auth.userDetails.username
-            }` &&
-            schedule.isActive === true) ||
-          (schedule.tempStudent && schedule.tempStudent.parent) ===
-            `${auth && auth.userDetails.fullname} ${
-              auth && auth.userDetails.username
-            }`
-      );
-
-      setSchedules(parentFilter);
+      setSchedules(res.data);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
@@ -1375,7 +1362,7 @@ const AllSchedule = () => {
                     padding: "4px 4px 4px 4px",
                     boxShadow:
                       "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-                    width: "1064px",
+                    width: "940px",
                     height: "530px",
                     overflow: "hidden",
                     overflowY: "scroll",

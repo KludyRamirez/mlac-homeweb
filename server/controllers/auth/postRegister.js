@@ -48,6 +48,7 @@ const postRegister = async (req, res) => {
         role: user.role,
         fullname: user.fullname,
         username: user.username,
+        mail: user.mail,
       },
     });
   } catch (err) {
@@ -55,4 +56,53 @@ const postRegister = async (req, res) => {
   }
 };
 
-module.exports = postRegister;
+const postWaitList = async (req, res) => {
+  try {
+    const { username, lastname, role, firstname, mail } = req.body;
+
+    const usernameExists = await User.exists({
+      username: username,
+    });
+
+    if (usernameExists) {
+      return res.status(409).send("Username already exists");
+    }
+    // create user document and save in database
+    const user = await User.create({
+      username,
+      firstname,
+      lastname,
+      role,
+      cardId: uniqid(),
+      fullname: `${firstname} ${lastname}`,
+      mail,
+    });
+
+    // create JWT token
+    const token = jwt.sign(
+      {
+        userId: user._id,
+      },
+      process.env.TOKEN_KEY,
+      {
+        expiresIn: "24h",
+      }
+    );
+
+    res.status(201).json({
+      userDetails: {
+        _id: user._id,
+        token: token,
+        cardId: user.cardId,
+        role: user.role,
+        fullname: user.fullname,
+        username: user.username,
+        mail: user.mail,
+      },
+    });
+  } catch (err) {
+    return res.status(500).send("Error occured. Please try again");
+  }
+};
+
+module.exports = { postRegister, postWaitList };

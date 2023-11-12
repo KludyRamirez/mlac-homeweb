@@ -11,8 +11,8 @@ export const getActions = (dispatch) => {
     login: (userDetails, history) => dispatch(login(userDetails, history)),
     register: (userDetails, history) =>
       dispatch(register(userDetails, history)),
-    waitList: (userDetails, history) =>
-      dispatch(waitList(userDetails, history)),
+    waitlist: (userDetails, history) =>
+      dispatch(waitlist(userDetails, history)),
   };
 };
 
@@ -55,9 +55,9 @@ const register = (userDetails) => {
   };
 };
 
-const waitList = (userDetails, history) => {
+const waitlist = (userDetails, history) => {
   return async (dispatch) => {
-    const response = await api.waitList(userDetails);
+    const response = await api.waitlist(userDetails);
     console.log(response);
 
     if (response.error) {

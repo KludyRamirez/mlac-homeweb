@@ -1,5 +1,5 @@
-const { getUser } = require("../outsidechat/users");
-const { deleteUser } = require("../outsidechat/users");
+const { getUser } = require("../outsidechat/user");
+const { deleteUser } = require("../outsidechat/user");
 
 exports.controllers = {
   getUser,

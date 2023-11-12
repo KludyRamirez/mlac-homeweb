@@ -22,14 +22,12 @@ export const validateRegisterForm = ({
 };
 
 export const validateWaitListForm = ({
-  role,
   username,
   firstname,
   lastname,
   mail,
 }) => {
   return (
-    validateRole(role) &&
     validateUsername(username) &&
     validateLastname(lastname) &&
     validateFirstname(firstname) &&

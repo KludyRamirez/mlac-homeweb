@@ -17,6 +17,13 @@ const registerSchema = Joi.object({
   role: Joi.string(),
 });
 
+const waitlistSchema = Joi.object({
+  username: Joi.string().min(3).max(24).required(),
+  firstname: Joi.string().min(3).max(24).required(),
+  lastname: Joi.string().min(3).max(24).required(),
+  mail: Joi.string().min(3).max(32).required(),
+});
+
 const loginSchema = Joi.object({
   username: Joi.string().min(3).max(24).required(),
   password: Joi.string().min(6).max(24).required(),
@@ -29,6 +36,13 @@ router.post(
   validator.body(registerSchema), // backend validation middleware
   authControllers.controllers.postRegister
 );
+
+router.post(
+  "/waitlist",
+  validator.body(waitlistSchema), // backend validation middleware
+  authControllers.controllers.postWaitList
+);
+
 router.post(
   "/login",
   validator.body(loginSchema), // backend validation middleware
