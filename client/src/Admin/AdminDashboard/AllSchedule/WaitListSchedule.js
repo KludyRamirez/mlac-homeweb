@@ -16,21 +16,18 @@ import AbsentScheduleCard from "./AbsentScheduleCard";
 import AuditModal from "./AuditModal";
 import DeletionModal from "./DeletionModal";
 import {
-  BsCheckLg,
   BsCameraReels,
   BsPatchMinus,
+  BsPatchPlus,
   BsTrash,
-  BsFullscreenExit,
-  BsArrowsFullscreen,
 } from "react-icons/bs";
-import { MdVideocam } from "react-icons/md";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import {
   AiOutlineSortDescending,
   AiOutlineSortAscending,
 } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { HiOutlineFilter } from "react-icons/hi";
+import moment from "moment";
 
 const CustomPaginationItem = styled(PaginationItem)(({ theme }) => ({
   border: "none",
@@ -381,7 +378,7 @@ const conSelector = createSelector([selectCon], (con) => con);
 const selectAudit = (state) => state.audit;
 const auditSelector = createSelector([selectAudit], (audit) => audit);
 
-const AllSchedule = () => {
+const WaitListSchedule = () => {
   const [schedules, setSchedules] = useState([]);
   const [tempSchedules, setTempSchedules] = useState([]);
   const [tempSoloSchedules, setTempSoloSchedules] = useState([]);
@@ -394,7 +391,7 @@ const AllSchedule = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSchedules, setFilteredSchedules] = useState([]);
   const [filteredMixedSchedules, setFilteredMixedSchedules] = useState([]);
-  const [showExtraFunc, setShowExtraFunc] = useState(false);
+  const [showExtraFunc, setShowExtraFunc] = useState(true);
   //modals
   const [showModal, setShowModal] = useState(false);
   const [showSecModal, setShowSecModal] = useState(false);
@@ -539,7 +536,11 @@ const AllSchedule = () => {
       const params = { searchQuery }; // Modify this based on your API's requirements
       const res = await axios.get(url, { headers, params });
 
-      setSchedules(res.data);
+      const waitListFilter = res.data.filter(
+        (schedule) => schedule.isWaitlisted === "Yes"
+      );
+
+      setSchedules(waitListFilter);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
@@ -1048,6 +1049,7 @@ const AllSchedule = () => {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
       });
+      getSchedules();
     } catch (err) {
       console.error("Error fetching users:", err);
     }
@@ -1068,6 +1070,10 @@ const AllSchedule = () => {
       getSchedules();
     }
     setShowDeleteModal(false);
+  };
+
+  const formatTimestamp = (timestamp) => {
+    return moment(timestamp).format("MMMM Do YYYY");
   };
 
   return (
@@ -1151,7 +1157,7 @@ const AllSchedule = () => {
                   },
                 }}
               >
-                I
+                -
               </div>
 
               <div
@@ -1290,7 +1296,7 @@ const AllSchedule = () => {
                       padding: "13px 16px",
                       borderTopLeftRadius: "10px",
                       borderBottomLeftRadius: "10px",
-                      width: "70%",
+                      width: "80%",
                       boxShadow:
                         "rgba(0, 123, 255, 0.06) 0px 2px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 2px -1px",
                     }}
@@ -1320,7 +1326,7 @@ const AllSchedule = () => {
                           fontWeight: "600",
                         }}
                       >
-                        Status
+                        Type | Date
                       </h5>
                     </div>
                   </div>
@@ -1333,7 +1339,7 @@ const AllSchedule = () => {
                         "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
                       borderTopRightRadius: "10px",
                       borderBottomRightRadius: "10px",
-                      width: "30%",
+                      width: "20%",
                     }}
                   >
                     <h5
@@ -1379,15 +1385,15 @@ const AllSchedule = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            padding: "16px",
-                            width: "70%",
+                            padding: "14px 16px",
+                            width: "87%",
                           }}
                         >
                           <div
                             style={{
                               display: "flex",
                               justifyContent: "space-between",
-                              width: "71.5%",
+                              width: "76.6%",
                             }}
                           >
                             <h5
@@ -1396,7 +1402,8 @@ const AllSchedule = () => {
                                 color: "#122c8e",
                                 fontWeight: "600",
                                 lineHeight: "22px",
-                                fontSize: "0.8em",
+                                fontSize: "12px",
+                                letterSpacing: "0.4px",
                               }}
                             >
                               {schedule.nameOfStudent},{" "}
@@ -1409,39 +1416,69 @@ const AllSchedule = () => {
                                 }}
                               >
                                 {schedule.timing}
-                              </span>{" "}
-                              <br /> {schedule.day}, {schedule.studentType}{" "}
-                              <br />
+                              </span>
+                              , {schedule.day} <br />
+                              <span style={{ color: "green" }}>
+                                {schedule.parent
+                                  ? schedule.parent
+                                      .split(" ")
+                                      .slice(0, 2)
+                                      .join(" ")
+                                  : ""}{" "}
+                                [Parent]
+                              </span>
                             </h5>
                             <div
                               style={{
                                 display: "flex",
-                                height: "100%",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                                gap: "8px",
+                                flexDirection: "column",
+                                alignItems: "flex-start",
+                                justifyContent: "center",
+                                gap: "0px",
                               }}
                             >
                               <div
                                 style={{
-                                  width: "10px",
-                                  height: "10px",
-                                  background: "#2AAA8A",
-                                  borderRadius: "50%",
-                                }}
-                              ></div>
-                              <h5
-                                style={{
-                                  margin: "0px",
-                                  color: "#2AAA8A",
-                                  fontWeight: "600",
-                                  lineHeight: "22px",
-                                  fontSize: "0.8em",
-                                  wordSpacing: "1px",
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                                  gap: "12px",
                                 }}
                               >
-                                Enrolled
-                              </h5>
+                                <h5
+                                  style={{
+                                    margin: "0px",
+                                    color: "#122c8e",
+                                    fontWeight: "600",
+                                    lineHeight: "22px",
+                                    fontSize: "12px",
+                                    letterSpacing: "0.4px",
+                                  }}
+                                >
+                                  {formatTimestamp(schedule.timestamp)}
+                                </h5>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                                  gap: "12px",
+                                }}
+                              >
+                                <h5
+                                  style={{
+                                    margin: "0px",
+                                    color: "orange",
+                                    fontWeight: "600",
+                                    lineHeight: "22px",
+                                    fontSize: "12px",
+                                    wordSpacing: "1px",
+                                  }}
+                                >
+                                  {schedule.studentType}
+                                </h5>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1450,36 +1487,10 @@ const AllSchedule = () => {
                             display: "flex",
                             justifyContent: "space-between",
                             alignItems: "center",
-                            width: "30%",
-                            padding: "16px 14px",
+                            width: "20%",
+                            padding: "16px 16px 16px 0px",
                           }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                            <LowerIconDiv2
-                              onClick={() => navigateUpdate(schedule._id)}
-                            >
-                              <EditIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv2>
-                            <LowerIconDiv3>
-                              <BsCheckLg sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv3>
-                            <LowerIconDiv4
-                              onClick={() => handleAddToContainer(schedule)}
-                            >
-                              <BlockIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv4>
-                          </div>
-
                           {showExtraFunc ? (
                             <div
                               style={{
@@ -1488,13 +1499,8 @@ const AllSchedule = () => {
                               }}
                             >
                               <IconSortContainer>
-                                <BsCameraReels
-                                  style={{ color: "#122c8e", fontSize: "20px" }}
-                                />
-                              </IconSortContainer>
-                              <IconSortContainer>
-                                <BsPatchMinus
-                                  style={{ color: "#F4BB44", fontSize: "20px" }}
+                                <BsPatchPlus
+                                  style={{ color: "blue", fontSize: "20px" }}
                                 />
                               </IconSortContainer>
                               <IconSortContainer
@@ -1508,15 +1514,6 @@ const AllSchedule = () => {
                           ) : (
                             ""
                           )}
-
-                          <BiDotsVerticalRounded
-                            onClick={toggleExtraFunc}
-                            style={{
-                              fontSize: "24px",
-                              color: "rgba(0, 0, 0, 0.2)",
-                              cursor: "pointer",
-                            }}
-                          />
                         </div>
                       </ZebraDiv>
                     ))}
@@ -1530,4 +1527,4 @@ const AllSchedule = () => {
     </>
   );
 };
-export default AllSchedule;
+export default WaitListSchedule;

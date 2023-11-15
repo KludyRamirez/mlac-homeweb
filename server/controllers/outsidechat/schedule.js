@@ -29,7 +29,7 @@ const createSchedule = async (req, res) => {
       }).save();
       res.json(dyadComboSchedule);
     } catch (error) {
-      return res.status(400).send("schedule exists!");
+      return res.status(400).send("Create Schedule Error!");
     }
   }
 };

@@ -57,30 +57,6 @@ const FormTitle = styled("div")({
   },
 });
 
-const initialState = {
-  nameOfStudent: "",
-  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-  day: "",
-  parents: [],
-  parent: "",
-  schedTypes: ["Permanent"],
-  schedType: "Permanent",
-  studentTypes: ["Solo", "Dyad"],
-  studentType: "",
-  timings: [
-    "8 AM to 9 AM",
-    "9 AM to 10 AM",
-    "10 AM to 11 AM",
-    "11 AM to 12 NN",
-    "1 PM to 2 PM",
-    "2 PM to 3 PM",
-    "3 PM to 4 PM",
-    "4 PM to 5 PM",
-  ],
-  timing: "",
-  notifLocator: "",
-};
-
 const Flexer = styled("div")({
   display: "flex",
   justifyContent: "center",
@@ -107,6 +83,32 @@ const FormCon1 = styled("div")({
 const FormCon2 = styled("div")({
   width: "fit-content",
 });
+
+const initialState = {
+  nameOfStudent: "",
+  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  day: "",
+  parents: [],
+  parent: "",
+  schedTypes: ["Permanent"],
+  schedType: "Permanent",
+  studentTypes: ["Solo", "Dyad"],
+  studentType: "",
+  timings: [
+    "8 AM to 9 AM",
+    "9 AM to 10 AM",
+    "10 AM to 11 AM",
+    "11 AM to 12 NN",
+    "1 PM to 2 PM",
+    "2 PM to 3 PM",
+    "3 PM to 4 PM",
+    "4 PM to 5 PM",
+  ],
+  timing: "",
+  notifLocator: "",
+  isWaitlisteds: ["No"],
+  isWaitlisted: "No",
+};
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
@@ -180,13 +182,6 @@ const CreateSchedule = () => {
       ...values,
       parent: parentName,
     });
-  };
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
   };
 
   return (

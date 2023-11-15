@@ -36,7 +36,7 @@ export const validateWaitListForm = ({
 };
 
 const validatePassword = (password) => {
-  return password.length > 6 && password.length < 24;
+  return password.length > 6 && password.length < 24 && password !== "mlac123";
 };
 
 const validateUsername = (username) => {

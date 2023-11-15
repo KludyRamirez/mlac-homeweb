@@ -64,6 +64,15 @@ const schedsSchema = new mongoose.Schema(
         "Bad Weather",
       ],
     },
+    isWaitlisted: {
+      type: String,
+      default: "Yes",
+      enum: ["Yes", "No"],
+    },
+
+    notifParentLocator: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

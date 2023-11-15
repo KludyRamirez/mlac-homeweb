@@ -312,7 +312,7 @@ const CreateScheduleForm = ({
           <StatsCard
             sx={{
               background:
-                "radial-gradient(100% 100% at 0% 0, #0073ff 0, #122c8e 100%)",
+                "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
             }}
           >
             <div
