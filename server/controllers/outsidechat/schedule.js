@@ -115,7 +115,7 @@ const createTempSchedule = async (req, res) => {
 const getTempSchedule = async (req, res) => {
   try {
     const tempScheds = await TempSchedule.find()
-      .populate("permanentSched", "day timing parent nameOfStudent")
+      .populate("permanentSched", "day timing parent nameOfStudent cardId")
       .populate("tempStudentName", "parent nameOfStudent studentType schedType")
       .exec();
 
@@ -145,13 +145,13 @@ const deleteTempSchedules = async (req, res) => {
     const formattedDate = moment(currentDate).format("MMMM Do YYYY");
 
     const schedulesToDelete = await TempSchedule.find({
-      dateTime: { $gt: formattedDate },
+      dateTime: { $eq: formattedDate },
     }).select("tempStudentName");
 
     console.log("Schedules to be deleted:", schedulesToDelete);
 
     const deleteResult = await TempSchedule.deleteMany({
-      dateTime: { $gt: formattedDate },
+      dateTime: { $eq: formattedDate },
     });
 
     console.log("Schedules to be deleted:", deleteResult);
@@ -233,18 +233,16 @@ const deleteOneTempSoloSchedule = async (req, res) => {
 const deleteTempSoloSchedules = async (req, res) => {
   try {
     const currentDate = new Date();
-    const formattedDate = moment(currentDate)
-      .add(1, "days")
-      .format("MMMM Do YYYY");
+    const formattedDate = moment(currentDate).format("MMMM Do YYYY");
 
     const schedulesToDelete = await TempSolo.find({
-      dateTime: { $gt: formattedDate },
+      dateTime: { $eq: formattedDate },
     }).select("tempStudentName");
 
     console.log("Schedules to be deleted:", schedulesToDelete);
 
     const deleteResult = await TempSolo.deleteMany({
-      dateTime: { $gt: formattedDate },
+      dateTime: { $eq: formattedDate },
     });
 
     console.log("Schedules to be deleted:", deleteResult);

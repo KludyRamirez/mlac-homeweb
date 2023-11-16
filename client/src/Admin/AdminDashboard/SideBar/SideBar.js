@@ -9,27 +9,23 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
 import FriendSidebar from "../../../Dashboard/FriendSidebar/FriendSidebar";
-import mlacLogo from "../../../images/mlac.svg";
 
-import { GoComment, GoFileBinary, GoSquirrel } from "react-icons/go";
+import { GoComment, GoSquirrel } from "react-icons/go";
 
 import {
   SlUserFollow,
   SlEvent,
   SlGrid,
   SlChart,
-  SlList,
-  SlFolder,
   SlFolderAlt,
-  SlDocs,
-  SlDoc,
-  SlBookOpen,
+  SlUserFemale,
 } from "react-icons/sl";
 
 import { CgMenuLeft } from "react-icons/cg";
-import { BsCardList, BsListUl } from "react-icons/bs";
+import { BsDice3 } from "react-icons/bs";
 
 const drawerWidth = 240;
 
@@ -49,17 +45,55 @@ const FatBar = styled("div")({
   flexDirection: "column",
   justifyContent: "flex-start",
   alignItems: "center",
-  width: "74%",
-  background: "#FEFEFE",
+  width: "68%",
+  background: "rgba(7, 187, 255, 0.1)",
   "@media (max-width: 767px)": {
     borderRight: "none",
   },
 });
 
+const RouteCon = styled("div")({
+  margin: "6px 0",
+  display: "flex",
+  alignItems: "center",
+  borderRadius: "8px",
+  cursor: "pointer",
+  listStyle: "none",
+  overflow: "hidden",
+  position: "relative",
+  textDecoration: "none",
+  transition: "box-shadow .15s, transform .15s",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  "&:focus": {
+    boxShadow: "rgba(0, 123, 255, 0.1) 0px 4px 12px",
+  },
+  "&:hover": {
+    boxShadow: "rgba(0, 123, 255, 0.1) 0px 4px 12px",
+    transform: "translateY(-3px)",
+  },
+  "&:active": {
+    boxShadow: "rgba(0, 123, 255, 0.1) 0px 4px 12px",
+    transform: "translateY(3px)",
+  },
+});
+
+const selectAuth = (state) => state.auth;
+const authSelector = createSelector([selectAuth], (auth) => auth);
+
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
+  const [showOtherOptions, setShowOtherOptions] = useState(false);
+
+  const auth = useSelector(authSelector);
+
+  const toggleDiv = () => {
+    setShowOtherOptions(!showOtherOptions);
+  };
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -83,7 +117,7 @@ function ResponsiveDrawer(props) {
   };
 
   const drawer = (
-    <div>
+    <>
       <div
         style={{
           height: "100vh",
@@ -98,14 +132,15 @@ function ResponsiveDrawer(props) {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: "30%",
-            background: "#007bff",
+            width: "36%",
+            background: "white",
             gap: "12px",
+            paddingRight: "1px",
           }}
         >
           <Toolbar>
             <GoSquirrel
-              style={{ fontSize: "30px", color: "white", padding: "31px 0" }}
+              style={{ fontSize: "30px", color: "green", padding: "31px 0" }}
             />
           </Toolbar>
           <div
@@ -117,18 +152,22 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/timetable">
               {activeItem === "/timetable" ? (
-                <SlGrid
-                  className={activeItem === "/timetable" ? "icon-active" : ""}
-                  style={{ fontSize: "18px" }}
-                />
+                <RouteCon>
+                  <SlGrid
+                    className={activeItem === "/timetable" ? "icon-active" : ""}
+                    style={{ fontSize: "18px" }}
+                  />
+                </RouteCon>
               ) : (
-                <SlGrid
-                  style={{
-                    color: "white",
-                    padding: "10px",
-                    fontSize: "18px",
-                  }}
-                />
+                <RouteCon>
+                  <SlGrid
+                    style={{
+                      color: "#122c8e",
+                      padding: "10px",
+                      fontSize: "18px",
+                    }}
+                  />
+                </RouteCon>
               )}
             </Link>
           </div>
@@ -142,18 +181,22 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/children">
               {activeItem === "/children" ? (
-                <SlChart
-                  className={activeItem === "/children" ? "icon-active" : ""}
-                  style={{ fontSize: "18px" }}
-                />
+                <RouteCon>
+                  <SlUserFemale
+                    className={activeItem === "/children" ? "icon-active" : ""}
+                    style={{ fontSize: "18px" }}
+                  />
+                </RouteCon>
               ) : (
-                <SlChart
-                  style={{
-                    color: "white",
-                    padding: "10px",
-                    fontSize: "18px",
-                  }}
-                />
+                <RouteCon>
+                  <SlUserFemale
+                    style={{
+                      color: "#122c8e",
+                      padding: "10px",
+                      fontSize: "18px",
+                    }}
+                  />
+                </RouteCon>
               )}
             </Link>
           </div>
@@ -166,97 +209,28 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/chat">
               {activeItem === "/chat" ? (
-                <GoComment
-                  className={activeItem === "/chat" ? "icon-active" : ""}
-                  style={{
-                    fontSize: "18px",
+                <RouteCon>
+                  <GoComment
+                    className={activeItem === "/chat" ? "icon-active" : ""}
+                    style={{
+                      fontSize: "18px",
+                    }}
+                  />
+                </RouteCon>
+              ) : (
+                <RouteCon>
+                  <GoComment
+                    style={{
+                      color: "#122c8e",
+                      padding: "10px",
+                      fontSize: "18px",
+                    }}
+                  />
+                </RouteCon>
+              )}
+            </Link>
+          </div>
 
-                    color: "white",
-                  }}
-                />
-              ) : (
-                <GoComment
-                  style={{
-                    color: "white",
-                    padding: "10px",
-                    fontSize: "18px",
-                  }}
-                />
-              )}
-            </Link>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Link to="/user">
-              {activeItem === "/user" ? (
-                <SlUserFollow
-                  className={activeItem === "/user" ? "icon-active" : ""}
-                  style={{ fontSize: "18px" }}
-                />
-              ) : (
-                <SlUserFollow
-                  style={{
-                    color: "white",
-                    padding: "10px",
-                    fontSize: "18px",
-                  }}
-                />
-              )}
-            </Link>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Link to="/schedule">
-              {activeItem === "/schedule" ? (
-                <SlEvent
-                  className={activeItem === "/schedule" ? "icon-active" : ""}
-                  style={{ fontSize: "18px" }}
-                />
-              ) : (
-                <SlEvent
-                  style={{
-                    color: "white",
-                    padding: "10px",
-                    fontSize: "18px",
-                  }}
-                />
-              )}
-            </Link>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Link to="/waitlist">
-              {activeItem === "/waitlist" ? (
-                <SlFolderAlt
-                  className={activeItem === "/waitlist" ? "icon-active" : ""}
-                  style={{ fontSize: "18px" }}
-                />
-              ) : (
-                <SlFolderAlt
-                  style={{
-                    color: "white",
-                    padding: "10px",
-                    fontSize: "18px",
-                  }}
-                />
-              )}
-            </Link>
-          </div>
           <div
             style={{
               display: "flex",
@@ -266,25 +240,141 @@ function ResponsiveDrawer(props) {
           >
             <Link to="/logs">
               {activeItem === "/logs" ? (
-                <SlBookOpen
-                  className={activeItem === "/logs" ? "icon-active" : ""}
-                  style={{ fontSize: "18px" }}
-                />
+                <RouteCon>
+                  <SlChart
+                    className={activeItem === "/logs" ? "icon-active" : ""}
+                    style={{ fontSize: "18px" }}
+                  />
+                </RouteCon>
               ) : (
-                <SlBookOpen
-                  style={{
-                    color: "white",
-                    padding: "10px",
-                    fontSize: "18px",
-                  }}
-                />
+                <RouteCon>
+                  <SlChart
+                    style={{
+                      color: "#122c8e",
+                      padding: "10px",
+                      fontSize: "18px",
+                    }}
+                  />
+                </RouteCon>
               )}
             </Link>
           </div>
+          {auth && auth.userDetails.role === "Administrator" && (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "10px",
+                    padding: "10px",
+                    color: "#122c8e",
+                    fontWeight: "600",
+                    letterSpacing: "0.4px",
+                  }}
+                >
+                  Admin
+                </span>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Link to="/user">
+                  {activeItem === "/user" ? (
+                    <RouteCon>
+                      <SlUserFollow
+                        className={activeItem === "/user" ? "icon-active" : ""}
+                        style={{ fontSize: "18px" }}
+                      />
+                    </RouteCon>
+                  ) : (
+                    <RouteCon>
+                      <SlUserFollow
+                        style={{
+                          color: "#122c8e",
+                          padding: "10px",
+                          fontSize: "18px",
+                        }}
+                      />
+                    </RouteCon>
+                  )}
+                </Link>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Link to="/schedule">
+                  {activeItem === "/schedule" ? (
+                    <RouteCon>
+                      <SlEvent
+                        className={
+                          activeItem === "/schedule" ? "icon-active" : ""
+                        }
+                        style={{ fontSize: "18px" }}
+                      />
+                    </RouteCon>
+                  ) : (
+                    <RouteCon>
+                      <SlEvent
+                        style={{
+                          color: "#122c8e",
+                          padding: "10px",
+                          fontSize: "18px",
+                        }}
+                      />
+                    </RouteCon>
+                  )}
+                </Link>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Link to="/waitlist">
+                  {activeItem === "/waitlist" ? (
+                    <RouteCon>
+                      <SlFolderAlt
+                        className={
+                          activeItem === "/waitlist" ? "icon-active" : ""
+                        }
+                        style={{ fontSize: "18px" }}
+                      />
+                    </RouteCon>
+                  ) : (
+                    <RouteCon>
+                      <SlFolderAlt
+                        style={{
+                          color: "#122c8e",
+                          padding: "10px",
+                          fontSize: "18px",
+                        }}
+                      />
+                    </RouteCon>
+                  )}
+                </Link>
+              </div>
+            </>
+          )}
         </div>
         <FatBar>{/* <FriendSidebar /> */}</FatBar>
       </div>
-    </div>
+    </>
   );
 
   const container =

@@ -12,11 +12,28 @@ code {
 }
 
 .icon-active {
-  color: white;
-  background: rgba(255, 255, 255, 0.25);
+  color: #007bff;
+  background: rgba(7, 187, 255, 0.06);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: none;
   padding: 10px 10px;
   border-radius: 25%;
+}
+
+input[type="date" i] {
+  cursor: pointer;
+  align-items: center;
+  display: inline-flex;
+  overflow: hidden;
+  padding: 0px 12px;
+}
+
+input[type="select" i] {
+  cursor: pointer;
+  align-items: center;
+  display: inline-flex;
+  overflow: hidden;
+  padding: 0px 12px;
+  font-size: 14px;
 }

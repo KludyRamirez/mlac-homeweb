@@ -1,78 +1,278 @@
 import React, { useState, useEffect } from "react";
-
-import { Button, FormControl, MenuItem, Select } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
+import Tilt from "react-parallax-tilt";
+import { BsCalendarWeek, BsHourglassSplit, BsPlus } from "react-icons/bs";
 import { styled } from "@mui/system";
-
-import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { format, addDays } from "date-fns";
 import moment from "moment";
 
+const Flexer = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  borderRadius: "14px",
+  background: "transparent",
+  "@media (max-width: 767px)": {
+    padding: "40px 20px",
+    borderRadius: "20px",
+    boxShadow: "none",
+    borderBottomLeftRadius: "0px",
+    borderBottomRightRadius: "0px",
+  },
+});
+
 const FormContainer = styled("div")({
+  width: "100%",
+  borderRadius: "12px",
+
+  "@media (max-width: 767px)": {
+    borderRadius: "0px",
+  },
+});
+
+const FilterButton = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "40px",
+  height: "38px",
+  background: "rgba(7, 187, 255, 0.3)",
+  boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
+  borderRadius: "50%",
+  cursor: "pointer",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    transform: "translateY(-1px)",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const NextRoundButton = styled("button")({
+  padding: "0",
+  border: "none",
+  backgroundColor: "#07bbff",
+  backgroundImage:
+    "radial-gradient(100% 100% at 0% 0, #007bff 0, #007bff 100%)",
   boxShadow:
-    "rgba(0, 123, 255, 0.15) 0px 1px 0px, rgba(0, 123, 255, 0.15) 0px 8px 24px, rgba(0, 123, 255, 0.15) 0px 16px 48px",
-  padding: "40px",
-  backgroundColor: "#fdfdfd",
-  color: "gray",
-  borderRadius: "5px",
-  border: "2px solid #007bff",
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "6px",
+  width: "84px",
+  height: "38px",
+  borderRadius: "12px",
+  cursor: "pointer",
+  fontFamily: "Poppins, sans-serif",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    transform: "translateY(-1px)",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
+const NextDisabledButton = styled("button")({
+  padding: "0",
+  background: "white",
+  border: "none",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 123, 255, 0.1) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "6px",
+  width: "84px",
+  height: "38px",
+  borderRadius: "12px",
+  cursor: "pointer",
+  fontFamily: "Poppins, sans-serif",
+});
+
+const InputFields = styled("input")({
+  width: "100%",
+  background: "rgba(7, 187, 255, 0.2)",
+  border: "1px solid white",
+  borderRadius: "10px",
+  height: "42px",
+  padding: "0px 0px 0px 12px",
+  fontSize: "11px",
+  fontWeight: "600",
+  color: "#343434",
+  letterSpacing: "0.2px",
+  outline: "none",
+  position: "relative",
+  fontFamily: "Poppins, sans-serif",
+
+  "&:focus": {
+    outline: "2px solid #228B22",
+    border: "1px solid rgba(7, 187, 255, 0.2)",
+  },
+  "&::placeholder": {
+    color: "#343434",
+    fontSize: "11px",
+    fontWeight: "600",
+  },
+});
+
+const CustomSelect = styled("select")`
+  width: 100%;
+  background: rgba(7, 187, 255, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid white;
+  border-radius: 10px;
+  height: 44px;
+  padding: 0px 0px 0px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: #343434;
+  letter-spacing: 0.4px;
+  appearance: none; /* Removes default dropdown arrow */
+
+  &:focus {
+    outline: 2px solid #228b22;
+    border: 1px solid rgba(7, 187, 255, 0.2);
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const InputTitles = styled("div")({
+  width: "100px",
+  height: "20px",
+  fontSize: "12px",
+  margin: "0px",
+  color: "#122c8e",
+  fontWeight: "700",
+  letterSpacing: "0px",
+  textTransform: "",
+});
+
+const FlexerRow = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  gap: "16px",
+
+  "@media (max-width: 767px)": {
+    flexWrap: "wrap",
+  },
+});
+
+const StatsCard = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  width: "136px",
+  height: "112px",
+  overflow: "hidden",
+  borderRadius: "10px",
+  padding: "0px 12px",
+  gap: "4px",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 5px 10px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px",
 });
 
 const TitleCon = styled("div")({
   display: "flex",
-  gap: "20px",
-  justifyContent: "space-between",
+  justifyContent: "flex-start",
+  width: "100%",
+  gap: "4px",
+  paddingTop: "10px",
 });
 
-const FormTitle = styled("h1")({
+const RoleCon = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
+  width: "100%",
+});
+
+const RoleTitle = styled("div")({
   margin: "0px",
   backgroundColor: "blue",
   backgroundImage:
-    "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+    "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
   backgroundSize: "100%",
   backgroundRepeat: "repeat",
-  paddingBottom: "20px",
+  padding: "32px 0 37px 0",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
   MozBackgroundClip: "text",
   MozTextFillColor: "transparent",
+  fontSize: "48px",
+  fontWeight: "700",
+  letterSpacing: "-2.5px",
+  marginLeft: "-3.5px",
+  paddingRight: "3.5px",
+
+  "@media (max-width: 767px)": {},
 });
 
-const DateTimeCon = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  gap: "5px",
-});
+// const FormTitle = styled("h1")({
+//   margin: "0px",
+//   backgroundColor: "blue",
+//   backgroundImage:
+//     "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
+//   backgroundSize: "100%",
+//   backgroundRepeat: "repeat",
+//   paddingBottom: "20px",
+//   WebkitBackgroundClip: "text",
+//   WebkitTextFillColor: "transparent",
+//   MozBackgroundClip: "text",
+//   MozTextFillColor: "transparent",
+// });
 
-const DateTimeInput = styled("input")({
-  borderRadius: "5px",
-  width: "75%",
-  borderColor: "#007bff",
-  padding: "0px 10px",
-  textTransform: "uppercase",
-  color: "darkgray",
-});
+// const DateTimeCon = styled("div")({
+//   display: "flex",
+//   flexDirection: "column",
+//   gap: "5px",
+// });
+
+// const DateTimeInput = styled("input")({
+//   borderRadius: "5px",
+//   width: "75%",
+//   borderColor: "#007bff",
+//   padding: "0px 10px",
+//   textTransform: "uppercase",
+//   color: "darkgray",
+// });
 
 const IndTempCreateScheduleForm = ({
   handleSubmit,
   handleNameOfStudentChange,
   values,
-  handleChange,
+  handlePermanentChange,
   handleTempSoloDayChange,
+  handleChange,
 }) => {
   // destructure
   const {
     tempStudentNames,
     tempStudentName,
     schedType,
+    permanentScheds,
+    permanentSched,
     dateTime,
     tempSoloDay,
     timings,
     timing,
   } = values;
-
-  const [showDiv, setShowDiv] = useState(true);
 
   const todaym = moment();
   const minDate = todaym.add(1, "days").format("YYYY-MM-DD");
@@ -80,112 +280,327 @@ const IndTempCreateScheduleForm = ({
   const maxDate = moment().add(6, "days");
   const maxDateISOString = maxDate.format("YYYY-MM-DD");
 
-  const toggleDiv = () => {
-    setShowDiv(!showDiv);
-  };
-
   return (
     <>
-      <FormContainer>
+      <Flexer>
         <TitleCon>
-          <FormTitle>Temporary Schedule</FormTitle>
-          <div onClick={toggleDiv}>
-            <HourglassTopIcon fontSize="small" />
-          </div>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background: "red",
+            }}
+          ></div>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background: "#007bff",
+            }}
+          ></div>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background: "orange",
+            }}
+          ></div>
         </TitleCon>
-        <FormControl variant="standard" sx={{ width: "50%" }}>
-          <InputLabel id="demo-simple-select-standard-label">
-            Student Name
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            name="nameOfStudent"
-            value={tempStudentName}
-            onChange={handleNameOfStudentChange}
+        <RoleCon>
+          <RoleTitle> Ind Temporary</RoleTitle>
+        </RoleCon>
+        <FormContainer>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "8px",
+              width: "100%",
+            }}
           >
-            {tempStudentNames
-              .filter((n) => n.isActive === false && n.studentType === "Dyad")
-              .map((n) => (
-                <MenuItem key={n._id} value={n._id}>
-                  {n.nameOfStudent}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-        <br />
-        <br />
-        <DateTimeCon>
-          <label id="date">Date:</label>
-          <DateTimeInput
-            id="dateTime"
-            type="date"
-            name="dateTime"
-            min={minDate}
-            max={maxDateISOString}
-            value={dateTime}
-            onChange={handleTempSoloDayChange}
-            style={{ fontSize: "13px", height: "40px" }}
-          />
-        </DateTimeCon>
-
-        <br />
-
-        <FormControl variant="standard" sx={{ width: "90%" }}>
-          <InputLabel id="demo-simple-select-label">Timings</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            name="timing"
-            value={timing}
-            onChange={handleChange}
+            <InputTitles>Name *</InputTitles>
+            <CustomSelect
+              name="nameOfStudent"
+              value={tempStudentName}
+              onChange={handleNameOfStudentChange}
+            >
+              <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
+                Select student
+              </option>
+              {tempStudentNames
+                .filter((n) => n.isActive === false && n.studentType === "Dyad")
+                .map((n) => (
+                  <option key={n._id} value={n._id}>
+                    {n.nameOfStudent}
+                  </option>
+                ))}
+            </CustomSelect>
+          </div>
+          <br />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: "10px",
+              width: "100%",
+            }}
           >
-            {timings.map((t) => (
-              <MenuItem key={t} value={t}>
-                {t}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <br />
-        <br />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                width: "50%",
+              }}
+            >
+              <InputTitles>Date *</InputTitles>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  width: "100%",
+                }}
+              >
+                <InputFields
+                  type="date"
+                  name="dateTime"
+                  min={minDate}
+                  max={maxDateISOString}
+                  value={dateTime}
+                  onChange={handleTempSoloDayChange}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                width: "50%",
+              }}
+            >
+              <InputTitles>Time*</InputTitles>
+              <CustomSelect
+                name="timing"
+                value={timing}
+                onChange={handleChange}
+              >
+                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
+                  Select time
+                </option>
+                {timings.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </CustomSelect>
+            </div>
+          </div>
+        </FormContainer>
         <div
           style={{
             display: "flex",
+            width: "100%",
             justifyContent: "space-between",
             alignItems: "center",
-            width: "100%",
-            height: "40px",
+            padding: "40px 0 0 0",
           }}
         >
-          <Link to="/temp-schedule-solo" style={{ textDecoration: "none" }}>
-            <p
-              style={{ fontSize: "12px", fontWeight: "600", color: "#007bff" }}
-            >
-              Create Temporary <br /> Schedule for Solo Students?
-            </p>
-          </Link>
-          {showDiv ? (
-            <Button
-              variant="outlined"
-              sx={{ fontWeight: "600" }}
-              onClick={handleSubmit}
-              disabled={!tempStudentName || !schedType || !timing || !dateTime}
-            >
-              Submit
-            </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
+              <FilterButton>
+                <BsCalendarWeek
+                  style={{ fontSize: "18px", color: "#122c8e" }}
+                />
+              </FilterButton>
+            </Link>
+            <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
+              <FilterButton>
+                <BsHourglassSplit
+                  style={{ fontSize: "18px", color: "#122c8e" }}
+                />
+              </FilterButton>
+            </Link>
+          </div>
+
+          {!tempStudentName || !schedType || !timing || !dateTime ? (
+            <NextDisabledButton>
+              <BsPlus style={{ color: "#007bff", fontSize: "18px" }} />
+              <span
+                style={{
+                  fontWeight: "600",
+                  fontSize: "12px",
+                  color: "#007bff",
+                  paddingRight: "4px",
+                }}
+              >
+                Submit
+              </span>
+            </NextDisabledButton>
           ) : (
-            <Button
-              variant="outlined"
-              sx={{ fontWeight: "600" }}
-              onClick={handleSubmit}
-              disabled={!tempStudentName || !schedType || !timing || !dateTime}
-            >
-              Submit
-            </Button>
+            <NextRoundButton onClick={handleSubmit}>
+              <BsPlus style={{ color: "white", fontSize: "18px" }} />
+              <span
+                style={{
+                  fontWeight: "600",
+                  fontSize: "12px",
+                  color: "white",
+                  paddingRight: "4px",
+                }}
+              >
+                Submit
+              </span>
+            </NextRoundButton>
           )}
         </div>
-      </FormContainer>
+      </Flexer>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          height: "40px",
+          alignItems: "center",
+          gap: "24px",
+          margin: "20px 0px 30px 0",
+        }}
+      >
+        <div
+          style={{
+            width: "33%",
+            height: "1px",
+            background: "rgba(0, 0, 0, 0.1)",
+          }}
+        />
+        <span
+          style={{
+            fontSize: "16px",
+            color: "#122c8e",
+            fontWeight: "600",
+            marginTop: "-4px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Global Statistics
+        </span>
+        <div
+          style={{
+            width: "33%",
+            height: "1px",
+            background: "rgba(0, 0, 0, 0.1)",
+          }}
+        />
+      </div>
+      <FlexerRow>
+        <Tilt>
+          <StatsCard
+            sx={{
+              background: "#122c8e",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "14px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "400",
+                marginTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div>Total</div>
+              <div>Schedules</div>
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+              }}
+            >
+              19
+            </div>
+          </StatsCard>
+        </Tilt>
+        <Tilt>
+          <StatsCard
+            sx={{
+              background: "rgba(255, 170, 51, 1)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "14px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "400",
+                marginTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div>Online</div>
+              <div>Schedules</div>
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+              }}
+            >
+              7
+            </div>
+          </StatsCard>
+        </Tilt>
+        <Tilt>
+          <StatsCard
+            sx={{
+              background: "rgba(255, 49, 49, 1)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "14px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "400",
+                marginTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div>Absent</div>
+              <div>Schedules</div>
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+              }}
+            >
+              7
+            </div>
+          </StatsCard>
+        </Tilt>
+      </FlexerRow>
     </>
   );
 };

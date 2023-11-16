@@ -6,21 +6,12 @@ import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import EditIcon from "@mui/icons-material/Edit";
-import PersonIcon from "@mui/icons-material/Person";
-import BlockIcon from "@mui/icons-material/Block";
-import Tilt from "react-parallax-tilt";
 import { RiSearchLine } from "react-icons/ri";
 import Modal from "@mui/material/Modal";
 import AbsentScheduleCard from "./AbsentScheduleCard";
 import AuditModal from "./AuditModal";
 import DeletionModal from "./DeletionModal";
-import {
-  BsCameraReels,
-  BsPatchMinus,
-  BsPatchPlus,
-  BsTrash,
-} from "react-icons/bs";
+import { BsPatchPlus, BsTrash } from "react-icons/bs";
 import {
   AiOutlineSortDescending,
   AiOutlineSortAscending,
@@ -28,18 +19,6 @@ import {
 import { toast } from "react-toastify";
 import { HiOutlineFilter } from "react-icons/hi";
 import moment from "moment";
-
-const CustomPaginationItem = styled(PaginationItem)(({ theme }) => ({
-  border: "none",
-  borderRadius: "10px",
-  color: "white",
-  background: "#5468ff",
-  "&:hover": {
-    border: "1px solid #5468ff",
-    backgroundColor: "white",
-    color: "#5468ff",
-  },
-}));
 
 const StudentParentCon = styled("div")({
   display: "flex",
@@ -62,156 +41,6 @@ const Flexer = styled("div")({
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
-});
-
-const LowerIconDiv = styled("div")({
-  marginTop: "1px",
-  cursor: "pointer",
-  background: "#007bff",
-  color: "#007bff",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
-const LowerIconDiv2 = styled("div")({
-  marginTop: "1px",
-  cursor: "pointer",
-  background: "#FFAA33",
-  color: "#FFAA33",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
-const LowerIconDiv3 = styled("div")({
-  marginTop: "1px",
-  cursor: "pointer",
-  background: "#4CBB17",
-  color: "#4CBB17",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
-const LowerIconDiv4 = styled("div")({
-  marginTop: "1px",
-  cursor: "pointer",
-  background: "#FF3131",
-  color: "#FF3131",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
-const LowerIconDiv5 = styled("div")({
-  marginTop: "1px",
-  cursor: "pointer",
-  background: "#800020",
-  color: "#800020",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16px",
-  height: "16px",
-  borderRadius: "16px",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    width: "24px",
-    height: "24px",
-    borderRadius: "24px",
-    color: "white",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
 });
 
 const IconSortContainer = styled("div")({

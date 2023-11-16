@@ -20,10 +20,7 @@ import {
   BsCameraReels,
   BsPatchMinus,
   BsTrash,
-  BsFullscreenExit,
-  BsArrowsFullscreen,
 } from "react-icons/bs";
-import { MdVideocam } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import {
   AiOutlineSortDescending,
@@ -31,6 +28,7 @@ import {
 } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { HiOutlineFilter } from "react-icons/hi";
+import moment from "moment";
 
 const CustomPaginationItem = styled(PaginationItem)(({ theme }) => ({
   border: "none",
@@ -383,6 +381,7 @@ const auditSelector = createSelector([selectAudit], (audit) => audit);
 
 const AllSchedule = () => {
   const [schedules, setSchedules] = useState([]);
+  const [active, setActive] = useState("");
   const [tempSchedules, setTempSchedules] = useState([]);
   const [tempSoloSchedules, setTempSoloSchedules] = useState([]);
   const [mixedTempSchedules, setMixedTempSchedules] = useState([]);
@@ -394,7 +393,7 @@ const AllSchedule = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSchedules, setFilteredSchedules] = useState([]);
   const [filteredMixedSchedules, setFilteredMixedSchedules] = useState([]);
-  const [showExtraFunc, setShowExtraFunc] = useState(false);
+  const [showExtraFunc, setShowExtraFunc] = useState(true);
   //modals
   const [showModal, setShowModal] = useState(false);
   const [showSecModal, setShowSecModal] = useState(false);
@@ -539,7 +538,11 @@ const AllSchedule = () => {
       const params = { searchQuery }; // Modify this based on your API's requirements
       const res = await axios.get(url, { headers, params });
 
-      setSchedules(res.data);
+      const waitListFilter = res.data.filter(
+        (schedule) => schedule.isWaitlisted === "No"
+      );
+
+      setSchedules(waitListFilter);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
@@ -618,7 +621,14 @@ const AllSchedule = () => {
     }
   };
 
-  const handleAddToContainer = async (schedule) => {
+  const handleConfirmSetActiveToFalse = () => {
+    if (active) {
+      handleSetActiveToFalse(active);
+    }
+  };
+
+  const handleAddToContainer = async (schedule, id) => {
+    setActive(id);
     handleOpenModal();
 
     let updatedContainer = [];
@@ -723,7 +733,10 @@ const AllSchedule = () => {
 
   const TermsAndCondi = () => (
     <div>
-      <AuditModal handleCloseSecModal={handleCloseSecModal} />
+      <AuditModal
+        handleCloseSecModal={handleCloseSecModal}
+        handleConfirmSetActiveToFalse={handleConfirmSetActiveToFalse}
+      />
     </div>
   );
 
@@ -733,15 +746,6 @@ const AllSchedule = () => {
       a.nameOfStudent.localeCompare(b.nameOfStudent)
     );
     setSchedules(sortedSchedules);
-  };
-
-  const sortMixedAlphabeticallyDesc = () => {
-    const sortedMixedSchedules = [...filteredMixedSchedules].sort((a, b) =>
-      (a.tempStudentName && a.tempStudentName.nameOfStudent).localeCompare(
-        b.tempStudentName && b.tempStudentName.nameOfStudent
-      )
-    );
-    setMixedTempSchedules(sortedMixedSchedules);
   };
 
   const sortAlphabetically = () => {
@@ -1029,6 +1033,7 @@ const AllSchedule = () => {
   const handleCloseSecModal = () => {
     createSchedOrder();
     setShowSecModal(false);
+    window.location.reload();
   };
 
   const navigateUpdate = (id) => {
@@ -1048,6 +1053,7 @@ const AllSchedule = () => {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
       });
+      getSchedules();
     } catch (err) {
       console.error("Error fetching users:", err);
     }
@@ -1068,6 +1074,10 @@ const AllSchedule = () => {
       getSchedules();
     }
     setShowDeleteModal(false);
+  };
+
+  const formatTimestamp = (timestamp) => {
+    return moment(timestamp).format("MMMM Do YYYY");
   };
 
   return (
@@ -1151,7 +1161,7 @@ const AllSchedule = () => {
                   },
                 }}
               >
-                I
+                -
               </div>
 
               <div
@@ -1290,7 +1300,7 @@ const AllSchedule = () => {
                       padding: "13px 16px",
                       borderTopLeftRadius: "10px",
                       borderBottomLeftRadius: "10px",
-                      width: "70%",
+                      width: "68%",
                       boxShadow:
                         "rgba(0, 123, 255, 0.06) 0px 2px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 2px -1px",
                     }}
@@ -1299,7 +1309,7 @@ const AllSchedule = () => {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        width: "70%",
+                        width: "71.3%",
                       }}
                     >
                       <h5
@@ -1320,7 +1330,7 @@ const AllSchedule = () => {
                           fontWeight: "600",
                         }}
                       >
-                        Status
+                        Type | Date
                       </h5>
                     </div>
                   </div>
@@ -1333,7 +1343,7 @@ const AllSchedule = () => {
                         "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
                       borderTopRightRadius: "10px",
                       borderBottomRightRadius: "10px",
-                      width: "30%",
+                      width: "31%",
                     }}
                   >
                     <h5
@@ -1379,7 +1389,7 @@ const AllSchedule = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            padding: "16px",
+                            padding: "14px 16px",
                             width: "70%",
                           }}
                         >
@@ -1387,7 +1397,7 @@ const AllSchedule = () => {
                             style={{
                               display: "flex",
                               justifyContent: "space-between",
-                              width: "71.5%",
+                              width: "80%",
                             }}
                           >
                             <h5
@@ -1396,7 +1406,8 @@ const AllSchedule = () => {
                                 color: "#122c8e",
                                 fontWeight: "600",
                                 lineHeight: "22px",
-                                fontSize: "0.8em",
+                                fontSize: "12px",
+                                letterSpacing: "0.4px",
                               }}
                             >
                               {schedule.nameOfStudent},{" "}
@@ -1409,39 +1420,70 @@ const AllSchedule = () => {
                                 }}
                               >
                                 {schedule.timing}
-                              </span>{" "}
-                              <br /> {schedule.day}, {schedule.studentType}{" "}
-                              <br />
+                              </span>
+                              , {schedule.day} <br />
+                              <span style={{ color: "#122c8e" }}>
+                                {schedule.parent
+                                  ? schedule.parent
+                                      .split(" ")
+                                      .slice(0, 2)
+                                      .join(" ")
+                                  : ""}{" "}
+                                [Parent]
+                              </span>
                             </h5>
                             <div
                               style={{
                                 display: "flex",
-                                height: "100%",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                                gap: "8px",
+                                flexDirection: "column",
+                                alignItems: "flex-start",
+                                justifyContent: "center",
+                                gap: "0px",
                               }}
                             >
                               <div
                                 style={{
-                                  width: "10px",
-                                  height: "10px",
-                                  background: "#2AAA8A",
-                                  borderRadius: "50%",
-                                }}
-                              ></div>
-                              <h5
-                                style={{
-                                  margin: "0px",
-                                  color: "#2AAA8A",
-                                  fontWeight: "600",
-                                  lineHeight: "22px",
-                                  fontSize: "0.8em",
-                                  wordSpacing: "1px",
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                                  gap: "12px",
                                 }}
                               >
-                                Enrolled
-                              </h5>
+                                <h5
+                                  style={{
+                                    margin: "0px",
+                                    color: "#122c8e",
+                                    fontWeight: "600",
+                                    lineHeight: "22px",
+                                    fontSize: "12px",
+                                    letterSpacing: "0.4px",
+                                  }}
+                                >
+                                  {formatTimestamp(schedule.timestamp)}
+                                </h5>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  alignItems: "center",
+                                  gap: "12px",
+                                }}
+                              >
+                                <h5
+                                  style={{
+                                    margin: "0px",
+                                    color: "#122c8e",
+                                    fontWeight: "600",
+                                    lineHeight: "22px",
+                                    fontSize: "12px",
+                                    wordSpacing: "1px",
+                                  }}
+                                >
+                                  {schedule.studentType},{" "}
+                                  {schedule.isActive ? "Present" : "Absent"}
+                                </h5>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1474,7 +1516,9 @@ const AllSchedule = () => {
                               <BsCheckLg sx={{ fontSize: "14px" }} />
                             </LowerIconDiv3>
                             <LowerIconDiv4
-                              onClick={() => handleAddToContainer(schedule)}
+                              onClick={() =>
+                                handleAddToContainer(schedule, schedule._id)
+                              }
                             >
                               <BlockIcon sx={{ fontSize: "14px" }} />
                             </LowerIconDiv4>

@@ -33,6 +33,9 @@ const { createSchedOrder } = require("./user");
 const { createHoliday } = require("./holiday");
 const { getHoliday } = require("./holiday");
 
+//
+const { getLogs } = require("./logs");
+
 const { setActive } = require("../outsidechat/schedule");
 
 exports.controllers = {
@@ -64,4 +67,6 @@ exports.controllers = {
   createSchedOrder,
   createHoliday,
   getHoliday,
+
+  getLogs,
 };

@@ -77,19 +77,17 @@ const NextButton = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "24px",
-  height: "24px",
-  borderRadius: "24px",
+  width: "40px",
+  height: "38px",
+  borderRadius: "12px",
   userSelect: "none",
+  cursor: "pointer",
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
   transition:
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
-    width: "32px",
-    height: "32px",
-    borderRadius: "32px",
     color: "white",
   },
   "&:active": {
@@ -174,6 +172,7 @@ const AbsentScheduleCard = ({ s, saveOrderedSchedToDb }) => {
             justifyContent: "center",
             background: "transparent",
             borderRadius: "20px",
+            marginTop: "-5px",
           }}
         >
           <MeshGradientCard>
@@ -189,8 +188,6 @@ const AbsentScheduleCard = ({ s, saveOrderedSchedToDb }) => {
             </h1>
             <div
               style={{
-                padding: "20px",
-                border: "1px solid #007bff",
                 borderRadius: "10px",
               }}
             >

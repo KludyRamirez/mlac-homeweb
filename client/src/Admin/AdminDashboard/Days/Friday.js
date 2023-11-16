@@ -1,4 +1,3 @@
-// Bukas ang task mo ay chat, at ang iniwan mo kagabi ay scheduleExists na studentType = Solo
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
@@ -8,8 +7,7 @@ import axios from "axios";
 import Tilt from "react-parallax-tilt";
 import PermanentCell from "./Cells/PermanentCell";
 import TemporaryCell from "./Cells/TemporaryCell";
-import { FaCircleCheck } from "react-icons/fa6";
-import { FaCircleXmark } from "react-icons/fa6";
+import TempSoloCell from "./Cells/TempSoloCell";
 
 const FridayWrapper = styled("div")({});
 
@@ -667,7 +665,7 @@ const Friday = ({ socket, userNotif }) => {
                   <Tilt>
                     <TemporaryCell
                       schedule={schedule}
-                      deleteOneSched={deleteOneSched}
+                      deleteOneTempSched={deleteOneTempSched}
                     />
                   </Tilt>
                 ))}
@@ -749,7 +747,7 @@ const Friday = ({ socket, userNotif }) => {
                   <Tilt>
                     <TemporaryCell
                       schedule={schedule}
-                      deleteOneSched={deleteOneSched}
+                      deleteOneTempSched={deleteOneTempSched}
                     />
                   </Tilt>
                 ))}
@@ -831,7 +829,7 @@ const Friday = ({ socket, userNotif }) => {
                   <Tilt>
                     <TemporaryCell
                       schedule={schedule}
-                      deleteOneSched={deleteOneSched}
+                      deleteOneTempSched={deleteOneTempSched}
                     />
                   </Tilt>
                 ))}
@@ -913,7 +911,7 @@ const Friday = ({ socket, userNotif }) => {
                   <Tilt>
                     <TemporaryCell
                       schedule={schedule}
-                      deleteOneSched={deleteOneSched}
+                      deleteOneTempSched={deleteOneTempSched}
                     />
                   </Tilt>
                 ))}
@@ -1012,12 +1010,12 @@ const Friday = ({ socket, userNotif }) => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <PermanentCell
+                    <TempSoloCell
                       socket={socket}
                       userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
-                      deleteOneSched={deleteOneSched}
+                      deleteOneTempSoloSched={deleteOneTempSoloSched}
                     />
                   </Tilt>
                 ))}
@@ -1086,12 +1084,12 @@ const Friday = ({ socket, userNotif }) => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <PermanentCell
+                    <TempSoloCell
                       socket={socket}
                       userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
-                      deleteOneSched={deleteOneSched}
+                      deleteOneTempSoloSched={deleteOneTempSoloSched}
                     />
                   </Tilt>
                 ))}
@@ -1160,12 +1158,12 @@ const Friday = ({ socket, userNotif }) => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <PermanentCell
+                    <TempSoloCell
                       socket={socket}
                       userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
-                      deleteOneSched={deleteOneSched}
+                      deleteOneTempSoloSched={deleteOneTempSoloSched}
                     />
                   </Tilt>
                 ))}
@@ -1234,12 +1232,12 @@ const Friday = ({ socket, userNotif }) => {
                 )
                 .map((schedule) => (
                   <Tilt>
-                    <PermanentCell
+                    <TempSoloCell
                       socket={socket}
                       userNotif={userNotif}
                       schedule={schedule}
                       navigateUpdate={navigateUpdate}
-                      deleteOneSched={deleteOneSched}
+                      deleteOneTempSoloSched={deleteOneTempSoloSched}
                     />
                   </Tilt>
                 ))}
@@ -1262,6 +1260,980 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "11 AM to 12 NN" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+          </Solo>
+        </Flexer>
+
+        <Flexer>
+          <Permanent>
+            <TableTitle>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  width: "70%",
+                }}
+              >
+                <h6
+                  style={{
+                    color: "#007bff",
+                    margin: "0",
+                    padding: "0",
+                    fontWeight: "600",
+                    letterSpacing: "0.3px",
+                  }}
+                >
+                  Permanent
+                </h6>
+              </div>
+            </TableTitle>
+            <CellCon2>
+              {schedules
+                .filter(
+                  (schedule) =>
+                    schedule.day === "Friday" &&
+                    schedule.timing === "1 PM to 2 PM" &&
+                    schedule.schedType === "Permanent" &&
+                    schedule.isActive === true
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <PermanentCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
+                  </Tilt>
+                ))}
+              {schedules.filter(
+                (schedule) =>
+                  schedule.day === "Friday" &&
+                  schedule.timing === "1 PM to 2 PM" &&
+                  schedule.schedType === "Permanent" &&
+                  schedule.isActive === true
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "1 PM to 2 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+            <CellCon2>
+              {schedules
+                .filter(
+                  (schedule) =>
+                    schedule.day === "Friday" &&
+                    schedule.timing === "2 PM to 3 PM" &&
+                    schedule.schedType === "Permanent" &&
+                    schedule.isActive === true
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <PermanentCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
+                  </Tilt>
+                ))}
+              {schedules.filter(
+                (schedule) =>
+                  schedule.day === "Friday" &&
+                  schedule.timing === "2 PM to 3 PM" &&
+                  schedule.schedType === "Permanent" &&
+                  schedule.isActive === true
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "2 PM to 3 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+            <CellCon2>
+              {schedules
+                .filter(
+                  (schedule) =>
+                    schedule.day === "Friday" &&
+                    schedule.timing === "3 PM to 4 PM" &&
+                    schedule.schedType === "Permanent" &&
+                    schedule.isActive === true
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <PermanentCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
+                  </Tilt>
+                ))}
+              {schedules.filter(
+                (schedule) =>
+                  schedule.day === "Friday" &&
+                  schedule.timing === "3 PM to 4 PM" &&
+                  schedule.schedType === "Permanent" &&
+                  schedule.isActive === true
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "3 PM to 4 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+            <CellCon2>
+              {schedules
+                .filter(
+                  (schedule) =>
+                    schedule.day === "Friday" &&
+                    schedule.timing === "4 PM to 5 PM" &&
+                    schedule.schedType === "Permanent" &&
+                    schedule.isActive === true
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <PermanentCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneSched={deleteOneSched}
+                    />
+                  </Tilt>
+                ))}
+              {schedules.filter(
+                (schedule) =>
+                  schedule.day === "Friday" &&
+                  schedule.timing === "4 PM to 5 PM" &&
+                  schedule.schedType === "Permanent" &&
+                  schedule.isActive === true
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "4 PM to 5 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+          </Permanent>
+
+          <Temporary>
+            <TableTitle>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  width: "70%",
+                }}
+              >
+                <h6
+                  style={{
+                    color: "#007bff",
+                    margin: "0",
+                    padding: "0",
+                    fontWeight: "600",
+                    letterSpacing: "0.3px",
+                  }}
+                >
+                  Dyad Temporary
+                </h6>
+              </div>
+            </TableTitle>
+            <CellCon>
+              {tempSchedules
+                .filter(
+                  (schedule) =>
+                    ((schedule.permanentSched &&
+                      schedule.permanentSched.day) === "Friday" &&
+                      (schedule.permanentSched &&
+                        schedule.permanentSched.timing) === "1 PM to 2 PM" &&
+                      schedule.schedType === "Temporary") ||
+                    (schedule.tempSoloDay === "Friday" &&
+                      schedule.timing === "1 PM to 2 PM" &&
+                      schedule.schedType === "Temporary")
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneTempSched={deleteOneTempSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSchedules.filter(
+                (schedule) =>
+                  ((schedule.permanentSched && schedule.permanentSched.day) ===
+                    "Friday" &&
+                    (schedule.permanentSched &&
+                      schedule.permanentSched.timing) === "1 PM to 2 PM" &&
+                    schedule.schedType === "Temporary") ||
+                  (schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "1 PM to 2 PM" &&
+                    schedule.schedType === "Temporary")
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "1 PM to 2 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 &&
+                    schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "1 PM to 2 PM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.studentType === "Solo" &&
+                        schedule.isActive === true
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon>
+            <CellCon>
+              {tempSchedules
+                .filter(
+                  (schedule) =>
+                    ((schedule.permanentSched &&
+                      schedule.permanentSched.day) === "Friday" &&
+                      (schedule.permanentSched &&
+                        schedule.permanentSched.timing) === "2 PM to 3 PM" &&
+                      schedule.schedType === "Temporary") ||
+                    (schedule.tempSoloDay === "Friday" &&
+                      schedule.timing === "2 PM to 3 PM" &&
+                      schedule.schedType === "Temporary")
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneTempSched={deleteOneTempSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSchedules.filter(
+                (schedule) =>
+                  ((schedule.permanentSched && schedule.permanentSched.day) ===
+                    "Friday" &&
+                    (schedule.permanentSched &&
+                      schedule.permanentSched.timing) === "2 PM to 3 PM" &&
+                    schedule.schedType === "Temporary") ||
+                  (schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "2 PM to 3 PM" &&
+                    schedule.schedType === "Temporary")
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "2 PM to 3 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 &&
+                    schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "2 PM to 3 PM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.studentType === "Solo" &&
+                        schedule.isActive === true
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon>
+            <CellCon>
+              {tempSchedules
+                .filter(
+                  (schedule) =>
+                    ((schedule.permanentSched &&
+                      schedule.permanentSched.day) === "Friday" &&
+                      (schedule.permanentSched &&
+                        schedule.permanentSched.timing) === "3 PM to 4 PM" &&
+                      schedule.schedType === "Temporary") ||
+                    (schedule.tempSoloDay === "Friday" &&
+                      schedule.timing === "3 PM to 4 PM" &&
+                      schedule.schedType === "Temporary")
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneTempSched={deleteOneTempSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSchedules.filter(
+                (schedule) =>
+                  ((schedule.permanentSched && schedule.permanentSched.day) ===
+                    "Friday" &&
+                    (schedule.permanentSched &&
+                      schedule.permanentSched.timing) === "3 PM to 4 PM" &&
+                    schedule.schedType === "Temporary") ||
+                  (schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "3 PM to 4 PM" &&
+                    schedule.schedType === "Temporary")
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "3 PM to 4 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 &&
+                    schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "3 PM to 4 PM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.studentType === "Solo" &&
+                        schedule.isActive === true
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon>
+            <CellCon>
+              {tempSchedules
+                .filter(
+                  (schedule) =>
+                    ((schedule.permanentSched &&
+                      schedule.permanentSched.day) === "Friday" &&
+                      (schedule.permanentSched &&
+                        schedule.permanentSched.timing) === "4 PM to 5 PM" &&
+                      schedule.schedType === "Temporary") ||
+                    (schedule.tempSoloDay === "Friday" &&
+                      schedule.timing === "4 PM to 5 PM" &&
+                      schedule.schedType === "Temporary")
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <TemporaryCell
+                      schedule={schedule}
+                      deleteOneTempSched={deleteOneTempSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSchedules.filter(
+                (schedule) =>
+                  ((schedule.permanentSched && schedule.permanentSched.day) ===
+                    "Friday" &&
+                    (schedule.permanentSched &&
+                      schedule.permanentSched.timing) === "4 PM to 5 PM" &&
+                    schedule.schedType === "Temporary") ||
+                  (schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "4 PM to 5 PM" &&
+                    schedule.schedType === "Temporary")
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {tempSoloSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "4 PM to 5 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 &&
+                    schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "4 PM to 5 PM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.studentType === "Solo" &&
+                        schedule.isActive === true
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon>
+          </Temporary>
+
+          <Solo>
+            <TableTitle>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  width: "70%",
+                }}
+              >
+                <h6
+                  style={{
+                    color: "#007bff",
+                    margin: "0",
+                    padding: "0",
+                    fontWeight: "600",
+                    letterSpacing: "0.3px",
+                  }}
+                >
+                  Solo Temporary
+                </h6>
+              </div>
+            </TableTitle>
+            <CellCon2>
+              {tempSoloSchedules
+                .filter(
+                  (schedule) =>
+                    schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "1 PM to 2 PM" &&
+                    schedule.schedType === "Temporary"
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <TempSoloCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneTempSoloSched={deleteOneTempSoloSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSoloSchedules.filter(
+                (schedule) =>
+                  schedule.tempSoloDay === "Friday" &&
+                  schedule.timing === "1 PM to 2 PM" &&
+                  schedule.schedType === "Temporary"
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "1 PM to 2 PM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.isActive === true
+                    ).length === 0 &&
+                    tempSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "1 PM to 2 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+            <CellCon2>
+              {tempSoloSchedules
+                .filter(
+                  (schedule) =>
+                    schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "2 PM to 3 PM" &&
+                    schedule.schedType === "Temporary"
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <TempSoloCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneTempSoloSched={deleteOneTempSoloSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSoloSchedules.filter(
+                (schedule) =>
+                  schedule.tempSoloDay === "Friday" &&
+                  schedule.timing === "2 PM to 3 PM" &&
+                  schedule.schedType === "Temporary"
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "2 PM to 3 PM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.isActive === true
+                    ).length === 0 &&
+                    tempSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "2 PM to 3 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+            <CellCon2>
+              {tempSoloSchedules
+                .filter(
+                  (schedule) =>
+                    schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "3 PM to 4 PM" &&
+                    schedule.schedType === "Temporary"
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <TempSoloCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneTempSoloSched={deleteOneTempSoloSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSoloSchedules.filter(
+                (schedule) =>
+                  schedule.tempSoloDay === "Friday" &&
+                  schedule.timing === "3 PM to 4 PM" &&
+                  schedule.schedType === "Temporary"
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "3 PM to 4 PM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.isActive === true
+                    ).length === 0 &&
+                    tempSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "3 PM to 4 PM" &&
+                        schedule.schedType === "Temporary"
+                    ).length === 0 ? (
+                      <div
+                        style={{
+                          color: "#007bff",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Available
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "#ff3131",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "0",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          letterSpacing: "0.3px",
+                        }}
+                      >
+                        Occupied
+                      </div>
+                    )}
+                  </Cell2>
+                </Tilt>
+              )}
+            </CellCon2>
+            <CellCon2>
+              {tempSoloSchedules
+                .filter(
+                  (schedule) =>
+                    schedule.tempSoloDay === "Friday" &&
+                    schedule.timing === "4 PM to 5 PM" &&
+                    schedule.schedType === "Temporary"
+                )
+                .map((schedule) => (
+                  <Tilt>
+                    <TempSoloCell
+                      socket={socket}
+                      userNotif={userNotif}
+                      schedule={schedule}
+                      navigateUpdate={navigateUpdate}
+                      deleteOneTempSoloSched={deleteOneTempSoloSched}
+                    />
+                  </Tilt>
+                ))}
+              {tempSoloSchedules.filter(
+                (schedule) =>
+                  schedule.tempSoloDay === "Friday" &&
+                  schedule.timing === "4 PM to 5 PM" &&
+                  schedule.schedType === "Temporary"
+              ).length === 0 && (
+                <Tilt>
+                  <Cell2>
+                    {schedules.filter(
+                      (schedule) =>
+                        schedule.day === "Friday" &&
+                        schedule.timing === "4 PM to 5 PM" &&
+                        schedule.schedType === "Permanent" &&
+                        schedule.isActive === true
+                    ).length === 0 &&
+                    tempSchedules.filter(
+                      (schedule) =>
+                        schedule.tempSoloDay === "Friday" &&
+                        schedule.timing === "4 PM to 5 PM" &&
                         schedule.schedType === "Temporary"
                     ).length === 0 ? (
                       <div

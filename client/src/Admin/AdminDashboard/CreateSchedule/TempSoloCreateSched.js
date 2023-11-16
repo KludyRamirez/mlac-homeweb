@@ -18,11 +18,71 @@ const Wrapper = styled("div")({
 
 const TempCreateScheduleContainer = styled("div")({
   display: "flex",
-  justifyContent: "space-around",
+  flexDirection: "column",
+  justifyContent: "flex-start",
   alignItems: "flex-start",
-  padding: "80px 20px",
-  flexWrap: "wrap",
   width: "100%",
+
+  "@media (max-width: 767px)": {
+    overflow: "hidden",
+    overflowY: "scroll",
+  },
+});
+
+const TitleCon = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "100%",
+  gap: "8px",
+});
+
+const FormTitle = styled("div")({
+  padding: "30px",
+  backgroundImage:
+    "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
+  backgroundSize: "100%",
+  backgroundRepeat: "repeat",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  MozBackgroundClip: "text",
+  MozTextFillColor: "transparent",
+  fontSize: "58px",
+  fontWeight: "700",
+  letterSpacing: "-2px",
+
+  "@media (max-width: 767px)": {
+    fontSize: "48px",
+  },
+});
+
+const Flexer = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  width: "100%",
+  flexWrap: "wrap",
+  gap: "56px",
+  paddingTop: "24px",
+
+  "@media (max-width: 767px)": {
+    gap: "10px",
+    justifyContent: "flex-start",
+  },
+});
+
+const FormCon1 = styled("div")({
+  width: "30%",
+  "@media (max-width: 767px)": {
+    width: "100%",
+  },
+});
+
+const FormCon2 = styled("div")({
+  width: "fit-content",
+  "@media (max-width: 767px)": {
+    width: "fit-content",
+  },
 });
 
 const initialState = {
@@ -131,18 +191,26 @@ const TempSoloCreateSched = () => {
   return (
     <Wrapper>
       <ResponsiveDrawer />
-
       <TempCreateScheduleContainer>
-        <TempSoloCreateSchedForm
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
-          //   handlePermanentChange={handlePermanentChange}
-          handleNameOfStudentChange={handleNameOfStudentChange}
-          handleTempSoloDayChange={handleTempSoloDayChange}
-          setValues={setValues}
-          values={values}
-        />
-        <TempSoloSchedule />
+        <TitleCon>
+          <FormTitle>Solo Schedule</FormTitle>
+        </TitleCon>
+        <Flexer>
+          <FormCon1>
+            <TempSoloCreateSchedForm
+              handleSubmit={handleSubmit}
+              handleChange={handleChange}
+              //   handlePermanentChange={handlePermanentChange}
+              handleNameOfStudentChange={handleNameOfStudentChange}
+              handleTempSoloDayChange={handleTempSoloDayChange}
+              setValues={setValues}
+              values={values}
+            />
+          </FormCon1>
+          <FormCon2>
+            <TempSoloSchedule />
+          </FormCon2>
+        </Flexer>
       </TempCreateScheduleContainer>
     </Wrapper>
   );

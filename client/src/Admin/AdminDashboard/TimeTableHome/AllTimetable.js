@@ -14,10 +14,34 @@ import TopBar from "../AppBar/AppBar";
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
-  background: "#fefefe",
   display: "flex",
   justifyContent: "center",
-  alignItems: "flex-start",
+  backgroundColor: "#ffffff",
+});
+
+const TitleCon = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
+  width: "100%",
+});
+
+const FormTitle = styled("div")({
+  padding: "30px 30px 0px 30px",
+  backgroundImage:
+    "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
+  backgroundSize: "100%",
+  backgroundRepeat: "repeat",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  MozBackgroundClip: "text",
+  MozTextFillColor: "transparent",
+  fontSize: "58px",
+  fontWeight: "700",
+  letterSpacing: "-2px",
+
+  "@media (max-width: 767px)": {
+    fontSize: "48px",
+  },
 });
 
 const TimeTableCon = styled("div")({
@@ -77,26 +101,9 @@ const AllTimetable = ({ socket, userNotif }) => {
       <ResponsiveDrawer />
 
       <TimeTableCon>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            borderBottom: "1px solid rgba(0, 123, 255, 0.1)",
-          }}
-        >
-          <h1
-            style={{
-              margin: "0",
-              padding: "30px 0px 20px 36px",
-              fontWeight: "600",
-              color: "#007bff",
-              fontSize: "24px",
-              letterSpacing: "1px",
-            }}
-          >
-            Timetable
-          </h1>
-        </div>
+        <TitleCon>
+          <FormTitle>Running Timetable</FormTitle>
+        </TitleCon>
         <Flexer>
           <WeekContainer>
             <div
@@ -123,12 +130,7 @@ const AllTimetable = ({ socket, userNotif }) => {
                 willChange: "box-shadow, transform",
                 fontSize: "11px",
                 fontWeight: "bold",
-                // borderBottom:
-                //   activeDay === "Monday" ? "none" : "1px solid #007bff",
-                // borderTop:
-                //   activeDay === "Monday" ? "none" : "1px solid #007bff",
-                // borderLeft:
-                //   activeDay === "Monday" ? "none" : "1px solid #007bff",
+
                 ":focus": {
                   boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",

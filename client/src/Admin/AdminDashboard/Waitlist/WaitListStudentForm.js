@@ -238,11 +238,7 @@ const WaitListStudentForm = ({
   handleChange,
   handleStudentTypeChange,
   handleWaitList,
-  isFormValid,
   values,
-  firstname,
-  lastname,
-  username,
 }) => {
   // destructure
   const {

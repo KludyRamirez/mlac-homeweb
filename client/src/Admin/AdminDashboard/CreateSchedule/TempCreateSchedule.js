@@ -4,12 +4,13 @@ import { createSelector } from "reselect";
 import { styled } from "@mui/system";
 import { toast } from "react-toastify";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
-
 import axios from "axios";
-import TempCreateScheduleForm from "./TempCreateScheduleForm";
 
+import TempCreateScheduleForm from "./TempCreateScheduleForm";
 import TempSchedule from "../AllSchedule/TempSchedule";
 import IndTempCreateSchedule from "./IndTempCreateSchedule";
+
+import { BsBlockquoteLeft } from "react-icons/bs";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -21,20 +22,71 @@ const Wrapper = styled("div")({
 
 const TempCreateScheduleContainer = styled("div")({
   display: "flex",
-  justifyContent: "space-around",
+  flexDirection: "column",
+  justifyContent: "flex-start",
   alignItems: "flex-start",
-  padding: "80px 20px",
-  flexWrap: "wrap",
   width: "100%",
+
+  "@media (max-width: 767px)": {
+    overflow: "hidden",
+    overflowY: "scroll",
+  },
+});
+
+const TitleCon = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "100%",
+  gap: "8px",
+});
+
+const FormTitle = styled("div")({
+  padding: "30px",
+  backgroundImage:
+    "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
+  backgroundSize: "100%",
+  backgroundRepeat: "repeat",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  MozBackgroundClip: "text",
+  MozTextFillColor: "transparent",
+  fontSize: "58px",
+  fontWeight: "700",
+  letterSpacing: "-2px",
+
+  "@media (max-width: 767px)": {
+    fontSize: "48px",
+  },
 });
 
 const Flexer = styled("div")({
   display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  flexWrap: "wrap",
+  justifyContent: "center",
+  alignItems: "flex-start",
   width: "100%",
+  flexWrap: "wrap",
+  gap: "56px",
+  paddingTop: "24px",
+
+  "@media (max-width: 767px)": {
+    gap: "10px",
+    justifyContent: "flex-start",
+  },
+});
+
+const FormCon1 = styled("div")({
+  width: "30%",
+  "@media (max-width: 767px)": {
+    width: "100%",
+  },
+});
+
+const FormCon2 = styled("div")({
+  width: "fit-content",
+  "@media (max-width: 767px)": {
+    width: "fit-content",
+  },
 });
 
 const initialState = {
@@ -47,6 +99,35 @@ const initialState = {
   permanentScheds: [],
   permanentSched: "",
 };
+
+const NextRoundButton = styled("button")({
+  padding: "0",
+  border: "none",
+  background: "rgba(7, 187, 255, 0.1)",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "6px",
+  width: "40px",
+  height: "38px",
+  borderRadius: "12px",
+  cursor: "pointer",
+  fontFamily: "Poppins, sans-serif",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    transform: "translateY(-3px)",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
@@ -144,21 +225,32 @@ const TempCreateSchedule = () => {
     <Wrapper>
       <ResponsiveDrawer />
       <TempCreateScheduleContainer>
-        {showDiv ? (
-          <TempCreateScheduleForm
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-            handlePermanentChange={handlePermanentChange}
-            handleNameOfStudentChange={handleNameOfStudentChange}
-            handleTempSoloDayChange={handleTempSoloDayChange}
-            setValues={setValues}
-            values={values}
-          />
-        ) : (
-          <IndTempCreateSchedule />
-        )}
-        <TempSchedule />
-        <button onClick={toggleDiv}>kludy</button>
+        <TitleCon>
+          <FormTitle>Temp Schedule</FormTitle>
+          <NextRoundButton onClick={toggleDiv}>
+            <BsBlockquoteLeft style={{ fontSize: "18px", color: "#122c8e" }} />
+          </NextRoundButton>
+        </TitleCon>
+        <Flexer>
+          <FormCon1>
+            {showDiv ? (
+              <TempCreateScheduleForm
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                handlePermanentChange={handlePermanentChange}
+                handleNameOfStudentChange={handleNameOfStudentChange}
+                handleTempSoloDayChange={handleTempSoloDayChange}
+                setValues={setValues}
+                values={values}
+              />
+            ) : (
+              <IndTempCreateSchedule />
+            )}
+          </FormCon1>
+          <FormCon2>
+            <TempSchedule />
+          </FormCon2>
+        </Flexer>
       </TempCreateScheduleContainer>
     </Wrapper>
   );

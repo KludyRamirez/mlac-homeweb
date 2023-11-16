@@ -8,9 +8,6 @@ import axios from "axios";
 import BlockIcon from "@mui/icons-material/Block";
 import { RiSearchLine } from "react-icons/ri";
 import Modal from "@mui/material/Modal";
-import AbsentScheduleCard from "./AbsentScheduleCard";
-import AuditModal from "./AuditModal";
-import DeletionModal from "./DeletionModal";
 import { BsCheckLg, BsTrash } from "react-icons/bs";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import {
@@ -328,7 +325,7 @@ const conSelector = createSelector([selectCon], (con) => con);
 const selectAudit = (state) => state.audit;
 const auditSelector = createSelector([selectAudit], (audit) => audit);
 
-const TempSoloSchedule = () => {
+const LogsCon = () => {
   const [schedules, setSchedules] = useState([]);
   const [activeSchedType, setActiveSchedType] = useState("Permanent");
   const [isNameDesc, setIsNameDesc] = useState(false);
@@ -356,32 +353,14 @@ const TempSoloSchedule = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    deleteExpiredTemporarySchedule();
-    deleteExpiredTemporarySoloSchedule();
-    handleDeleteCon();
-  }, []);
-
-  useEffect(() => {
-    getSchedules();
+    getLogs();
   }, [auth, searchQuery]);
 
   useEffect(() => {
     const filtered = schedules.filter((schedule) => {
       return (
-        (schedule.tempStudentName &&
-          schedule.tempStudentName.nameOfStudent
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())) ||
-        (schedule.permanentSched &&
-          schedule.permanentSched.day
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())) ||
-        schedule.timing.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        schedule.studentType
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        schedule.cardId
-          ?.slice(-4)
+        schedule.tempStudentName &&
+        schedule.tempStudentName.nameOfStudent
           .toLowerCase()
           .includes(searchQuery.toLowerCase())
       );
@@ -397,59 +376,14 @@ const TempSoloSchedule = () => {
     setShowExtraFunc(!showExtraFunc);
   };
 
-  const deleteExpiredTemporarySchedule = async () => {
-    try {
-      const res = await axios.delete(
-        `${process.env.REACT_APP_API}/temp-schedule`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.error("Error deleting schedules:", error);
-    }
-  };
-
-  const deleteExpiredTemporarySoloSchedule = async () => {
-    try {
-      const res = await axios.delete(
-        `${process.env.REACT_APP_API}/temp-soloschedule`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.error("Error deleting schedules:", error);
-    }
-  };
-
-  const handleDeleteCon = async () => {
-    try {
-      const res = await axios.delete(`${process.env.REACT_APP_API}/con`, {
-        headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
-        },
-      });
-      console.log(res.data);
-    } catch (error) {
-      console.error("Error deleting schedules:", error);
-    }
-  };
-
-  const getSchedules = async () => {
+  const getLogs = async () => {
     try {
       if (!auth.userDetails.token) {
         console.error("Authentication token not found.");
         return;
       }
 
-      const url = `${process.env.REACT_APP_API}/temp-soloschedule`;
+      const url = `${process.env.REACT_APP_API}/logs`;
       const headers = {
         Authorization: `Bearer ${auth.userDetails.token}`,
       };
@@ -457,156 +391,13 @@ const TempSoloSchedule = () => {
       // Send the search query as a parameter to the API
       const params = { searchQuery }; // Modify this based on your API's requirements
       const res = await axios.get(url, { headers, params });
-
-      const tempFilter = res.data.filter(
-        (schedule) =>
-          schedule.tempStudentName &&
-          schedule.tempStudentName.studentType === "Solo" &&
-          schedule.schedType === "Temporary"
-      );
-
-      setSchedules(tempFilter);
+      console.log(res.data);
+      setSchedules(res.data);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
   };
 
-  const handleSetActiveToFalse = async (id) => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
-
-      await axios.patch(
-        `${process.env.REACT_APP_API}/schedule/${id}/setActive`,
-        {
-          isActive: false,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Error fetching schedules:", error);
-    }
-  };
-
-  const handleAddToContainer = async (schedule) => {
-    handleOpenModal();
-
-    let updatedContainer = [];
-    if (localStorage.getItem("con")) {
-      updatedContainer = JSON.parse(localStorage.getItem("con"));
-    }
-
-    const existingScheduleIndex = updatedContainer.findIndex(
-      (s) => s._id === schedule._id
-    );
-    if (existingScheduleIndex !== -1) {
-      updatedContainer[existingScheduleIndex] = {
-        ...schedule,
-        count: updatedContainer[existingScheduleIndex].count + 1,
-      };
-    } else {
-      updatedContainer = [];
-      updatedContainer.push({
-        ...schedule,
-        count: 1,
-      });
-    }
-
-    localStorage.setItem("con", JSON.stringify(updatedContainer));
-
-    dispatch({
-      type: "ADD_TO_CON",
-      payload: updatedContainer,
-    });
-    console.log("success");
-  };
-
-  const saveOrderedSchedToDb = async () => {
-    handleOpenSecModal();
-
-    dispatch({
-      type: "AUDIT",
-      payload: true,
-    });
-
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API}/con`,
-        { con },
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-      console.log("Con POST RES", res);
-    } catch (err) {
-      console.log("con save err", err);
-    }
-  };
-
-  const createSchedOrder = async () => {
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API}/sched-order`,
-        { audit },
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-
-      console.log("USER CASH ORDER CREATED RES ", res);
-
-      if (res.data.ok) {
-        localStorage.removeItem("con");
-
-        dispatch({
-          type: "ADD_TO_CON",
-          payload: [],
-        });
-
-        dispatch({
-          type: "AUDIT",
-          payload: false,
-        });
-
-        handleDeleteCon();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const showConItems = () => (
-    <div>
-      {con.map((s) => (
-        <AbsentScheduleCard
-          key={s._id}
-          s={s}
-          saveOrderedSchedToDb={saveOrderedSchedToDb}
-        />
-      ))}
-    </div>
-  );
-
-  const TermsAndCondi = () => (
-    <div>
-      <AuditModal
-        handleCloseSecModal={handleCloseSecModal}
-        handleSetActiveToFalse={handleSetActiveToFalse}
-      />
-    </div>
-  );
-
-  //
   const sortAlphabeticallyDesc = () => {
     const sortedSchedules = [...filteredSchedules].sort((a, b) =>
       a.nameOfStudent.localeCompare(b.nameOfStudent)
@@ -766,12 +557,7 @@ const TempSoloSchedule = () => {
   };
 
   const handleCloseSecModal = () => {
-    createSchedOrder();
     setShowSecModal(false);
-  };
-
-  const navigateUpdate = (id) => {
-    history.push(`/schedule/${id}`);
   };
 
   // delete modal
@@ -782,15 +568,12 @@ const TempSoloSchedule = () => {
       return;
     }
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API}/temp-soloschedule/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-      getSchedules();
+      await axios.delete(`${process.env.REACT_APP_API}/temp-schedule/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.userDetails.token}`,
+        },
+      });
+      getLogs();
     } catch (err) {
       console.error("Error fetching users:", err);
     }
@@ -808,7 +591,7 @@ const TempSoloSchedule = () => {
   const handleConfirmDelete = () => {
     if (deleteId) {
       deleteOneSchedule(deleteId);
-      getSchedules();
+      getLogs();
     }
     setShowDeleteModal(false);
   };
@@ -819,36 +602,6 @@ const TempSoloSchedule = () => {
 
   return (
     <>
-      <Modal
-        sx={{ border: "none", outline: "none" }}
-        open={showModal}
-        onClose={handleCloseModal}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <ModalBox>{showConItems()}</ModalBox>
-      </Modal>
-      <Modal
-        sx={{ border: "none", outline: "none" }}
-        open={showSecModal}
-        onClose={handleAttemptCloseSecModal}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <ModalBox>{TermsAndCondi()}</ModalBox>
-      </Modal>
-      <Modal
-        sx={{ border: "none", outline: "none" }}
-        open={showDeleteModal}
-        onClose={handleCloseDeleteModal}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <ModalBox>
-          <DeletionModal handleConfirmDelete={handleConfirmDelete} />
-        </ModalBox>
-      </Modal>
-
       <StudentParentCon>
         <FlexerSwitch>
           <div
@@ -1106,7 +859,7 @@ const TempSoloSchedule = () => {
                     padding: "4px 4px 4px 4px",
                     boxShadow:
                       "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-                    width: "940px",
+                    width: "100%",
                     height: "530px",
                     overflow: "hidden",
                     overflowY: "scroll",
@@ -1175,8 +928,8 @@ const TempSoloSchedule = () => {
                                 {schedule.permanentSched &&
                                 schedule.permanentSched.day
                                   ? schedule.permanentSched &&
-                                    schedule.permanentSched.day.substring(0, 3)
-                                  : schedule.tempSoloDay.substring(0, 3)}{" "}
+                                    schedule.permanentSched.day
+                                  : schedule.tempSoloDay}
                               </div>
                               <div
                                 style={{
@@ -1282,9 +1035,7 @@ const TempSoloSchedule = () => {
                             <LowerIconDiv3>
                               <BsCheckLg sx={{ fontSize: "14px" }} />
                             </LowerIconDiv3>
-                            <LowerIconDiv4
-                              onClick={() => handleAddToContainer(schedule)}
-                            >
+                            <LowerIconDiv4>
                               <BlockIcon sx={{ fontSize: "14px" }} />
                             </LowerIconDiv4>
                           </div>
@@ -1329,4 +1080,4 @@ const TempSoloSchedule = () => {
     </>
   );
 };
-export default TempSoloSchedule;
+export default LogsCon;

@@ -1,21 +1,10 @@
 import React from "react";
-import Radio from "@mui/material/Radio";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import {
-  Button,
-  FormControl,
-  FormGroup,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import { HiSelector } from "react-icons/hi";
-import Tilt from "react-parallax-tilt";
-import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
+import Tilt from "react-parallax-tilt";
 import { BsCalendarWeek, BsHourglassSplit, BsPlus } from "react-icons/bs";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import { FormGroup, Radio, FormControlLabel } from "@mui/material";
 
 const Flexer = styled("div")({
   display: "flex",
@@ -47,9 +36,8 @@ const FilterButton = styled("div")({
   alignItems: "center",
   width: "40px",
   height: "38px",
-  background: "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
-  boxShadow:
-    "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+  background: "rgba(7, 187, 255, 0.2)",
+  boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
   borderRadius: "50%",
   cursor: "pointer",
   userSelect: "none",
@@ -66,20 +54,23 @@ const FilterButton = styled("div")({
   },
 });
 
-const FilterRealButton = styled("button")({
+const NextRoundButton = styled("button")({
   padding: "0",
   border: "none",
-  background: "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+  backgroundColor: "#07bbff",
+  backgroundImage:
+    "radial-gradient(100% 100% at 0% 0, #007bff 0, #007bff 100%)",
   boxShadow:
-    "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: "2px",
-  width: "86px",
-  height: "42px",
-  borderRadius: "10px",
+  gap: "6px",
+  width: "84px",
+  height: "38px",
+  borderRadius: "12px",
   cursor: "pointer",
+  fontFamily: "Poppins, sans-serif",
   userSelect: "none",
   WebkitUserSelect: "none",
   touchAction: "manipulation",
@@ -94,117 +85,68 @@ const FilterRealButton = styled("button")({
   },
 });
 
-const InputFieldName = styled("input")({
+const NextDisabledButton = styled("button")({
+  padding: "0",
+  background: "white",
+  border: "none",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 123, 255, 0.1) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "6px",
+  width: "84px",
+  height: "38px",
+  borderRadius: "12px",
+  cursor: "pointer",
+  fontFamily: "Poppins, sans-serif",
+});
+
+const InputFields = styled("input")({
   width: "100%",
-  background: "rgba(255, 255, 255, 0.6)",
-  backdropFilter: "blur(20px)",
-  WebkitBackdropFilter: "blur(20px)",
-  border: "1px solid transparent",
+  background: "rgba(7, 187, 255, 0.2)",
+  border: "1px solid white",
   borderRadius: "10px",
   height: "42px",
   padding: "0px 0px 0px 12px",
-  fontSize: "12px",
-  fontWeight: "500",
-  color: "#122c8e",
-  letterSpacing: "0.4px",
+  fontSize: "11px",
+  fontWeight: "600",
+  color: "#343434",
+  letterSpacing: "0.2px",
   outline: "none",
   position: "relative",
 
   "&:focus": {
-    outline: "2px solid #122c8e",
-    border: "1px solid transparent",
+    outline: "2px solid #228B22",
+    border: "1px solid rgba(7, 187, 255, 0.2)",
   },
   "&::placeholder": {
-    color: "rgba(0, 123, 255, 0.4)",
-    fontSize: "12px",
-    fontWeight: "500",
+    color: "#343434",
+    fontSize: "11px",
+    fontWeight: "600",
+    fontFamily: "Poppins, sans-serif",
   },
 });
 
-const CustomSelectDay = styled("select")`
+const CustomSelect = styled("select")`
   width: 100%;
-  background: rgba(255, 255, 255, 0.6);
-backdrop-filter: blur(20px);
--webkit-backdrop-filter: blur(20px);
-border: 1px solid transparent;
-  border-radius: 10px;
-  height: 44px;
-  padding: 0px 0px 0px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #122c8e;
-  letter-spacing: 0.4px;
-  appearance: none; /* Removes default dropdown arrow */
-
-  &:focus {
-    outline: 2px solid #122c8e;
-    border: 1px solid transparent;
-  }
-
-  &::placeholder {
-    color: rgba(0, 123, 255, 0.4),
-    font-size: 12px;
-  }
-
-  @media (max-width: 767px) {
-    width: 100%;
-  }
-`;
-
-const CustomSelectTime = styled("select")`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(7, 187, 255, 0.2);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid transparent;
+  border: 1px solid white;
   border-radius: 10px;
   height: 44px;
   padding: 0px 0px 0px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #122c8e;
-
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: #343434;
   letter-spacing: 0.4px;
   appearance: none; /* Removes default dropdown arrow */
 
   &:focus {
-    outline: 2px solid #122c8e;
-    border: 1px solid transparent;
-  }
-
-  &::placeholder {
-    color: transparent;
-    font-size: 12px;
-  }
-
-  @media (max-width: 767px) {
-    width: 100%;
-  }
-`;
-
-const CustomSelectParent = styled("select")`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid transparent;
-  border-radius: 10px;
-  height: 44px;
-  padding: 0px 0px 0px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #122c8e;
-  letter-spacing: 0.4px;
-  appearance: none; /* Removes default dropdown arrow */
-
-  &:focus {
-    outline: 2px solid #122c8e;
-    border: 1px solid white;
-  }
-
-  &::placeholder {
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 12px;
+    outline: 2px solid #228b22;
+    border: 1px solid rgba(7, 187, 255, 0.2);
   }
 
   @media (max-width: 767px) {
@@ -215,18 +157,9 @@ const CustomSelectParent = styled("select")`
 const InputTitles = styled("div")({
   width: "100px",
   height: "20px",
-  fontSize: "11px",
+  fontSize: "12px",
   margin: "0px",
-  color: "#007bff",
-  // backgroundColor: "blue",
-  // backgroundImage:
-  //   "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
-  // backgroundSize: "100%",
-  // backgroundRepeat: "repeat",
-  // WebkitBackgroundClip: "text",
-  // WebkitTextFillColor: "transparent",
-  // MozBackgroundClip: "text",
-  // MozTextFillColor: "transparent",
+  color: "#122c8e",
   fontWeight: "700",
   letterSpacing: "0px",
   textTransform: "",
@@ -236,8 +169,6 @@ const FlexerRow = styled("div")({
   display: "flex",
   justifyContent: "center",
   gap: "16px",
-  paddingTop: "8px",
-  paddingBottom: "32px",
 
   "@media (max-width: 767px)": {
     flexWrap: "wrap",
@@ -247,38 +178,48 @@ const FlexerRow = styled("div")({
 const StatsCard = styled("div")({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between",
+  justifyContent: "center",
   alignItems: "flex-start",
-  width: "86px",
-  height: "72px",
-  borderRadius: "14px",
-  padding: "10px",
+  width: "136px",
+  height: "112px",
+  overflow: "hidden",
+  borderRadius: "10px",
+  padding: "0px 12px",
+  gap: "4px",
   boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "rgba(0, 0, 0, 0.1) 0px 5px 10px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px",
 });
 
 const TitleCon = styled("div")({
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "flex-start",
+  width: "100%",
+  gap: "4px",
+  paddingTop: "10px",
+});
+
+const RoleCon = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
   width: "100%",
 });
 
-const FormTitle = styled("div")({
+const RoleTitle = styled("div")({
   margin: "0px",
   backgroundColor: "blue",
   backgroundImage:
     "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
   backgroundSize: "100%",
   backgroundRepeat: "repeat",
-  padding: "0px 0px 30px 0",
+  padding: "32px 0 37px 0",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
   MozBackgroundClip: "text",
   MozTextFillColor: "transparent",
-  fontSize: "24px",
+  fontSize: "48px",
   fontWeight: "700",
   letterSpacing: "-2.5px",
-  paddingRight: "2.5px",
+  marginLeft: "-3.5px",
 
   "@media (max-width: 767px)": {},
 });
@@ -295,9 +236,8 @@ const CreateScheduleForm = ({
     nameOfStudent,
     days,
     day,
-    parents,
     parent,
-    schedTypes,
+    parents,
     schedType,
     studentTypes,
     studentType,
@@ -307,120 +247,37 @@ const CreateScheduleForm = ({
 
   return (
     <>
-      <FlexerRow>
-        <Tilt>
-          <StatsCard
-            sx={{
-              background:
-                "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "16px",
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "600",
-              }}
-            >
-              Total
-            </div>
-            <div
-              style={{
-                fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "600",
-                alignSelf: "flex-end",
-                paddingTop: "3px",
-              }}
-            >
-              19
-            </div>
-          </StatsCard>
-        </Tilt>
-        <Tilt>
-          <StatsCard sx={{ background: "#ff3131" }}>
-            <div
-              style={{
-                fontSize: "16px",
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "600",
-              }}
-            >
-              Absent
-            </div>
-            <div
-              style={{
-                fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "600",
-                alignSelf: "flex-end",
-                paddingTop: "3px",
-              }}
-            >
-              7
-            </div>
-          </StatsCard>
-        </Tilt>
-        <Tilt>
-          <StatsCard
-            sx={{ background: "radial-gradient(circle, #FFAA33, #0099CC)" }}
-          >
-            <div
-              style={{
-                fontSize: "16px",
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "600",
-              }}
-            >
-              Online
-            </div>
-            <div
-              style={{
-                fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "600",
-                alignSelf: "flex-end",
-                paddingTop: "3px",
-              }}
-            >
-              12
-            </div>
-          </StatsCard>
-        </Tilt>
-        <Tilt>
-          <StatsCard
-            sx={{
-              background:
-                "radial-gradient(100% 100% at 0% 0, #122c8e 0, #0070ff 100%)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "16px",
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "600",
-              }}
-            >
-              Present
-            </div>
-            <div
-              style={{
-                fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
-                fontWeight: "600",
-                alignSelf: "flex-end",
-                paddingTop: "3px",
-              }}
-            >
-              5
-            </div>
-          </StatsCard>
-        </Tilt>
-      </FlexerRow>
       <Flexer>
         <TitleCon>
-          <FormTitle>Add Permanent Schedule +</FormTitle>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background: "red",
+            }}
+          ></div>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background: "#007bff",
+            }}
+          ></div>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background: "orange",
+            }}
+          ></div>
         </TitleCon>
+
+        <RoleCon>
+          <RoleTitle> Add Student</RoleTitle>
+        </RoleCon>
         <FormContainer>
           <div
             style={{
@@ -428,7 +285,7 @@ const CreateScheduleForm = ({
               flexDirection: "column",
               alignItems: "flex-start",
               gap: "8px",
-              paddingBottom: "4px",
+              width: "100%",
             }}
           >
             <InputTitles>Name*</InputTitles>
@@ -440,8 +297,7 @@ const CreateScheduleForm = ({
                 width: "100%",
               }}
             >
-              <BsPlus style={{ position: "absolute" }} />
-              <InputFieldName
+              <InputFields
                 name="nameOfStudent"
                 value={nameOfStudent}
                 onChange={handleChange}
@@ -454,7 +310,7 @@ const CreateScheduleForm = ({
             style={{
               display: "flex",
               justifyContent: "flex-start",
-              gap: "8px",
+              gap: "10px",
               width: "100%",
             }}
           >
@@ -468,20 +324,20 @@ const CreateScheduleForm = ({
               }}
             >
               <InputTitles>Time*</InputTitles>
-              <CustomSelectTime
+              <CustomSelect
                 name="timing"
                 value={timing}
                 onChange={handleChange}
               >
                 <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                  Enter time
+                  Select time
                 </option>
                 {timings.map((t) => (
                   <option key={t} value={t}>
                     {t}
                   </option>
                 ))}
-              </CustomSelectTime>
+              </CustomSelect>
             </div>
             <div
               style={{
@@ -493,18 +349,16 @@ const CreateScheduleForm = ({
               }}
             >
               <InputTitles>Day*</InputTitles>
-
-              <CustomSelectDay name="day" value={day} onChange={handleChange}>
+              <CustomSelect name="day" value={day} onChange={handleChange}>
+                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
+                  Select day
+                </option>
                 {days.map((d) => (
-                  <option
-                    style={{ fontSize: "12px", fontWeight: "600" }}
-                    key={d}
-                    value={d}
-                  >
+                  <option key={d} value={d}>
                     {d}
                   </option>
                 ))}
-              </CustomSelectDay>
+              </CustomSelect>
             </div>
           </div>
           <br />
@@ -512,7 +366,7 @@ const CreateScheduleForm = ({
             style={{
               display: "flex",
               justifyContent: "flex-start",
-              gap: "8px",
+              gap: "10px",
               width: "100%",
             }}
           >
@@ -522,15 +376,18 @@ const CreateScheduleForm = ({
                 flexDirection: "column",
                 alignItems: "flex-start",
                 gap: "8px",
-                width: "100%",
+                width: "50%",
               }}
             >
-              <InputTitles>Parent*</InputTitles>
-              <CustomSelectParent
+              <InputTitles>Parent *</InputTitles>
+              <CustomSelect
                 name="parent"
                 value={parent}
                 onChange={handleParentChange}
               >
+                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
+                  Select parent
+                </option>
                 {parents
                   .filter((p) => p.role === "Administrator")
                   .map((p) => (
@@ -538,113 +395,136 @@ const CreateScheduleForm = ({
                       {p.fullname}
                     </option>
                   ))}
-              </CustomSelectParent>
+              </CustomSelect>
             </div>
-          </div>
-          <InputTitles sx={{ marginTop: "26px" }}>Type*</InputTitles>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              marginTop: "8px",
-              width: "fit-content",
-              borderRadius: "12px",
-              padding: "5px 2px 5px 12px",
-              background:
-                "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-              // boxShadow:
-              //   "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-            }}
-          >
-            <div>
-              <FormGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-                value={studentType}
-                onChange={handleStudentTypeChange}
-                sx={{
-                  padding: "0",
-                  background: "transparent",
-                  borderRadius: "12px",
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                width: "50%",
+                gap: "8px",
+              }}
+            >
+              <InputTitles>Type *</InputTitles>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                   width: "100%",
+                  borderRadius: "10px",
+                  background: "#122c8e",
+                  height: "44px",
                 }}
               >
-                {studentTypes.map((st) => (
-                  <FormControlLabel
-                    key={st}
-                    value={st}
-                    checked={studentType === st}
-                    control={
-                      <Radio
-                        sx={{
-                          color: "white",
-                          "& .MuiSvgIcon-root": {
-                            fontSize: 20,
-                          },
-                          "&.Mui-checked": {
-                            color: "white",
-                          },
-                        }}
+                <div style={{ marginLeft: "16px" }}>
+                  <FormGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    value={studentType}
+                    onChange={handleStudentTypeChange}
+                    sx={{
+                      padding: "0",
+                      background: "transparent",
+                      borderRadius: "12px",
+                      width: "100%",
+                    }}
+                  >
+                    {studentTypes.map((st) => (
+                      <FormControlLabel
+                        key={st}
+                        value={st}
+                        checked={studentType === st}
+                        control={
+                          <Radio
+                            sx={{
+                              color: "white",
+
+                              "& .MuiSvgIcon-root": {
+                                fontSize: 20,
+                                fontWeight: "400",
+                              },
+                              "&.Mui-checked": {
+                                color: "white",
+                              },
+                            }}
+                          />
+                        }
+                        label={
+                          <span
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: "600",
+                              letterSpacing: "0.4px",
+                              color: "white",
+                              fontFamily: "Poppins, sans-serif",
+                            }}
+                          >
+                            {st}
+                          </span>
+                        }
                       />
-                    }
-                    label={
-                      <span
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "600",
-                          letterSpacing: "0.2px",
-                          color: "white",
-                        }}
-                      >
-                        {st}
-                      </span>
-                    }
-                  />
-                ))}
-              </FormGroup>
+                    ))}
+                  </FormGroup>
+                </div>
+              </div>
             </div>
           </div>
+        </FormContainer>
+
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "40px 0 0 0",
+          }}
+        >
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              padding: "42px 0 0 0",
+              gap: "8px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
-                <FilterButton>
-                  <BsCalendarWeek
-                    style={{ fontSize: "18px", color: "white" }}
-                  />
-                </FilterButton>
-              </Link>
-              <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
-                <FilterButton>
-                  <BsHourglassSplit
-                    style={{ fontSize: "18px", color: "white" }}
-                  />
-                </FilterButton>
-              </Link>
-            </div>
-            <FilterRealButton
-              onClick={handleSubmit}
-              disabled={
-                !nameOfStudent || !studentType || !schedType || !day || !parent
-              }
-            >
-              <BsPlus style={{ fontSize: "18px", color: "white" }} />
-              <div
+            <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
+              <FilterButton>
+                <BsCalendarWeek
+                  style={{ fontSize: "18px", color: "#122c8e" }}
+                />
+              </FilterButton>
+            </Link>
+            <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
+              <FilterButton>
+                <BsHourglassSplit
+                  style={{ fontSize: "18px", color: "#122c8e" }}
+                />
+              </FilterButton>
+            </Link>
+          </div>
+
+          {!nameOfStudent || !studentType || !schedType || !day ? (
+            <NextDisabledButton>
+              <BsPlus style={{ color: "#007bff", fontSize: "18px" }} />
+              <span
+                style={{
+                  fontWeight: "600",
+                  fontSize: "12px",
+                  color: "#007bff",
+                  paddingRight: "4px",
+                }}
+              >
+                Submit
+              </span>
+            </NextDisabledButton>
+          ) : (
+            <NextRoundButton onClick={handleSubmit}>
+              <BsPlus style={{ color: "white", fontSize: "18px" }} />
+              <span
                 style={{
                   fontWeight: "600",
                   fontSize: "12px",
@@ -653,11 +533,143 @@ const CreateScheduleForm = ({
                 }}
               >
                 Submit
-              </div>
-            </FilterRealButton>
-          </div>
-        </FormContainer>
+              </span>
+            </NextRoundButton>
+          )}
+        </div>
       </Flexer>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          height: "40px",
+          alignItems: "center",
+          gap: "24px",
+          margin: "20px 0px 30px 0",
+        }}
+      >
+        <div
+          style={{
+            width: "33%",
+            height: "1px",
+            background: "rgba(0, 0, 0, 0.1)",
+          }}
+        />
+        <span
+          style={{
+            fontSize: "16px",
+            color: "#122c8e",
+            fontWeight: "600",
+            marginTop: "-4px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Global Statistics
+        </span>
+        <div
+          style={{
+            width: "33%",
+            height: "1px",
+            background: "rgba(0, 0, 0, 0.1)",
+          }}
+        />
+      </div>
+      <FlexerRow>
+        <Tilt>
+          <StatsCard
+            sx={{
+              background: "#122c8e",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "14px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "400",
+                marginTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div>Total</div>
+              <div>Schedules</div>
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+              }}
+            >
+              19
+            </div>
+          </StatsCard>
+        </Tilt>
+        <Tilt>
+          <StatsCard
+            sx={{
+              background: "rgba(255, 170, 51, 1)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "14px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "400",
+                marginTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div>Online</div>
+              <div>Schedules</div>
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+              }}
+            >
+              7
+            </div>
+          </StatsCard>
+        </Tilt>
+        <Tilt>
+          <StatsCard
+            sx={{
+              background: "rgba(255, 49, 49, 1)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "14px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "400",
+                marginTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div>Absent</div>
+              <div>Schedules</div>
+            </div>
+            <div
+              style={{
+                fontSize: "42px",
+                color: "rgba(255, 255, 255, 1)",
+                fontWeight: "600",
+                alignSelf: "flex-end",
+              }}
+            >
+              7
+            </div>
+          </StatsCard>
+        </Tilt>
+      </FlexerRow>
     </>
   );
 };

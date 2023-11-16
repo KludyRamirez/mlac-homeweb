@@ -37,7 +37,7 @@ const flowyBackground = keyframes`
 
 const CellTemp = styled("div")({
   backgroundImage:
-    "radial-gradient(at bottom left, rgba(7,187,255, 0.20) 6%, rgba(204, 251, 241, 0.15) 47.6%, rgba(209, 213, 219, 0.06) 87.8%)",
+    "radial-gradient(at bottom left, rgba(204, 251, 241, 0.15) 6%, rgba(255, 255, 255, 0.15) 47.6%, rgba(7, 187, 255, 0.20) 87.8%)",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
   border: "1px solid #07bbff",
@@ -157,7 +157,7 @@ const LowerIconDiv4 = styled("div")({
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const TemporaryCell = ({ schedule, deleteOneTempSched }) => {
+const TempSoloCell = ({ schedule, deleteOneTempSoloSched }) => {
   const auth = useSelector(authSelector);
   return (
     <CellTemp key={schedule._id}>
@@ -183,7 +183,7 @@ const TemporaryCell = ({ schedule, deleteOneTempSched }) => {
               color: "#007bff",
               fontSize: "16px",
             }}
-            onClick={() => deleteOneTempSched(schedule._id)}
+            onClick={() => deleteOneTempSoloSched(schedule._id)}
           />
         )}
       </div>
@@ -266,4 +266,4 @@ const TemporaryCell = ({ schedule, deleteOneTempSched }) => {
   );
 };
 
-export default TemporaryCell;
+export default TempSoloCell;
