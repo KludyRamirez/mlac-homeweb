@@ -5,6 +5,7 @@ import authReducer from "./reducers/authReducer";
 import alertReducer from "./reducers/alertReducer";
 import { auditReducer } from "./reducers/auditReducer";
 import { conReducer } from "./reducers/conReducer";
+import friendsReducer from "./reducers/friendsReducer";
 
 // Define a function to load state from localStorage
 const loadState = () => {
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   alert: alertReducer,
   con: conReducer,
   audit: auditReducer,
+  friends: friendsReducer,
 });
 
 // Load the initial state from localStorage

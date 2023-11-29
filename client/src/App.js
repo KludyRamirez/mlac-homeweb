@@ -11,7 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { io } from "socket.io-client";
 
 import LoginPage from "./authPages/LoginPage/LoginPage";
-import Dashboard from "./Dashboard/Dashboard";
 import RegisterPage from "./authPages/RegisterPage/RegisterPage";
 import AlertNotificationComponents from "./shared/components/AlertNotificationComponents";
 
@@ -20,13 +19,14 @@ import AlertNotificationComponents from "./shared/components/AlertNotificationCo
 import "./App.css";
 import UserUpdate from "./Admin/AdminDashboard/UserPages/UserUpdate";
 import CreateSchedule from "./Admin/AdminDashboard/CreateSchedule/CreateSchedule";
-import UpdateSchedule from "./Admin/AdminDashboard/UpdateSchedule/UpdateSchedule";
 import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreateSchedule";
 import TempSoloCreateSched from "./Admin/AdminDashboard/CreateSchedule/TempSoloCreateSched";
 import ParentSortSchedule from "./Admin/AdminDashboard/AllSchedule/ParentSortSchedule";
 import AllTimetable from "./Admin/AdminDashboard/TimeTableHome/AllTimetable";
-import WaitList from "./Admin/AdminDashboard/Waitlist/WaitList";
 import Logs from "./Admin/AdminDashboard/Logs/Logs";
+import EditSchedule from "./Admin/AdminDashboard/UpdateSchedule/EditSchedule";
+import Chat from "./Dashboard/Chat";
+import WaitList from "./Admin/AdminDashboard/Waitlist/WaitList";
 
 function App() {
   const [userNotif, setUserNotif] = useState("");
@@ -65,7 +65,7 @@ function App() {
             <LoginPage setUserNotif={setUserNotif} />
           </Route>
           <Route exact path="/chat">
-            <Dashboard />
+            <Chat />
           </Route>
           <Route exact path="/user">
             <RegisterPage />
@@ -77,7 +77,7 @@ function App() {
             <CreateSchedule />
           </Route>
           <Route exact path="/schedule/:id">
-            <UpdateSchedule />
+            <EditSchedule />
           </Route>
           <Route exact path="/temp-schedule">
             <TempCreateSchedule />

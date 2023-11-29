@@ -15,7 +15,7 @@ const tempSoloSchedsSchema = new mongoose.Schema(
       enum: ["Permanent", "Temporary"],
     },
     dateTime: {
-      type: String,
+      type: Date,
     },
     tempSoloDay: {
       type: String,
@@ -45,6 +45,17 @@ const tempSoloSchedsSchema = new mongoose.Schema(
         "Conflict of Schedule",
         "Bad Weather",
       ],
+    },
+
+    isActive: {
+      type: String,
+      default: "No info yet",
+      enum: ["No info yet", "Present", "Absent"],
+    },
+
+    isVideoOn: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

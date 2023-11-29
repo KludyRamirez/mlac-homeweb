@@ -410,7 +410,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -479,7 +479,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -548,7 +548,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -617,7 +617,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -723,7 +723,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -805,7 +805,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -887,7 +887,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -969,7 +969,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1067,7 +1067,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1141,7 +1141,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1215,7 +1215,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1289,7 +1289,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1384,7 +1384,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1453,7 +1453,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1522,7 +1522,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1591,7 +1591,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1697,7 +1697,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1779,7 +1779,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1861,7 +1861,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -1943,7 +1943,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -2041,7 +2041,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -2115,7 +2115,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -2189,7 +2189,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>
@@ -2263,7 +2263,7 @@ const Monday = ({ socket, userNotif }) => {
                           letterSpacing: "0.3px",
                         }}
                       >
-                        Occupied
+                        Unavailable
                       </div>
                     )}
                   </Cell2>

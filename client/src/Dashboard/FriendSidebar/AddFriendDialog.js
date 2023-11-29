@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { validateMail } from "../../shared/utils/validators";
+import { validateUsername } from "../../shared/utils/validators";
 import { Dialog } from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,45 +8,50 @@ import DialogContentText from "@mui/material/DialogContentText";
 import { Typography } from "@mui/material";
 import InputWithLabel from "../../shared/components/InputWithLabel";
 import CustomPrimaryButton from "../../shared/components/CustomPrimaryButton";
+import { connect } from "react-redux";
+import { getActions } from "../../store/actions/friendsActions";
 
 const AddFriendDialog = ({
   isDialogOpen,
   closeDialogHandler,
   sendFriendInvitation = () => {},
 }) => {
-  const [mail, setMail] = useState("");
+  const [username, setUsername] = useState("");
   const [isFormValid, setIsFormValid] = useState("");
 
   const handleSendInvitation = () => {
-    // send friend req to server
+    sendFriendInvitation(
+      {
+        targetUsername: username,
+      },
+      handleCloseDialog
+    );
   };
 
   const handleCloseDialog = () => {
     closeDialogHandler();
-    setMail("");
+    setUsername("");
   };
 
   useEffect(() => {
-    setIsFormValid(validateMail(mail));
-  }, [mail, setMail]);
+    setIsFormValid(validateUsername(username));
+  }, [username, setUsername]);
 
   return (
     <div>
       <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
         <DialogTitle>
-          <Typography>Invite a Friend</Typography>
+          <Typography>Invite a Parent</Typography>
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <Typography>
-              Enter e-mail address of friend which would like to invite
-            </Typography>
+            <Typography>Enter username of Parent to invite</Typography>
             <InputWithLabel
-              label="Mail"
+              label="username"
               type="text"
-              value={mail}
-              setValue={setMail}
-              placeholder="Enter mail address"
+              value={username}
+              setValue={setUsername}
+              placeholder="Enter username"
             />
           </DialogContentText>
         </DialogContent>
@@ -67,4 +72,10 @@ const AddFriendDialog = ({
   );
 };
 
-export default AddFriendDialog;
+const mapActionsToProps = (dispatch) => {
+  return {
+    ...getActions(dispatch),
+  };
+};
+
+export default connect(null, mapActionsToProps)(AddFriendDialog);

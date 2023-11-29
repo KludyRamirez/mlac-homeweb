@@ -12,13 +12,8 @@ code {
 }
 
 .icon-active {
-  color: #007bff;
-  background: rgba(7, 187, 255, 0.06);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: none;
-  padding: 10px 10px;
-  border-radius: 25%;
+  color: white;
+  padding: 2px 0;
 }
 
 input[type="date" i] {
@@ -26,7 +21,7 @@ input[type="date" i] {
   align-items: center;
   display: inline-flex;
   overflow: hidden;
-  padding: 0px 12px;
+  padding: 0px 20px;
 }
 
 input[type="select" i] {
@@ -34,6 +29,6 @@ input[type="select" i] {
   align-items: center;
   display: inline-flex;
   overflow: hidden;
-  padding: 0px 12px;
+  padding: 0px 20px;
   font-size: 14px;
 }

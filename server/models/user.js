@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const Schema = mongoose.Schema;
+
 const userSchema = new mongoose.Schema(
   {
     cardId: { type: String, unique: true },
@@ -22,7 +24,10 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+
+    friends: [{ type: Schema.Types.ObjectId, ref: "user" }],
   },
+
   { timestamps: true }
 );
 

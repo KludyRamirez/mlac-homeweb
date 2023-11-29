@@ -39,7 +39,7 @@ const validatePassword = (password) => {
   return password.length > 6 && password.length < 24 && password !== "mlac123";
 };
 
-const validateUsername = (username) => {
+export const validateUsername = (username) => {
   return username.length > 3 && username.length < 24;
 };
 

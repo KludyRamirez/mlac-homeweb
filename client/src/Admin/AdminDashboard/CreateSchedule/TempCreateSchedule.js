@@ -11,13 +11,18 @@ import TempSchedule from "../AllSchedule/TempSchedule";
 import IndTempCreateSchedule from "./IndTempCreateSchedule";
 
 import { BsBlockquoteLeft } from "react-icons/bs";
+import dots from "../../../images/dots.webp";
+
+const Dots = styled("div")({
+  background: "#F0FFFf",
+});
 
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
   justifyContent: "center",
-  backgroundColor: "#ffffff",
+  backgroundImage: `url(${dots})`,
 });
 
 const TempCreateScheduleContainer = styled("div")({
@@ -29,6 +34,7 @@ const TempCreateScheduleContainer = styled("div")({
 
   "@media (max-width: 767px)": {
     overflow: "hidden",
+    overflowX: "scroll",
     overflowY: "scroll",
   },
 });
@@ -38,22 +44,28 @@ const TitleCon = styled("div")({
   justifyContent: "flex-start",
   alignItems: "center",
   width: "100%",
-  gap: "8px",
 });
 
 const FormTitle = styled("div")({
-  padding: "30px",
-  backgroundImage:
-    "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
-  backgroundSize: "100%",
-  backgroundRepeat: "repeat",
-  WebkitBackgroundClip: "text",
-  WebkitTextFillColor: "transparent",
-  MozBackgroundClip: "text",
-  MozTextFillColor: "transparent",
-  fontSize: "58px",
+  padding: "34px 38px 20px 38px",
+  color: "#f7fff7",
+  textShadow:
+    "-1px -1px 1px rgba(255, 255, 255, 1), 1px 1px 1px rgba(0, 0, 0, 0.2)",
+  fontSize: "32px",
   fontWeight: "700",
-  letterSpacing: "-2px",
+  letterSpacing: "-0.4px",
+
+  "&:hover": {
+    backgroundImage:
+      "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+    backgroundSize: "100%",
+    backgroundRepeat: "repeat",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    MozBackgroundClip: "text",
+    MozTextFillColor: "transparent",
+    textShadow: "none",
+  },
 
   "@media (max-width: 767px)": {
     fontSize: "48px",
@@ -66,7 +78,7 @@ const Flexer = styled("div")({
   alignItems: "flex-start",
   width: "100%",
   flexWrap: "wrap",
-  gap: "56px",
+  gap: "48px",
   paddingTop: "24px",
 
   "@media (max-width: 767px)": {
@@ -83,7 +95,7 @@ const FormCon1 = styled("div")({
 });
 
 const FormCon2 = styled("div")({
-  width: "fit-content",
+  width: "62%",
   "@media (max-width: 767px)": {
     width: "fit-content",
   },
@@ -222,37 +234,41 @@ const TempCreateSchedule = () => {
   };
 
   return (
-    <Wrapper>
-      <ResponsiveDrawer />
-      <TempCreateScheduleContainer>
-        <TitleCon>
-          <FormTitle>Temp Schedule</FormTitle>
-          <NextRoundButton onClick={toggleDiv}>
-            <BsBlockquoteLeft style={{ fontSize: "18px", color: "#122c8e" }} />
-          </NextRoundButton>
-        </TitleCon>
-        <Flexer>
-          <FormCon1>
-            {showDiv ? (
-              <TempCreateScheduleForm
-                handleSubmit={handleSubmit}
-                handleChange={handleChange}
-                handlePermanentChange={handlePermanentChange}
-                handleNameOfStudentChange={handleNameOfStudentChange}
-                handleTempSoloDayChange={handleTempSoloDayChange}
-                setValues={setValues}
-                values={values}
+    <Dots>
+      <Wrapper>
+        <ResponsiveDrawer />
+        <TempCreateScheduleContainer>
+          <TitleCon>
+            <FormTitle>Temp Schedule</FormTitle>
+            <NextRoundButton onClick={toggleDiv}>
+              <BsBlockquoteLeft
+                style={{ fontSize: "18px", color: "#122c8e" }}
               />
-            ) : (
-              <IndTempCreateSchedule />
-            )}
-          </FormCon1>
-          <FormCon2>
-            <TempSchedule />
-          </FormCon2>
-        </Flexer>
-      </TempCreateScheduleContainer>
-    </Wrapper>
+            </NextRoundButton>
+          </TitleCon>
+          <Flexer>
+            <FormCon1>
+              {showDiv ? (
+                <TempCreateScheduleForm
+                  handleSubmit={handleSubmit}
+                  handleChange={handleChange}
+                  handlePermanentChange={handlePermanentChange}
+                  handleNameOfStudentChange={handleNameOfStudentChange}
+                  handleTempSoloDayChange={handleTempSoloDayChange}
+                  setValues={setValues}
+                  values={values}
+                />
+              ) : (
+                <IndTempCreateSchedule />
+              )}
+            </FormCon1>
+            <FormCon2>
+              <TempSchedule />
+            </FormCon2>
+          </Flexer>
+        </TempCreateScheduleContainer>
+      </Wrapper>
+    </Dots>
   );
 };
 

@@ -19,7 +19,7 @@ const tempScheduleSchema = new mongoose.Schema(
       ref: "scheds",
     },
     dateTime: {
-      type: String,
+      type: Date,
     },
     timing: {
       type: String,
@@ -36,6 +36,31 @@ const tempScheduleSchema = new mongoose.Schema(
     },
     tempSoloDay: {
       type: String,
+    },
+
+    studentType: {
+      type: String,
+      enum: ["Solo", "Dyad"],
+    },
+
+    isActive: {
+      type: String,
+      default: "No info yet",
+      enum: ["No info yet", "Present", "Absent"],
+    },
+
+    absentReason: {
+      type: String,
+      default: "Busy",
+      enum: [
+        "Busy",
+        "Sickness",
+        "No Transportation",
+        "Family Matter",
+        "Tiredness",
+        "Conflict of Schedule",
+        "Bad Weather",
+      ],
     },
   },
   { timestamps: true }

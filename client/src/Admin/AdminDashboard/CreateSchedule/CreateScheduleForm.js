@@ -1,10 +1,9 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-
 import Tilt from "react-parallax-tilt";
-import { BsCalendarWeek, BsHourglassSplit, BsPlus } from "react-icons/bs";
-import { FormGroup, Radio, FormControlLabel } from "@mui/material";
+import { BsClockFill, BsHourglassSplit } from "react-icons/bs";
+import { FaPlus } from "react-icons/fa6";
 
 const Flexer = styled("div")({
   display: "flex",
@@ -34,20 +33,27 @@ const FilterButton = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "40px",
-  height: "38px",
-  background: "rgba(7, 187, 255, 0.2)",
-  boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
-  borderRadius: "50%",
+  gap: "8px",
+  width: "88px",
+  height: "40px",
+  background: "#f7fff7",
+  border: "1px solid rgba(0, 123, 255, 0.6)",
+  borderRadius: "36px",
   cursor: "pointer",
+  color: "#122c8e",
   userSelect: "none",
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
   transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
   "&:hover": {
+    border: "none",
+    color: "white",
     transform: "translateY(-1px)",
+    background: "#33f641",
+    backgroundImage:
+      "radial-gradient(at 16.0% 15.0%, hsl(55, 99%, 44%) 0px, transparent 50%),radial-gradient(at 12.0% 94.0%, hsl(74, 34%, 61%) 0px, transparent 50%),radial-gradient(at 98.0% 29.0%, hsl(90, 60%, 24%) 0px, transparent 50%),radial-gradient(at 1.0% 16.0%, hsl(105, 10%, 31%) 0px, transparent 50%),radial-gradient(at 28.0% 88.0%, hsl(148, 67%, 56%) 0px, transparent 50%)",
   },
   "&:active": {
     transform: "translateY(3px)",
@@ -57,18 +63,16 @@ const FilterButton = styled("div")({
 const NextRoundButton = styled("button")({
   padding: "0",
   border: "none",
-  backgroundColor: "#07bbff",
+  background: "#33f641",
   backgroundImage:
-    "radial-gradient(100% 100% at 0% 0, #007bff 0, #007bff 100%)",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
+    "radial-gradient(at 16.0% 15.0%, hsl(55, 99%, 44%) 0px, transparent 50%),radial-gradient(at 12.0% 94.0%, hsl(74, 34%, 61%) 0px, transparent 50%),radial-gradient(at 98.0% 29.0%, hsl(90, 60%, 24%) 0px, transparent 50%),radial-gradient(at 1.0% 16.0%, hsl(105, 10%, 31%) 0px, transparent 50%),radial-gradient(at 28.0% 88.0%, hsl(148, 67%, 56%) 0px, transparent 50%)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "6px",
-  width: "84px",
-  height: "38px",
-  borderRadius: "12px",
+  width: "38px",
+  height: "36px",
+  borderRadius: "24px",
   cursor: "pointer",
   fontFamily: "Poppins, sans-serif",
   userSelect: "none",
@@ -87,66 +91,65 @@ const NextRoundButton = styled("button")({
 
 const NextDisabledButton = styled("button")({
   padding: "0",
-  background: "white",
+  background: "transparent",
   border: "none",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 123, 255, 0.1) 0px 1px 2px 0px",
+  outline: "1px solid rgba(0, 123, 255, 0.6)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "6px",
-  width: "84px",
-  height: "38px",
-  borderRadius: "12px",
+  width: "38px",
+  height: "36px",
+  borderRadius: "24px",
   cursor: "pointer",
   fontFamily: "Poppins, sans-serif",
 });
 
 const InputFields = styled("input")({
   width: "100%",
-  background: "rgba(7, 187, 255, 0.2)",
-  border: "1px solid white",
-  borderRadius: "10px",
-  height: "42px",
-  padding: "0px 0px 0px 12px",
-  fontSize: "11px",
-  fontWeight: "600",
-  color: "#343434",
+  background: "#f7fff7",
+  outline: "1px solid rgba(0, 123, 255, 0.6)",
+  border: "none",
+  borderRadius: "24px",
+  height: "44px",
+  padding: "0px 0px 0px 20px",
+  fontSize: "12px",
+  fontWeight: "500",
+  color: "#122c8e",
   letterSpacing: "0.2px",
-  outline: "none",
   position: "relative",
+  fontFamily: "Poppins, sans-serif",
 
   "&:focus": {
-    outline: "2px solid #228B22",
-    border: "1px solid rgba(7, 187, 255, 0.2)",
+    outline: "2px solid #007bff",
+    border: "none",
   },
   "&::placeholder": {
-    color: "#343434",
-    fontSize: "11px",
-    fontWeight: "600",
-    fontFamily: "Poppins, sans-serif",
+    color: "rgba(0, 0, 0, 0.4)",
+    fontSize: "12px",
+    fontWeight: "500",
   },
 });
 
 const CustomSelect = styled("select")`
+  cursor: pointer;
   width: 100%;
-  background: rgba(7, 187, 255, 0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid white;
-  border-radius: 10px;
+  background: #f7fff7;
+  border: none;
+  outline: 1px solid rgba(0, 123, 255, 0.6);
+  border-radius: 24px;
   height: 44px;
-  padding: 0px 0px 0px 12px;
-  font-size: 11px;
-  font-weight: 600;
+  padding: 0px 0px 0px 20px;
+  font-size: 12px;
+  font-weight: 500;
   font-family: "Poppins", sans-serif;
-  color: #343434;
+  color: #122c8e;
   letter-spacing: 0.4px;
   appearance: none; /* Removes default dropdown arrow */
 
   &:focus {
-    outline: 2px solid #228b22;
-    border: 1px solid rgba(7, 187, 255, 0.2);
+    outline: 2px solid #007bff;
+    border: none;
   }
 
   @media (max-width: 767px) {
@@ -161,8 +164,7 @@ const InputTitles = styled("div")({
   margin: "0px",
   color: "#122c8e",
   fontWeight: "700",
-  letterSpacing: "0px",
-  textTransform: "",
+  letterSpacing: "0.4px",
 });
 
 const FlexerRow = styled("div")({
@@ -206,22 +208,20 @@ const RoleCon = styled("div")({
 
 const RoleTitle = styled("div")({
   margin: "0px",
-  backgroundColor: "blue",
+  padding: "32px 4px 37px 0",
+  fontSize: "48px",
+  fontWeight: "700",
+  marginLeft: "-3.5px",
   backgroundImage:
     "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
   backgroundSize: "100%",
   backgroundRepeat: "repeat",
-  padding: "32px 0 37px 0",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
   MozBackgroundClip: "text",
   MozTextFillColor: "transparent",
-  fontSize: "48px",
-  fontWeight: "700",
-  letterSpacing: "-2.5px",
-  marginLeft: "-3.5px",
-
-  "@media (max-width: 767px)": {},
+  textShadow: "none",
+  letterSpacing: "-2px",
 });
 
 const CreateScheduleForm = ({
@@ -276,7 +276,7 @@ const CreateScheduleForm = ({
         </TitleCon>
 
         <RoleCon>
-          <RoleTitle> Add Student</RoleTitle>
+          <RoleTitle>Permanent</RoleTitle>
         </RoleCon>
         <FormContainer>
           <div
@@ -301,7 +301,6 @@ const CreateScheduleForm = ({
                 name="nameOfStudent"
                 value={nameOfStudent}
                 onChange={handleChange}
-                placeholder="Enter name"
               />
             </div>
           </div>
@@ -329,9 +328,7 @@ const CreateScheduleForm = ({
                 value={timing}
                 onChange={handleChange}
               >
-                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                  Select time
-                </option>
+                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}></option>
                 {timings.map((t) => (
                   <option key={t} value={t}>
                     {t}
@@ -350,9 +347,7 @@ const CreateScheduleForm = ({
             >
               <InputTitles>Day*</InputTitles>
               <CustomSelect name="day" value={day} onChange={handleChange}>
-                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                  Select day
-                </option>
+                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}></option>
                 {days.map((d) => (
                   <option key={d} value={d}>
                     {d}
@@ -385,9 +380,7 @@ const CreateScheduleForm = ({
                 value={parent}
                 onChange={handleParentChange}
               >
-                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                  Select parent
-                </option>
+                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}></option>
                 {parents
                   .filter((p) => p.role === "Administrator")
                   .map((p) => (
@@ -402,74 +395,23 @@ const CreateScheduleForm = ({
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
-                width: "50%",
                 gap: "8px",
+                width: "50%",
               }}
             >
               <InputTitles>Type *</InputTitles>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                  borderRadius: "10px",
-                  background: "#122c8e",
-                  height: "44px",
-                }}
+              <CustomSelect
+                name="studentType"
+                value={studentType}
+                onChange={handleStudentTypeChange}
               >
-                <div style={{ marginLeft: "16px" }}>
-                  <FormGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                    value={studentType}
-                    onChange={handleStudentTypeChange}
-                    sx={{
-                      padding: "0",
-                      background: "transparent",
-                      borderRadius: "12px",
-                      width: "100%",
-                    }}
-                  >
-                    {studentTypes.map((st) => (
-                      <FormControlLabel
-                        key={st}
-                        value={st}
-                        checked={studentType === st}
-                        control={
-                          <Radio
-                            sx={{
-                              color: "white",
-
-                              "& .MuiSvgIcon-root": {
-                                fontSize: 20,
-                                fontWeight: "400",
-                              },
-                              "&.Mui-checked": {
-                                color: "white",
-                              },
-                            }}
-                          />
-                        }
-                        label={
-                          <span
-                            style={{
-                              fontSize: "11px",
-                              fontWeight: "600",
-                              letterSpacing: "0.4px",
-                              color: "white",
-                              fontFamily: "Poppins, sans-serif",
-                            }}
-                          >
-                            {st}
-                          </span>
-                        }
-                      />
-                    ))}
-                  </FormGroup>
-                </div>
-              </div>
+                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}></option>
+                {studentTypes.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </CustomSelect>
             </div>
           </div>
         </FormContainer>
@@ -493,47 +435,39 @@ const CreateScheduleForm = ({
           >
             <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
               <FilterButton>
-                <BsCalendarWeek
-                  style={{ fontSize: "18px", color: "#122c8e" }}
-                />
+                <BsClockFill style={{ fontSize: "18px" }} />
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "500",
+                  }}
+                >
+                  Dyad
+                </span>
               </FilterButton>
             </Link>
             <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
               <FilterButton>
-                <BsHourglassSplit
-                  style={{ fontSize: "18px", color: "#122c8e" }}
-                />
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "500",
+                  }}
+                >
+                  Solo
+                </span>
+                <BsHourglassSplit style={{ fontSize: "18px" }} />
               </FilterButton>
             </Link>
           </div>
 
           {!nameOfStudent || !studentType || !schedType || !day ? (
             <NextDisabledButton>
-              <BsPlus style={{ color: "#007bff", fontSize: "18px" }} />
-              <span
-                style={{
-                  fontWeight: "600",
-                  fontSize: "12px",
-                  color: "#007bff",
-                  paddingRight: "4px",
-                }}
-              >
-                Submit
-              </span>
+              <FaPlus style={{ color: "#122c8e", fontSize: "14px" }} />
             </NextDisabledButton>
           ) : (
             <NextRoundButton onClick={handleSubmit}>
-              <BsPlus style={{ color: "white", fontSize: "18px" }} />
-              <span
-                style={{
-                  fontWeight: "600",
-                  fontSize: "12px",
-                  color: "white",
-                  paddingRight: "4px",
-                }}
-              >
-                Submit
-              </span>
+              <FaPlus style={{ color: "white", fontSize: "14px" }} />
             </NextRoundButton>
           )}
         </div>
@@ -553,7 +487,7 @@ const CreateScheduleForm = ({
           style={{
             width: "33%",
             height: "1px",
-            background: "rgba(0, 0, 0, 0.1)",
+            background: "rgba(255, 255, 255, 1)",
           }}
         />
         <span
@@ -571,7 +505,7 @@ const CreateScheduleForm = ({
           style={{
             width: "33%",
             height: "1px",
-            background: "rgba(0, 0, 0, 0.1)",
+            background: "rgba(255, 255, 255, 1)",
           }}
         />
       </div>
@@ -579,7 +513,9 @@ const CreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "#122c8e",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              background: "#3d66cc",
             }}
           >
             <div
@@ -593,7 +529,7 @@ const CreateScheduleForm = ({
               }}
             >
               <div>Total</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
@@ -610,7 +546,9 @@ const CreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "rgba(255, 170, 51, 1)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              background: "orange",
             }}
           >
             <div
@@ -624,7 +562,7 @@ const CreateScheduleForm = ({
               }}
             >
               <div>Online</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
@@ -641,7 +579,9 @@ const CreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "rgba(255, 49, 49, 1)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              background: "#ff3131",
             }}
           >
             <div
@@ -655,7 +595,7 @@ const CreateScheduleForm = ({
               }}
             >
               <div>Absent</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{

@@ -13,6 +13,7 @@ export const getActions = (dispatch) => {
       dispatch(register(userDetails, history)),
     waitlist: (userDetails, history) =>
       dispatch(waitlist(userDetails, history)),
+    setUserDetails: (userDetails) => dispatch(setUserDetails(userDetails)),
   };
 };
 
@@ -36,7 +37,7 @@ const login = (userDetails, history) => {
       localStorage.setItem("user", JSON.stringify(userDetails));
 
       dispatch(setUserDetails(userDetails));
-      history.push("/timetable");
+      history.push("/chat");
     }
   };
 };

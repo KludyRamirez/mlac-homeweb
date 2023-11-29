@@ -4,6 +4,8 @@ const { getSchedule } = require("../outsidechat/schedule");
 const { getOneSchedule } = require("../outsidechat/schedule");
 const { updateOneSchedule } = require("../outsidechat/schedule");
 const { deleteOneSchedule } = require("../outsidechat/schedule");
+const { isVideoOffHandler } = require("../outsidechat/schedule");
+const { isActiveDefHandler } = require("../outsidechat/schedule");
 // temporary schedule
 const { createTempSchedule } = require("../outsidechat/schedule");
 const { getTempSchedule } = require("../outsidechat/schedule");
@@ -15,19 +17,36 @@ const { getTempSoloSchedule } = require("../outsidechat/schedule");
 const { deleteOneTempSoloSchedule } = require("../outsidechat/schedule");
 const { deleteTempSoloSchedules } = require("../outsidechat/schedule");
 
+// absentCounter setter
+
+const { setPlusAbsentCounter } = require("../outsidechat/schedule");
+
+// presentCounter Setter
+
+const { setMinusAbsentCounter } = require("../outsidechat/schedule");
+
 // user
 const { getUser } = require("./user");
 const { deleteUser } = require("./user");
+
 // user update
 const { editUser } = require("../outsidechat/userUpdate");
 const { updateUserGet } = require("../outsidechat/userUpdate");
-// user container
+
+// user absent logs
 const { userCon } = require("./user");
 const { getUserCon } = require("./user");
 const { emptyCon } = require("./user");
-//user order
 const { userOrders } = require("./user");
 const { createSchedOrder } = require("./user");
+
+// user present logs
+
+const { userConPresent } = require("./user");
+const { getUserConPresent } = require("./user");
+const { emptyConPresent } = require("./user");
+const { userOrdersPresent } = require("./user");
+const { createSchedOrderPresent } = require("./user");
 
 // holiday
 const { createHoliday } = require("./holiday");
@@ -36,7 +55,13 @@ const { getHoliday } = require("./holiday");
 //
 const { getLogs } = require("./logs");
 
+//
+
 const { setActive } = require("../outsidechat/schedule");
+const { setActiveTemp } = require("../outsidechat/schedule");
+const { setActiveTempSolo } = require("../outsidechat/schedule");
+const { setVideo } = require("../outsidechat/schedule");
+const { setVideoTempSolo } = require("../outsidechat/schedule");
 
 exports.controllers = {
   createSchedule,
@@ -44,6 +69,9 @@ exports.controllers = {
   getOneSchedule,
   updateOneSchedule,
   deleteOneSchedule,
+
+  isVideoOffHandler,
+  isActiveDefHandler,
 
   createTempSchedule,
   getTempSchedule,
@@ -59,14 +87,39 @@ exports.controllers = {
   deleteUser,
   editUser,
   updateUserGet,
+
+  // patches setters
+
   setActive,
+  setActiveTemp,
+  setActiveTempSolo,
+  setVideo,
+  setVideoTempSolo,
+
+  // absent logs
+
   userCon,
   getUserCon,
   emptyCon,
   userOrders,
   createSchedOrder,
+
+  // present logs
+
+  userConPresent,
+  getUserConPresent,
+  emptyConPresent,
+  userOrdersPresent,
+  createSchedOrderPresent,
+
+  // holidays
+
   createHoliday,
   getHoliday,
 
   getLogs,
+
+  // absentCounter setters
+  setPlusAbsentCounter,
+  setMinusAbsentCounter,
 };

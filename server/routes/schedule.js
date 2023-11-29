@@ -16,6 +16,7 @@ router.post(
   mainController.controllers.createSchedule
 );
 router.get("/schedule", auth, admin, mainController.controllers.getSchedule);
+
 router.get(
   "/schedule/:id",
   auth,
@@ -102,6 +103,64 @@ router.patch(
   auth,
   admin,
   mainController.controllers.setActive
+);
+
+router.patch(
+  "/temp-soloschedule/:id/setActiveTemp",
+  auth,
+  admin,
+  mainController.controllers.setActiveTemp
+);
+
+router.patch(
+  "/temp-soloschedule/:id/setActiveTempSolo",
+  auth,
+  admin,
+  mainController.controllers.setActiveTempSolo
+);
+
+router.patch(
+  "/schedule/:id/setVideo",
+  auth,
+  admin,
+  mainController.controllers.setVideo
+);
+
+router.patch(
+  "/schedule/:id/setVideoTempSolo",
+  auth,
+  admin,
+  mainController.controllers.setVideoTempSolo
+);
+
+router.post(
+  "/schedule-vidoff",
+  auth,
+  admin,
+  mainController.controllers.isVideoOffHandler
+);
+
+router.post(
+  "/schedule-isactivedef",
+  auth,
+  admin,
+  mainController.controllers.isActiveDefHandler
+);
+
+//
+
+router.patch(
+  "/schedule/:id/setabsentcounterplus",
+  auth,
+  admin,
+  mainController.controllers.setPlusAbsentCounter
+);
+
+router.patch(
+  "/schedule/:id/setpresentcounterminus",
+  auth,
+  admin,
+  mainController.controllers.setMinusAbsentCounter
 );
 
 module.exports = router;

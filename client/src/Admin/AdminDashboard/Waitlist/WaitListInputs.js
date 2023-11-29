@@ -62,34 +62,6 @@ const FilterButton = styled("div")({
   },
 });
 
-const FilterRealButton = styled("button")({
-  padding: "0",
-  border: "none",
-  background: "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-  boxShadow:
-    "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "2px",
-  width: "86px",
-  height: "42px",
-  borderRadius: "10px",
-  cursor: "pointer",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    transform: "translateY(-1px)",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
-
 const NextRoundButton = styled("button")({
   padding: "0",
   border: "none",

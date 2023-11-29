@@ -381,7 +381,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "8 AM to 9 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -450,7 +451,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "9 AM to 10 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -519,7 +521,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "10 AM to 11 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -588,7 +591,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "11 AM to 12 NN" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -656,10 +660,12 @@ const Friday = ({ socket, userNotif }) => {
                       schedule.permanentSched.day) === "Friday" &&
                       (schedule.permanentSched &&
                         schedule.permanentSched.timing) === "8 AM to 9 AM" &&
-                      schedule.schedType === "Temporary") ||
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false) ||
                     (schedule.tempSoloDay === "Friday" &&
                       schedule.timing === "8 AM to 9 AM" &&
-                      schedule.schedType === "Temporary")
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false)
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -675,10 +681,12 @@ const Friday = ({ socket, userNotif }) => {
                     "Friday" &&
                     (schedule.permanentSched &&
                       schedule.permanentSched.timing) === "8 AM to 9 AM" &&
-                    schedule.schedType === "Temporary") ||
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false) ||
                   (schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "8 AM to 9 AM" &&
-                    schedule.schedType === "Temporary")
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false)
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -686,7 +694,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "8 AM to 9 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 &&
                     schedules.filter(
                       (schedule) =>
@@ -738,10 +747,12 @@ const Friday = ({ socket, userNotif }) => {
                       schedule.permanentSched.day) === "Friday" &&
                       (schedule.permanentSched &&
                         schedule.permanentSched.timing) === "9 AM to 10 AM" &&
-                      schedule.schedType === "Temporary") ||
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false) ||
                     (schedule.tempSoloDay === "Friday" &&
                       schedule.timing === "9 AM to 10 AM" &&
-                      schedule.schedType === "Temporary")
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false)
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -757,10 +768,12 @@ const Friday = ({ socket, userNotif }) => {
                     "Friday" &&
                     (schedule.permanentSched &&
                       schedule.permanentSched.timing) === "9 AM to 10 AM" &&
-                    schedule.schedType === "Temporary") ||
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false) ||
                   (schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "9 AM to 10 AM" &&
-                    schedule.schedType === "Temporary")
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false)
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -768,7 +781,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "9 AM to 10 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 &&
                     schedules.filter(
                       (schedule) =>
@@ -820,10 +834,12 @@ const Friday = ({ socket, userNotif }) => {
                       schedule.permanentSched.day) === "Friday" &&
                       (schedule.permanentSched &&
                         schedule.permanentSched.timing) === "10 AM to 11 AM" &&
-                      schedule.schedType === "Temporary") ||
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false) ||
                     (schedule.tempSoloDay === "Friday" &&
                       schedule.timing === "10 AM to 11 AM" &&
-                      schedule.schedType === "Temporary")
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false)
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -839,10 +855,12 @@ const Friday = ({ socket, userNotif }) => {
                     "Friday" &&
                     (schedule.permanentSched &&
                       schedule.permanentSched.timing) === "10 AM to 11 AM" &&
-                    schedule.schedType === "Temporary") ||
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false) ||
                   (schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "10 AM to 11 AM" &&
-                    schedule.schedType === "Temporary")
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false)
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -850,7 +868,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "10 AM to 11 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 &&
                     schedules.filter(
                       (schedule) =>
@@ -902,10 +921,12 @@ const Friday = ({ socket, userNotif }) => {
                       schedule.permanentSched.day) === "Friday" &&
                       (schedule.permanentSched &&
                         schedule.permanentSched.timing) === "11 AM to 12 NN" &&
-                      schedule.schedType === "Temporary") ||
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false) ||
                     (schedule.tempSoloDay === "Friday" &&
                       schedule.timing === "11 AM to 12 NN" &&
-                      schedule.schedType === "Temporary")
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false)
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -921,10 +942,12 @@ const Friday = ({ socket, userNotif }) => {
                     "Friday" &&
                     (schedule.permanentSched &&
                       schedule.permanentSched.timing) === "11 AM to 12 NN" &&
-                    schedule.schedType === "Temporary") ||
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false) ||
                   (schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "11 AM to 12 NN" &&
-                    schedule.schedType === "Temporary")
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false)
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -932,7 +955,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "11 AM to 12 NN" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 &&
                     schedules.filter(
                       (schedule) =>
@@ -1006,7 +1030,8 @@ const Friday = ({ socket, userNotif }) => {
                   (schedule) =>
                     schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "8 AM to 9 AM" &&
-                    schedule.schedType === "Temporary"
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1023,7 +1048,8 @@ const Friday = ({ socket, userNotif }) => {
                 (schedule) =>
                   schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "8 AM to 9 AM" &&
-                  schedule.schedType === "Temporary"
+                  schedule.schedType === "Temporary" &&
+                  schedule.isExpired === false
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -1038,7 +1064,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "8 AM to 9 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -1080,7 +1107,8 @@ const Friday = ({ socket, userNotif }) => {
                   (schedule) =>
                     schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "9 AM to 10 AM" &&
-                    schedule.schedType === "Temporary"
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1097,7 +1125,8 @@ const Friday = ({ socket, userNotif }) => {
                 (schedule) =>
                   schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "9 AM to 10 AM" &&
-                  schedule.schedType === "Temporary"
+                  schedule.schedType === "Temporary" &&
+                  schedule.isExpired === false
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -1112,7 +1141,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "9 AM to 10 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -1154,7 +1184,8 @@ const Friday = ({ socket, userNotif }) => {
                   (schedule) =>
                     schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "10 AM to 11 AM" &&
-                    schedule.schedType === "Temporary"
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1171,7 +1202,8 @@ const Friday = ({ socket, userNotif }) => {
                 (schedule) =>
                   schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "10 AM to 11 AM" &&
-                  schedule.schedType === "Temporary"
+                  schedule.schedType === "Temporary" &&
+                  schedule.isExpired === false
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -1186,7 +1218,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "10 AM to 11 AM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -1228,7 +1261,8 @@ const Friday = ({ socket, userNotif }) => {
                   (schedule) =>
                     schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "11 AM to 12 NN" &&
-                    schedule.schedType === "Temporary"
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1245,7 +1279,8 @@ const Friday = ({ socket, userNotif }) => {
                 (schedule) =>
                   schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "11 AM to 12 NN" &&
-                  schedule.schedType === "Temporary"
+                  schedule.schedType === "Temporary" &&
+                  schedule.isExpired === false
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -1260,7 +1295,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "11 AM to 12 NN" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -1355,7 +1391,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "1 PM to 2 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -1424,7 +1461,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "2 PM to 3 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -1493,7 +1531,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "3 PM to 4 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -1562,7 +1601,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "4 PM to 5 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -1630,10 +1670,12 @@ const Friday = ({ socket, userNotif }) => {
                       schedule.permanentSched.day) === "Friday" &&
                       (schedule.permanentSched &&
                         schedule.permanentSched.timing) === "1 PM to 2 PM" &&
-                      schedule.schedType === "Temporary") ||
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false) ||
                     (schedule.tempSoloDay === "Friday" &&
                       schedule.timing === "1 PM to 2 PM" &&
-                      schedule.schedType === "Temporary")
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false)
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1649,10 +1691,12 @@ const Friday = ({ socket, userNotif }) => {
                     "Friday" &&
                     (schedule.permanentSched &&
                       schedule.permanentSched.timing) === "1 PM to 2 PM" &&
-                    schedule.schedType === "Temporary") ||
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false) ||
                   (schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "1 PM to 2 PM" &&
-                    schedule.schedType === "Temporary")
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false)
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -1660,7 +1704,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "1 PM to 2 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 &&
                     schedules.filter(
                       (schedule) =>
@@ -1712,10 +1757,12 @@ const Friday = ({ socket, userNotif }) => {
                       schedule.permanentSched.day) === "Friday" &&
                       (schedule.permanentSched &&
                         schedule.permanentSched.timing) === "2 PM to 3 PM" &&
-                      schedule.schedType === "Temporary") ||
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false) ||
                     (schedule.tempSoloDay === "Friday" &&
                       schedule.timing === "2 PM to 3 PM" &&
-                      schedule.schedType === "Temporary")
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false)
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1731,10 +1778,12 @@ const Friday = ({ socket, userNotif }) => {
                     "Friday" &&
                     (schedule.permanentSched &&
                       schedule.permanentSched.timing) === "2 PM to 3 PM" &&
-                    schedule.schedType === "Temporary") ||
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false) ||
                   (schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "2 PM to 3 PM" &&
-                    schedule.schedType === "Temporary")
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false)
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -1742,7 +1791,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "2 PM to 3 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 &&
                     schedules.filter(
                       (schedule) =>
@@ -1794,10 +1844,12 @@ const Friday = ({ socket, userNotif }) => {
                       schedule.permanentSched.day) === "Friday" &&
                       (schedule.permanentSched &&
                         schedule.permanentSched.timing) === "3 PM to 4 PM" &&
-                      schedule.schedType === "Temporary") ||
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false) ||
                     (schedule.tempSoloDay === "Friday" &&
                       schedule.timing === "3 PM to 4 PM" &&
-                      schedule.schedType === "Temporary")
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false)
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1813,10 +1865,12 @@ const Friday = ({ socket, userNotif }) => {
                     "Friday" &&
                     (schedule.permanentSched &&
                       schedule.permanentSched.timing) === "3 PM to 4 PM" &&
-                    schedule.schedType === "Temporary") ||
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false) ||
                   (schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "3 PM to 4 PM" &&
-                    schedule.schedType === "Temporary")
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false)
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -1824,7 +1878,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "3 PM to 4 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 &&
                     schedules.filter(
                       (schedule) =>
@@ -1876,10 +1931,12 @@ const Friday = ({ socket, userNotif }) => {
                       schedule.permanentSched.day) === "Friday" &&
                       (schedule.permanentSched &&
                         schedule.permanentSched.timing) === "4 PM to 5 PM" &&
-                      schedule.schedType === "Temporary") ||
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false) ||
                     (schedule.tempSoloDay === "Friday" &&
                       schedule.timing === "4 PM to 5 PM" &&
-                      schedule.schedType === "Temporary")
+                      schedule.schedType === "Temporary" &&
+                      schedule.isExpired === false)
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1895,10 +1952,12 @@ const Friday = ({ socket, userNotif }) => {
                     "Friday" &&
                     (schedule.permanentSched &&
                       schedule.permanentSched.timing) === "4 PM to 5 PM" &&
-                    schedule.schedType === "Temporary") ||
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false) ||
                   (schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "4 PM to 5 PM" &&
-                    schedule.schedType === "Temporary")
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false)
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -1906,7 +1965,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "4 PM to 5 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 &&
                     schedules.filter(
                       (schedule) =>
@@ -1980,7 +2040,8 @@ const Friday = ({ socket, userNotif }) => {
                   (schedule) =>
                     schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "1 PM to 2 PM" &&
-                    schedule.schedType === "Temporary"
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -1997,7 +2058,8 @@ const Friday = ({ socket, userNotif }) => {
                 (schedule) =>
                   schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "1 PM to 2 PM" &&
-                  schedule.schedType === "Temporary"
+                  schedule.schedType === "Temporary" &&
+                  schedule.isExpired === false
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -2012,7 +2074,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "1 PM to 2 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -2054,7 +2117,8 @@ const Friday = ({ socket, userNotif }) => {
                   (schedule) =>
                     schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "2 PM to 3 PM" &&
-                    schedule.schedType === "Temporary"
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -2071,7 +2135,8 @@ const Friday = ({ socket, userNotif }) => {
                 (schedule) =>
                   schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "2 PM to 3 PM" &&
-                  schedule.schedType === "Temporary"
+                  schedule.schedType === "Temporary" &&
+                  schedule.isExpired === false
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -2086,7 +2151,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "2 PM to 3 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -2128,7 +2194,8 @@ const Friday = ({ socket, userNotif }) => {
                   (schedule) =>
                     schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "3 PM to 4 PM" &&
-                    schedule.schedType === "Temporary"
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -2145,7 +2212,8 @@ const Friday = ({ socket, userNotif }) => {
                 (schedule) =>
                   schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "3 PM to 4 PM" &&
-                  schedule.schedType === "Temporary"
+                  schedule.schedType === "Temporary" &&
+                  schedule.isExpired === false
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -2160,7 +2228,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "3 PM to 4 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{
@@ -2202,7 +2271,8 @@ const Friday = ({ socket, userNotif }) => {
                   (schedule) =>
                     schedule.tempSoloDay === "Friday" &&
                     schedule.timing === "4 PM to 5 PM" &&
-                    schedule.schedType === "Temporary"
+                    schedule.schedType === "Temporary" &&
+                    schedule.isExpired === false
                 )
                 .map((schedule) => (
                   <Tilt>
@@ -2219,7 +2289,8 @@ const Friday = ({ socket, userNotif }) => {
                 (schedule) =>
                   schedule.tempSoloDay === "Friday" &&
                   schedule.timing === "4 PM to 5 PM" &&
-                  schedule.schedType === "Temporary"
+                  schedule.schedType === "Temporary" &&
+                  schedule.isExpired === false
               ).length === 0 && (
                 <Tilt>
                   <Cell2>
@@ -2234,7 +2305,8 @@ const Friday = ({ socket, userNotif }) => {
                       (schedule) =>
                         schedule.tempSoloDay === "Friday" &&
                         schedule.timing === "4 PM to 5 PM" &&
-                        schedule.schedType === "Temporary"
+                        schedule.schedType === "Temporary" &&
+                        schedule.isExpired === false
                     ).length === 0 ? (
                       <div
                         style={{

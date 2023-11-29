@@ -12,14 +12,28 @@ router.get("/user/:id", auth, admin, mainController.controllers.updateUserGet);
 router.delete("/user/:id", auth, admin, mainController.controllers.deleteUser);
 router.put("/user/:id", mainController.controllers.editUser);
 
-// usercart
+// user absent logs con
 
 router.post("/con", auth, mainController.controllers.userCon);
 router.get("/con", auth, mainController.controllers.getUserCon);
 router.delete("/con", auth, mainController.controllers.emptyCon);
 
-// user sched order
+// user absent logs audit
 
 router.post("/sched-order", auth, mainController.controllers.createSchedOrder);
+
+// user present logs con
+
+router.post("/con-present", auth, mainController.controllers.userConPresent);
+router.get("/con-present", auth, mainController.controllers.getUserConPresent);
+router.delete("/con-present", auth, mainController.controllers.emptyConPresent);
+
+// uuser present logs audit
+
+router.post(
+  "/sched-order-present",
+  auth,
+  mainController.controllers.createSchedOrderPresent
+);
 
 module.exports = router;

@@ -10,10 +10,18 @@ const schedsSchema = new mongoose.Schema(
       trim: true,
       maxlength: 32,
     },
+
     isActive: {
-      type: Boolean,
-      default: true,
+      type: String,
+      default: "No info yet",
+      enum: ["No info yet", "Present", "Absent"],
     },
+
+    isVideoOn: {
+      type: Boolean,
+      default: false,
+    },
+
     schedType: {
       type: String,
       enum: ["Permanent", "Temporary"],
@@ -64,14 +72,19 @@ const schedsSchema = new mongoose.Schema(
         "Bad Weather",
       ],
     },
+
     isWaitlisted: {
       type: String,
-      default: "Yes",
       enum: ["Yes", "No"],
     },
 
     notifParentLocator: {
       type: String,
+    },
+
+    absentCounter: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

@@ -12,6 +12,8 @@ const initialState = {
   tempSoloDay: "",
   schedTypes: ["Temporary"],
   schedType: "Temporary",
+  studentTypes: ["Dyad"],
+  studentType: "Dyad",
   timings: [
     "8 AM to 9 AM",
     "9 AM to 10 AM",

@@ -207,7 +207,7 @@ const conSelector = createSelector([selectCon], (con) => con);
 const selectAudit = (state) => state.audit;
 const auditSelector = createSelector([selectAudit], (audit) => audit);
 
-const WaitListSchedule = () => {
+const WaitlistSchedule = () => {
   const [schedules, setSchedules] = useState([]);
   const [tempSchedules, setTempSchedules] = useState([]);
   const [tempSoloSchedules, setTempSoloSchedules] = useState([]);
@@ -1356,4 +1356,4 @@ const WaitListSchedule = () => {
     </>
   );
 };
-export default WaitListSchedule;
+export default WaitlistSchedule;

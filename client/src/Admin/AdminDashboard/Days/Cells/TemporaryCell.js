@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/system";
 import { keyframes } from "@mui/styled-engine";
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { createSelector } from "reselect";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import axios from "axios";
-import WatchLaterIcon from "@mui/icons-material/WatchLater";
-import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import BlockIcon from "@mui/icons-material/Block";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import TimerIcon from "@mui/icons-material/Timer";
-import Tilt from "react-parallax-tilt";
 
 const flowyBackground = keyframes`
   0% {

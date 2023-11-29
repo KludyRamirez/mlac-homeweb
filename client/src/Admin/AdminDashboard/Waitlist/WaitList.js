@@ -6,8 +6,7 @@ import { getActions } from "../../../store/actions/authActions";
 import { useHistory } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import WaitListInputs from "./WaitListInputs";
-import AllSchedule from "../AllSchedule/AllSchedule";
-import WaitListSchedule from "../AllSchedule/WaitListSchedule";
+import WaitlistSchedule from "../AllSchedule/WaitlistSchedule";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -144,7 +143,7 @@ const WaitList = ({ waitlist }) => {
             />
           </FormCon1>
           <FormCon2>
-            <WaitListSchedule />
+            <WaitlistSchedule />
           </FormCon2>
         </Flexer>
       </CreateWaitListUserContainer>
