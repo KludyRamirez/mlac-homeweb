@@ -7,6 +7,7 @@ import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
 import AllSchedule from "../AllSchedule/AllSchedule";
+import TopBar from "../AppBar/AppBar";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -122,8 +123,10 @@ const authSelector = createSelector([selectAuth], (auth) => auth);
 
 const CreateSchedule = () => {
   const [values, setValues] = useState(initialState);
-  const [showModal, setShowModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
   const auth = useSelector(authSelector);
+
+  const maxLength = 50;
 
   useEffect(() => {
     getParents();
@@ -162,7 +165,7 @@ const CreateSchedule = () => {
           },
         }
       );
-      toast.success(`${res.data.nameOfStudent} is created.`);
+      toast.success(`Schedule created!`);
       window.location.reload();
     } catch (error) {
       if (error.response && error.response.data) {
@@ -174,6 +177,10 @@ const CreateSchedule = () => {
   };
 
   const handleChange = (e) => {
+    if (e.target.value.length <= maxLength) {
+      setInputValue(e.target.value);
+    }
+
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
@@ -193,6 +200,7 @@ const CreateSchedule = () => {
 
   return (
     <Wrapper>
+      <TopBar />
       <ResponsiveDrawer />
       <CreateScheduleContainer>
         <TitleCon>
@@ -206,6 +214,7 @@ const CreateSchedule = () => {
               values={values}
               handleParentChange={handleParentChange}
               handleStudentTypeChange={handleStudentTypeChange}
+              maxLength={maxLength}
             />
           </FormCon1>
           <FormCon2>

@@ -56,12 +56,23 @@ const { getHoliday } = require("./holiday");
 const { getLogs } = require("./logs");
 
 //
-
 const { setActive } = require("../outsidechat/schedule");
 const { setActiveTemp } = require("../outsidechat/schedule");
 const { setActiveTempSolo } = require("../outsidechat/schedule");
 const { setVideo } = require("../outsidechat/schedule");
 const { setVideoTempSolo } = require("../outsidechat/schedule");
+
+//
+const { postProgRep } = require("../outsidechat/progressReport");
+const { getProgRep } = require("../outsidechat/progressReport");
+// const { getProgRepId } = require("../outsidechat/progressReport");
+const { deleteProgRep } = require("../outsidechat/progressReport");
+const { setStatusProgRepCompleted } = require("../outsidechat/progressReport");
+const { updateStatusProgRep } = require("../outsidechat/progressReport");
+
+// set waitlist
+const { hashWaitlistUserPassword } = require("./user");
+const { setWaitlistStatus } = require("../outsidechat/schedule");
 
 exports.controllers = {
   createSchedule,
@@ -122,4 +133,19 @@ exports.controllers = {
   // absentCounter setters
   setPlusAbsentCounter,
   setMinusAbsentCounter,
+
+  // progress reports
+
+  postProgRep,
+  getProgRep,
+  setStatusProgRepCompleted,
+
+  // getProgRepId,
+  deleteProgRep,
+  updateStatusProgRep,
+
+  // set isWaitlist - hashed Waitlist account
+
+  setWaitlistStatus,
+  hashWaitlistUserPassword,
 };

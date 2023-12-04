@@ -5,41 +5,37 @@ import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
 import { RiSearchLine } from "react-icons/ri";
 import Modal from "@mui/material/Modal";
 import AbsentScheduleCard from "./AbsentScheduleCard";
 import AuditModal from "./AuditModal";
 import DeletionModal from "./DeletionModal";
+import Tilt from "react-parallax-tilt";
 import {
-  BsCheckLg,
-  BsCameraReels,
-  BsPatchMinus,
-  BsTrash,
-  BsExclamationTriangle,
-  BsTrash2Fill,
   BsX,
-  BsBackspace,
+  BsCameraVideo,
   BsCalendar2Check,
   BsCalendar2X,
   BsExclamationCircle,
+  BsInboxes,
+  BsSortUp,
+  BsSortDownAlt,
+  BsSortAlphaDown,
+  BsSortAlphaUpAlt,
+  BsSpeakerFill,
+  BsMegaphoneFill,
+  BsMegaphone,
 } from "react-icons/bs";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import {
-  AiOutlineSortDescending,
-  AiOutlineSortAscending,
-} from "react-icons/ai";
 import { toast } from "react-toastify";
-import { HiOutlineFilter } from "react-icons/hi";
 import moment from "moment";
 import PresentConModal from "./PresentConModal";
 import PresentAuditModal from "./PresentAuditModal";
 import VideoModal from "./VideoModal";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
-import AbsentTempAuditModal from "./AbsentTempAuditModal";
-
-const Dots = styled("div")({});
+import dots from "../../../images/dots.webp";
+import TimeBar from "../TimeBar/TimeBar";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -64,6 +60,7 @@ const StudentParentCon = styled("div")({
   background: "transparent",
   width: "100%",
   zIndex: "2",
+  padding: "0px 40px",
 
   "@media (max-width: 767px)": {
     padding: "10px",
@@ -80,7 +77,7 @@ const TitleCon = styled("div")({
 });
 
 const FormTitle = styled("div")({
-  padding: "34px 38px 20px 38px",
+  padding: "34px 0px 20px 0px",
   color: "#f7fff7",
   textShadow:
     "-1px -1px 1px rgba(255, 255, 255, 1), 1px 1px 1px rgba(0, 0, 0, 0.2)",
@@ -143,6 +140,37 @@ const LowerIconDiv = styled("div")({
   },
 });
 
+const LowerIconDiv4 = styled("div")({
+  marginTop: "1px",
+  cursor: "pointer",
+  background: "transparent",
+  border: "1px solid #FF3131",
+  color: "transparent",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16px",
+  height: "16px",
+  borderRadius: "16px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+  "&:hover": {
+    width: "24px",
+    height: "24px",
+    borderRadius: "24px",
+    color: "#FF3131",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
+  },
+});
+
 const IconSortContainer = styled("div")({
   width: "32px",
   height: "32px",
@@ -189,17 +217,17 @@ const SearchBar = styled("input")(({ theme }) => ({
   borderBottomLeftRadius: "10px",
   zIndex: "1",
   padding: "6px 0px 6px 40px",
-  fontSize: "12px",
-  fontWeight: "600",
-  color: "#007bff",
+  fontSize: "13px",
+  fontWeight: "500",
+  color: "#122c8e",
   outline: "1px solid rgba(7, 187, 255, 0.4)",
+  fontFamily: "Poppins, sans-serif",
 
   "&:focus": {
     outline: "2px solid #122c8e",
   },
   "&::placeholder": {
     color: "rgba(0, 0, 0, 0.3)",
-    fontFamily: "Poppins, sans-serif",
   },
   "@media (max-width: 767px)": {
     // width: "50%",
@@ -215,7 +243,7 @@ const ModalBox = styled("div")({
   transform: "translate(-50%, -50%)",
   background: "white",
   borderRadius: "20px",
-  fontSize: "12px",
+  fontSize: "13px",
   fontWeight: "600",
   color: "#007bff",
   border: "none",
@@ -238,7 +266,7 @@ const FlexRow = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",
-  gap: "120px",
+  gap: "40px",
   width: "100%",
   height: "100%",
 
@@ -317,6 +345,21 @@ const PermanentTitle = styled("div")({
   letterSpacing: "-1px",
 
   "@media (max-width: 767px)": {},
+});
+
+const StatsCard = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  width: "136px",
+  height: "112px",
+  overflow: "hidden",
+  borderRadius: "10px",
+  padding: "0px 12px",
+  gap: "4px",
+  boxShadow:
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
 });
 
 const selectAuth = (state) => state.auth;
@@ -540,6 +583,10 @@ const ParentSortSchedule = () => {
           }`
       );
       setTempSchedules(parentFilter);
+      console.log(
+        "------------------------------------------------------------------>",
+        tempSchedules
+      );
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
@@ -562,14 +609,15 @@ const ParentSortSchedule = () => {
       const parentFilter = res.data.filter(
         (schedule) =>
           (schedule.tempStudentName && schedule.tempStudentName.parent) ===
-          (auth && auth.userDetails.fullname)
+          `${auth && auth.userDetails.fullname} ${
+            auth && auth.userDetails.username
+          }`
       );
       setTempSoloSchedules(parentFilter);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
   };
-
   const handleSetActiveToFalse = async (id) => {
     try {
       if (!auth.userDetails.token) {
@@ -593,13 +641,96 @@ const ParentSortSchedule = () => {
     }
   };
 
+  const handleSetActiveToFalseTemp = async (id) => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      await axios.patch(
+        `${process.env.REACT_APP_API}/temp-schedule/${id}/setActiveTemp`,
+        {
+          isActive: "Absent",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching schedules:", error);
+    }
+  };
+
+  const handleSetActiveToFalseTempSolo = async (id) => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      await axios.patch(
+        `${process.env.REACT_APP_API}/temp-soloschedule/${id}/setActiveTempSolo`,
+        {
+          isActive: "Absent",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching schedules:", error);
+    }
+  };
+
   const handleConfirmSetActiveToFalse = () => {
     if (active) {
+      handleSetActiveToFalseTemp(active);
+      handleSetActiveToFalseTempSolo(active);
       handleSetActiveToFalse(active);
     }
   };
 
-  const handleAddToContainer = async (schedule, id) => {
+  const handleAddToContainer = async (schedule, id, objId) => {
+    setPlusAbsentCounter(id);
+    setActive(objId);
+    handleOpenModal();
+
+    let updatedContainer = [];
+    if (localStorage.getItem("con")) {
+      updatedContainer = JSON.parse(localStorage.getItem("con"));
+    }
+
+    const existingScheduleIndex = updatedContainer.findIndex(
+      (s) => s._id === schedule._id
+    );
+    if (existingScheduleIndex !== -1) {
+      updatedContainer[existingScheduleIndex] = {
+        ...schedule,
+        count: updatedContainer[existingScheduleIndex].count + 1,
+      };
+    } else {
+      updatedContainer = [];
+      updatedContainer.push({
+        ...schedule,
+        count: 1,
+      });
+    }
+
+    localStorage.setItem("con", JSON.stringify(updatedContainer));
+
+    dispatch({
+      type: "ADD_TO_CON",
+      payload: updatedContainer,
+    });
+    console.log("success");
+  };
+
+  const handleAddToContainerPerm = async (schedule, id) => {
     setPlusAbsentCounter(id);
     setActive(id);
     handleOpenModal();
@@ -1057,12 +1188,6 @@ const ParentSortSchedule = () => {
   const handleCloseSecModal = () => {
     createSchedOrder();
     setShowSecModal(false);
-    window.location.reload();
-  };
-
-  const navigateUpdate = (id) => {
-    history.push(`/schedule/${id}`);
-    window.location.reload();
   };
 
   const deleteOneSchedule = async (id) => {
@@ -1108,9 +1233,44 @@ const ParentSortSchedule = () => {
 
   // for present logs -------------> //
 
-  const handleAddToContainerPresent = async (schedule, id) => {
-    setActive(id);
+  const handleAddToContainerPresent = async (schedule, id, objId) => {
     setMinusPresentCounter(id);
+    setActive(objId);
+    handleOpenModalPresent();
+
+    let updatedContainer = [];
+    if (localStorage.getItem("con")) {
+      updatedContainer = JSON.parse(localStorage.getItem("con"));
+    }
+
+    const existingScheduleIndex = updatedContainer.findIndex(
+      (s) => s._id === schedule._id
+    );
+    if (existingScheduleIndex !== -1) {
+      updatedContainer[existingScheduleIndex] = {
+        ...schedule,
+        count: updatedContainer[existingScheduleIndex].count + 1,
+      };
+    } else {
+      updatedContainer = [];
+      updatedContainer.push({
+        ...schedule,
+        count: 1,
+      });
+    }
+
+    localStorage.setItem("con", JSON.stringify(updatedContainer));
+
+    dispatch({
+      type: "ADD_TO_CON",
+      payload: updatedContainer,
+    });
+    console.log("success");
+  };
+
+  const handleAddToContainerPresentPerm = async (schedule, id) => {
+    setMinusPresentCounter(id);
+    setActive(id);
     handleOpenModalPresent();
 
     let updatedContainer = [];
@@ -1224,9 +1384,57 @@ const ParentSortSchedule = () => {
     }
   };
 
+  const handleSetActiveToTrueTemp = async (id) => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      await axios.patch(
+        `${process.env.REACT_APP_API}/temp-schedule/${id}/setActiveTemp`,
+        {
+          isActive: "Present",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching schedules:", error);
+    }
+  };
+
+  const handleSetActiveToTrueTempSolo = async (id) => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      await axios.patch(
+        `${process.env.REACT_APP_API}/temp-soloschedule/${id}/setActiveTempSolo`,
+        {
+          isActive: "Present",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching schedules:", error);
+    }
+  };
+
   const handleConfirmSetActiveToTrue = () => {
     if (active) {
       handleSetActiveToTrue(active);
+      handleSetActiveToTrueTemp(active);
+      handleSetActiveToTrueTempSolo(active);
     }
   };
 
@@ -1324,7 +1532,6 @@ const ParentSortSchedule = () => {
   const handleCloseSecModalPresent = () => {
     createSchedOrderPresent();
     setShowSecPresentModal(false);
-    window.location.reload();
   };
 
   // for video modal --------------------------------------------->
@@ -1412,675 +1619,685 @@ const ParentSortSchedule = () => {
   };
 
   return (
-    <Dots>
-      <Wrapper>
-        <ResponsiveDrawer />
-        <Modal
-          sx={{ border: "none", outline: "none" }}
-          open={showModal}
-          onClose={handleCloseModal}
-          aria-labelledby="parent-modal-title"
-          aria-describedby="parent-modal-description"
-        >
-          <ModalBox>{showConItems()}</ModalBox>
-        </Modal>
-        <Modal
-          sx={{ border: "none", outline: "none" }}
-          open={showSecModal}
-          onClose={handleAttemptCloseSecModal}
-          aria-labelledby="child-modal-title"
-          aria-describedby="child-modal-description"
-        >
-          <ModalBox>{TermsAndCondi()}</ModalBox>
-        </Modal>
-        <Modal
-          sx={{ border: "none", outline: "none" }}
-          open={showDeleteModal}
-          onClose={handleCloseDeleteModal}
-          aria-labelledby="child-modal-title"
-          aria-describedby="child-modal-description"
-        >
-          <ModalBox>
-            <DeletionModal handleConfirmDelete={handleConfirmDelete} />
-          </ModalBox>
-        </Modal>
+    <Wrapper>
+      <ResponsiveDrawer />
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showModal}
+        onClose={handleCloseModal}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <ModalBox>{showConItems()}</ModalBox>
+      </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showSecModal}
+        onClose={handleAttemptCloseSecModal}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <ModalBox>{TermsAndCondi()}</ModalBox>
+      </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showDeleteModal}
+        onClose={handleCloseDeleteModal}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <ModalBox>
+          <DeletionModal handleConfirmDelete={handleConfirmDelete} />
+        </ModalBox>
+      </Modal>
 
-        {/* Present Logs Modal ------------------------------------------> */}
+      {/* Present Logs Modal ------------------------------------------> */}
 
-        <Modal
-          sx={{ border: "none", outline: "none" }}
-          open={showPresentModal}
-          onClose={handleCloseModalPresent}
-          aria-labelledby="parent-modal-title"
-          aria-describedby="parent-modal-description"
-        >
-          <ModalBox>{showConItemsPresent()}</ModalBox>
-        </Modal>
-        <Modal
-          sx={{ border: "none", outline: "none" }}
-          open={showSecPresentModal}
-          onClose={handleAttemptCloseSecModalPresent}
-          aria-labelledby="child-modal-title"
-          aria-describedby="child-modal-description"
-        >
-          <ModalBox>{TermsAndCondiPresent()}</ModalBox>
-        </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showPresentModal}
+        onClose={handleCloseModalPresent}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <ModalBox>{showConItemsPresent()}</ModalBox>
+      </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showSecPresentModal}
+        onClose={handleAttemptCloseSecModalPresent}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <ModalBox>{TermsAndCondiPresent()}</ModalBox>
+      </Modal>
 
-        {/* video modal ---------------------------> */}
+      {/* video modal ---------------------------> */}
 
-        <Modal
-          sx={{ border: "none", outline: "none" }}
-          open={showVideoModal}
-          onClose={handleCloseVideoModal}
-          aria-labelledby="child-modal-title"
-          aria-describedby="child-modal-description"
-        >
-          <ModalBox>
-            <VideoModal handleConfirmVideo={handleConfirmVideo} />
-          </ModalBox>
-        </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showVideoModal}
+        onClose={handleCloseVideoModal}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <ModalBox>
+          <VideoModal handleConfirmVideo={handleConfirmVideo} />
+        </ModalBox>
+      </Modal>
 
-        <StudentParentCon>
-          <TitleCon>
-            <FormTitle>Parent View</FormTitle>
-          </TitleCon>
-          <FlexRow>
-            <FlexerSwitch>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "1000px",
-                }}
-              >
-                <TableContainer>
-                  <div
-                    onClick={() => handleDayChange("Permanent")}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "4px",
-                      width: "24px",
-                      height: "24px",
-                      borderRadius: "50%",
-                      marginTop:
-                        activeSchedType === "Permanent" ? "0px" : "0px",
-                      background:
-                        activeSchedType === "Permanent"
-                          ? "white"
-                          : "transparent",
-                      backgroundImage:
-                        activeSchedType === "Permanent"
-                          ? "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)"
-                          : "transparent",
-                      color:
-                        activeSchedType === "Permanent" ? "#07bbff" : "#07bbff",
+      <StudentParentCon>
+        <TitleCon>
+          <FormTitle>Parent View</FormTitle>
+        </TitleCon>
+        <FlexRow>
+          <FlexerSwitch>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "1000px",
+              }}
+            >
+              <TableContainer>
+                <div
+                  onClick={() => handleDayChange("Permanent")}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "4px",
+                    width: "24px",
+                    height: "24px",
+                    borderRadius: "50%",
+                    marginTop: activeSchedType === "Permanent" ? "0px" : "0px",
+                    background:
+                      activeSchedType === "Permanent" ? "white" : "transparent",
+                    backgroundImage:
+                      activeSchedType === "Permanent"
+                        ? "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)"
+                        : "transparent",
+                    color:
+                      activeSchedType === "Permanent" ? "#07bbff" : "#07bbff",
 
-                      cursor: "pointer",
-                      textDecoration: "none",
-                      transition: "box-shadow .15s, transform .15s",
-                      touchAction: "manipulation",
-                      willChange: "box-shadow, transform",
-                      fontSize: "11px",
-                      fontWeight: "bold",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    transition: "box-shadow .15s, transform .15s",
+                    touchAction: "manipulation",
+                    willChange: "box-shadow, transform",
+                    fontSize: "11px",
+                    fontWeight: "bold",
 
-                      ":focus": {
-                        boxShadow:
-                          "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                      },
-                      ":hover": {
-                        boxShadow:
-                          "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                        transform: "translateY(-2px)",
+                    ":focus": {
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    },
+                    ":hover": {
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                      transform: "translateY(-2px)",
 
-                        background: "white",
-                      },
-                    }}
-                  ></div>
+                      background: "white",
+                    },
+                  }}
+                ></div>
 
-                  <div
-                    onClick={() => handleDayChange("Temporary")}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "4px",
-                      width: "24px",
-                      height: "24px",
-                      borderRadius: "50%",
-                      marginTop:
-                        activeSchedType === "Temporary" ? "0px" : "0px",
-                      background:
-                        activeSchedType === "Temporary"
-                          ? "white"
-                          : "transparent",
-                      backgroundImage:
-                        activeSchedType === "Temporary"
-                          ? "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)"
-                          : "transparent",
-                      color:
-                        activeSchedType === "Temporary" ? "#07bbff" : "#07bbff",
+                <div
+                  onClick={() => handleDayChange("Temporary")}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "4px",
+                    width: "24px",
+                    height: "24px",
+                    borderRadius: "50%",
+                    marginTop: activeSchedType === "Temporary" ? "0px" : "0px",
+                    background:
+                      activeSchedType === "Temporary" ? "white" : "transparent",
+                    backgroundImage:
+                      activeSchedType === "Temporary"
+                        ? "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)"
+                        : "transparent",
+                    color:
+                      activeSchedType === "Temporary" ? "#07bbff" : "#07bbff",
 
-                      cursor: "pointer",
-                      textDecoration: "none",
-                      transition: "box-shadow .15s, transform .15s",
-                      touchAction: "manipulation",
-                      willChange: "box-shadow, transform",
-                      fontSize: "11px",
-                      fontWeight: "bold",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    transition: "box-shadow .15s, transform .15s",
+                    touchAction: "manipulation",
+                    willChange: "box-shadow, transform",
+                    fontSize: "11px",
+                    fontWeight: "bold",
 
-                      ":focus": {
-                        boxShadow:
-                          "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                      },
-                      ":hover": {
-                        boxShadow:
-                          "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
-                        transform: "translateY(-2px)",
-                        borderBottom: "1px solid #007bff",
-                        borderTop: "1px solid #007bff",
-                        borderLeft: "1px solid #007bff",
-                        background: "white",
-                      },
-                    }}
-                  ></div>
-                </TableContainer>
+                    ":focus": {
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    },
+                    ":hover": {
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                      transform: "translateY(-2px)",
+                      borderBottom: "1px solid #007bff",
+                      borderTop: "1px solid #007bff",
+                      borderLeft: "1px solid #007bff",
+                      background: "white",
+                    },
+                  }}
+                ></div>
+              </TableContainer>
 
-                {activeSchedType === "Permanent" && (
-                  <div>
-                    <PermanentTitle>Permanent</PermanentTitle>
-                  </div>
-                )}
-                {activeSchedType === "Temporary" && (
-                  <div>
-                    <PermanentTitle>Temporary</PermanentTitle>
-                  </div>
-                )}
-              </div>
               {activeSchedType === "Permanent" && (
-                <>
-                  <SearchMainCon>
-                    <div
+                <div>
+                  <PermanentTitle>Permanent</PermanentTitle>
+                </div>
+              )}
+              {activeSchedType === "Temporary" && (
+                <div>
+                  <PermanentTitle>Temporary</PermanentTitle>
+                </div>
+              )}
+            </div>
+            {activeSchedType === "Permanent" && (
+              <>
+                <SearchMainCon>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "6px",
+                      left: "8px",
+                      width: "26px",
+                      height: "26px",
+                      zIndex: "2",
+                      borderRadius: "50%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <RiSearchLine
                       style={{
-                        position: "absolute",
-                        top: "6px",
-                        left: "8px",
-                        width: "26px",
-                        height: "26px",
-                        zIndex: "2",
-                        borderRadius: "50%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        color: "#007bff",
+                        fontSize: "16px",
                       }}
-                    >
-                      <RiSearchLine
-                        style={{
-                          color: "#007bff",
-                          fontSize: "16px",
-                        }}
-                      />
-                    </div>
-                    <SearchBar
-                      type="text"
-                      placeholder="Search.."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
-                    <div style={{ display: "flex", gap: "8px" }}>
-                      {isNameDesc ? (
-                        <div onClick={toggleFilterName}>
-                          <FilterButton onClick={sortAlphabetically}>
-                            <AiOutlineSortAscending
-                              style={{ fontSize: "18px" }}
-                            />
-                          </FilterButton>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterName}>
-                          <FilterButton onClick={sortAlphabeticallyDesc}>
-                            <AiOutlineSortDescending
-                              style={{ fontSize: "18px" }}
-                            />
-                          </FilterButton>
-                        </div>
-                      )}
-
-                      {isDayDesc ? (
-                        <div onClick={toggleFilterDay}>
-                          <FilterButton onClick={sortByDayOfWeek}>
-                            <HiOutlineFilter style={{ fontSize: "18px" }} />
-                          </FilterButton>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterDay}>
-                          <FilterButton onClick={sortByDayOfWeekDesc}>
-                            <HiOutlineFilter style={{ fontSize: "18px" }} />
-                          </FilterButton>
-                        </div>
-                      )}
-                    </div>
-                  </SearchMainCon>
-                  <Flexer>
+                  </div>
+                  <SearchBar
+                    type="text"
+                    placeholder="Search.."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    {isDayDesc ? (
+                      <div onClick={toggleFilterDay}>
+                        <FilterButton onClick={sortByDayOfWeek}>
+                          <BsSortAlphaDown style={{ fontSize: "18px" }} />
+                        </FilterButton>
+                      </div>
+                    ) : (
+                      <div onClick={toggleFilterDay}>
+                        <FilterButton onClick={sortByDayOfWeekDesc}>
+                          <BsSortAlphaUpAlt style={{ fontSize: "18px" }} />
+                        </FilterButton>
+                      </div>
+                    )}
+                    {isNameDesc ? (
+                      <div onClick={toggleFilterName}>
+                        <FilterButton onClick={sortAlphabetically}>
+                          <BsSortUp style={{ fontSize: "18px" }} />
+                        </FilterButton>
+                      </div>
+                    ) : (
+                      <div onClick={toggleFilterName}>
+                        <FilterButton onClick={sortAlphabeticallyDesc}>
+                          <BsSortDownAlt style={{ fontSize: "18px" }} />
+                        </FilterButton>
+                      </div>
+                    )}
+                  </div>
+                </SearchMainCon>
+                <Flexer>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      borderRadius: "10px",
+                      width: "100%",
+                    }}
+                  >
                     <div
                       style={{
                         display: "flex",
-                        justifyContent: "center",
-                        borderRadius: "10px",
-                        width: "100%",
+                        justifyContent: "space-between",
+                        background: "rgba(255, 255, 255, 1)",
+                        padding: "13px 20px",
+                        borderTopLeftRadius: "10px",
+                        borderBottomLeftRadius: "10px",
+                        width: "70%",
+                        borderTop: "1px solid rgba(7, 187, 255, 0.6)",
+                        borderBottom: "1px solid rgba(7, 187, 255, 0.6)",
+                        borderLeft: "1px solid rgba(7, 187, 255, 0.6)",
                       }}
                     >
                       <div
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          background: "rgba(255, 255, 255, 1)",
-                          padding: "13px 20px",
-                          borderTopLeftRadius: "10px",
-                          borderBottomLeftRadius: "10px",
-                          width: "68%",
-                          borderTop: "1px solid rgba(7, 187, 255, 0.4)",
-                          borderBottom: "1px solid rgba(7, 187, 255, 0.4)",
-                          borderLeft: "1px solid rgba(7, 187, 255, 0.4)",
+                          width: "78.7%",
                         }}
                       >
                         <div
                           style={{
                             display: "flex",
-                            justifyContent: "space-between",
-                            width: "80%",
+                            justifyContent: "center",
                           }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <div style={{ width: "70px" }}>
-                              <h5
-                                style={{
-                                  color: "#007bff",
-                                  margin: "0",
-                                  letterSpacing: "0.2px",
-                                  fontWeight: "600",
-                                }}
-                              >
-                                ID
-                              </h5>
-                            </div>
-
+                          <div style={{ width: "80px" }}>
                             <h5
                               style={{
                                 color: "#007bff",
                                 margin: "0",
                                 letterSpacing: "0.2px",
-                                fontWeight: "600",
+                                fontWeight: "500",
                               }}
                             >
-                              Student's Info
+                              ID
                             </h5>
                           </div>
+
                           <h5
                             style={{
                               color: "#007bff",
                               margin: "0",
                               letterSpacing: "0.2px",
-                              fontWeight: "600",
+                              fontWeight: "500",
                             }}
                           >
-                            Type | Status
+                            Student's Info
                           </h5>
                         </div>
-                      </div>
-                      <div
-                        style={{
-                          backgroundImage:
-                            "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5468ff 100%)",
-                          padding: "13px 14px",
-                          boxShadow:
-                            "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-                          borderTopRightRadius: "24px",
-                          borderBottomRightRadius: "24px",
-                          width: "31%",
-                        }}
-                      >
                         <h5
                           style={{
-                            color: "white",
+                            color: "#007bff",
                             margin: "0",
                             letterSpacing: "0.2px",
-                            fontWeight: "600",
+                            fontWeight: "500",
                           }}
                         >
-                          Actions
+                          Type | Status
                         </h5>
                       </div>
                     </div>
-                  </Flexer>
-
-                  <Flexer>
                     <div
                       style={{
-                        backgroundColor: "#f0ffff",
-                        borderRadius: "12px",
-                        border: "1px solid rgba(7, 187, 255, 0.4)",
-                        padding: "4px 4px 4px 4px",
+                        backgroundImage:
+                          "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5468ff 100%)",
+                        padding: "13px 14px",
                         boxShadow:
-                          "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-                        width: "100%",
-                        height: "300px",
-                        overflow: "hidden",
-                        overflowY: "scroll",
+                          "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+                        borderTopRightRadius: "24px",
+                        borderBottomRightRadius: "24px",
+                        width: "31%",
                       }}
                     >
-                      <div
+                      <h5
                         style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-start",
-                          width: "100%",
+                          color: "white",
+                          margin: "0",
+                          letterSpacing: "0.2px",
+                          fontWeight: "500",
                         }}
                       >
-                        {filteredSchedules.map((schedule) => (
-                          <ZebraDiv>
+                        Actions
+                      </h5>
+                    </div>
+                  </div>
+                </Flexer>
+
+                <Flexer>
+                  <div
+                    style={{
+                      backgroundColor: "#f0ffff",
+                      // backgroundImage: `url(${dots})`,
+                      borderRadius: "12px",
+                      border: "1px solid rgba(7, 187, 255, 0.4)",
+                      backdropFilter: "blur(4px)",
+                      WebkitBackdropFilter: "blur(4px)",
+                      padding: "4px 4px 4px 4px",
+                      width: "100%",
+                      height: "226px",
+                      overflow: "hidden",
+                      overflowY: "scroll",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      {filteredSchedules.length === 0 ? (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "100%",
+                            height: "100%",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              gap: "8px",
+                            }}
+                          >
+                            <BsInboxes
+                              style={{
+                                fontSize: "24px",
+                                color: "rgba(0, 123, 255, 1)",
+                              }}
+                            />
                             <div
                               style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                padding: "14px 14px",
-                                width: "70%",
+                                color: "rgba(0, 123, 255, 1)",
+                                fontSize: "13px",
+                                fontWeight: "500",
                               }}
                             >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  width: "100%",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    margin: "0px",
-
-                                    fontWeight: "500",
-                                    lineHeight: "22px",
-                                    fontSize: "12px",
-                                    letterSpacing: "0.2px",
-                                    width: "60px",
-                                  }}
-                                >
-                                  {schedule.cardId
-                                    ? schedule.cardId.slice(-3)
-                                    : ""}
-                                </div>
-                                <div
-                                  style={{
-                                    margin: "0px",
-                                    fontWeight: "500",
-                                    lineHeight: "22px",
-                                    fontSize: "12px",
-                                    letterSpacing: "0.2px",
-                                    width: "300px",
-                                  }}
-                                >
-                                  <span
-                                    style={{
-                                      fontWeight: "500",
-                                      letterSpacing: "0.2px",
-                                      color: "blue",
-                                    }}
-                                  >
-                                    {schedule.nameOfStudent}
-                                  </span>
-                                  ,{" "}
-                                  <span
-                                    style={{
-                                      wordSpacing: "0px",
-                                      textTransform: "lowercase",
-                                    }}
-                                  >
-                                    {schedule.timing}
-                                  </span>
-                                  , {schedule.day} <br />
-                                  <span>
-                                    {schedule.parent
-                                      ? schedule.parent
-                                          .split(" ")
-                                          .slice(0, 2)
-                                          .join(" ")
-                                      : ""}{" "}
-                                  </span>
-                                </div>
+                              No data
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          {filteredSchedules
+                            .filter((schedule) => schedule.length !== 0)
+                            .map((schedule) => (
+                              <ZebraDiv>
                                 <div
                                   style={{
                                     display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "flex-start",
-                                    justifyContent: "center",
-                                    gap: "0px",
-                                    width: "260px",
+                                    justifyContent: "space-between",
+                                    padding: "14px 16px",
+                                    width: "70%",
                                   }}
                                 >
                                   <div
                                     style={{
                                       display: "flex",
                                       justifyContent: "flex-start",
-                                      alignItems: "center",
-                                      gap: "8px",
+                                      width: "100%",
                                     }}
                                   >
                                     <div
                                       style={{
-                                        display: "flex",
-                                        justifyContent: "flex-start",
-                                        alignItems: "center",
-                                        gap: "12px",
+                                        margin: "0px",
+                                        fontWeight: "500",
+                                        lineHeight: "22px",
+                                        fontSize: "13px",
+                                        letterSpacing: "0.2px",
+                                        width: "81px",
                                       }}
                                     >
-                                      <h5
+                                      {schedule.cardId
+                                        ? schedule.cardId.slice(-3)
+                                        : ""}
+                                    </div>
+                                    <div
+                                      style={{
+                                        margin: "0px",
+                                        fontWeight: "500",
+                                        lineHeight: "22px",
+                                        fontSize: "13px",
+                                        letterSpacing: "0.2px",
+                                        width: "340px",
+                                      }}
+                                    >
+                                      <span
                                         style={{
-                                          margin: "0px",
-
                                           fontWeight: "500",
-                                          lineHeight: "22px",
-                                          fontSize: "12px",
-                                          letterSpacing: "0.4px",
+                                          letterSpacing: "0.2px",
+                                          color: "blue",
+                                          fontSize: "13px",
                                         }}
                                       >
-                                        {schedule.studentType}
-                                      </h5>
+                                        {schedule.nameOfStudent}
+                                      </span>{" "}
+                                      |{" "}
+                                      <span
+                                        style={{
+                                          wordSpacing: "0px",
+                                          textTransform: "lowercase",
+                                        }}
+                                      >
+                                        {schedule.timing}
+                                      </span>
+                                      , {schedule.day} <br />
+                                      <span style={{ fontSize: "13px" }}>
+                                        {schedule.parent
+                                          ? schedule.parent
+                                              .split(" ")
+                                              .slice(0, 2)
+                                              .join(" ")
+                                          : ""}{" "}
+                                      </span>
                                     </div>
-                                    {"|"}
                                     <div
                                       style={{
-                                        margin: "0px",
-                                        fontWeight: "500",
-                                        lineHeight: "22px",
-                                        fontSize: "12px",
-                                        wordSpacing: "1px",
-                                      }}
-                                    >
-                                      {schedule.isActive === "No info yet" && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            gap: "8px",
-                                          }}
-                                        >
-                                          <div
-                                            style={{
-                                              background: "#122c8e",
-                                              width: "10px",
-                                              height: "10px",
-                                              borderRadius: "50%",
-                                            }}
-                                          ></div>
-                                          <div
-                                            style={{
-                                              color: "#122c8e",
-                                            }}
-                                          >
-                                            No info yet
-                                          </div>
-                                        </div>
-                                      )}
-                                      {schedule.isActive === "Present" && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            gap: "8px",
-                                          }}
-                                        >
-                                          <div
-                                            style={{
-                                              background: "#2AAA8A",
-                                              width: "10px",
-                                              height: "10px",
-                                              borderRadius: "50%",
-                                            }}
-                                          ></div>
-                                          <div
-                                            style={{
-                                              color: "#2AAA8A",
-                                            }}
-                                          >
-                                            Present
-                                          </div>
-                                        </div>
-                                      )}
-                                      {schedule.isActive === "Absent" && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            gap: "8px",
-                                          }}
-                                        >
-                                          <div
-                                            style={{
-                                              background: "#ff3131",
-                                              width: "10px",
-                                              height: "10px",
-                                              borderRadius: "50%",
-                                            }}
-                                          ></div>
-                                          <div
-                                            style={{
-                                              color: "#ff3131",
-                                            }}
-                                          >
-                                            Absent
-                                          </div>
-                                        </div>
-                                      )}
-                                    </div>
-                                    {"|"}
-                                    <div
-                                      style={{
-                                        margin: "0px",
-                                        fontWeight: "500",
-                                        lineHeight: "22px",
-                                        fontSize: "12px",
-                                        wordSpacing: "1px",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "flex-start",
+                                        justifyContent: "center",
+                                        gap: "0px",
+                                        width: "200px",
                                       }}
                                     >
                                       <div
                                         style={{
                                           display: "flex",
-                                          justifyContent: "center",
+                                          justifyContent: "flex-start",
                                           alignItems: "center",
                                           gap: "8px",
                                         }}
                                       >
-                                        {schedule.isVideoOn ? (
-                                          <>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "flex-start",
+                                            alignItems: "center",
+                                            gap: "12px",
+                                          }}
+                                        >
+                                          <h5
+                                            style={{
+                                              margin: "0px",
+                                              fontWeight: "500",
+                                              lineHeight: "22px",
+                                              fontSize: "13px",
+                                              letterSpacing: "0.2px",
+                                            }}
+                                          >
+                                            {schedule.studentType}
+                                          </h5>
+                                        </div>
+                                        <span
+                                          style={{
+                                            color: "#122c8e",
+                                            fontSize: "11px",
+                                          }}
+                                        >
+                                          |
+                                        </span>
+                                        <div
+                                          style={{
+                                            margin: "0px",
+
+                                            fontWeight: "500",
+                                            lineHeight: "22px",
+                                            fontSize: "13px",
+                                            wordSpacing: "1px",
+                                          }}
+                                        >
+                                          {schedule.isActive ===
+                                            "No info yet" && (
                                             <div
                                               style={{
-                                                background: "#007bff",
-                                                width: "10px",
-                                                height: "10px",
-                                                borderRadius: "50%",
-                                              }}
-                                            ></div>
-                                            <div
-                                              style={{
-                                                color: "#007bff",
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                gap: "8px",
                                               }}
                                             >
-                                              Online
+                                              <div
+                                                style={{
+                                                  color: "#122c8e",
+                                                  fontSize: "13px",
+                                                }}
+                                              >
+                                                No info
+                                              </div>
                                             </div>
-                                          </>
-                                        ) : (
-                                          <>
+                                          )}
+                                          {schedule.isActive === "Present" && (
                                             <div
                                               style={{
-                                                background: "#122c8e",
-                                                width: "10px",
-                                                height: "10px",
-                                                borderRadius: "50%",
-                                              }}
-                                            ></div>
-                                            <div
-                                              style={{
-                                                color: "#122c8e",
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                gap: "8px",
                                               }}
                                             >
-                                              OnSite
+                                              <div
+                                                style={{
+                                                  color: "#2AAA8A",
+                                                  fontSize: "13px",
+                                                }}
+                                              >
+                                                Present
+                                              </div>
                                             </div>
-                                          </>
+                                          )}
+                                          {schedule.isActive === "Absent" && (
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                gap: "8px",
+                                              }}
+                                            >
+                                              <div
+                                                style={{
+                                                  color: "#ff3131",
+                                                  fontSize: "13px",
+                                                }}
+                                              >
+                                                Absent
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                        <span
+                                          style={{
+                                            color: "#122c8e",
+                                            fontSize: "11px",
+                                          }}
+                                        >
+                                          |
+                                        </span>
+                                        {schedule.isActive !== "Absent" && (
+                                          <div
+                                            style={{
+                                              margin: "0px",
+                                              fontWeight: "500",
+                                              lineHeight: "22px",
+                                              fontSize: "13px",
+                                              wordSpacing: "1px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                gap: "8px",
+                                              }}
+                                            >
+                                              {schedule.isVideoOn ? (
+                                                <>
+                                                  <div
+                                                    style={{
+                                                      color: "#007bff",
+                                                      fontSize: "13px",
+                                                    }}
+                                                  >
+                                                    Online
+                                                  </div>
+                                                </>
+                                              ) : (
+                                                <>
+                                                  <div
+                                                    style={{
+                                                      color: "#122c8e",
+                                                      fontSize: "13px",
+                                                    }}
+                                                  >
+                                                    On-site
+                                                  </div>
+                                                </>
+                                              )}
+                                            </div>
+                                          </div>
                                         )}
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                width: "30%",
-                                padding: "16px 14px",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                  gap: "4px",
-                                }}
-                              >
-                                <LowerIconDiv>
-                                  <PersonIcon sx={{ fontSize: "14px" }} />
-                                </LowerIconDiv>
-                              </div>
-
-                              {showExtraFunc ? (
                                 <div
                                   style={{
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    width: "30%",
+                                    padding: "16px 14px",
                                   }}
                                 >
-                                  {schedule.isActive !== "No info yet" && (
-                                    <>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      alignItems: "center",
+                                      gap: "4px",
+                                    }}
+                                  >
+                                    <LowerIconDiv>
+                                      <PersonIcon sx={{ fontSize: "14px" }} />
+                                    </LowerIconDiv>
+                                  </div>
+
+                                  {showExtraFunc ? (
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                      }}
+                                    >
                                       {schedule.isVideoOn === false &&
-                                        schedule.isActive === "Present" && (
+                                        schedule.isActive !== "Absent" && (
                                           <IconSortContainer
                                             onClick={() =>
                                               handleClickVideo(schedule._id)
                                             }
                                           >
-                                            <BsCameraReels
+                                            <BsCameraVideo
                                               style={{
                                                 color: "#007bff",
                                                 fontSize: "20px",
@@ -2088,625 +2305,836 @@ const ParentSortSchedule = () => {
                                             />
                                           </IconSortContainer>
                                         )}
-                                    </>
+
+                                      {schedule.isActive !== "Present" &&
+                                        schedule.isActive !== "Absent" && (
+                                          <>
+                                            <IconSortContainer
+                                              onClick={() =>
+                                                handleAddToContainerPresentPerm(
+                                                  schedule,
+                                                  schedule._id
+                                                )
+                                              }
+                                            >
+                                              <BsCalendar2Check
+                                                style={{
+                                                  color: "#4CBB17",
+                                                  fontSize: "20px",
+                                                }}
+                                              />
+                                            </IconSortContainer>
+                                            <IconSortContainer
+                                              onClick={() =>
+                                                handleAddToContainerPerm(
+                                                  schedule,
+                                                  schedule._id
+                                                )
+                                              }
+                                            >
+                                              <BsCalendar2X
+                                                style={{
+                                                  color: "#Ff3131",
+                                                  fontSize: "20px",
+                                                }}
+                                              />
+                                            </IconSortContainer>
+                                          </>
+                                        )}
+
+                                      <IconSortContainer>
+                                        <BsExclamationCircle
+                                          style={{
+                                            color: "#FFBF00",
+                                            fontSize: "20px",
+                                          }}
+                                        />
+                                      </IconSortContainer>
+                                    </div>
+                                  ) : (
+                                    ""
                                   )}
 
-                                  {schedule.isActive !== "Present" &&
-                                    schedule.isActive !== "Absent" && (
-                                      <>
-                                        <IconSortContainer
-                                          onClick={() =>
-                                            handleAddToContainerPresent(
-                                              schedule,
-                                              schedule._id
-                                            )
-                                          }
-                                        >
-                                          <BsCalendar2Check
-                                            style={{
-                                              color: "#4CBB17",
-                                              fontSize: "20px",
-                                            }}
-                                          />
-                                        </IconSortContainer>
-                                        <IconSortContainer
-                                          onClick={() =>
-                                            handleAddToContainer(
-                                              schedule,
-                                              schedule._id
-                                            )
-                                          }
-                                        >
-                                          <BsCalendar2X
-                                            style={{
-                                              color: "#Ff3131",
-                                              fontSize: "20px",
-                                            }}
-                                          />
-                                        </IconSortContainer>
-                                      </>
-                                    )}
-
-                                  <IconSortContainer>
-                                    <BsExclamationCircle
-                                      style={{
-                                        color: "#FFBF00",
-                                        fontSize: "20px",
-                                      }}
-                                    />
-                                  </IconSortContainer>
+                                  <BiDotsVerticalRounded
+                                    onClick={toggleExtraFunc}
+                                    style={{
+                                      fontSize: "24px",
+                                      color: "rgba(0, 123, 255, 0.8)",
+                                      cursor: "pointer",
+                                    }}
+                                  />
                                 </div>
-                              ) : (
-                                ""
-                              )}
-
-                              <BiDotsVerticalRounded
-                                onClick={toggleExtraFunc}
-                                style={{
-                                  fontSize: "24px",
-                                  color: "rgba(0, 123, 255, 0.6)",
-                                  cursor: "pointer",
-                                }}
-                              />
-                            </div>
-                          </ZebraDiv>
-                        ))}
-                      </div>
+                              </ZebraDiv>
+                            ))}
+                        </>
+                      )}
                     </div>
-                  </Flexer>
-                </>
-              )}
+                  </div>
+                </Flexer>
+              </>
+            )}
 
-              {activeSchedType === "Temporary" && (
-                <>
-                  <SearchMainCon>
-                    <div
+            {activeSchedType === "Temporary" && (
+              <>
+                <SearchMainCon>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "6px",
+                      left: "8px",
+                      width: "26px",
+                      height: "26px",
+                      zIndex: "2",
+                      borderRadius: "50%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <RiSearchLine
                       style={{
-                        position: "absolute",
-                        top: "6px",
-                        left: "8px",
-                        width: "26px",
-                        height: "26px",
-                        zIndex: "2",
-                        borderRadius: "50%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        color: "#007bff",
+                        fontSize: "16px",
                       }}
-                    >
-                      <RiSearchLine
-                        style={{
-                          color: "#007bff",
-                          fontSize: "16px",
-                        }}
-                      />
-                    </div>
-                    <SearchBar
-                      type="text"
-                      placeholder="Search.."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
-                    <div style={{ display: "flex", gap: "8px" }}>
-                      {isNameDesc ? (
-                        <div onClick={toggleFilterName}>
-                          <FilterButton onClick={sortMixedAlphabetically}>
-                            <AiOutlineSortAscending
-                              style={{ fontSize: "18px" }}
-                            />
-                          </FilterButton>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterName}>
-                          <FilterButton onClick={sortAlphabeticallyDesc}>
-                            <AiOutlineSortDescending
-                              style={{ fontSize: "18px" }}
-                            />
-                          </FilterButton>
-                        </div>
-                      )}
-
-                      {isDayDesc ? (
-                        <div onClick={toggleFilterDay}>
-                          <FilterButton onClick={sortByDayOfWeek}>
-                            <HiOutlineFilter style={{ fontSize: "18px" }} />
-                          </FilterButton>
-                        </div>
-                      ) : (
-                        <div onClick={toggleFilterDay}>
-                          <FilterButton onClick={sortByDayOfWeekDesc}>
-                            <HiOutlineFilter style={{ fontSize: "18px" }} />
-                          </FilterButton>
-                        </div>
-                      )}
-                    </div>
-                  </SearchMainCon>
-                  <Flexer>
+                  </div>
+                  <SearchBar
+                    type="text"
+                    placeholder="Search.."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    {isDayDesc ? (
+                      <div onClick={toggleFilterDay}>
+                        <FilterButton onClick={sortByDayOfWeek}>
+                          <BsSortAlphaDown style={{ fontSize: "18px" }} />
+                        </FilterButton>
+                      </div>
+                    ) : (
+                      <div onClick={toggleFilterDay}>
+                        <FilterButton onClick={sortByDayOfWeekDesc}>
+                          <BsSortAlphaUpAlt style={{ fontSize: "18px" }} />
+                        </FilterButton>
+                      </div>
+                    )}
+                    {isNameDesc ? (
+                      <div onClick={toggleFilterName}>
+                        <FilterButton onClick={sortAlphabetically}>
+                          <BsSortUp style={{ fontSize: "18px" }} />
+                        </FilterButton>
+                      </div>
+                    ) : (
+                      <div onClick={toggleFilterName}>
+                        <FilterButton onClick={sortAlphabeticallyDesc}>
+                          <BsSortDownAlt style={{ fontSize: "18px" }} />
+                        </FilterButton>
+                      </div>
+                    )}
+                  </div>
+                </SearchMainCon>
+                <Flexer>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      borderRadius: "10px",
+                      width: "100%",
+                    }}
+                  >
                     <div
                       style={{
                         display: "flex",
-                        justifyContent: "center",
-                        borderRadius: "10px",
-                        width: "100%",
+                        justifyContent: "space-between",
+                        background: "rgba(255, 255, 255, 1)",
+                        padding: "13px 20px",
+                        borderTopLeftRadius: "10px",
+                        borderBottomLeftRadius: "10px",
+                        width: "70%",
+                        borderTop: "1px solid rgba(7, 187, 255, 0.6)",
+                        borderBottom: "1px solid rgba(7, 187, 255, 0.6)",
+                        borderLeft: "1px solid rgba(7, 187, 255, 0.6)",
                       }}
                     >
                       <div
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
-                          background: "rgba(255, 255, 255, 1)",
-                          padding: "13px 20px",
-                          borderTopLeftRadius: "10px",
-                          borderBottomLeftRadius: "10px",
-                          width: "68%",
-                          borderTop: "1px solid rgba(7, 187, 255, 0.4)",
-                          borderBottom: "1px solid rgba(7, 187, 255, 0.4)",
-                          borderLeft: "1px solid rgba(7, 187, 255, 0.4)",
+                          width: "78.7%",
                         }}
                       >
                         <div
                           style={{
                             display: "flex",
-                            justifyContent: "space-between",
-                            width: "80%",
+                            justifyContent: "center",
                           }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <div style={{ width: "70px" }}>
-                              <h5
-                                style={{
-                                  color: "#007bff",
-                                  margin: "0",
-                                  letterSpacing: "0.2px",
-                                  fontWeight: "600",
-                                }}
-                              >
-                                ID
-                              </h5>
-                            </div>
-
+                          <div style={{ width: "80px" }}>
                             <h5
                               style={{
                                 color: "#007bff",
                                 margin: "0",
                                 letterSpacing: "0.2px",
-                                fontWeight: "600",
+                                fontWeight: "500",
                               }}
                             >
-                              Student's Info
+                              ID
                             </h5>
                           </div>
+
                           <h5
                             style={{
                               color: "#007bff",
                               margin: "0",
                               letterSpacing: "0.2px",
-                              fontWeight: "600",
+                              fontWeight: "500",
                             }}
                           >
-                            Type | Status
+                            Student's Info
                           </h5>
                         </div>
-                      </div>
-                      <div
-                        style={{
-                          backgroundImage:
-                            "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5468ff 100%)",
-                          padding: "13px 14px",
-                          boxShadow:
-                            "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-                          borderTopRightRadius: "24px",
-                          borderBottomRightRadius: "24px",
-                          width: "31%",
-                        }}
-                      >
                         <h5
                           style={{
-                            color: "white",
+                            color: "#007bff",
                             margin: "0",
                             letterSpacing: "0.2px",
-                            fontWeight: "600",
+                            fontWeight: "500",
                           }}
                         >
-                          Actions
+                          Type | Status
                         </h5>
                       </div>
                     </div>
-                  </Flexer>
-
-                  <Flexer>
                     <div
                       style={{
-                        backgroundColor: "#f0ffff",
-                        borderRadius: "12px",
-                        border: "1px solid rgba(7, 187, 255, 0.4)",
-                        padding: "4px 4px 4px 4px",
+                        backgroundImage:
+                          "radial-gradient(100% 100% at 100% 0, #5468ff 0, #5468ff 100%)",
+                        padding: "13px 14px",
                         boxShadow:
-                          "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
-                        width: "100%",
-                        height: "300px",
-                        overflow: "hidden",
-                        overflowY: "scroll",
+                          "rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
+                        borderTopRightRadius: "24px",
+                        borderBottomRightRadius: "24px",
+                        width: "31%",
                       }}
                     >
-                      <div
+                      <h5
                         style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-start",
-                          width: "100%",
+                          color: "white",
+                          margin: "0",
+                          letterSpacing: "0.2px",
+                          fontWeight: "500",
                         }}
                       >
-                        {filteredMixedSchedules.map((schedule) => (
-                          <ZebraDiv>
+                        Actions
+                      </h5>
+                    </div>
+                  </div>
+                </Flexer>
+
+                <Flexer>
+                  <div
+                    style={{
+                      backgroundColor: "#f0ffff",
+                      // backgroundImage: `url(${dots})`,
+                      borderRadius: "12px",
+                      border: "1px solid rgba(7, 187, 255, 0.4)",
+                      backdropFilter: "blur(4px)",
+                      WebkitBackdropFilter: "blur(4px)",
+                      padding: "4px 4px 4px 4px",
+                      width: "100%",
+                      height: "226px",
+                      overflow: "hidden",
+                      overflowY: "scroll",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      {filteredMixedSchedules.length === 0 ? (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "100%",
+                            height: "100%",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              gap: "8px",
+                            }}
+                          >
+                            <BsInboxes
+                              style={{
+                                fontSize: "24px",
+                                color: "rgba(0, 123, 255, 1)",
+                              }}
+                            />
                             <div
                               style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                padding: "14px 14px",
-                                width: "70%",
+                                color: "rgba(0, 123, 255, 1)",
+                                fontSize: "13px",
+                                fontWeight: "500",
                               }}
                             >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  width: "100%",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    margin: "0px",
-
-                                    fontWeight: "500",
-                                    lineHeight: "22px",
-                                    fontSize: "12px",
-                                    letterSpacing: "0.2px",
-                                    width: "60px",
-                                  }}
-                                >
-                                  {schedule.cardId
-                                    ? schedule.cardId.slice(-3)
-                                    : ""}
-                                </div>
-                                <div
-                                  style={{
-                                    margin: "0px",
-                                    fontWeight: "500",
-                                    lineHeight: "22px",
-                                    fontSize: "12px",
-                                    letterSpacing: "0.2px",
-                                    width: "300px",
-                                  }}
-                                >
-                                  <span
-                                    style={{
-                                      fontWeight: "500",
-                                      letterSpacing: "0.2px",
-                                      color: "blue",
-                                    }}
-                                  >
-                                    {schedule.tempStudentName &&
-                                      schedule.tempStudentName.nameOfStudent}
-                                  </span>
-                                  ,{" "}
-                                  <span
-                                    style={{
-                                      wordSpacing: "0px",
-                                      textTransform: "lowercase",
-                                    }}
-                                  >
-                                    {schedule.permanentSched &&
-                                      schedule.permanentSched.timing}
-                                    {schedule.timing}
-                                  </span>
-                                  , {schedule.tempSoloDay} <br />
-                                  <span>
-                                    {schedule.tempStudentName &&
-                                    schedule.tempStudentName.parent
-                                      ? schedule.tempStudentName &&
-                                        schedule.tempStudentName.parent
-                                          .split(" ")
-                                          .slice(0, 2)
-                                          .join(" ")
-                                      : ""}{" "}
-                                  </span>
-                                </div>
+                              No data
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          {filteredMixedSchedules
+                            .filter((schedule) => schedule.length !== 0)
+                            .map((schedule) => (
+                              <ZebraDiv>
                                 <div
                                   style={{
                                     display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "flex-start",
-                                    justifyContent: "center",
-                                    gap: "0px",
-                                    width: "260px",
+                                    justifyContent: "space-between",
+                                    padding: "14px 16px",
+                                    width: "70%",
                                   }}
                                 >
                                   <div
                                     style={{
                                       display: "flex",
                                       justifyContent: "flex-start",
-                                      alignItems: "center",
-                                      gap: "8px",
+                                      width: "100%",
                                     }}
                                   >
                                     <div
                                       style={{
-                                        display: "flex",
-                                        justifyContent: "flex-start",
-                                        alignItems: "center",
-                                        gap: "12px",
+                                        margin: "0px",
+                                        fontWeight: "500",
+                                        lineHeight: "22px",
+                                        fontSize: "13px",
+                                        letterSpacing: "0.2px",
+                                        width: "81px",
                                       }}
                                     >
-                                      <h5
+                                      {schedule.cardId
+                                        ? schedule.cardId.slice(-3)
+                                        : ""}
+                                    </div>
+                                    <div
+                                      style={{
+                                        margin: "0px",
+                                        fontWeight: "500",
+                                        lineHeight: "22px",
+                                        fontSize: "13px",
+                                        letterSpacing: "0.2px",
+                                        width: "320px",
+                                      }}
+                                    >
+                                      <span
                                         style={{
-                                          margin: "0px",
-
                                           fontWeight: "500",
-                                          lineHeight: "22px",
-                                          fontSize: "12px",
-                                          letterSpacing: "0.4px",
+                                          letterSpacing: "0.2px",
+                                          color: "blue",
+                                          fontSize: "13px",
                                         }}
                                       >
                                         {schedule.tempStudentName &&
-                                          schedule.tempStudentName.studentType}
-                                      </h5>
+                                          schedule.tempStudentName
+                                            .nameOfStudent}
+                                      </span>{" "}
+                                      |{" "}
+                                      <span
+                                        style={{
+                                          wordSpacing: "0px",
+                                          textTransform: "lowercase",
+                                        }}
+                                      >
+                                        {schedule.timing}
+                                        {schedule.permanentSched &&
+                                          schedule.permanentSched.timing}
+                                      </span>
+                                      , {schedule.tempSoloDay} <br />
+                                      <span style={{ fontSize: "13px" }}>
+                                        {schedule.tempStudentName &&
+                                        schedule.tempStudentName.parent
+                                          ? schedule.tempStudentName &&
+                                            schedule.tempStudentName.parent
+                                              .split(" ")
+                                              .slice(0, 2)
+                                              .join(" ")
+                                          : ""}
+                                      </span>
                                     </div>
-                                    {"|"}
                                     <div
                                       style={{
-                                        margin: "0px",
-                                        fontWeight: "500",
-                                        lineHeight: "22px",
-                                        fontSize: "12px",
-                                        wordSpacing: "1px",
-                                      }}
-                                    >
-                                      {schedule.isActive === "No info yet" && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            gap: "8px",
-                                          }}
-                                        >
-                                          <div
-                                            style={{
-                                              background: "#122c8e",
-                                              width: "10px",
-                                              height: "10px",
-                                              borderRadius: "50%",
-                                            }}
-                                          ></div>
-                                          <div
-                                            style={{
-                                              color: "#122c8e",
-                                            }}
-                                          >
-                                            No info yet
-                                          </div>
-                                        </div>
-                                      )}
-                                      {schedule.isActive === "Present" && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            gap: "8px",
-                                          }}
-                                        >
-                                          <div
-                                            style={{
-                                              background: "#2AAA8A",
-                                              width: "10px",
-                                              height: "10px",
-                                              borderRadius: "50%",
-                                            }}
-                                          ></div>
-                                          <div
-                                            style={{
-                                              color: "#2AAA8A",
-                                            }}
-                                          >
-                                            Present
-                                          </div>
-                                        </div>
-                                      )}
-                                      {schedule.isActive === "Absent" && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            gap: "8px",
-                                          }}
-                                        >
-                                          <div
-                                            style={{
-                                              background: "#ff3131",
-                                              width: "10px",
-                                              height: "10px",
-                                              borderRadius: "50%",
-                                            }}
-                                          ></div>
-                                          <div
-                                            style={{
-                                              color: "#ff3131",
-                                            }}
-                                          >
-                                            Absent
-                                          </div>
-                                        </div>
-                                      )}
-                                    </div>
-                                    {"|"}
-                                    <div
-                                      style={{
-                                        margin: "0px",
-                                        fontWeight: "500",
-                                        lineHeight: "22px",
-                                        fontSize: "12px",
-                                        wordSpacing: "1px",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "flex-start",
+                                        justifyContent: "center",
+                                        gap: "0px",
+                                        width: "200px",
                                       }}
                                     >
                                       <div
                                         style={{
                                           display: "flex",
-                                          justifyContent: "center",
+                                          justifyContent: "flex-start",
                                           alignItems: "center",
                                           gap: "8px",
                                         }}
                                       >
                                         <div
                                           style={{
-                                            background: "#007bff",
-                                            width: "10px",
-                                            height: "10px",
-                                            borderRadius: "50%",
-                                          }}
-                                        ></div>
-                                        <div
-                                          style={{
-                                            color: "#007bff",
+                                            margin: "0px",
+                                            fontWeight: "500",
+                                            lineHeight: "22px",
+                                            fontSize: "13px",
+                                            letterSpacing: "0.2px",
                                           }}
                                         >
-                                          {schedule.permanentSched &&
-                                          schedule.permanentSched.isVideoOn
-                                            ? "Online"
-                                            : "On-site"}
+                                          {schedule.isActive ===
+                                            "No info yet" && (
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                gap: "8px",
+                                              }}
+                                            >
+                                              <div
+                                                style={{
+                                                  color: "#122c8e",
+                                                  fontSize: "13px",
+                                                }}
+                                              >
+                                                No info
+                                              </div>
+                                            </div>
+                                          )}
+                                          {schedule.isActive === "Present" && (
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                gap: "8px",
+                                              }}
+                                            >
+                                              <div
+                                                style={{
+                                                  color: "#2AAA8A",
+                                                  fontSize: "13px",
+                                                }}
+                                              >
+                                                Present
+                                              </div>
+                                            </div>
+                                          )}
+                                          {schedule.isActive === "Absent" && (
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                gap: "8px",
+                                              }}
+                                            >
+                                              <div
+                                                style={{
+                                                  color: "#ff3131",
+                                                  fontSize: "13px",
+                                                }}
+                                              >
+                                                Absent
+                                              </div>
+                                            </div>
+                                          )}
                                         </div>
+                                      </div>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "flex-start",
+                                          alignItems: "center",
+                                          gap: "8px",
+                                        }}
+                                      >
+                                        <h5
+                                          style={{
+                                            margin: "0px",
+                                            fontWeight: "500",
+                                            lineHeight: "22px",
+                                            fontSize: "13px",
+                                            letterSpacing: "0.2px",
+                                          }}
+                                        >
+                                          {formatTimestamp(schedule.dateTime)}
+                                        </h5>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                width: "30%",
-                                padding: "16px 14px",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                  gap: "4px",
-                                }}
-                              >
-                                <LowerIconDiv>
-                                  <PersonIcon sx={{ fontSize: "14px" }} />
-                                </LowerIconDiv>
-                              </div>
-
-                              {showExtraFunc ? (
                                 <div
                                   style={{
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    width: "30%",
+                                    padding: "16px 14px",
                                   }}
                                 >
-                                  {schedule.isActive !== "No info yet" && (
-                                    <>
-                                      {schedule.isVideoOn === false &&
-                                        schedule.isActive === "Present" && (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    {schedule.isActive !== "Present" &&
+                                      schedule.isActive !== "Absent" && (
+                                        <>
                                           <IconSortContainer
                                             onClick={() =>
-                                              handleClickVideo(schedule._id)
+                                              handleAddToContainerPresent(
+                                                schedule,
+                                                schedule &&
+                                                  schedule.tempStudentName._id,
+                                                schedule._id
+                                              )
                                             }
                                           >
-                                            <BsCameraReels
+                                            <BsCalendar2Check
                                               style={{
-                                                color: "#007bff",
+                                                color: "#4CBB17",
                                                 fontSize: "20px",
                                               }}
                                             />
                                           </IconSortContainer>
-                                        )}
-                                    </>
-                                  )}
-
-                                  {schedule.isActive !== "Present" &&
-                                    schedule.isActive !== "Absent" && (
-                                      <>
-                                        <IconSortContainer
-                                          onClick={() =>
-                                            handleAddToContainerPresent(
-                                              schedule,
-                                              schedule._id
-                                            )
-                                          }
-                                        >
-                                          <BsCalendar2Check
-                                            style={{
-                                              color: "#4CBB17",
-                                              fontSize: "20px",
-                                            }}
-                                          />
-                                        </IconSortContainer>
-                                        <IconSortContainer
-                                          onClick={() =>
-                                            handleAddToContainer(
-                                              schedule,
-                                              schedule._id
-                                            )
-                                          }
-                                        >
-                                          <BsCalendar2X
-                                            style={{
-                                              color: "#Ff3131",
-                                              fontSize: "20px",
-                                            }}
-                                          />
-                                        </IconSortContainer>
-                                      </>
-                                    )}
-
-                                  <IconSortContainer>
-                                    <BsExclamationCircle
-                                      style={{
-                                        color: "#FFBF00",
-                                        fontSize: "20px",
-                                      }}
+                                          <IconSortContainer
+                                            onClick={() =>
+                                              handleAddToContainer(
+                                                schedule,
+                                                schedule &&
+                                                  schedule.tempStudentName._id,
+                                                schedule._id
+                                              )
+                                            }
+                                          >
+                                            <BsCalendar2X
+                                              style={{
+                                                color: "#Ff3131",
+                                                fontSize: "20px",
+                                              }}
+                                            />
+                                          </IconSortContainer>
+                                        </>
+                                      )}
+                                  </div>
+                                  <div style={{ padding: "0 20px 0 0" }}>
+                                    <TimeBar
+                                      key={schedule._id}
+                                      scheduleDate={schedule.dateTime}
                                     />
-                                  </IconSortContainer>
+                                  </div>
                                 </div>
-                              ) : (
-                                ""
-                              )}
-
-                              <BiDotsVerticalRounded
-                                onClick={toggleExtraFunc}
-                                style={{
-                                  fontSize: "24px",
-                                  color: "rgba(0, 123, 255, 0.6)",
-                                  cursor: "pointer",
-                                }}
-                              />
-                            </div>
-                          </ZebraDiv>
-                        ))}
-                      </div>
+                              </ZebraDiv>
+                            ))}
+                        </>
+                      )}
                     </div>
-                  </Flexer>
-                </>
-              )}
-            </FlexerSwitch>
-          </FlexRow>
-        </StudentParentCon>
-      </Wrapper>
-    </Dots>
+                  </div>
+                </Flexer>
+              </>
+            )}
+          </FlexerSwitch>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "12px",
+              marginTop: "54px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                width: "100%",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "236px",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                    borderBottomRightRadius: "0px",
+                    borderBottomLeftRadius: "10px",
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    background: "#122c8e",
+                    WebkitBackdropFilter: "blur(4px)",
+                    backdropFilter: "blur(4px)",
+                    overflow: "hidden",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      padding: "10px",
+                    }}
+                  >
+                    <BsMegaphone style={{ fontSize: "24px", color: "white" }} />
+                  </div>
+                  <div
+                    style={{
+                      top: "138px",
+                      right: "-52px",
+                      position: "absolute",
+                      width: "150px",
+                      height: "150px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      background: "white",
+                      borderRadius: "50%",
+                      gap: "8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        background: "#122c8e",
+                        borderRadius: "50%",
+                        boxShadow:
+                          "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        background: "#122c8e",
+                        borderRadius: "50%",
+                        boxShadow:
+                          "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  height: "112px",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "0px",
+                  borderBottomRightRadius: "10px",
+                  borderBottomLeftRadius: "10px",
+                  outline: "1px solid rgba(7, 187, 255, 0.3)",
+                  boxShadow:
+                    "rgba(0, 123, 255, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  background: "#f0ffff",
+                  WebkitBackdropFilter: "blur(4px)",
+                  backdropFilter: "blur(4px)",
+                }}
+              ></div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+              }}
+            >
+              <Tilt>
+                <StatsCard
+                  sx={{
+                    outline: "1px solid rgba(7, 187, 255, 0.3)",
+                    boxShadow:
+                      "rgba(0, 123, 255, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    background: "#f0ffff",
+                    WebkitBackdropFilter: "blur(4px)",
+                    backdropFilter: "blur(4px)",
+
+                    cursor: "pointer",
+                    listStyle: "none",
+                    overflow: "hidden",
+                    position: "relative",
+                    textDecoration: "none",
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                    touchAction: "manipulation",
+                    willChange: "transform",
+                    transition: "transform .15s",
+                    color: "#122c8e",
+                    ":hover": {
+                      color: "white",
+                      background: "#122c8e",
+                      outline: "none",
+                    },
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "14px",
+
+                      fontWeight: "400",
+                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div>Total</div>
+                    <div style={{ marginTop: "-2px" }}>Schedules</div>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "42px",
+
+                      fontWeight: "600",
+                      alignSelf: "flex-end",
+                    }}
+                  >
+                    19
+                  </div>
+                </StatsCard>
+              </Tilt>
+              <Tilt>
+                <StatsCard
+                  sx={{
+                    outline: "1px solid rgba(7, 187, 255, 0.3)",
+                    boxShadow:
+                      "rgba(0, 123, 255, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    background: "#f0ffff",
+                    WebkitBackdropFilter: "blur(4px)",
+                    backdropFilter: "blur(4px)",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                    borderBottomRightRadius: "10px",
+                    borderBottomLeftRadius: "0px",
+                    cursor: "pointer",
+                    listStyle: "none",
+                    overflow: "hidden",
+                    position: "relative",
+                    textDecoration: "none",
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                    touchAction: "manipulation",
+                    willChange: "transform",
+                    transition: "transform .15s",
+                    color: "#122c8e",
+                    ":hover": {
+                      color: "white",
+                      background: "#FFBF00",
+                      outline: "none",
+                    },
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      fontWeight: "400",
+                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div>Online</div>
+                    <div style={{ marginTop: "-2px" }}>Schedules</div>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "42px",
+
+                      fontWeight: "600",
+                      alignSelf: "flex-end",
+                    }}
+                  >
+                    7
+                  </div>
+                </StatsCard>
+              </Tilt>
+              <Tilt>
+                <StatsCard
+                  sx={{
+                    outline: "1px solid rgba(7, 187, 255, 0.3)",
+                    boxShadow:
+                      "rgba(0, 123, 255, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    background: "#f0ffff",
+                    WebkitBackdropFilter: "blur(4px)",
+                    backdropFilter: "blur(4px)",
+                    borderTopLeftRadius: "0px",
+                    borderTopRightRadius: "10px",
+                    borderBottomRightRadius: "10px",
+                    borderBottomLeftRadius: "10px",
+                    cursor: "pointer",
+                    listStyle: "none",
+                    overflow: "hidden",
+                    position: "relative",
+                    textDecoration: "none",
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                    touchAction: "manipulation",
+                    willChange: "transform",
+                    transition: "transform .15s",
+                    color: "#122c8e",
+                    ":hover": {
+                      color: "white",
+                      background: "#ff3131",
+                      outline: "none",
+                    },
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      fontWeight: "400",
+                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div>Absent</div>
+                    <div style={{ marginTop: "-2px" }}>Schedules</div>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "42px",
+                      fontWeight: "600",
+                      alignSelf: "flex-end",
+                    }}
+                  >
+                    7
+                  </div>
+                </StatsCard>
+              </Tilt>
+            </div>
+          </div>
+        </FlexRow>
+      </StudentParentCon>
+    </Wrapper>
   );
 };
 export default ParentSortSchedule;

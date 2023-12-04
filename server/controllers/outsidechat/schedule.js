@@ -5,11 +5,12 @@ const TempLogs = require("../../models/tempLogs");
 const TempSoloLogs = require("../../models/tempSoloLogs");
 const uniqid = require("uniqid");
 const cron = require("node-cron");
+const moment = require("moment-timezone");
 
 // schedule
 
 const createSchedule = async (req, res) => {
-  const { day, timing, studentType, isVideoOn } = req.body;
+  const { day, timing, studentType } = req.body;
 
   const scheduleExists = await Schedule.exists({
     $and: [{ studentType: "Solo" }, { day: day }, { timing: timing }],
@@ -58,7 +59,7 @@ const createSchedule = async (req, res) => {
 
 const getSchedule = async (req, res) => {
   try {
-    const scheds = await Schedule.find();
+    const scheds = await Schedule.find().sort({ updatedAt: -1 });
     res.json(scheds);
   } catch (error) {
     return res.status(500).send("Error occurred, please try again!");
@@ -154,7 +155,24 @@ const deleteOneSchedule = async (req, res) => {
 // temporary schedule
 
 const createTempSchedule = async (req, res) => {
-  const { tempSoloDay, timing, day } = req.body;
+  const { tempSoloDay, timing, dateTime } = req.body;
+
+  const today = moment().tz("Asia/Manila").format("YYYY-MM-DD");
+  const tomorrow = moment().add(1, "day").startOf("day");
+
+  if (today === dateTime) {
+    return res.status(409).send("Cannot schedule on same day!");
+  }
+
+  if (moment(dateTime).isBefore(today, "day")) {
+    return res.status(409).send("Selected date is in the past!");
+  }
+
+  if (moment(dateTime).isAfter(tomorrow.add(5, "days"), "day")) {
+    return res
+      .status(409)
+      .send("Selected date is more than 6 days from tomorrow!");
+  }
 
   const scheduleExists = await Schedule.exists({
     $and: [{ studentType: "Solo" }, { day: tempSoloDay }, { timing: timing }],
@@ -259,10 +277,31 @@ const deleteTempSchedules = async (req, res) => {
 // temporary solo schedule
 
 const createTempSoloSchedule = async (req, res) => {
-  const { day, timing, tempSoloDay } = req.body;
+  const { day, timing, tempSoloDay, dateTime } = req.body;
+
+  const today = moment().tz("Asia/Manila").format("YYYY-MM-DD");
+  const tomorrow = moment().add(1, "day").startOf("day");
+
+  if (today === dateTime) {
+    return res.status(409).send("Cannot schedule on same day!");
+  }
+
+  if (moment(dateTime).isBefore(today, "day")) {
+    return res.status(409).send("Selected date is in the past!");
+  }
+
+  if (moment(dateTime).isAfter(tomorrow.add(5, "days"), "day")) {
+    return res
+      .status(409)
+      .send("Selected date is more than 6 days from tomorrow!");
+  }
 
   const scheduleExists = await Schedule.exists({
-    $and: [{ isActive: true }, { day: day }, { timing: timing }],
+    $and: [
+      { isActive: "Present" && "No info yet" },
+      { day: day },
+      { timing: timing },
+    ],
   });
 
   if (scheduleExists) {
@@ -429,34 +468,25 @@ const setMinusAbsentCounter = async (req, res) => {
 
 //progress report
 
-const createProgressReport = async (req, res) => {
-  const { day, timing, tempSoloDay } = req.body;
-
-  const scheduleExists = await Schedule.exists({
-    $and: [{ isActive: true }, { day: day }, { timing: timing }],
-  });
-
-  if (scheduleExists) {
-    return res.status(409).send("Slot Occupied!");
-  }
-
-  const tempScheduleExists = await TempSchedule.exists({
-    $and: [{ tempSoloDay: tempSoloDay }, { timing: timing }],
-  });
-
-  if (tempScheduleExists) {
-    return res.status(409).send("Schedule already exists");
-  }
-
+const setWaitlistStatus = async (req, res) => {
   try {
-    const newSchedule = await new TempSolo({
-      ...req.body,
-      cardId: uniqid(),
-    }).save();
-    res.json(newSchedule);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json("Temporary schedule create error.");
+    const { isWaitlisted } = req.body;
+    const updatedSchedule = await Schedule.findByIdAndUpdate(
+      req.params.id,
+      { isWaitlisted },
+      { new: true }
+    );
+
+    if (!updatedSchedule) {
+      return res.status(404).json({ error: "Schedule not found." });
+    }
+
+    res.status(200).json({
+      message: "isWaitlisted status changed.",
+      updatedSchedule,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to change active status." });
   }
 };
 
@@ -482,6 +512,7 @@ module.exports = {
   setActiveTempSolo,
   setVideo,
   setVideoTempSolo,
+  setWaitlistStatus,
 
   isVideoOffHandler,
   isActiveDefHandler,

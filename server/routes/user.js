@@ -28,12 +28,20 @@ router.post("/con-present", auth, mainController.controllers.userConPresent);
 router.get("/con-present", auth, mainController.controllers.getUserConPresent);
 router.delete("/con-present", auth, mainController.controllers.emptyConPresent);
 
-// uuser present logs audit
+// user present logs audit
 
 router.post(
   "/sched-order-present",
   auth,
   mainController.controllers.createSchedOrderPresent
+);
+
+// handle hash Waitlist Account password
+
+router.post(
+  "/hash-password",
+  auth,
+  mainController.controllers.hashWaitlistUserPassword
 );
 
 module.exports = router;

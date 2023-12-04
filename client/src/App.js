@@ -27,6 +27,7 @@ import Logs from "./Admin/AdminDashboard/Logs/Logs";
 import EditSchedule from "./Admin/AdminDashboard/UpdateSchedule/EditSchedule";
 import Chat from "./Dashboard/Chat";
 import WaitList from "./Admin/AdminDashboard/Waitlist/WaitList";
+import CreateProgRequest from "./Admin/AdminDashboard/ProgRequest/CreateProgRequest";
 
 function App() {
   const [userNotif, setUserNotif] = useState("");
@@ -96,6 +97,9 @@ function App() {
           </Route>
           <Route exact path="/logs">
             <Logs />
+          </Route>
+          <Route exact path="/report">
+            <CreateProgRequest />
           </Route>
         </Switch>
       </Router>

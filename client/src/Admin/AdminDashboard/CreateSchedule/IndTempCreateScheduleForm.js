@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Tilt from "react-parallax-tilt";
-import { BsCalendarWeek, BsHourglassSplit, BsPlus } from "react-icons/bs";
+import {
+  BsCalendarWeek,
+  BsClockFill,
+  BsHourglass,
+  BsHourglassSplit,
+  BsPlus,
+} from "react-icons/bs";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import moment from "moment";
+import { FaPlus } from "react-icons/fa6";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Flexer = styled("div")({
   display: "flex",
@@ -33,20 +42,27 @@ const FilterButton = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "40px",
-  height: "38px",
-  background: "rgba(7, 187, 255, 0.3)",
-  boxShadow: "rgba(0, 0, 0, 0.06) 0px 1px 1px",
-  borderRadius: "50%",
+  gap: "8px",
+  width: "88px",
+  height: "40px",
+  background: "#f7fff7",
+  border: "1px solid rgba(0, 123, 255, 0.6)",
+  borderRadius: "36px",
   cursor: "pointer",
+  color: "#122c8e",
   userSelect: "none",
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
   transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
   "&:hover": {
+    border: "none",
+    color: "white",
     transform: "translateY(-1px)",
+    background: "#33f641",
+    backgroundImage:
+      "radial-gradient(at 16.0% 15.0%, hsl(55, 99%, 44%) 0px, transparent 50%),radial-gradient(at 12.0% 94.0%, hsl(74, 34%, 61%) 0px, transparent 50%),radial-gradient(at 98.0% 29.0%, hsl(90, 60%, 24%) 0px, transparent 50%),radial-gradient(at 1.0% 16.0%, hsl(105, 10%, 31%) 0px, transparent 50%),radial-gradient(at 28.0% 88.0%, hsl(148, 67%, 56%) 0px, transparent 50%)",
   },
   "&:active": {
     transform: "translateY(3px)",
@@ -56,18 +72,16 @@ const FilterButton = styled("div")({
 const NextRoundButton = styled("button")({
   padding: "0",
   border: "none",
-  backgroundColor: "#07bbff",
+  background: "#33f641",
   backgroundImage:
-    "radial-gradient(100% 100% at 0% 0, #007bff 0, #007bff 100%)",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
+    "radial-gradient(at 16.0% 15.0%, hsl(55, 99%, 44%) 0px, transparent 50%),radial-gradient(at 12.0% 94.0%, hsl(74, 34%, 61%) 0px, transparent 50%),radial-gradient(at 98.0% 29.0%, hsl(90, 60%, 24%) 0px, transparent 50%),radial-gradient(at 1.0% 16.0%, hsl(105, 10%, 31%) 0px, transparent 50%),radial-gradient(at 28.0% 88.0%, hsl(148, 67%, 56%) 0px, transparent 50%)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "6px",
-  width: "84px",
-  height: "38px",
-  borderRadius: "12px",
+  width: "38px",
+  height: "36px",
+  borderRadius: "24px",
   cursor: "pointer",
   fontFamily: "Poppins, sans-serif",
   userSelect: "none",
@@ -86,66 +100,91 @@ const NextRoundButton = styled("button")({
 
 const NextDisabledButton = styled("button")({
   padding: "0",
-  background: "white",
+  background: "transparent",
   border: "none",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 123, 255, 0.1) 0px 1px 2px 0px",
+  outline: "1px solid rgba(0, 123, 255, 0.6)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "6px",
-  width: "84px",
-  height: "38px",
-  borderRadius: "12px",
+  width: "38px",
+  height: "36px",
+  borderRadius: "24px",
   cursor: "pointer",
   fontFamily: "Poppins, sans-serif",
 });
 
 const InputFields = styled("input")({
   width: "100%",
-  background: "rgba(7, 187, 255, 0.2)",
-  border: "1px solid white",
-  borderRadius: "10px",
-  height: "42px",
-  padding: "0px 0px 0px 12px",
-  fontSize: "11px",
-  fontWeight: "600",
-  color: "#343434",
+  background: "#f7fff7",
+  outline: "1px solid rgba(0, 123, 255, 0.6)",
+  border: "none",
+  borderRadius: "24px",
+  height: "44px",
+  padding: "0px 0px 0px 20px",
+  fontSize: "12px",
+  fontWeight: "500",
+  color: "#122c8e",
   letterSpacing: "0.2px",
-  outline: "none",
   position: "relative",
   fontFamily: "Poppins, sans-serif",
 
   "&:focus": {
-    outline: "2px solid #228B22",
-    border: "1px solid rgba(7, 187, 255, 0.2)",
+    outline: "2px solid #007bff",
+    border: "none",
   },
   "&::placeholder": {
-    color: "#343434",
-    fontSize: "11px",
-    fontWeight: "600",
+    color: "rgba(0, 0, 0, 0.4)",
+    fontSize: "12px",
+    fontWeight: "500",
   },
 });
 
 const CustomSelect = styled("select")`
+  cursor: pointer;
   width: 100%;
-  background: rgba(7, 187, 255, 0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid white;
-  border-radius: 10px;
+  background: #f7fff7;
+  border: none;
+  outline: 1px solid rgba(0, 123, 255, 0.6);
+  border-radius: 24px;
   height: 44px;
-  padding: 0px 0px 0px 12px;
-  font-size: 11px;
-  font-weight: 600;
+  padding: 0px 0px 0px 20px;
+  font-size: 12px;
+  font-weight: 500;
   font-family: "Poppins", sans-serif;
-  color: #343434;
+  color: #122c8e;
   letter-spacing: 0.4px;
   appearance: none; /* Removes default dropdown arrow */
 
   &:focus {
-    outline: 2px solid #228b22;
-    border: 1px solid rgba(7, 187, 255, 0.2);
+    outline: 2px solid #007bff;
+    border: none;
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const CustomSelectDatePicker = styled(DatePicker)`
+  cursor: pointer;
+  width: 227px;
+  background: #f7fff7;
+  border: none;
+  outline: 1px solid rgba(0, 123, 255, 0.6);
+  border-radius: 24px;
+  height: 44px;
+  padding: 0px 0px 0px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  color: #122c8e;
+  letter-spacing: 0.4px;
+  appearance: none; /* Removes default dropdown arrow */
+
+  &:focus {
+    outline: 2px solid #007bff;
+    border: none;
   }
 
   @media (max-width: 767px) {
@@ -160,8 +199,7 @@ const InputTitles = styled("div")({
   margin: "0px",
   color: "#122c8e",
   fontWeight: "700",
-  letterSpacing: "0px",
-  textTransform: "",
+  letterSpacing: "0.4px",
 });
 
 const FlexerRow = styled("div")({
@@ -205,80 +243,57 @@ const RoleCon = styled("div")({
 
 const RoleTitle = styled("div")({
   margin: "0px",
-  backgroundColor: "blue",
+  padding: "32px 4px 37px 0px",
+  fontSize: "48px",
+  fontWeight: "700",
+  marginLeft: "-3.5px",
   backgroundImage:
     "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
   backgroundSize: "100%",
   backgroundRepeat: "repeat",
-  padding: "32px 0 37px 0",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
   MozBackgroundClip: "text",
   MozTextFillColor: "transparent",
-  fontSize: "48px",
-  fontWeight: "700",
-  letterSpacing: "-2.5px",
-  marginLeft: "-3.5px",
-  paddingRight: "3.5px",
-
-  "@media (max-width: 767px)": {},
+  textShadow: "none",
+  letterSpacing: "-2px",
 });
-
-// const FormTitle = styled("h1")({
-//   margin: "0px",
-//   backgroundColor: "blue",
-//   backgroundImage:
-//     "radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%)",
-//   backgroundSize: "100%",
-//   backgroundRepeat: "repeat",
-//   paddingBottom: "20px",
-//   WebkitBackgroundClip: "text",
-//   WebkitTextFillColor: "transparent",
-//   MozBackgroundClip: "text",
-//   MozTextFillColor: "transparent",
-// });
-
-// const DateTimeCon = styled("div")({
-//   display: "flex",
-//   flexDirection: "column",
-//   gap: "5px",
-// });
-
-// const DateTimeInput = styled("input")({
-//   borderRadius: "5px",
-//   width: "75%",
-//   borderColor: "#007bff",
-//   padding: "0px 10px",
-//   textTransform: "uppercase",
-//   color: "darkgray",
-// });
 
 const IndTempCreateScheduleForm = ({
   handleSubmit,
   handleNameOfStudentChange,
   values,
-  handlePermanentChange,
   handleTempSoloDayChange,
   handleChange,
+  toggleDiv,
 }) => {
   // destructure
   const {
     tempStudentNames,
     tempStudentName,
     schedType,
-    permanentScheds,
-    permanentSched,
     dateTime,
-    tempSoloDay,
     timings,
     timing,
   } = values;
 
-  const todaym = moment();
-  const minDate = todaym.add(1, "days").format("YYYY-MM-DD");
+  const [selectedDate, setSelectedDate] = useState("");
 
-  const maxDate = moment().add(6, "days");
-  const maxDateISOString = maxDate.format("YYYY-MM-DD");
+  const isSunday = (date) => {
+    return date.getDay() === 0; // 0 represents Sunday
+  };
+
+  const isDisabled = (date) => {
+    return (
+      moment(date).isBefore(moment(), "day") ||
+      (moment(date).isAfter(moment(), "day") && !isSunday(date))
+    );
+  };
+
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+    handleTempSoloDayChange(newDate);
+  };
 
   return (
     <>
@@ -310,7 +325,7 @@ const IndTempCreateScheduleForm = ({
           ></div>
         </TitleCon>
         <RoleCon>
-          <RoleTitle> Ind Temporary</RoleTitle>
+          <RoleTitle>Independent</RoleTitle>
         </RoleCon>
         <FormContainer>
           <div
@@ -328,11 +343,11 @@ const IndTempCreateScheduleForm = ({
               value={tempStudentName}
               onChange={handleNameOfStudentChange}
             >
-              <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                Select student
-              </option>
+              <option></option>
               {tempStudentNames
-                .filter((n) => n.isActive === false && n.studentType === "Dyad")
+                .filter(
+                  (n) => n.isActive === "Absent" && n.studentType === "Dyad"
+                )
                 .map((n) => (
                   <option key={n._id} value={n._id}>
                     {n.nameOfStudent}
@@ -367,13 +382,13 @@ const IndTempCreateScheduleForm = ({
                   width: "100%",
                 }}
               >
-                <InputFields
-                  type="date"
-                  name="dateTime"
-                  min={minDate}
-                  max={maxDateISOString}
-                  value={dateTime}
-                  onChange={handleTempSoloDayChange}
+                <CustomSelectDatePicker
+                  minDate={moment().add(1, "days").toDate()}
+                  maxDate={moment().add(6, "days").toDate()}
+                  filterDate={isDisabled}
+                  placeholderText=""
+                  selected={selectedDate}
+                  onChange={(date) => handleDateChange(date)}
                 />
               </div>
             </div>
@@ -393,9 +408,7 @@ const IndTempCreateScheduleForm = ({
                 value={timing}
                 onChange={handleChange}
               >
-                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                  Select time
-                </option>
+                <option></option>
                 {timings.map((t) => (
                   <option key={t} value={t}>
                     {t}
@@ -415,56 +428,68 @@ const IndTempCreateScheduleForm = ({
           }}
         >
           <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "8px",
-            }}
+            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
           >
-            <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
-              <FilterButton>
-                <BsCalendarWeek
-                  style={{ fontSize: "18px", color: "#122c8e" }}
-                />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
+              <Link to="/schedule" style={{ textDecoration: "none" }}>
+                <FilterButton sx={{ borderBottomRightRadius: "4px" }}>
+                  <BsCalendarWeek style={{ fontSize: "18px" }} />
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Perm
+                  </span>
+                </FilterButton>
+              </Link>
+              <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
+                <FilterButton sx={{ borderBottomLeftRadius: "4px" }}>
+                  <BsHourglassSplit style={{ fontSize: "18px" }} />
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Solo
+                  </span>
+                </FilterButton>
+              </Link>
+            </div>
+            <div>
+              <FilterButton
+                sx={{ borderTopRightRadius: "4px" }}
+                onClick={toggleDiv}
+              >
+                <BsClockFill style={{ fontSize: "18px" }} />
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "500",
+                  }}
+                >
+                  Dyad
+                </span>
               </FilterButton>
-            </Link>
-            <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
-              <FilterButton>
-                <BsHourglassSplit
-                  style={{ fontSize: "18px", color: "#122c8e" }}
-                />
-              </FilterButton>
-            </Link>
+            </div>
           </div>
 
           {!tempStudentName || !schedType || !timing || !dateTime ? (
             <NextDisabledButton>
-              <BsPlus style={{ color: "#007bff", fontSize: "18px" }} />
-              <span
-                style={{
-                  fontWeight: "600",
-                  fontSize: "12px",
-                  color: "#007bff",
-                  paddingRight: "4px",
-                }}
-              >
-                Submit
-              </span>
+              <FaPlus style={{ color: "#007bff", fontSize: "14px" }} />
             </NextDisabledButton>
           ) : (
             <NextRoundButton onClick={handleSubmit}>
-              <BsPlus style={{ color: "white", fontSize: "18px" }} />
-              <span
-                style={{
-                  fontWeight: "600",
-                  fontSize: "12px",
-                  color: "white",
-                  paddingRight: "4px",
-                }}
-              >
-                Submit
-              </span>
+              <FaPlus style={{ color: "white", fontSize: "14px" }} />
             </NextRoundButton>
           )}
         </div>
@@ -510,13 +535,32 @@ const IndTempCreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "#122c8e",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#122c8e",
+                outline: "1px solid #122c8e",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -524,12 +568,12 @@ const IndTempCreateScheduleForm = ({
               }}
             >
               <div>Total</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -541,13 +585,32 @@ const IndTempCreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "rgba(255, 170, 51, 1)",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#FFBF00",
+                outline: "1px solid #FFBF00",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -555,12 +618,12 @@ const IndTempCreateScheduleForm = ({
               }}
             >
               <div>Online</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -572,13 +635,31 @@ const IndTempCreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "rgba(255, 49, 49, 1)",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#ff3131",
+                outline: "#ff3131",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -586,12 +667,11 @@ const IndTempCreateScheduleForm = ({
               }}
             >
               <div>Absent</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}

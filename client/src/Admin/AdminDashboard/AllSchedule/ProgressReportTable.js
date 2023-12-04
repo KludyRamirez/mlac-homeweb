@@ -5,9 +5,12 @@ import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
 import { RiSearchLine } from "react-icons/ri";
 import Modal from "@mui/material/Modal";
+import AbsentScheduleCard from "./AbsentScheduleCard";
+import AuditModal from "./AuditModal";
 import DeletionModal from "./DeletionModal";
 import {
   BsCameraReels,
@@ -15,20 +18,22 @@ import {
   BsCalendar2Check,
   BsCalendar2X,
   BsExclamationCircle,
+  BsInboxes,
+  BsSortUp,
+  BsSortDownAlt,
+  BsSortAlphaDown,
+  BsSortAlphaUpAlt,
+  BsDownload,
+  BsCloudDownload,
 } from "react-icons/bs";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import {
-  AiOutlineSortDescending,
-  AiOutlineSortAscending,
-} from "react-icons/ai";
 import { toast } from "react-toastify";
-import { HiOutlineFilter } from "react-icons/hi";
 import moment from "moment";
 import PresentConModal from "./PresentConModal";
 import PresentAuditModal from "./PresentAuditModal";
 import VideoModal from "./VideoModal";
-import AbsentTempAuditModal from "./AbsentTempAuditModal";
-import AbsentTempConModal from "./AbsentTempConModal";
+import dots from "../../../images/dots.webp";
+import TimeBar from "../TimeBar/TimeBar";
 
 const StudentParentCon = styled("div")({
   display: "flex",
@@ -51,9 +56,6 @@ const Flexer = styled("div")({
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
-  "@media (max-width: 767px)": {
-    width: "1100px",
-  },
 });
 
 const LowerIconDiv = styled("div")({
@@ -194,18 +196,18 @@ const SearchBar = styled("input")(({ theme }) => ({
   borderTopLeftRadius: "10px",
   borderBottomLeftRadius: "10px",
   zIndex: "1",
-  padding: "6px 0px 6px 40px",
-  fontSize: "12px",
-  fontWeight: "600",
+  padding: "6px 0px 6px 48px",
+  fontSize: "13px",
+  fontWeight: "500",
   color: "#007bff",
   outline: "1px solid rgba(7, 187, 255, 0.4)",
+  fontFamily: "Poppins, sans-serif",
 
   "&:focus": {
     outline: "2px solid #122c8e",
   },
   "&::placeholder": {
     color: "rgba(0, 0, 0, 0.3)",
-    fontFamily: "Poppins, sans-serif",
   },
   "@media (max-width: 767px)": {
     // width: "50%",
@@ -221,7 +223,7 @@ const ModalBox = styled("div")({
   transform: "translate(-50%, -50%)",
   background: "white",
   borderRadius: "20px",
-  fontSize: "12px",
+  fontSize: "13px",
   fontWeight: "600",
   color: "#007bff",
   border: "none",
@@ -257,7 +259,10 @@ const ZebraDiv = styled("div")({
   color: "#122c8e",
   "&:nth-child(even)": {
     background: "rgba(255, 255, 255, 0.9)",
-    borderRadius: "10px",
+    borderTopLeftRadius: "10px",
+    borderBottomLeftRadius: "10px",
+    borderTopRightRadius: "40px",
+    borderBottomRightRadius: "40px",
     border: "1px solid rgba(7, 187, 255, 0.3)",
   },
 
@@ -310,7 +315,6 @@ const PermanentTitle = styled("div")({
   fontSize: "24px",
   fontWeight: "700",
   letterSpacing: "-1px",
-  paddingRight: "2px",
 
   "@media (max-width: 767px)": {},
 });
@@ -327,6 +331,9 @@ const auditSelector = createSelector([selectAudit], (audit) => audit);
 const ProgressReportTable = () => {
   const [schedules, setSchedules] = useState([]);
   const [active, setActive] = useState("");
+  const [tempSchedules, setTempSchedules] = useState([]);
+  const [tempSoloSchedules, setTempSoloSchedules] = useState([]);
+  const [mixedTempSchedules, setMixedTempSchedules] = useState([]);
   const [activeSchedType, setActiveSchedType] = useState("Permanent");
   const [isNameDesc, setIsNameDesc] = useState(false);
   const [isDayDesc, setIsDayDesc] = useState(false);
@@ -334,7 +341,9 @@ const ProgressReportTable = () => {
   const [isTypeDesc, setIsTypeDesc] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSchedules, setFilteredSchedules] = useState([]);
+  const [filteredMixedSchedules, setFilteredMixedSchedules] = useState([]);
   const [showExtraFunc, setShowExtraFunc] = useState(true);
+
   //modals
   const [showModal, setShowModal] = useState(false);
   const [showSecModal, setShowSecModal] = useState(false);
@@ -346,7 +355,6 @@ const ProgressReportTable = () => {
   const [showSecPresentModal, setShowSecPresentModal] = useState(false);
 
   // video modals
-
   const [videoId, setVideoId] = useState("");
   const [showVideoModal, setShowVideoModal] = useState(false);
 
@@ -368,27 +376,25 @@ const ProgressReportTable = () => {
   useEffect(() => {
     updateExpiredTemporarySchedule();
     updateExpiredTemporarySoloSchedule();
-    handleDeleteCon();
   }, []);
 
   useEffect(() => {
-    getSchedules();
+    getTempSchedules();
+    getTempSoloSchedules();
+  }, [searchQuery]);
+
+  useEffect(() => {
+    getProgRep();
   }, [auth, searchQuery]);
 
   useEffect(() => {
     const filtered = schedules.filter((schedule) => {
       return (
-        (schedule.tempStudentName &&
-          schedule.tempStudentName.nameOfStudent
+        (schedule.nameOfStudent &&
+          schedule.nameOfStudent.nameOfStudent
             .toLowerCase()
             .includes(searchQuery.toLowerCase())) ||
-        schedule.tempSoloDay
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        schedule.timing.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        schedule.studentType
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
+        schedule.day.toLowerCase().includes(searchQuery.toLowerCase()) ||
         schedule.cardId
           ?.slice(-4)
           .toLowerCase()
@@ -397,6 +403,29 @@ const ProgressReportTable = () => {
     });
     setFilteredSchedules(filtered);
   }, [searchQuery, schedules]);
+
+  useEffect(() => {
+    const mixedTempFiltered = mixedTempSchedules.filter((schedule) => {
+      return (
+        (schedule.tempStudentName && schedule.tempStudentName.nameOfStudent)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        schedule.cardId
+          ?.slice(-4)
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      );
+    });
+    setFilteredMixedSchedules(mixedTempFiltered);
+  }, [searchQuery, mixedTempSchedules]);
+
+  useEffect(() => {
+    if (tempSchedules.length >= 0 && tempSoloSchedules.length >= 0) {
+      const mixedTempSchedulesVar = [...tempSchedules, ...tempSoloSchedules];
+      setMixedTempSchedules(mixedTempSchedulesVar);
+      console.log(mixedTempSchedulesVar);
+    }
+  }, [tempSchedules, tempSoloSchedules]);
 
   const handleDayChange = (day) => {
     setActiveSchedType(day);
@@ -453,7 +482,29 @@ const ProgressReportTable = () => {
     }
   };
 
-  const getSchedules = async () => {
+  const getProgRep = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const url = `${process.env.REACT_APP_API}/progrep`;
+      const headers = {
+        Authorization: `Bearer ${auth.userDetails.token}`,
+      };
+
+      // Send the search query as a parameter to the API
+      const params = { searchQuery }; // Modify this based on your API's requirements
+      const res = await axios.get(url, { headers, params });
+
+      setSchedules(res.data);
+    } catch (err) {
+      console.error("Error fetching schedules:", err);
+    }
+  };
+
+  const getTempSchedules = async () => {
     try {
       if (!auth.userDetails.token) {
         console.error("Authentication token not found.");
@@ -465,10 +516,39 @@ const ProgressReportTable = () => {
         Authorization: `Bearer ${auth.userDetails.token}`,
       };
 
-      const params = { searchQuery };
-      const res = await axios.get(url, { headers, params });
+      const res = await axios.get(url, { headers });
 
-      setSchedules(res.data);
+      const parentFilter = res.data.filter(
+        (schedule) =>
+          (schedule.tempStudentName && schedule.tempStudentName.parent) ===
+          (auth && auth.userDetails.fullname)
+      );
+      setTempSchedules(parentFilter);
+    } catch (err) {
+      console.error("Error fetching schedules:", err);
+    }
+  };
+
+  const getTempSoloSchedules = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const url = `${process.env.REACT_APP_API}/temp-soloschedule`;
+      const headers = {
+        Authorization: `Bearer ${auth.userDetails.token}`,
+      };
+
+      const res = await axios.get(url, { headers });
+
+      const parentFilter = res.data.filter(
+        (schedule) =>
+          (schedule.tempStudentName && schedule.tempStudentName.parent) ===
+          (auth && auth.userDetails.fullname)
+      );
+      setTempSoloSchedules(parentFilter);
     } catch (err) {
       console.error("Error fetching schedules:", err);
     }
@@ -481,8 +561,8 @@ const ProgressReportTable = () => {
         return;
       }
 
-      const response = await axios.patch(
-        `${process.env.REACT_APP_API}/temp-soloschedule/${id}/setActiveTemp`,
+      await axios.patch(
+        `${process.env.REACT_APP_API}/schedule/${id}/setActive`,
         {
           isActive: "Absent",
         },
@@ -491,10 +571,6 @@ const ProgressReportTable = () => {
             Authorization: `Bearer ${auth.userDetails.token}`,
           },
         }
-      );
-      console.log(
-        "----------------------------------------------------------------------------------------> success changed active status",
-        response.data
       );
     } catch (error) {
       console.error("Error fetching schedules:", error);
@@ -507,42 +583,9 @@ const ProgressReportTable = () => {
     }
   };
 
-  const handleSetActiveToTrue = async (id) => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
-
-      const response = await axios.patch(
-        `${process.env.REACT_APP_API}/temp-soloschedule/${id}/setActiveTemp`,
-        {
-          isActive: "Present",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-      console.log(
-        "----------------------------------------------------------------------------------------> success changed active status",
-        response.data
-      );
-    } catch (error) {
-      console.error("Error fetching schedules:", error);
-    }
-  };
-
-  const handleConfirmSetActiveToTrue = () => {
-    if (active) {
-      handleSetActiveToTrue(active);
-    }
-  };
-
-  const handleAddToContainer = async (schedule, id, objId) => {
+  const handleAddToContainer = async (schedule, id) => {
     setPlusAbsentCounter(id);
-    setActive(objId);
+    setActive(id);
     handleOpenModal();
 
     let updatedContainer = [];
@@ -633,10 +676,60 @@ const ProgressReportTable = () => {
     }
   };
 
+  const handleSetPlusAbsentCounter = async (id) => {
+    try {
+      const currentValueResponse = await axios.get(
+        `${process.env.REACT_APP_API}/schedule/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+
+      const currentValue = currentValueResponse.data?.absentCounter;
+
+      if (typeof currentValue !== "undefined") {
+        const updatedValue = currentValue + 1;
+
+        const response = await axios.patch(
+          `${process.env.REACT_APP_API}/schedule/${id}/setabsentcounterplus`,
+          { absentCounter: updatedValue },
+          {
+            headers: {
+              Authorization: `Bearer ${auth.userDetails.token}`,
+            },
+          }
+        );
+
+        console.log(
+          "--------------------------------------------------------------------------------->Success:",
+          response.data
+        );
+      } else {
+        console.error("Error: Unable to fetch current value");
+      }
+    } catch (err) {
+      console.error("Error updating absent counter:", err);
+    }
+  };
+
+  const handleConfirmSetPlusAbsentCounter = async () => {
+    try {
+      if (plusAbsentCounter) {
+        await handleSetPlusAbsentCounter(plusAbsentCounter);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      window.location.reload();
+    }
+  };
+
   const showConItems = () => (
     <div>
       {con.map((s) => (
-        <AbsentTempConModal
+        <AbsentScheduleCard
           key={s._id}
           s={s}
           saveOrderedSchedToDb={saveOrderedSchedToDb}
@@ -647,36 +740,39 @@ const ProgressReportTable = () => {
 
   const TermsAndCondi = () => (
     <div>
-      <AbsentTempAuditModal
+      <AuditModal
         handleCloseSecModal={handleCloseSecModal}
-        handleConfirmSetPlusAbsentCounter={handleConfirmSetPlusAbsentCounter}
         handleConfirmSetActiveToFalse={handleConfirmSetActiveToFalse}
+        handleConfirmSetPlusAbsentCounter={handleConfirmSetPlusAbsentCounter}
       />
     </div>
   );
 
   //
   const sortAlphabeticallyDesc = () => {
-    const sortedSchedules = [...filteredSchedules].sort(
-      (a, b) =>
-        a.tempStudentName &&
-        a.tempStudentName.nameOfStudent.localeCompare(
-          b.tempStudentName && b.tempStudentName.nameOfStudent
-        )
+    const sortedSchedules = [...filteredSchedules].sort((a, b) =>
+      a.nameOfStudent.localeCompare(b.nameOfStudent)
     );
     setSchedules(sortedSchedules);
   };
 
   const sortAlphabetically = () => {
-    const sortedSchedules = [...filteredSchedules].sort(
-      (a, b) =>
-        b.tempStudentName &&
-        b.tempStudentName.nameOfStudent.localeCompare(
-          a.tempStudentName && a.tempStudentName.nameOfStudent
-        )
+    const sortedSchedules = [...filteredSchedules].sort((a, b) =>
+      b.nameOfStudent.localeCompare(a.nameOfStudent)
     );
     setSchedules(sortedSchedules);
   };
+
+  const sortMixedAlphabetically = () => {
+    const sortedMixedSchedules = [...filteredMixedSchedules].sort((a, b) =>
+      (b.tempStudentName && b.tempStudentName.nameOfStudent).localeCompare(
+        a.tempStudentName && a.tempStudentName.nameOfStudent
+      )
+    );
+    setMixedTempSchedules(sortedMixedSchedules);
+  };
+
+  //
 
   const sortByDayOfWeekDesc = () => {
     const daysOrder = [
@@ -698,6 +794,26 @@ const ProgressReportTable = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedByDayOfWeekDesc = () => {
+    const daysOrder = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const sortedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const dayA = daysOrder.indexOf(a.permanentSched && a.permanentSched.day);
+      const dayB = daysOrder.indexOf(b.permanentSched && b.permanentSched.day);
+      return dayA - dayB;
+    });
+
+    setMixedTempSchedules(sortedSchedules);
+  };
+
   const sortByDayOfWeek = () => {
     const daysOrder = [
       "Sunday",
@@ -716,6 +832,26 @@ const ProgressReportTable = () => {
     });
 
     setSchedules(sortedSchedules);
+  };
+
+  const sortMixedByDayOfWeek = () => {
+    const daysOrder = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const sortedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const dayA = daysOrder.indexOf(a.permanentSched && a.permanentSched.day);
+      const dayB = daysOrder.indexOf(b.permanentSched && b.permanentSched.day);
+      return dayB - dayA;
+    });
+
+    setMixedTempSchedules(sortedSchedules);
   };
 
   //
@@ -741,6 +877,31 @@ const ProgressReportTable = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedByTimeDesc = () => {
+    const timeOrder = [
+      "8 AM to 9 AM",
+      "9 AM to 10 AM",
+      "10 AM to 11 AM",
+      "11 AM to 12 NN",
+      "1 PM to 2 PM",
+      "2 PM to 3 PM",
+      "3 PM to 4 PM",
+      "4 PM to 5 PM",
+    ];
+
+    const sortedMixedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const timeA = timeOrder.indexOf(
+        a.timing || (a.permanentSched && a.permanentSched.timing)
+      );
+      const timeB = timeOrder.indexOf(
+        b.timing || (b.permanentSched && b.permanentSched.timing)
+      );
+      return timeA - timeB;
+    });
+
+    setMixedTempSchedules(sortedMixedSchedules);
+  };
+
   const sortByTime = () => {
     const timeOrder = [
       "8 AM to 9 AM",
@@ -762,6 +923,31 @@ const ProgressReportTable = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedByTime = () => {
+    const timeOrder = [
+      "8 AM to 9 AM",
+      "9 AM to 10 AM",
+      "10 AM to 11 AM",
+      "11 AM to 12 NN",
+      "1 PM to 2 PM",
+      "2 PM to 3 PM",
+      "3 PM to 4 PM",
+      "4 PM to 5 PM",
+    ];
+
+    const sortedMixedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const timeA = timeOrder.indexOf(
+        a.timing || (a.permanentSched && a.permanentSched.timing)
+      );
+      const timeB = timeOrder.indexOf(
+        b.timing || (b.permanentSched && b.permanentSched.timing)
+      );
+      return timeB - timeA;
+    });
+
+    setMixedTempSchedules(sortedMixedSchedules);
+  };
+
   //
 
   const sortByTypeDesc = () => {
@@ -776,6 +962,22 @@ const ProgressReportTable = () => {
     setSchedules(sortedSchedules);
   };
 
+  const sortMixedByTypeDesc = () => {
+    const typeOrder = ["Solo", "Dyad"];
+
+    const sortedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const typeA = typeOrder.indexOf(
+        a.studentType || (a.tempStudentName && a.tempStudentName.studentType)
+      );
+      const typeB = typeOrder.indexOf(
+        b.studentType || (b.tempStudentName && b.tempStudentName.studentType)
+      );
+      return typeA - typeB;
+    });
+
+    setMixedTempSchedules(sortedSchedules);
+  };
+
   const sortByType = () => {
     const typeOrder = ["Solo", "Dyad"];
 
@@ -786,6 +988,22 @@ const ProgressReportTable = () => {
     });
 
     setSchedules(sortedSchedules);
+  };
+
+  const sortMixedByType = () => {
+    const typeOrder = ["Solo", "Dyad"];
+
+    const sortedSchedules = [...filteredMixedSchedules].sort((a, b) => {
+      const typeA = typeOrder.indexOf(
+        a.studentType || (a.tempStudentName && a.tempStudentName.studentType)
+      );
+      const typeB = typeOrder.indexOf(
+        b.studentType || (b.tempStudentName && b.tempStudentName.studentType)
+      );
+      return typeB - typeA;
+    });
+
+    setMixedTempSchedules(sortedSchedules);
   };
 
   const toggleFilterName = () => {
@@ -803,8 +1021,6 @@ const ProgressReportTable = () => {
   const toggleFilterType = () => {
     setIsTypeDesc(!isTypeDesc);
   };
-
-  //
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -825,20 +1041,21 @@ const ProgressReportTable = () => {
   const handleCloseSecModal = () => {
     createSchedOrder();
     setShowSecModal(false);
+    window.location.reload();
   };
 
-  const deleteOneSchedule = async (id) => {
+  const deleteOneProgRep = async (id) => {
     if (!auth.userDetails.token) {
       console.error("Authentication token not found.");
       return;
     }
     try {
-      await axios.delete(`${process.env.REACT_APP_API}/temp-schedule/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API}/progrep/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
       });
-      getSchedules();
+      getProgRep();
     } catch (err) {
       console.error("Error fetching users:", err);
     }
@@ -855,8 +1072,8 @@ const ProgressReportTable = () => {
 
   const handleConfirmDelete = () => {
     if (deleteId) {
-      deleteOneSchedule(deleteId);
-      getSchedules();
+      deleteOneProgRep(deleteId);
+      getProgRep();
     }
     setShowDeleteModal(false);
   };
@@ -870,9 +1087,9 @@ const ProgressReportTable = () => {
 
   // for present logs -------------> //
 
-  const handleAddToContainerPresent = async (schedule, id, objId) => {
+  const handleAddToContainerPresent = async (schedule, id) => {
+    setActive(id);
     setMinusPresentCounter(id);
-    setActive(objId);
     handleOpenModalPresent();
 
     let updatedContainer = [];
@@ -963,54 +1180,7 @@ const ProgressReportTable = () => {
     }
   };
 
-  const showConItemsPresent = () => (
-    <div>
-      {con.map((s) => (
-        <PresentConModal
-          key={s._id}
-          s={s}
-          saveOrderedSchedToDbPresent={saveOrderedSchedToDbPresent}
-        />
-      ))}
-    </div>
-  );
-
-  const TermsAndCondiPresent = () => (
-    <div>
-      <PresentAuditModal
-        handleCloseSecModalPresent={handleCloseSecModalPresent}
-        handleConfirmSetMinusPresentCounter={
-          handleConfirmSetMinusPresentCounter
-        }
-        handleConfirmSetActiveToTrue={handleConfirmSetActiveToTrue}
-      />
-    </div>
-  );
-
-  const handleOpenModalPresent = () => {
-    setShowPresentModal(true);
-  };
-  const handleCloseModalPresent = () => {
-    setShowPresentModal(false);
-  };
-
-  const handleOpenSecModalPresent = () => {
-    setShowSecPresentModal(true);
-    handleCloseModalPresent();
-  };
-
-  const handleAttemptCloseSecModalPresent = () => {
-    setShowSecPresentModal(false);
-  };
-
-  const handleCloseSecModalPresent = () => {
-    createSchedOrderPresent();
-    setShowSecPresentModal(false);
-  };
-
-  // for video modal --------------------------------------------->
-
-  const handleSetVideoToTrue = async (id) => {
+  const handleSetActiveToTrue = async (id) => {
     try {
       if (!auth.userDetails.token) {
         console.error("Authentication token not found.");
@@ -1018,9 +1188,9 @@ const ProgressReportTable = () => {
       }
 
       await axios.patch(
-        `${process.env.REACT_APP_API}/schedule/${id}/setVideoTempSolo`,
+        `${process.env.REACT_APP_API}/schedule/${id}/setActive`,
         {
-          isVideoOn: true,
+          isActive: "Present",
         },
         {
           headers: {
@@ -1033,103 +1203,11 @@ const ProgressReportTable = () => {
     }
   };
 
-  const isVideoOffSwitch = async () => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
-
-      const headers = {
-        Authorization: `Bearer ${auth.userDetails.token}`,
-      };
-
-      await axios.put(
-        `${process.env.REACT_APP_API}/schedule-vidoff`,
-        {},
-        { headers }
-      );
-    } catch (error) {
-      console.error("Error updating schedules:", error);
+  const handleConfirmSetActiveToTrue = () => {
+    if (active) {
+      handleSetActiveToTrue(active);
     }
   };
-
-  const handleClickVideo = (id) => {
-    setVideoId(id);
-    setShowVideoModal(true);
-  };
-
-  const handleCloseVideoModal = () => {
-    setShowVideoModal(false);
-  };
-
-  const handleConfirmVideo = async () => {
-    try {
-      if (videoId) {
-        await handleSetVideoToTrue(videoId);
-      }
-      setShowVideoModal(false);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      window.location.reload();
-    }
-  };
-
-  // absent counter plus
-
-  const handleSetPlusAbsentCounter = async (id) => {
-    try {
-      // Fetch current value
-      const currentValueResponse = await axios.get(
-        `${process.env.REACT_APP_API}/schedule/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-
-      const currentValue = currentValueResponse.data?.absentCounter;
-
-      if (typeof currentValue !== "undefined") {
-        const updatedValue = currentValue + 1;
-
-        const response = await axios.patch(
-          `${process.env.REACT_APP_API}/schedule/${id}/setabsentcounterplus`,
-          { absentCounter: updatedValue },
-          {
-            headers: {
-              Authorization: `Bearer ${auth.userDetails.token}`,
-            },
-          }
-        );
-
-        console.log(
-          "--------------------------------------------------------------------------------->Success:",
-          response.data
-        );
-      } else {
-        console.error("Error: Unable to fetch current value");
-      }
-    } catch (err) {
-      console.error("Error updating absent counter:", err);
-    }
-  };
-
-  const handleConfirmSetPlusAbsentCounter = async () => {
-    try {
-      if (plusAbsentCounter) {
-        await handleSetPlusAbsentCounter(plusAbsentCounter);
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      window.location.reload();
-    }
-  };
-
-  // present counter minus
 
   const handleSetMinusPresentCounter = async (id) => {
     try {
@@ -1180,6 +1258,115 @@ const ProgressReportTable = () => {
     } finally {
       window.location.reload();
     }
+  };
+
+  const showConItemsPresent = () => (
+    <div>
+      {con.map((s) => (
+        <PresentConModal
+          key={s._id}
+          s={s}
+          saveOrderedSchedToDbPresent={saveOrderedSchedToDbPresent}
+        />
+      ))}
+    </div>
+  );
+
+  const TermsAndCondiPresent = () => (
+    <div>
+      <PresentAuditModal
+        handleCloseSecModalPresent={handleCloseSecModalPresent}
+        handleConfirmSetActiveToTrue={handleConfirmSetActiveToTrue}
+        handleConfirmSetMinusPresentCounter={
+          handleConfirmSetMinusPresentCounter
+        }
+      />
+    </div>
+  );
+
+  const handleOpenModalPresent = () => {
+    setShowPresentModal(true);
+  };
+  const handleCloseModalPresent = () => {
+    setShowPresentModal(false);
+  };
+
+  const handleOpenSecModalPresent = () => {
+    setShowSecPresentModal(true);
+    handleCloseModalPresent();
+  };
+
+  const handleAttemptCloseSecModalPresent = () => {
+    setShowSecPresentModal(false);
+  };
+
+  const handleCloseSecModalPresent = () => {
+    createSchedOrderPresent();
+    setShowSecPresentModal(false);
+    window.location.reload();
+  };
+
+  // for video modal --------------------------------------------->
+
+  const handleSetVideoToTrue = async (id) => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      await axios.patch(
+        `${process.env.REACT_APP_API}/schedule/${id}/setVideo`,
+        {
+          isVideoOn: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.userDetails.token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching schedules:", error);
+    }
+  };
+
+  const isVideoOffSwitch = async () => {
+    try {
+      if (!auth.userDetails.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${auth.userDetails.token}`,
+      };
+
+      await axios.put(
+        `${process.env.REACT_APP_API}/schedule-vidoff`,
+        {},
+        { headers }
+      );
+    } catch (error) {
+      console.error("Error updating schedules:", error);
+    }
+  };
+
+  const handleClickVideo = (id) => {
+    setVideoId(id);
+    setShowVideoModal(true);
+  };
+
+  const handleCloseVideoModal = () => {
+    setShowVideoModal(false);
+  };
+
+  const handleConfirmVideo = () => {
+    if (videoId) {
+      handleSetVideoToTrue(videoId);
+      getProgRep();
+    }
+    setShowVideoModal(false);
   };
 
   return (
@@ -1295,16 +1482,13 @@ const ProgressReportTable = () => {
                     boxShadow:
                       "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
                     transform: "translateY(-2px)",
-
                     background: "white",
                   },
                 }}
-              >
-                -
-              </div>
+              ></div>
 
               <div
-                onClick={() => handleDayChange("Temporary")}
+                onClick={() => handleDayChange("Permanent")}
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -1345,14 +1529,12 @@ const ProgressReportTable = () => {
                     background: "white",
                   },
                 }}
-              >
-                O
-              </div>
+              ></div>
             </TableContainer>
 
             {activeSchedType === "Permanent" && (
               <div>
-                <PermanentTitle>Solo</PermanentTitle>
+                <PermanentTitle>Permanent</PermanentTitle>
               </div>
             )}
           </div>
@@ -1387,30 +1569,29 @@ const ProgressReportTable = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 <div style={{ display: "flex", gap: "8px" }}>
-                  {isNameDesc ? (
-                    <div onClick={toggleFilterName}>
-                      <FilterButton onClick={sortAlphabetically}>
-                        <AiOutlineSortAscending style={{ fontSize: "18px" }} />
-                      </FilterButton>
-                    </div>
-                  ) : (
-                    <div onClick={toggleFilterName}>
-                      <FilterButton onClick={sortAlphabeticallyDesc}>
-                        <AiOutlineSortDescending style={{ fontSize: "18px" }} />
-                      </FilterButton>
-                    </div>
-                  )}
-
                   {isDayDesc ? (
                     <div onClick={toggleFilterDay}>
                       <FilterButton onClick={sortByDayOfWeek}>
-                        <HiOutlineFilter style={{ fontSize: "18px" }} />
+                        <BsSortAlphaDown style={{ fontSize: "18px" }} />
                       </FilterButton>
                     </div>
                   ) : (
                     <div onClick={toggleFilterDay}>
                       <FilterButton onClick={sortByDayOfWeekDesc}>
-                        <HiOutlineFilter style={{ fontSize: "18px" }} />
+                        <BsSortAlphaUpAlt style={{ fontSize: "18px" }} />
+                      </FilterButton>
+                    </div>
+                  )}
+                  {isNameDesc ? (
+                    <div onClick={toggleFilterName}>
+                      <FilterButton onClick={sortAlphabetically}>
+                        <BsSortUp style={{ fontSize: "18px" }} />
+                      </FilterButton>
+                    </div>
+                  ) : (
+                    <div onClick={toggleFilterName}>
+                      <FilterButton onClick={sortAlphabeticallyDesc}>
+                        <BsSortDownAlt style={{ fontSize: "18px" }} />
                       </FilterButton>
                     </div>
                   )}
@@ -1433,17 +1614,17 @@ const ProgressReportTable = () => {
                       padding: "13px 20px",
                       borderTopLeftRadius: "10px",
                       borderBottomLeftRadius: "10px",
-                      width: "68%",
-                      borderTop: "1px solid rgba(7, 187, 255, 0.4)",
-                      borderBottom: "1px solid rgba(7, 187, 255, 0.4)",
-                      borderLeft: "1px solid rgba(7, 187, 255, 0.4)",
+                      width: "70%",
+                      borderTop: "2px solid #007bff",
+                      borderBottom: "2px solid #007bff",
+                      borderLeft: "2px solid #007bff",
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        width: "82%",
+                        width: "77%",
                       }}
                     >
                       <div
@@ -1452,13 +1633,13 @@ const ProgressReportTable = () => {
                           justifyContent: "center",
                         }}
                       >
-                        <div style={{ width: "82px" }}>
+                        <div style={{ width: "80px" }}>
                           <h5
                             style={{
                               color: "#007bff",
                               margin: "0",
                               letterSpacing: "0.2px",
-                              fontWeight: "600",
+                              fontWeight: "500",
                             }}
                           >
                             ID
@@ -1470,10 +1651,10 @@ const ProgressReportTable = () => {
                             color: "#007bff",
                             margin: "0",
                             letterSpacing: "0.2px",
-                            fontWeight: "600",
+                            fontWeight: "500",
                           }}
                         >
-                          Student's Info
+                          Report for | Date Issued
                         </h5>
                       </div>
                       <h5
@@ -1481,10 +1662,10 @@ const ProgressReportTable = () => {
                           color: "#007bff",
                           margin: "0",
                           letterSpacing: "0.2px",
-                          fontWeight: "600",
+                          fontWeight: "500",
                         }}
                       >
-                        Status | Date of Sched
+                        Claiming Date
                       </h5>
                     </div>
                   </div>
@@ -1505,7 +1686,7 @@ const ProgressReportTable = () => {
                         color: "white",
                         margin: "0",
                         letterSpacing: "0.2px",
-                        fontWeight: "600",
+                        fontWeight: "500",
                       }}
                     >
                       Actions
@@ -1518,11 +1699,12 @@ const ProgressReportTable = () => {
                 <div
                   style={{
                     backgroundColor: "#f0ffff",
+                    backgroundImage: `url(${dots})`,
                     borderRadius: "12px",
                     border: "1px solid rgba(7, 187, 255, 0.4)",
+                    backdropFilter: "blur(4px)",
+                    WebkitBackdropFilter: "blur(4px)",
                     padding: "4px 4px 4px 4px",
-                    boxShadow:
-                      "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
                     width: "100%",
                     height: "530px",
                     overflow: "hidden",
@@ -1535,304 +1717,200 @@ const ProgressReportTable = () => {
                       flexDirection: "column",
                       alignItems: "flex-start",
                       width: "100%",
+                      height: "100%",
                     }}
                   >
-                    {filteredSchedules.map((schedule) => (
-                      <ZebraDiv>
+                    {filteredSchedules.length === 0 ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      >
                         <div
                           style={{
                             display: "flex",
-                            justifyContent: "space-between",
-                            padding: "14px 16px",
-                            width: "70%",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            gap: "8px",
+                            marginTop: "-64px",
                           }}
                         >
+                          <BsInboxes
+                            style={{
+                              fontSize: "28px",
+                              color: "rgba(0, 123, 255, 1)",
+                            }}
+                          />
                           <div
                             style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "88%",
+                              color: "rgba(0, 123, 255, 1)",
+                              fontSize: "14px",
                             }}
                           >
-                            <div
-                              style={{
-                                margin: "0px",
-
-                                fontWeight: "500",
-                                lineHeight: "22px",
-                                fontSize: "12px",
-                                letterSpacing: "0.2px",
-                                width: "48px",
-                              }}
-                            >
-                              {schedule.cardId ? schedule.cardId.slice(-3) : ""}
-                            </div>
-                            <div
-                              style={{
-                                margin: "0px",
-                                fontWeight: "500",
-                                lineHeight: "22px",
-                                fontSize: "12px",
-                                letterSpacing: "0.2px",
-                                width: "298px",
-                              }}
-                            >
-                              {schedule.tempStudentName &&
-                                schedule.tempStudentName.nameOfStudent}{" "}
-                              |{" "}
-                              <span
-                                style={{
-                                  wordSpacing: "0px",
-                                  textTransform: "lowercase",
-                                }}
-                              >
-                                {schedule.permanentSched &&
-                                  schedule.permanentSched.timing}
-                              </span>
-                              , {schedule.tempSoloDay} <br />
-                              {schedule.tempStudentName &&
-                                schedule.tempStudentName.nameOfStudent}
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "flex-start",
-                                justifyContent: "flex-start",
-                                gap: "0px",
-                                width: "174px",
-                              }}
-                            >
+                            No data
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        {filteredSchedules
+                          .filter((schedule) => schedule.length !== 0)
+                          .map((schedule) => (
+                            <ZebraDiv>
                               <div
                                 style={{
                                   display: "flex",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                  gap: "12px",
-                                  marginLeft: "-10px",
+                                  justifyContent: "space-between",
+                                  padding: "14px 16px",
+                                  width: "70%",
                                 }}
                               >
                                 <div
                                   style={{
-                                    margin: "0px",
-                                    fontWeight: "500",
-                                    lineHeight: "22px",
-                                    fontSize: "12px",
-                                    wordSpacing: "1px",
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    width: "100%",
                                   }}
                                 >
-                                  {schedule.isActive === "No info yet" && (
-                                    <div
+                                  <div
+                                    style={{
+                                      margin: "0px",
+                                      fontWeight: "500",
+                                      lineHeight: "22px",
+                                      fontSize: "13px",
+                                      letterSpacing: "0.2px",
+                                      width: "81px",
+                                    }}
+                                  >
+                                    {schedule.cardId
+                                      ? schedule.cardId.slice(-3)
+                                      : ""}
+                                  </div>
+                                  <div
+                                    style={{
+                                      margin: "0px",
+                                      fontWeight: "500",
+                                      lineHeight: "22px",
+                                      fontSize: "13px",
+                                      letterSpacing: "0.2px",
+                                      width: "340px",
+                                    }}
+                                  >
+                                    <span
                                       style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        gap: "8px",
+                                        fontWeight: "500",
+                                        letterSpacing: "0.2px",
+                                        color: "blue",
+                                        fontSize: "13px",
                                       }}
                                     >
-                                      <div
-                                        style={{
-                                          background: "#122c8e",
-                                          width: "10px",
-                                          height: "10px",
-                                          borderRadius: "50%",
-                                        }}
-                                      ></div>
-                                      <div
-                                        style={{
-                                          color: "#122c8e",
-                                        }}
-                                      >
-                                        No info yet
-                                      </div>
-                                    </div>
-                                  )}
-                                  {schedule.isActive === "Present" && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                      }}
-                                    >
-                                      <div
-                                        style={{
-                                          background: "#0BDA51",
-                                          width: "10px",
-                                          height: "10px",
-                                          borderRadius: "50%",
-                                        }}
-                                      ></div>
-                                      <div
-                                        style={{
-                                          color: "#0BDA51",
-                                        }}
-                                      >
-                                        Present
-                                      </div>
-                                    </div>
-                                  )}
-                                  {schedule.isActive === "Absent" && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                      }}
-                                    >
-                                      <div
-                                        style={{
-                                          background: "#ff3131",
-                                          width: "10px",
-                                          height: "10px",
-                                          borderRadius: "50%",
-                                        }}
-                                      ></div>
-                                      <div
-                                        style={{
-                                          color: "#ff3131",
-                                        }}
-                                      >
-                                        Absent
-                                      </div>
-                                    </div>
-                                  )}
+                                      {schedule.nameOfStudent &&
+                                        schedule.nameOfStudent.nameOfStudent}
+                                    </span>{" "}
+                                    |{" "}
+                                    <span>
+                                      {new Date(
+                                        schedule.createdAt
+                                      ).toLocaleDateString("en-PH", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                      })}
+                                    </span>
+                                    <br />
+                                    <span style={{ fontSize: "13px" }}>
+                                      {schedule.nameOfStudent &&
+                                      schedule.nameOfStudent.parent
+                                        ? schedule.nameOfStudent &&
+                                          schedule.nameOfStudent.parent
+                                            .split(" ")
+                                            .slice(0, 2)
+                                            .join(" ")
+                                        : ""}{" "}
+                                    </span>
+                                  </div>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "flex-start",
+                                      gap: "0px",
+                                      width: "200px",
+                                      fontSize: "13px",
+                                    }}
+                                  >
+                                    {new Date(
+                                      schedule.dateTime
+                                    ).toLocaleDateString("en-PH", {
+                                      year: "numeric",
+                                      month: "long",
+                                      day: "numeric",
+                                    })}
+                                  </div>
                                 </div>
                               </div>
                               <div
                                 style={{
                                   display: "flex",
-                                  justifyContent: "flex-start",
+                                  justifyContent: "space-between",
                                   alignItems: "center",
-                                  gap: "12px",
+                                  width: "30%",
+                                  padding: "16px 14px",
                                 }}
                               >
-                                <h5
+                                <div
                                   style={{
-                                    margin: "0px 0px 0px -10px",
-                                    fontWeight: "500",
-                                    lineHeight: "22px",
-                                    fontSize: "12px",
-                                    letterSpacing: "0.4px",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    gap: "4px",
                                   }}
                                 >
-                                  {formatTimestamp(schedule.dateTime)}
-                                </h5>
+                                  <LowerIconDiv>
+                                    <PersonIcon sx={{ fontSize: "14px" }} />
+                                  </LowerIconDiv>
+
+                                  <LowerIconDiv4
+                                    onClick={() =>
+                                      handleClickDelete(schedule._id)
+                                    }
+                                  >
+                                    <BsX style={{ fontSize: "20px" }} />
+                                  </LowerIconDiv4>
+                                </div>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <IconSortContainer>
+                                    <BsCloudDownload
+                                      style={{
+                                        color: "",
+                                        fontSize: "18px",
+                                      }}
+                                    />
+                                  </IconSortContainer>
+                                </div>
+
+                                <div style={{ padding: "0 20px 0 0" }}>
+                                  <TimeBar
+                                    key={schedule._id}
+                                    scheduleDate={schedule.dateTime}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "30%",
-                            padding: "16px 14px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-
-                            <LowerIconDiv4
-                              onClick={() => handleClickDelete(schedule._id)}
-                            >
-                              <BsX style={{ fontSize: "20px" }} />
-                            </LowerIconDiv4>
-                          </div>
-
-                          {showExtraFunc ? (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              {schedule.isActive !== "No info yet" && (
-                                <>
-                                  {schedule.isActive === "Present" && (
-                                    <IconSortContainer
-                                      onClick={() =>
-                                        handleClickVideo(schedule._id)
-                                      }
-                                    >
-                                      <BsCameraReels
-                                        style={{
-                                          color: "#007bff",
-                                          fontSize: "20px",
-                                        }}
-                                      />
-                                    </IconSortContainer>
-                                  )}
-                                </>
-                              )}
-
-                              {schedule.isActive !== "Present" &&
-                                schedule.isActive !== "Absent" && (
-                                  <>
-                                    <IconSortContainer
-                                      onClick={() =>
-                                        handleAddToContainerPresent(
-                                          schedule,
-                                          schedule &&
-                                            schedule.tempStudentName._id,
-                                          schedule._id
-                                        )
-                                      }
-                                    >
-                                      <BsCalendar2Check
-                                        style={{
-                                          color: "#4CBB17",
-                                          fontSize: "20px",
-                                        }}
-                                      />
-                                    </IconSortContainer>
-                                    <IconSortContainer
-                                      onClick={() =>
-                                        handleAddToContainer(
-                                          schedule,
-                                          schedule &&
-                                            schedule.tempStudentName._id,
-                                          schedule._id
-                                        )
-                                      }
-                                    >
-                                      <BsCalendar2X
-                                        style={{
-                                          color: "#Ff3131",
-                                          fontSize: "20px",
-                                        }}
-                                      />
-                                    </IconSortContainer>
-                                  </>
-                                )}
-                            </div>
-                          ) : (
-                            ""
-                          )}
-
-                          <BiDotsVerticalRounded
-                            onClick={toggleExtraFunc}
-                            style={{
-                              fontSize: "24px",
-                              color: "rgba(0, 123, 255, 0.6)",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </div>
-                      </ZebraDiv>
-                    ))}
+                            </ZebraDiv>
+                          ))}
+                      </>
+                    )}
                   </div>
                 </div>
               </Flexer>

@@ -2,19 +2,8 @@ import React, { useState } from "react";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
-
 import Tilt from "react-parallax-tilt";
-import {
-  BsArrowRightShort,
-  BsCalendar2Plus,
-  BsCalendarPlus,
-  BsCalendarWeek,
-  BsClockFill,
-  BsHourglassSplit,
-  BsPlus,
-  BsPlusLg,
-} from "react-icons/bs";
-import { FormGroup, Radio, FormControlLabel } from "@mui/material";
+import { BsClockFill, BsHourglassSplit } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 
 const Flexer = styled("div")({
@@ -235,38 +224,32 @@ const RoleTitle = styled("div")({
   letterSpacing: "-2px",
 });
 
-const WaitListStudentForm = ({
+const WaitListStudentFormSecond = ({
   handleSubmit,
   handleChange,
-  handleStudentTypeChange,
   handleWaitList,
   values,
-  handleFormChange,
 }) => {
   // destructure
   const {
-    nameOfStudent,
-    days,
-    day,
-    studentTypes,
-    studentType,
-    timings,
-    timing,
-    schedType,
+    age,
+    sex,
+    previousCenter,
+    currentCenter,
+    doctor,
+    medicalHistory,
+    sexs,
   } = values;
+
+  const handleActivate = (e) => {
+    handleWaitList();
+    handleSubmit(e);
+  };
 
   return (
     <>
       <Flexer>
         <TitleCon>
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              background: "red",
-            }}
-          ></div>
           <div
             style={{
               width: "10px",
@@ -283,6 +266,14 @@ const WaitListStudentForm = ({
               background: "orange",
             }}
           ></div>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background: "red",
+            }}
+          ></div>
         </TitleCon>
 
         <RoleCon>
@@ -292,26 +283,130 @@ const WaitListStudentForm = ({
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              gap: "8px",
+              justifyContent: "flex-start",
+              gap: "10px",
               width: "100%",
             }}
           >
-            <InputTitles>Name*</InputTitles>
-
             <div
               style={{
                 display: "flex",
-                justifyContent: "flex-start",
-                width: "100%",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                width: "50%",
               }}
             >
+              <InputTitles
+                sx={{
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: "12px",
+                }}
+              >
+                Age *
+              </InputTitles>
               <InputFields
-                name="nameOfStudent"
-                value={nameOfStudent}
+                sx={{ width: "91.7%" }}
+                type="text"
+                required
+                name="age"
+                value={age}
                 onChange={handleChange}
-                placeholder="Enter name"
+                placeholder="Enter age"
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                width: "50%",
+              }}
+            >
+              <InputTitles
+                sx={{
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: "12px",
+                }}
+              >
+                Sex*
+              </InputTitles>
+              <CustomSelect name="sex" value={sex} onChange={handleChange}>
+                <option></option>
+                {sexs.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </CustomSelect>
+            </div>
+          </div>
+          <br />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: "10px",
+              width: "100%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                width: "50%",
+              }}
+            >
+              <InputTitles
+                sx={{
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: "12px",
+                }}
+              >
+                <div>Previous Center *</div>
+              </InputTitles>
+              <InputFields
+                sx={{ width: "91.7%" }}
+                type="text"
+                required
+                name="previousCenter"
+                value={previousCenter}
+                onChange={handleChange}
+                placeholder="Enter center"
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                width: "50%",
+              }}
+            >
+              <InputTitles
+                sx={{
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: "12px",
+                }}
+              >
+                <div>Current Center *</div>
+              </InputTitles>
+              <InputFields
+                sx={{ width: "91.7%" }}
+                type="text"
+                required
+                name="currentCenter"
+                value={currentCenter}
+                onChange={handleChange}
+                placeholder="Enter last name"
               />
             </div>
           </div>
@@ -320,7 +415,7 @@ const WaitListStudentForm = ({
             style={{
               display: "flex",
               justifyContent: "flex-start",
-              gap: "12px",
+              gap: "10px",
               width: "100%",
             }}
           >
@@ -333,21 +428,24 @@ const WaitListStudentForm = ({
                 width: "50%",
               }}
             >
-              <InputTitles>Time*</InputTitles>
-              <CustomSelect
-                name="timing"
-                value={timing}
+              <InputTitles
+                sx={{
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: "12px",
+                }}
+              >
+                <div>Doctor *</div>
+              </InputTitles>
+              <InputFields
+                sx={{ width: "91.7%" }}
+                type="text"
+                required
+                name="doctor"
+                value={doctor}
                 onChange={handleChange}
-              >
-                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                  Enter time
-                </option>
-                {timings.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </CustomSelect>
+                placeholder="Enter doctor"
+              />
             </div>
             <div
               style={{
@@ -358,111 +456,91 @@ const WaitListStudentForm = ({
                 width: "50%",
               }}
             >
-              <InputTitles>Day*</InputTitles>
-              <CustomSelect name="day" value={day} onChange={handleChange}>
-                {days.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-              </CustomSelect>
-            </div>
-          </div>
-          <br />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "12px",
-              width: "97.62%",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                width: "50%",
-              }}
-            >
-              <InputTitles>Type *</InputTitles>
-              <CustomSelect
-                name="studentType"
-                value={studentType}
-                onChange={handleStudentTypeChange}
+              <InputTitles
+                sx={{
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: "12px",
+                }}
               >
-                <option></option>
-                {studentTypes.map((st) => (
-                  <option key={st} value={st}>
-                    {st}
-                  </option>
-                ))}
-              </CustomSelect>
+                <div>Illness *</div>
+              </InputTitles>
+              <InputFields
+                sx={{ width: "91.7%" }}
+                type="text"
+                required
+                name="medicalHistory"
+                value={medicalHistory}
+                onChange={handleChange}
+                placeholder="Enter medical history"
+              />
             </div>
           </div>
-        </FormContainer>
 
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "40px 0 0 0",
-          }}
-        >
           <div
             style={{
               display: "flex",
+              width: "100%",
               justifyContent: "space-between",
               alignItems: "center",
-              gap: "12px",
+              padding: "40px 0 0 0",
             }}
           >
-            <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
-              <FilterButton sx={{ borderBottomRightRadius: "4px" }}>
-                <BsClockFill style={{ fontSize: "18px" }} />
-                <span
-                  style={{
-                    fontSize: "12px",
-                    fontWeight: "500",
-                  }}
-                >
-                  Dyad
-                </span>
-              </FilterButton>
-            </Link>
-            <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
-              <FilterButton sx={{ borderBottomLeftRadius: "4px" }}>
-                <span
-                  style={{
-                    fontSize: "12px",
-                    fontWeight: "500",
-                  }}
-                >
-                  Solo
-                </span>
-                <BsHourglassSplit style={{ fontSize: "18px" }} />
-              </FilterButton>
-            </Link>
-          </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
+              <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
+                <FilterButton sx={{ borderBottomRightRadius: "4px" }}>
+                  <BsClockFill style={{ fontSize: "18px" }} />
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Dyad
+                  </span>
+                </FilterButton>
+              </Link>
+              <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
+                <FilterButton sx={{ borderBottomLeftRadius: "4px" }}>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Solo
+                  </span>
+                  <BsHourglassSplit style={{ fontSize: "18px" }} />
+                </FilterButton>
+              </Link>
+            </div>
 
-          {!nameOfStudent || !studentType || !schedType || !day ? (
-            <NextDisabledButton>
-              <BsArrowRightShort
-                style={{ color: "#122c8e", fontSize: "24px" }}
-              />
-            </NextDisabledButton>
-          ) : (
-            <NextRoundButton onClick={() => handleFormChange("StudentSecond")}>
-              <BsArrowRightShort style={{ color: "white", fontSize: "24px" }} />
-            </NextRoundButton>
-          )}
-        </div>
+            {!age ||
+            !doctor ||
+            !previousCenter ||
+            !currentCenter ||
+            !sex ||
+            !medicalHistory ? (
+              <NextDisabledButton>
+                <FaPlus style={{ color: "#122c8e", fontSize: "14px" }} />
+              </NextDisabledButton>
+            ) : (
+              <NextRoundButton onClick={handleActivate}>
+                <FaPlus style={{ color: "white", fontSize: "14px" }} />
+              </NextRoundButton>
+            )}
+          </div>
+        </FormContainer>
       </Flexer>
     </>
   );
 };
 
-export default WaitListStudentForm;
+export default WaitListStudentFormSecond;

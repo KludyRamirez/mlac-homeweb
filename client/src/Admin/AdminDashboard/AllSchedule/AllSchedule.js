@@ -13,29 +13,24 @@ import AbsentScheduleCard from "./AbsentScheduleCard";
 import AuditModal from "./AuditModal";
 import DeletionModal from "./DeletionModal";
 import {
-  BsCheckLg,
   BsCameraReels,
-  BsPatchMinus,
-  BsTrash,
-  BsExclamationTriangle,
-  BsTrash2Fill,
   BsX,
-  BsBackspace,
   BsCalendar2Check,
   BsCalendar2X,
   BsExclamationCircle,
+  BsInboxes,
+  BsSortUp,
+  BsSortDownAlt,
+  BsSortAlphaDown,
+  BsSortAlphaUpAlt,
 } from "react-icons/bs";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import {
-  AiOutlineSortDescending,
-  AiOutlineSortAscending,
-} from "react-icons/ai";
 import { toast } from "react-toastify";
-import { HiOutlineFilter } from "react-icons/hi";
 import moment from "moment";
 import PresentConModal from "./PresentConModal";
 import PresentAuditModal from "./PresentAuditModal";
 import VideoModal from "./VideoModal";
+import dots from "../../../images/dots.webp";
 
 const StudentParentCon = styled("div")({
   display: "flex",
@@ -198,18 +193,18 @@ const SearchBar = styled("input")(({ theme }) => ({
   borderTopLeftRadius: "10px",
   borderBottomLeftRadius: "10px",
   zIndex: "1",
-  padding: "6px 0px 6px 40px",
+  padding: "6px 0px 6px 48px",
   fontSize: "12px",
-  fontWeight: "600",
+  fontWeight: "500",
   color: "#007bff",
   outline: "1px solid rgba(7, 187, 255, 0.4)",
+  fontFamily: "Poppins, sans-serif",
 
   "&:focus": {
     outline: "2px solid #122c8e",
   },
   "&::placeholder": {
     color: "rgba(0, 0, 0, 0.3)",
-    fontFamily: "Poppins, sans-serif",
   },
   "@media (max-width: 767px)": {
     // width: "50%",
@@ -261,7 +256,10 @@ const ZebraDiv = styled("div")({
   color: "#122c8e",
   "&:nth-child(even)": {
     background: "rgba(255, 255, 255, 0.9)",
-    borderRadius: "10px",
+    borderTopLeftRadius: "10px",
+    borderBottomLeftRadius: "10px",
+    borderTopRightRadius: "40px",
+    borderBottomRightRadius: "40px",
     border: "1px solid rgba(7, 187, 255, 0.3)",
   },
 
@@ -1494,7 +1492,6 @@ const AllSchedule = () => {
                     boxShadow:
                       "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
                     transform: "translateY(-2px)",
-
                     background: "white",
                   },
                 }}
@@ -1582,30 +1579,29 @@ const AllSchedule = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 <div style={{ display: "flex", gap: "8px" }}>
-                  {isNameDesc ? (
-                    <div onClick={toggleFilterName}>
-                      <FilterButton onClick={sortAlphabetically}>
-                        <AiOutlineSortAscending style={{ fontSize: "18px" }} />
-                      </FilterButton>
-                    </div>
-                  ) : (
-                    <div onClick={toggleFilterName}>
-                      <FilterButton onClick={sortAlphabeticallyDesc}>
-                        <AiOutlineSortDescending style={{ fontSize: "18px" }} />
-                      </FilterButton>
-                    </div>
-                  )}
-
                   {isDayDesc ? (
                     <div onClick={toggleFilterDay}>
                       <FilterButton onClick={sortByDayOfWeek}>
-                        <HiOutlineFilter style={{ fontSize: "18px" }} />
+                        <BsSortAlphaDown style={{ fontSize: "18px" }} />
                       </FilterButton>
                     </div>
                   ) : (
                     <div onClick={toggleFilterDay}>
                       <FilterButton onClick={sortByDayOfWeekDesc}>
-                        <HiOutlineFilter style={{ fontSize: "18px" }} />
+                        <BsSortAlphaUpAlt style={{ fontSize: "18px" }} />
+                      </FilterButton>
+                    </div>
+                  )}
+                  {isNameDesc ? (
+                    <div onClick={toggleFilterName}>
+                      <FilterButton onClick={sortAlphabetically}>
+                        <BsSortUp style={{ fontSize: "18px" }} />
+                      </FilterButton>
+                    </div>
+                  ) : (
+                    <div onClick={toggleFilterName}>
+                      <FilterButton onClick={sortAlphabeticallyDesc}>
+                        <BsSortDownAlt style={{ fontSize: "18px" }} />
                       </FilterButton>
                     </div>
                   )}
@@ -1629,16 +1625,16 @@ const AllSchedule = () => {
                       borderTopLeftRadius: "10px",
                       borderBottomLeftRadius: "10px",
                       width: "68%",
-                      borderTop: "1px solid rgba(7, 187, 255, 0.4)",
-                      borderBottom: "1px solid rgba(7, 187, 255, 0.4)",
-                      borderLeft: "1px solid rgba(7, 187, 255, 0.4)",
+                      borderTop: "2px solid #122c8e",
+                      borderBottom: "2px solid #122c8e",
+                      borderLeft: "2px solid #122c8e",
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        width: "75%",
+                        width: "76%",
                       }}
                     >
                       <div
@@ -1653,7 +1649,7 @@ const AllSchedule = () => {
                               color: "#007bff",
                               margin: "0",
                               letterSpacing: "0.2px",
-                              fontWeight: "600",
+                              fontWeight: "500",
                             }}
                           >
                             ID
@@ -1665,7 +1661,7 @@ const AllSchedule = () => {
                             color: "#007bff",
                             margin: "0",
                             letterSpacing: "0.2px",
-                            fontWeight: "600",
+                            fontWeight: "500",
                           }}
                         >
                           Student's Info
@@ -1676,7 +1672,7 @@ const AllSchedule = () => {
                           color: "#007bff",
                           margin: "0",
                           letterSpacing: "0.2px",
-                          fontWeight: "600",
+                          fontWeight: "500",
                         }}
                       >
                         Type | Status
@@ -1700,7 +1696,7 @@ const AllSchedule = () => {
                         color: "white",
                         margin: "0",
                         letterSpacing: "0.2px",
-                        fontWeight: "600",
+                        fontWeight: "500",
                       }}
                     >
                       Actions
@@ -1713,11 +1709,12 @@ const AllSchedule = () => {
                 <div
                   style={{
                     backgroundColor: "#f0ffff",
+                    backgroundImage: `url(${dots})`,
                     borderRadius: "12px",
                     border: "1px solid rgba(7, 187, 255, 0.4)",
+                    backdropFilter: "blur(4px)",
+                    WebkitBackdropFilter: "blur(4px)",
                     padding: "4px 4px 4px 4px",
-                    boxShadow:
-                      "rgba(0, 123, 255, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -1px",
                     width: "100%",
                     height: "530px",
                     overflow: "hidden",
@@ -1730,388 +1727,395 @@ const AllSchedule = () => {
                       flexDirection: "column",
                       alignItems: "flex-start",
                       width: "100%",
+                      height: "100%",
                     }}
                   >
-                    {filteredSchedules.map((schedule) => (
-                      <ZebraDiv>
+                    {filteredSchedules.length === 0 ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      >
                         <div
                           style={{
                             display: "flex",
-                            justifyContent: "space-between",
-                            padding: "14px 16px",
-                            width: "70%",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            gap: "8px",
+                            marginTop: "-64px",
                           }}
                         >
+                          <BsInboxes
+                            style={{
+                              fontSize: "28px",
+                              color: "rgba(0, 123, 255, 1)",
+                            }}
+                          />
                           <div
                             style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              width: "100%",
+                              color: "rgba(0, 123, 255, 1)",
+                              fontSize: "14px",
                             }}
                           >
-                            <div
-                              style={{
-                                margin: "0px",
-                                fontWeight: "500",
-                                lineHeight: "22px",
-                                fontSize: "12px",
-                                letterSpacing: "0.2px",
-                                width: "81px",
-                              }}
-                            >
-                              {schedule.cardId ? schedule.cardId.slice(-3) : ""}
-                            </div>
-                            <div
-                              style={{
-                                margin: "0px",
-
-                                fontWeight: "500",
-                                lineHeight: "22px",
-                                fontSize: "12px",
-                                letterSpacing: "0.2px",
-                                width: "320px",
-                              }}
-                            >
-                              <span
-                                style={{
-                                  fontWeight: "500",
-                                  letterSpacing: "0.2px",
-                                  color: "blue",
-                                }}
-                              >
-                                {schedule.nameOfStudent}
-                              </span>
-                              ,{" "}
-                              <span
-                                style={{
-                                  wordSpacing: "0px",
-                                  textTransform: "lowercase",
-                                }}
-                              >
-                                {schedule.timing}
-                              </span>
-                              , {schedule.day} <br />
-                              <span>
-                                {schedule.parent
-                                  ? schedule.parent
-                                      .split(" ")
-                                      .slice(0, 2)
-                                      .join(" ")
-                                  : ""}{" "}
-                              </span>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "flex-start",
-                                justifyContent: "center",
-                                gap: "0px",
-                                width: "200px",
-                              }}
-                            >
+                            No data
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        {filteredSchedules
+                          .filter((schedule) => schedule.length !== 0)
+                          .map((schedule) => (
+                            <ZebraDiv>
                               <div
                                 style={{
                                   display: "flex",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                  gap: "8px",
+                                  justifyContent: "space-between",
+                                  padding: "14px 16px",
+                                  width: "70%",
                                 }}
                               >
                                 <div
                                   style={{
                                     display: "flex",
                                     justifyContent: "flex-start",
-                                    alignItems: "center",
-                                    gap: "12px",
-                                  }}
-                                >
-                                  <h5
-                                    style={{
-                                      margin: "0px",
-
-                                      fontWeight: "500",
-                                      lineHeight: "22px",
-                                      fontSize: "12px",
-                                      letterSpacing: "0.4px",
-                                    }}
-                                  >
-                                    {schedule.studentType}
-                                  </h5>
-                                </div>
-                                {"|"}
-                                <div
-                                  style={{
-                                    margin: "0px",
-
-                                    fontWeight: "500",
-                                    lineHeight: "22px",
-                                    fontSize: "12px",
-                                    wordSpacing: "1px",
-                                  }}
-                                >
-                                  {schedule.isActive === "No info yet" && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                      }}
-                                    >
-                                      <div
-                                        style={{
-                                          background: "transparent",
-                                          width: "10px",
-                                          height: "10px",
-                                          border: "1px solid #122c8e",
-                                          borderRadius: "50%",
-                                        }}
-                                      ></div>
-                                      <div
-                                        style={{
-                                          color: "#122c8e",
-                                        }}
-                                      >
-                                        No info
-                                      </div>
-                                    </div>
-                                  )}
-                                  {schedule.isActive === "Present" && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                      }}
-                                    >
-                                      <div
-                                        style={{
-                                          background: "transparent",
-                                          width: "10px",
-                                          height: "10px",
-                                          border: "1px solid #2aaa8a",
-                                          borderRadius: "50%",
-                                        }}
-                                      ></div>
-                                      <div
-                                        style={{
-                                          color: "#2AAA8A",
-                                        }}
-                                      >
-                                        Present
-                                      </div>
-                                    </div>
-                                  )}
-                                  {schedule.isActive === "Absent" && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                      }}
-                                    >
-                                      <div
-                                        style={{
-                                          background: "transparent",
-                                          width: "10px",
-                                          height: "10px",
-                                          border: "1px solid #ff3131",
-                                          borderRadius: "50%",
-                                        }}
-                                      ></div>
-                                      <div
-                                        style={{
-                                          color: "#ff3131",
-                                        }}
-                                      >
-                                        Absent
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-
-                                <div
-                                  style={{
-                                    margin: "0px",
-                                    fontWeight: "500",
-                                    lineHeight: "22px",
-                                    fontSize: "12px",
-                                    wordSpacing: "1px",
+                                    width: "100%",
                                   }}
                                 >
                                   <div
                                     style={{
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      alignItems: "center",
-                                      gap: "8px",
+                                      margin: "0px",
+                                      fontWeight: "500",
+                                      lineHeight: "22px",
+                                      fontSize: "13px",
+                                      letterSpacing: "0.2px",
+                                      width: "81px",
                                     }}
                                   >
-                                    {schedule.isVideoOn ? (
-                                      <>
-                                        <div
+                                    {schedule.cardId
+                                      ? schedule.cardId.slice(-3)
+                                      : ""}
+                                  </div>
+                                  <div
+                                    style={{
+                                      margin: "0px",
+                                      fontWeight: "500",
+                                      lineHeight: "22px",
+                                      fontSize: "13px",
+                                      letterSpacing: "0.2px",
+                                      width: "340px",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        fontWeight: "500",
+                                        letterSpacing: "0.2px",
+                                        color: "blue",
+                                        fontSize: "13px",
+                                      }}
+                                    >
+                                      {schedule.nameOfStudent}
+                                    </span>{" "}
+                                    |{" "}
+                                    <span
+                                      style={{
+                                        wordSpacing: "0px",
+                                        textTransform: "lowercase",
+                                      }}
+                                    >
+                                      {schedule.timing}
+                                    </span>
+                                    , {schedule.day} <br />
+                                    <span style={{ fontSize: "13px" }}>
+                                      {schedule.parent
+                                        ? schedule.parent
+                                            .split(" ")
+                                            .slice(0, 2)
+                                            .join(" ")
+                                        : ""}{" "}
+                                    </span>
+                                  </div>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "flex-start",
+                                      justifyContent: "center",
+                                      gap: "0px",
+                                      width: "200px",
+                                    }}
+                                  >
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        alignItems: "center",
+                                        gap: "8px",
+                                      }}
+                                    >
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "flex-start",
+                                          alignItems: "center",
+                                          gap: "12px",
+                                        }}
+                                      >
+                                        <h5
                                           style={{
-                                            background: "transparent",
-                                            width: "10px",
-                                            height: "10px",
-                                            border: "1px solid #007bff",
-                                            borderRadius: "50%",
-                                          }}
-                                        ></div>
-                                        <div
-                                          style={{
-                                            color: "#007bff",
+                                            margin: "0px",
+                                            fontWeight: "500",
+                                            lineHeight: "22px",
+                                            fontSize: "13px",
+                                            letterSpacing: "0.2px",
                                           }}
                                         >
-                                          Online
-                                        </div>
-                                      </>
-                                    ) : (
-                                      <>
+                                          {schedule.studentType}
+                                        </h5>
+                                      </div>
+                                      {"|"}
+                                      <div
+                                        style={{
+                                          margin: "0px",
+
+                                          fontWeight: "500",
+                                          lineHeight: "22px",
+                                          fontSize: "13px",
+                                          wordSpacing: "1px",
+                                        }}
+                                      >
+                                        {schedule.isActive ===
+                                          "No info yet" && (
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                              gap: "8px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                color: "#122c8e",
+                                                fontSize: "13px",
+                                              }}
+                                            >
+                                              No info
+                                            </div>
+                                          </div>
+                                        )}
+                                        {schedule.isActive === "Present" && (
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                              gap: "8px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                color: "#2AAA8A",
+                                                fontSize: "13px",
+                                              }}
+                                            >
+                                              Present
+                                            </div>
+                                          </div>
+                                        )}
+                                        {schedule.isActive === "Absent" && (
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                              gap: "8px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                color: "#ff3131",
+                                                fontSize: "13px",
+                                              }}
+                                            >
+                                              Absent
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      {"|"}
+                                      {schedule.isActive !== "Absent" && (
                                         <div
                                           style={{
-                                            background: "transparent",
-                                            width: "10px",
-                                            height: "10px",
-                                            border: "1px solid #FF7F50",
-                                            borderRadius: "50%",
-                                          }}
-                                        ></div>
-                                        <div
-                                          style={{
-                                            color: "#FF7F50",
+                                            margin: "0px",
+                                            fontWeight: "500",
+                                            lineHeight: "22px",
+                                            fontSize: "12px",
+                                            wordSpacing: "1px",
                                           }}
                                         >
-                                          OnSite
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                              gap: "8px",
+                                            }}
+                                          >
+                                            {schedule.isVideoOn ? (
+                                              <>
+                                                <div
+                                                  style={{
+                                                    color: "#007bff",
+                                                    fontSize: "13px",
+                                                  }}
+                                                >
+                                                  Online
+                                                </div>
+                                              </>
+                                            ) : (
+                                              <>
+                                                <div
+                                                  style={{
+                                                    color: "#122c8e",
+                                                  }}
+                                                >
+                                                  On-site
+                                                </div>
+                                              </>
+                                            )}
+                                          </div>
                                         </div>
-                                      </>
-                                    )}
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "30%",
-                            padding: "16px 14px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              gap: "4px",
-                            }}
-                          >
-                            <LowerIconDiv>
-                              <PersonIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv>
-                            <LowerIconDiv2
-                              onClick={() => navigateUpdate(schedule._id)}
-                            >
-                              <EditIcon sx={{ fontSize: "14px" }} />
-                            </LowerIconDiv2>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  width: "30%",
+                                  padding: "16px 14px",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    gap: "4px",
+                                  }}
+                                >
+                                  <LowerIconDiv>
+                                    <PersonIcon sx={{ fontSize: "14px" }} />
+                                  </LowerIconDiv>
+                                  <LowerIconDiv2
+                                    onClick={() => navigateUpdate(schedule._id)}
+                                  >
+                                    <EditIcon sx={{ fontSize: "14px" }} />
+                                  </LowerIconDiv2>
 
-                            <LowerIconDiv4
-                              onClick={() => handleClickDelete(schedule._id)}
-                            >
-                              <BsX style={{ fontSize: "20px" }} />
-                            </LowerIconDiv4>
-                          </div>
+                                  <LowerIconDiv4
+                                    onClick={() =>
+                                      handleClickDelete(schedule._id)
+                                    }
+                                  >
+                                    <BsX style={{ fontSize: "20px" }} />
+                                  </LowerIconDiv4>
+                                </div>
 
-                          {showExtraFunc ? (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              {schedule.isActive !== "No info yet" && (
-                                <>
-                                  {schedule.isVideoOn === false &&
-                                    schedule.isActive === "Present" && (
-                                      <IconSortContainer
-                                        onClick={() =>
-                                          handleClickVideo(schedule._id)
-                                        }
-                                      >
-                                        <BsCameraReels
-                                          style={{
-                                            color: "#007bff",
-                                            fontSize: "20px",
-                                          }}
-                                        />
-                                      </IconSortContainer>
-                                    )}
-                                </>
-                              )}
+                                {showExtraFunc ? (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    {schedule.isVideoOn === false &&
+                                      schedule.isActive !== "Absent" && (
+                                        <IconSortContainer
+                                          onClick={() =>
+                                            handleClickVideo(schedule._id)
+                                          }
+                                        >
+                                          <BsCameraReels
+                                            style={{
+                                              color: "#007bff",
+                                              fontSize: "20px",
+                                            }}
+                                          />
+                                        </IconSortContainer>
+                                      )}
 
-                              {schedule.isActive !== "Present" &&
-                                schedule.isActive !== "Absent" && (
-                                  <>
-                                    <IconSortContainer
-                                      onClick={() =>
-                                        handleAddToContainerPresent(
-                                          schedule,
-                                          schedule._id
-                                        )
-                                      }
-                                    >
-                                      <BsCalendar2Check
+                                    {schedule.isActive !== "Present" &&
+                                      schedule.isActive !== "Absent" && (
+                                        <>
+                                          <IconSortContainer
+                                            onClick={() =>
+                                              handleAddToContainerPresent(
+                                                schedule,
+                                                schedule._id
+                                              )
+                                            }
+                                          >
+                                            <BsCalendar2Check
+                                              style={{
+                                                color: "#4CBB17",
+                                                fontSize: "20px",
+                                              }}
+                                            />
+                                          </IconSortContainer>
+                                          <IconSortContainer
+                                            onClick={() =>
+                                              handleAddToContainer(
+                                                schedule,
+                                                schedule._id
+                                              )
+                                            }
+                                          >
+                                            <BsCalendar2X
+                                              style={{
+                                                color: "#Ff3131",
+                                                fontSize: "20px",
+                                              }}
+                                            />
+                                          </IconSortContainer>
+                                        </>
+                                      )}
+
+                                    <IconSortContainer>
+                                      <BsExclamationCircle
                                         style={{
-                                          color: "#4CBB17",
+                                          color: "#FFBF00",
                                           fontSize: "20px",
                                         }}
                                       />
                                     </IconSortContainer>
-                                    <IconSortContainer
-                                      onClick={() =>
-                                        handleAddToContainer(
-                                          schedule,
-                                          schedule._id
-                                        )
-                                      }
-                                    >
-                                      <BsCalendar2X
-                                        style={{
-                                          color: "#Ff3131",
-                                          fontSize: "20px",
-                                        }}
-                                      />
-                                    </IconSortContainer>
-                                  </>
+                                  </div>
+                                ) : (
+                                  ""
                                 )}
 
-                              <IconSortContainer>
-                                <BsExclamationCircle
-                                  style={{ color: "#FFBF00", fontSize: "20px" }}
+                                <BiDotsVerticalRounded
+                                  onClick={toggleExtraFunc}
+                                  style={{
+                                    fontSize: "24px",
+                                    color: "rgba(0, 123, 255, 0.6)",
+                                    cursor: "pointer",
+                                  }}
                                 />
-                              </IconSortContainer>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-
-                          <BiDotsVerticalRounded
-                            onClick={toggleExtraFunc}
-                            style={{
-                              fontSize: "24px",
-                              color: "rgba(0, 123, 255, 0.6)",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </div>
-                      </ZebraDiv>
-                    ))}
+                              </div>
+                            </ZebraDiv>
+                          ))}
+                      </>
+                    )}
                   </div>
                 </div>
               </Flexer>

@@ -81,10 +81,31 @@ const schedsSchema = new mongoose.Schema(
     notifParentLocator: {
       type: String,
     },
-
     absentCounter: {
       type: Number,
       default: 0,
+    },
+    age: {
+      type: String,
+    },
+    sex: {
+      type: String,
+      enum: ["Male", "Female"],
+    },
+    birthday: {
+      type: String,
+    },
+    previousCenter: {
+      type: String,
+    },
+    currentCenter: {
+      type: String,
+    },
+    doctor: {
+      type: String,
+    },
+    medicalHistory: {
+      type: String,
     },
   },
   { timestamps: true }

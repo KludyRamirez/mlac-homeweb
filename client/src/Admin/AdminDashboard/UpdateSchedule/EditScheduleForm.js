@@ -190,7 +190,7 @@ const StatsCard = styled("div")({
   padding: "0px 12px",
   gap: "4px",
   boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 5px 10px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px",
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
 });
 
 const TitleCon = styled("div")({
@@ -514,15 +514,32 @@ const EditScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              background: "#3d66cc",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#122c8e",
+                outline: "1px solid #122c8e",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -535,7 +552,7 @@ const EditScheduleForm = ({
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -547,15 +564,32 @@ const EditScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              background: "orange",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#FFBF00",
+                outline: "1px solid #FFBF00",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -568,7 +602,7 @@ const EditScheduleForm = ({
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -580,15 +614,31 @@ const EditScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              background: "#ff3131",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#ff3131",
+                outline: "#ff3131",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -601,7 +651,6 @@ const EditScheduleForm = ({
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}

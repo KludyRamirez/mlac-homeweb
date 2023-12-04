@@ -4,11 +4,20 @@ import { createSelector } from "reselect";
 import { toast } from "react-toastify";
 import axios from "axios";
 import IndTempCreateScheduleForm from "./IndTempCreateScheduleForm";
+import moment from "moment";
+
+const tomorrow = moment().add(1, "day");
+
+if (tomorrow.day() === 0) {
+  tomorrow.add(1, "day");
+}
+
+const formattedTomorrow = tomorrow.format("YYYY-MM-DD");
 
 const initialState = {
   tempStudentNames: [],
   tempStudentName: "",
-  dateTime: "",
+  dateTime: formattedTomorrow,
   tempSoloDay: "",
   schedTypes: ["Temporary"],
   schedType: "Temporary",
@@ -30,7 +39,7 @@ const initialState = {
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const IndTempCreateSchedule = () => {
+const IndTempCreateSchedule = ({ toggleDiv }) => {
   const [values, setValues] = useState(initialState);
   const auth = useSelector(authSelector);
 
@@ -96,16 +105,19 @@ const IndTempCreateSchedule = () => {
     setValues({ ...values, tempStudentName: e.target.value });
   };
 
-  const handleTempSoloDayChange = (e) => {
-    e.preventDefault();
-    const newDateTime = e.target.value;
-    const dateObj = new Date(newDateTime);
+  const handleTempSoloDayChange = (newSelectedDate) => {
+    const dateObj = new Date(newSelectedDate);
     const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
-    setValues({
-      ...values,
-      dateTime: newDateTime,
-      tempSoloDay: dayOfWeek,
-    });
+
+    if (dayOfWeek === "Sunday") {
+      toast.error("Closed on Sundays");
+    } else {
+      setValues({
+        ...values,
+        dateTime: newSelectedDate,
+        day: dayOfWeek,
+      });
+    }
   };
 
   return (
@@ -116,6 +128,7 @@ const IndTempCreateSchedule = () => {
       handleTempSoloDayChange={handleTempSoloDayChange}
       setValues={setValues}
       values={values}
+      toggleDiv={toggleDiv}
     />
   );
 };

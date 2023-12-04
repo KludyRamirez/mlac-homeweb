@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import Tilt from "react-parallax-tilt";
 import { BsCalendarWeek, BsClockFill } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
+import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Flexer = styled("div")({
   display: "flex",
@@ -157,6 +160,32 @@ const CustomSelect = styled("select")`
   }
 `;
 
+const CustomSelectDatePicker = styled(DatePicker)`
+  cursor: pointer;
+  width: 227px;
+  background: #f7fff7;
+  border: none;
+  outline: 1px solid rgba(0, 123, 255, 0.6);
+  border-radius: 24px;
+  height: 44px;
+  padding: 0px 0px 0px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  color: #122c8e;
+  letter-spacing: 0.4px;
+  appearance: none; /* Removes default dropdown arrow */
+
+  &:focus {
+    outline: 2px solid #007bff;
+    border: none;
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
 const InputTitles = styled("div")({
   width: "100px",
   height: "20px",
@@ -230,6 +259,7 @@ const TempSoloCreateScheduleForm = ({
   values,
   handleTempSoloDayChange,
   handleChange,
+  maxLength,
 }) => {
   // destructure
   const {
@@ -241,13 +271,23 @@ const TempSoloCreateScheduleForm = ({
     timing,
   } = values;
 
-  const today = new Date();
-  today.setDate(today.getDate() + 1);
-  const minDate = today.toISOString().split("T")[0];
+  const [selectedDate, setSelectedDate] = useState("");
 
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 6);
-  const maxDateISOString = maxDate.toISOString().split("T")[0];
+  const isSunday = (date) => {
+    return date.getDay() === 0; // 0 represents Sunday
+  };
+
+  const isDisabled = (date) => {
+    return (
+      moment(date).isBefore(moment(), "day") ||
+      (moment(date).isAfter(moment(), "day") && !isSunday(date))
+    );
+  };
+
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+    handleTempSoloDayChange(newDate);
+  };
 
   return (
     <>
@@ -296,6 +336,7 @@ const TempSoloCreateScheduleForm = ({
               name="nameOfStudent"
               value={tempStudentName}
               onChange={handleNameOfStudentChange}
+              maxLength={maxLength}
             >
               <option></option>
               {tempStudentNames
@@ -336,13 +377,13 @@ const TempSoloCreateScheduleForm = ({
                   width: "100%",
                 }}
               >
-                <InputFields
-                  type="date"
-                  name="dateTime"
-                  min={minDate}
-                  max={maxDateISOString}
-                  value={dateTime}
-                  onChange={handleTempSoloDayChange}
+                <CustomSelectDatePicker
+                  minDate={moment().add(1, "days").toDate()}
+                  maxDate={moment().add(6, "days").toDate()}
+                  filterDate={isDisabled}
+                  placeholderText=""
+                  selected={selectedDate}
+                  onChange={(date) => handleDateChange(date)}
                 />
               </div>
             </div>
@@ -362,9 +403,7 @@ const TempSoloCreateScheduleForm = ({
                 value={timing}
                 onChange={handleChange}
               >
-                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                  Select time
-                </option>
+                <option></option>
                 {timings.map((t) => (
                   <option key={t} value={t}>
                     {t}
@@ -388,11 +427,11 @@ const TempSoloCreateScheduleForm = ({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              gap: "8px",
+              gap: "12px",
             }}
           >
             <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
-              <FilterButton>
+              <FilterButton sx={{ borderBottomRightRadius: "4px" }}>
                 <BsClockFill style={{ fontSize: "18px" }} />
                 <span
                   style={{
@@ -405,7 +444,7 @@ const TempSoloCreateScheduleForm = ({
               </FilterButton>
             </Link>
             <Link to="/schedule" style={{ textDecoration: "none" }}>
-              <FilterButton>
+              <FilterButton sx={{ borderBottomLeftRadius: "4px" }}>
                 <span
                   style={{
                     fontSize: "12px",
@@ -471,13 +510,32 @@ const TempSoloCreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "#122c8e",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#122c8e",
+                outline: "1px solid #122c8e",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -485,12 +543,12 @@ const TempSoloCreateScheduleForm = ({
               }}
             >
               <div>Total</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -502,13 +560,32 @@ const TempSoloCreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "rgba(255, 170, 51, 1)",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#FFBF00",
+                outline: "1px solid #FFBF00",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -516,12 +593,12 @@ const TempSoloCreateScheduleForm = ({
               }}
             >
               <div>Online</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -533,13 +610,31 @@ const TempSoloCreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "rgba(255, 49, 49, 1)",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#ff3131",
+                outline: "#ff3131",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -547,12 +642,11 @@ const TempSoloCreateScheduleForm = ({
               }}
             >
               <div>Absent</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}

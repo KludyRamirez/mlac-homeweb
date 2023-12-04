@@ -95,7 +95,7 @@ const NextButton = styled("div")({
   },
 });
 
-const DeletionModal = ({ handleConfirmDelete }) => {
+const WaitlistModal = ({ handleConfirmSetIsWaitlisted }) => {
   return (
     <>
       <AsCard>
@@ -128,7 +128,7 @@ const DeletionModal = ({ handleConfirmDelete }) => {
             >
               Tell us the reason
             </h1>
-            <button onClick={handleConfirmDelete}>Delete</button>
+            <button onClick={handleConfirmSetIsWaitlisted}>Set</button>
             <div
               style={{
                 width: "100%",
@@ -157,4 +157,4 @@ const DeletionModal = ({ handleConfirmDelete }) => {
   );
 };
 
-export default DeletionModal;
+export default WaitlistModal;

@@ -44,10 +44,10 @@ const FormTitle = styled("div")({
   padding: "34px 38px 20px 38px",
   color: "#f7fff7",
   textShadow:
-    "-1px -1px 1px rgba(255, 255, 255, 0.4), 1px 1px 1px rgba(7, 187, 255, 0.4)",
+    "-1px -1px 1px rgba(255, 255, 255, 1), 1px 1px 1px rgba(0, 0, 0, 0.2)",
   fontSize: "32px",
   fontWeight: "700",
-  letterSpacing: "-0.4px",
+  letterSpacing: "-0.2px",
 
   "&:hover": {
     backgroundImage:
@@ -221,7 +221,7 @@ const EditSchedule = () => {
         <ResponsiveDrawer />
         <EditScheduleContainer>
           <TitleCon>
-            <FormTitle>{">"} Edit Schedule</FormTitle>
+            <FormTitle>Edit Schedule</FormTitle>
           </TitleCon>
           <Flexer>
             <FormCon1>

@@ -10,19 +10,15 @@ import TempCreateScheduleForm from "./TempCreateScheduleForm";
 import TempSchedule from "../AllSchedule/TempSchedule";
 import IndTempCreateSchedule from "./IndTempCreateSchedule";
 
-import { BsBlockquoteLeft } from "react-icons/bs";
-import dots from "../../../images/dots.webp";
-
-const Dots = styled("div")({
-  background: "#F0FFFf",
-});
+import moment from "moment";
 
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
   justifyContent: "center",
-  backgroundImage: `url(${dots})`,
+  backgroundImage:
+    "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)",
 });
 
 const TempCreateScheduleContainer = styled("div")({
@@ -42,7 +38,6 @@ const TempCreateScheduleContainer = styled("div")({
 const TitleCon = styled("div")({
   display: "flex",
   justifyContent: "flex-start",
-  alignItems: "center",
   width: "100%",
 });
 
@@ -101,45 +96,24 @@ const FormCon2 = styled("div")({
   },
 });
 
+const tomorrow = moment().add(1, "day");
+
+if (tomorrow.day() === 0) {
+  tomorrow.add(1, "day");
+}
+
+const formattedTomorrow = tomorrow.format("YYYY-MM-DD");
+
 const initialState = {
   tempStudentNames: [],
   tempStudentName: "",
-  dateTime: "",
+  dateTime: formattedTomorrow,
   tempSoloDay: "",
   schedTypes: ["Temporary"],
   schedType: "Temporary",
   permanentScheds: [],
   permanentSched: "",
 };
-
-const NextRoundButton = styled("button")({
-  padding: "0",
-  border: "none",
-  background: "rgba(7, 187, 255, 0.1)",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "6px",
-  width: "40px",
-  height: "38px",
-  borderRadius: "12px",
-  cursor: "pointer",
-  fontFamily: "Poppins, sans-serif",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    transform: "translateY(-3px)",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
@@ -217,16 +191,19 @@ const TempCreateSchedule = () => {
     setValues({ ...values, tempStudentName: e.target.value });
   };
 
-  const handleTempSoloDayChange = (e) => {
-    e.preventDefault();
-    const newDateTime = e.target.value;
-    const dateObj = new Date(newDateTime);
+  const handleTempSoloDayChange = (newSelectedDate) => {
+    const dateObj = new Date(newSelectedDate);
     const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
-    setValues({
-      ...values,
-      dateTime: newDateTime,
-      tempSoloDay: dayOfWeek,
-    });
+
+    if (dayOfWeek === "Sunday") {
+      toast.error("Closed on Sundays");
+    } else {
+      setValues({
+        ...values,
+        dateTime: newSelectedDate,
+        day: dayOfWeek,
+      });
+    }
   };
 
   const toggleDiv = () => {
@@ -234,41 +211,35 @@ const TempCreateSchedule = () => {
   };
 
   return (
-    <Dots>
-      <Wrapper>
-        <ResponsiveDrawer />
-        <TempCreateScheduleContainer>
-          <TitleCon>
-            <FormTitle>Temp Schedule</FormTitle>
-            <NextRoundButton onClick={toggleDiv}>
-              <BsBlockquoteLeft
-                style={{ fontSize: "18px", color: "#122c8e" }}
+    <Wrapper>
+      <ResponsiveDrawer />
+      <TempCreateScheduleContainer>
+        <TitleCon>
+          <FormTitle>Create Schedule</FormTitle>
+        </TitleCon>
+        <Flexer>
+          <FormCon1>
+            {showDiv ? (
+              <TempCreateScheduleForm
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                handlePermanentChange={handlePermanentChange}
+                handleNameOfStudentChange={handleNameOfStudentChange}
+                handleTempSoloDayChange={handleTempSoloDayChange}
+                setValues={setValues}
+                values={values}
+                toggleDiv={toggleDiv}
               />
-            </NextRoundButton>
-          </TitleCon>
-          <Flexer>
-            <FormCon1>
-              {showDiv ? (
-                <TempCreateScheduleForm
-                  handleSubmit={handleSubmit}
-                  handleChange={handleChange}
-                  handlePermanentChange={handlePermanentChange}
-                  handleNameOfStudentChange={handleNameOfStudentChange}
-                  handleTempSoloDayChange={handleTempSoloDayChange}
-                  setValues={setValues}
-                  values={values}
-                />
-              ) : (
-                <IndTempCreateSchedule />
-              )}
-            </FormCon1>
-            <FormCon2>
-              <TempSchedule />
-            </FormCon2>
-          </Flexer>
-        </TempCreateScheduleContainer>
-      </Wrapper>
-    </Dots>
+            ) : (
+              <IndTempCreateSchedule toggleDiv={toggleDiv} />
+            )}
+          </FormCon1>
+          <FormCon2>
+            <TempSchedule />
+          </FormCon2>
+        </Flexer>
+      </TempCreateScheduleContainer>
+    </Wrapper>
   );
 };
 

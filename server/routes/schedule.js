@@ -106,7 +106,7 @@ router.patch(
 );
 
 router.patch(
-  "/temp-soloschedule/:id/setActiveTemp",
+  "/temp-schedule/:id/setActiveTemp",
   auth,
   admin,
   mainController.controllers.setActiveTemp
@@ -161,6 +161,13 @@ router.patch(
   auth,
   admin,
   mainController.controllers.setMinusAbsentCounter
+);
+
+router.patch(
+  "/schedule/:id/setwaitliststatus",
+  auth,
+  admin,
+  mainController.controllers.setWaitlistStatus
 );
 
 module.exports = router;

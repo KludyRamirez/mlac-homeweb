@@ -2,7 +2,9 @@ const User = require("../../models/user");
 const Container = require("../../models/container");
 const Order = require("../../models/order");
 const PresentLogs = require("../../models/logsPresent");
+const Schedule = require("../../models/scheds");
 const uniqid = require("uniqid");
+const bcrypt = require("bcryptjs");
 
 const getUser = async (req, res) => {
   try {
@@ -281,6 +283,58 @@ const createSchedOrderPresent = async (req, res) => {
   }
 };
 
+//----------------->
+const hashPassword = async (plainPassword) => {
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+  return hashedPassword;
+};
+
+//accessing two different collection schedule to user
+
+const hashWaitlistUserPassword = async (req, res) => {
+  try {
+    const { parent } = req.body;
+
+    if (!parent) {
+      return res
+        .status(400)
+        .send("Parent value is missing in the request body.");
+    }
+
+    const schedule = await Schedule.findOne({ parent: parent });
+
+    if (schedule) {
+      // Assuming 'schedule' is an object with a 'schedule' property that contains a string
+      const slicedSchedule = schedule.parent.split(" ").pop();
+
+      console.log("----------------------->", slicedSchedule);
+
+      const user = await User.findOne({
+        username: slicedSchedule,
+      });
+
+      if (user) {
+        const hashedPassword = await hashPassword(user.password);
+
+        await User.updateOne(
+          { username: slicedSchedule },
+          { $set: { password: hashedPassword } }
+        );
+
+        return res.send("Password hashed and updated successfully.");
+      } else {
+        return res.send("No user found with the extracted schedule username.");
+      }
+    } else {
+      return res.send("No schedule found matching the provided parent value.");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   getUser,
   deleteUser,
@@ -300,4 +354,8 @@ module.exports = {
   emptyConPresent,
   userOrdersPresent,
   createSchedOrderPresent,
+
+  // set isWaitlist
+
+  hashWaitlistUserPassword,
 };

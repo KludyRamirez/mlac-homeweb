@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Tilt from "react-parallax-tilt";
-import { BsCalendarWeek, BsHourglassSplit, BsPlus } from "react-icons/bs";
+import React, { useState } from "react";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import Tilt from "react-parallax-tilt";
+import { BsCalendarWeek, BsClockFill } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 const Flexer = styled("div")({
   display: "flex",
@@ -105,33 +108,33 @@ const NextDisabledButton = styled("button")({
   fontFamily: "Poppins, sans-serif",
 });
 
-const InputFields = styled("input")({
-  width: "100%",
-  background: "#f7fff7",
-  outline: "1px solid rgba(0, 123, 255, 0.6)",
-  border: "none",
-  borderRadius: "24px",
-  height: "44px",
-  padding: "0px 0px 0px 20px",
-  fontSize: "12px",
-  fontWeight: "500",
-  color: "#122c8e",
-  letterSpacing: "0.2px",
-  position: "relative",
-  fontFamily: "Poppins, sans-serif",
-
-  "&:focus": {
-    outline: "2px solid #007bff",
-    border: "none",
-  },
-  "&::placeholder": {
-    color: "rgba(0, 0, 0, 0.4)",
-    fontSize: "12px",
-    fontWeight: "500",
-  },
-});
-
 const CustomSelect = styled("select")`
+  cursor: pointer;
+  width: 100%;
+  background: #f7fff7;
+  border: none;
+  outline: 1px solid rgba(0, 123, 255, 0.6);
+  border-radius: 24px;
+  height: 44px;
+  padding: 0px 0px 0px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  color: #122c8e;
+  letter-spacing: 0.4px;
+  appearance: none; /* Removes default dropdown arrow */
+
+  &:focus {
+    outline: 2px solid #007bff;
+    border: none;
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const CustomSelectDatePicker = styled(DatePicker)`
   cursor: pointer;
   width: 100%;
   background: #f7fff7;
@@ -224,55 +227,38 @@ const RoleTitle = styled("div")({
   letterSpacing: "-2px",
 });
 
-const CreateWaitlistScheduleForm = ({
+const CreateProgRequestForm = ({
   handleSubmit,
   handleNameOfStudentChange,
   values,
-  handleTempSoloDayChange,
+  handleDayChange,
 }) => {
   // destructure
-  const { tempStudentNames, tempStudentName, dateTime, tempSoloDay } = values;
+  const { nameOfStudents, nameOfStudent, dateTime, statuses, status, day } =
+    values;
 
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
 
-  let selectedDay = "";
+  const isSunday = (date) => {
+    return date.getDay() === 0; // 0 represents Sunday
+  };
 
-  const selectedPermanentSched = permanentScheds.find(
-    (ps) => ps._id === permanentSched
-  );
+  const isDisabled = (date) => {
+    return (
+      moment(date).isBefore(moment(), "day") ||
+      (moment(date).isAfter(moment().add(13, "days"), "day") && !isSunday(date))
+    );
+  };
 
-  if (selectedPermanentSched) {
-    selectedDay = selectedPermanentSched.day;
-  }
-
-  useEffect(() => {
-    if (tempSoloDay === selectedDay) {
-      setIsButtonEnabled(true);
-    } else {
-      setIsButtonEnabled(false);
-    }
-  }, [tempSoloDay, permanentSched]);
-
-  const today = new Date();
-  today.setDate(today.getDate() + 14);
-  const minDate = today.toISOString().split("T")[0];
-
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 6);
-  const maxDateISOString = maxDate.toISOString().split("T")[0];
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+    handleDayChange(newDate);
+  };
 
   return (
     <>
       <Flexer>
         <TitleCon>
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              background: "red",
-            }}
-          ></div>
           <div
             style={{
               width: "10px",
@@ -289,9 +275,17 @@ const CreateWaitlistScheduleForm = ({
               background: "orange",
             }}
           ></div>
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              background: "#ff3131",
+            }}
+          ></div>
         </TitleCon>
         <RoleCon>
-          <RoleTitle>Temporary</RoleTitle>
+          <RoleTitle>Report</RoleTitle>
         </RoleCon>
         <FormContainer>
           <div
@@ -306,13 +300,11 @@ const CreateWaitlistScheduleForm = ({
             <InputTitles>Name *</InputTitles>
             <CustomSelect
               name="nameOfStudent"
-              value={tempStudentName}
+              value={nameOfStudent}
               onChange={handleNameOfStudentChange}
             >
-              <option style={{ color: "rgba(0, 123, 255, 0.4)" }}>
-                Select student
-              </option>
-              {tempStudentNames.map((n) => (
+              <option></option>
+              {nameOfStudents.map((n) => (
                 <option key={n._id} value={n._id}>
                   {n.nameOfStudent}
                 </option>
@@ -323,39 +315,20 @@ const CreateWaitlistScheduleForm = ({
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-start",
-              gap: "10px",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "8px",
               width: "100%",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                width: "100%",
-              }}
-            >
-              <InputTitles>Date *</InputTitles>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  width: "100%",
-                }}
-              >
-                <InputFields
-                  type="date"
-                  name="dateTime"
-                  min={minDate}
-                  max={maxDateISOString}
-                  value={dateTime}
-                  onChange={handleTempSoloDayChange}
-                />
-              </div>
-            </div>
+            <InputTitles>Date *</InputTitles>
+            <CustomSelectDatePicker
+              minDate={moment().add(1, "days").toDate()}
+              filterDate={isDisabled}
+              placeholderText="Select a date"
+              selected={selectedDate}
+              onChange={(date) => handleDateChange(date)}
+            />
           </div>
         </FormContainer>
         <div
@@ -372,11 +345,11 @@ const CreateWaitlistScheduleForm = ({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              gap: "8px",
+              gap: "12px",
             }}
           >
             <Link to="/schedule" style={{ textDecoration: "none" }}>
-              <FilterButton>
+              <FilterButton sx={{ borderBottomRightRadius: "4px" }}>
                 <BsCalendarWeek style={{ fontSize: "18px" }} />
                 <span
                   style={{
@@ -388,22 +361,22 @@ const CreateWaitlistScheduleForm = ({
                 </span>
               </FilterButton>
             </Link>
-            <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
-              <FilterButton>
-                <BsHourglassSplit style={{ fontSize: "18px" }} />
+            <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
+              <FilterButton sx={{ borderBottomLeftRadius: "4px" }}>
                 <span
                   style={{
                     fontSize: "12px",
                     fontWeight: "500",
                   }}
                 >
-                  Solo
+                  Dyad
                 </span>
+                <BsClockFill style={{ fontSize: "18px" }} />
               </FilterButton>
             </Link>
           </div>
 
-          {!tempStudentName || !schedType || !permanentSched ? (
+          {!nameOfStudent || !dateTime ? (
             <NextDisabledButton>
               <FaPlus style={{ color: "#007bff", fontSize: "14px" }} />
             </NextDisabledButton>
@@ -455,13 +428,32 @@ const CreateWaitlistScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "#122c8e",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#122c8e",
+                outline: "1px solid #122c8e",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -469,12 +461,12 @@ const CreateWaitlistScheduleForm = ({
               }}
             >
               <div>Total</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -486,13 +478,32 @@ const CreateWaitlistScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "rgba(255, 170, 51, 1)",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#FFBF00",
+                outline: "1px solid #FFBF00",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -500,12 +511,12 @@ const CreateWaitlistScheduleForm = ({
               }}
             >
               <div>Online</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -517,13 +528,31 @@ const CreateWaitlistScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              background: "rgba(255, 49, 49, 1)",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#ff3131",
+                outline: "#ff3131",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -531,12 +560,11 @@ const CreateWaitlistScheduleForm = ({
               }}
             >
               <div>Absent</div>
-              <div>Schedules</div>
+              <div style={{ marginTop: "-2px" }}>Schedules</div>
             </div>
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -550,4 +578,4 @@ const CreateWaitlistScheduleForm = ({
   );
 };
 
-export default CreateWaitlistScheduleForm;
+export default CreateProgRequestForm;

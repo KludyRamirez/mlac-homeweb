@@ -7,18 +7,16 @@ import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import TempSoloCreateSchedForm from "./TempSoloCreateSchedForm";
 import TempSoloSchedule from "../AllSchedule/TempSoloSchedule";
-import dots from "../../../images/dots.webp";
-
-const Dots = styled("div")({
-  background: "#F0FFFf",
-});
+import TopBar from "../AppBar/AppBar";
+import moment from "moment-timezone";
 
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
   justifyContent: "center",
-  backgroundImage: `url(${dots})`,
+  backgroundImage:
+    "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)",
 });
 
 const TempCreateScheduleContainer = styled("div")({
@@ -96,10 +94,18 @@ const FormCon2 = styled("div")({
   },
 });
 
+const tomorrow = moment().add(1, "day");
+
+if (tomorrow.day() === 0) {
+  tomorrow.add(1, "day");
+}
+
+const formattedTomorrow = tomorrow.format("YYYY-MM-DD");
+
 const initialState = {
   tempStudentNames: [],
   tempStudentName: "",
-  dateTime: Date,
+  dateTime: formattedTomorrow,
   tempSoloDay: "",
   day: "",
   schedTypes: ["Temporary"],
@@ -122,7 +128,14 @@ const authSelector = createSelector([selectAuth], (auth) => auth);
 
 const TempSoloCreateSched = () => {
   const [values, setValues] = useState(initialState);
+  const [currentDate, setCurrentDate] = useState("");
   const auth = useSelector(authSelector);
+
+  useEffect(() => {
+    const today = moment().tz("Asia/Manila").format("YYYY-MM-DD");
+    setCurrentDate(today);
+    console.log(currentDate);
+  }, []);
 
   useEffect(() => {
     getTempSchedules();
@@ -186,46 +199,46 @@ const TempSoloCreateSched = () => {
     setValues({ ...values, tempStudentName: e.target.value });
   };
 
-  const handleTempSoloDayChange = (e) => {
-    e.preventDefault();
-    const newDateTime = e.target.value;
-    const dateObj = new Date(newDateTime);
+  const handleTempSoloDayChange = (newSelectedDate) => {
+    const dateObj = new Date(newSelectedDate);
     const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
-    setValues({
-      ...values,
-      dateTime: newDateTime,
-      tempSoloDay: dayOfWeek,
-      day: dayOfWeek,
-    });
+
+    if (dayOfWeek === "Sunday") {
+      toast.error("Closed on Sundays");
+    } else {
+      setValues({
+        ...values,
+        dateTime: newSelectedDate,
+        day: dayOfWeek,
+      });
+    }
   };
 
   return (
-    <Dots>
-      <Wrapper>
-        <ResponsiveDrawer />
-        <TempCreateScheduleContainer>
-          <TitleCon>
-            <FormTitle>Solo Schedule</FormTitle>
-          </TitleCon>
-          <Flexer>
-            <FormCon1>
-              <TempSoloCreateSchedForm
-                handleSubmit={handleSubmit}
-                handleChange={handleChange}
-                //   handlePermanentChange={handlePermanentChange}
-                handleNameOfStudentChange={handleNameOfStudentChange}
-                handleTempSoloDayChange={handleTempSoloDayChange}
-                setValues={setValues}
-                values={values}
-              />
-            </FormCon1>
-            <FormCon2>
-              <TempSoloSchedule />
-            </FormCon2>
-          </Flexer>
-        </TempCreateScheduleContainer>
-      </Wrapper>
-    </Dots>
+    <Wrapper>
+      <TopBar />
+      <ResponsiveDrawer />
+      <TempCreateScheduleContainer>
+        <TitleCon>
+          <FormTitle>Create Schedule</FormTitle>
+        </TitleCon>
+        <Flexer>
+          <FormCon1>
+            <TempSoloCreateSchedForm
+              handleSubmit={handleSubmit}
+              handleChange={handleChange}
+              handleNameOfStudentChange={handleNameOfStudentChange}
+              handleTempSoloDayChange={handleTempSoloDayChange}
+              setValues={setValues}
+              values={values}
+            />
+          </FormCon1>
+          <FormCon2>
+            <TempSoloSchedule />
+          </FormCon2>
+        </Flexer>
+      </TempCreateScheduleContainer>
+    </Wrapper>
   );
 };
 

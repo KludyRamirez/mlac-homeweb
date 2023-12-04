@@ -5,27 +5,21 @@ import { styled } from "@mui/system";
 import { toast } from "react-toastify";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
-
-import TempCreateScheduleForm from "./TempCreateScheduleForm";
-import TempSchedule from "../AllSchedule/TempSchedule";
-import IndTempCreateSchedule from "./IndTempCreateSchedule";
-
-import { BsBlockquoteLeft } from "react-icons/bs";
-import dots from "../../../images/dots.webp";
-
-const Dots = styled("div")({
-  background: "#F0FFFf",
-});
+import CreateProgRequestForm from "./CreateProgRequestForm";
+import ProgressReportTable from "../AllSchedule/ProgressReportTable";
+import TopBar from "../AppBar/AppBar";
+import moment from "moment";
 
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
   justifyContent: "center",
-  backgroundImage: `url(${dots})`,
+  backgroundImage:
+    "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)",
 });
 
-const TempCreateScheduleContainer = styled("div")({
+const CreateProgRequestContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-start",
@@ -34,7 +28,6 @@ const TempCreateScheduleContainer = styled("div")({
 
   "@media (max-width: 767px)": {
     overflow: "hidden",
-    overflowX: "scroll",
     overflowY: "scroll",
   },
 });
@@ -42,7 +35,6 @@ const TempCreateScheduleContainer = styled("div")({
 const TitleCon = styled("div")({
   display: "flex",
   justifyContent: "flex-start",
-  alignItems: "center",
   width: "100%",
 });
 
@@ -52,8 +44,8 @@ const FormTitle = styled("div")({
   textShadow:
     "-1px -1px 1px rgba(255, 255, 255, 1), 1px 1px 1px rgba(0, 0, 0, 0.2)",
   fontSize: "32px",
-  fontWeight: "700",
-  letterSpacing: "-0.4px",
+  fontWeight: "400",
+  letterSpacing: "-0.2px",
 
   "&:hover": {
     backgroundImage:
@@ -101,48 +93,29 @@ const FormCon2 = styled("div")({
   },
 });
 
-const initialState = {
-  tempStudentNames: [],
-  tempStudentName: "",
-  dateTime: "",
-  tempSoloDay: "",
-};
+const tomorrow = moment().add(1, "day");
 
-const NextRoundButton = styled("button")({
-  padding: "0",
-  border: "none",
-  background: "rgba(7, 187, 255, 0.1)",
-  boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "6px",
-  width: "40px",
-  height: "38px",
-  borderRadius: "12px",
-  cursor: "pointer",
-  fontFamily: "Poppins, sans-serif",
-  userSelect: "none",
-  WebkitUserSelect: "none",
-  touchAction: "manipulation",
-  willChange: "box-shadow, transform",
-  transition:
-    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
-  "&:hover": {
-    transform: "translateY(-3px)",
-  },
-  "&:active": {
-    transform: "translateY(3px)",
-  },
-});
+if (tomorrow.day() === 0) {
+  tomorrow.add(1, "day");
+}
+
+const formattedTomorrow = tomorrow.format("YYYY-MM-DD");
+
+const initialState = {
+  nameOfStudents: [],
+  nameOfStudent: "",
+  dateTime: formattedTomorrow,
+  statuses: ["Pending", "Overdue", "Completed"],
+  status: "Pending",
+  day: "",
+};
 
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const CreateWaitlistSchedule = () => {
+const CreateProgRequest = () => {
   const [values, setValues] = useState(initialState);
-  const [showDiv, setShowDiv] = useState(true);
+
   const auth = useSelector(authSelector);
 
   useEffect(() => {
@@ -163,7 +136,7 @@ const CreateWaitlistSchedule = () => {
       });
       setValues({
         ...values,
-        tempStudentNames: res.data,
+        nameOfStudents: res.data,
       });
     } catch (err) {
       console.error("Error fetching schedules:", err);
@@ -178,7 +151,7 @@ const CreateWaitlistSchedule = () => {
         return;
       }
       const res = await axios.post(
-        `${process.env.REACT_APP_API}/temp-schedule`,
+        `${process.env.REACT_APP_API}/progrep`,
         values,
         {
           headers: {
@@ -186,7 +159,7 @@ const CreateWaitlistSchedule = () => {
           },
         }
       );
-      toast.success("Progress Report Created.");
+      toast.success(`Progress report has been requested.`);
       window.location.reload();
     } catch (error) {
       if (error.response && error.response.data) {
@@ -197,62 +170,50 @@ const CreateWaitlistSchedule = () => {
     }
   };
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
   const handleNameOfStudentChange = (e) => {
     e.preventDefault();
-    setValues({ ...values, tempStudentName: e.target.value });
+    setValues({ ...values, nameOfStudent: e.target.value });
   };
 
-  const handleTempSoloDayChange = (e) => {
-    e.preventDefault();
-    const newDateTime = e.target.value;
-    const dateObj = new Date(newDateTime);
+  const handleDayChange = (newSelectedDate) => {
+    const dateObj = new Date(newSelectedDate);
     const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
-    setValues({
-      ...values,
-      dateTime: newDateTime,
-      tempSoloDay: dayOfWeek,
-    });
-  };
-
-  const toggleDiv = () => {
-    setShowDiv(!showDiv);
+    console.log("-------------------------------------->", dateObj);
+    if (dayOfWeek === "Sunday") {
+      toast.error("Closed on Sundays");
+    } else {
+      setValues({
+        ...values,
+        dateTime: newSelectedDate,
+        day: dayOfWeek,
+      });
+    }
   };
 
   return (
-    <Dots>
-      <Wrapper>
-        <ResponsiveDrawer />
-        <TempCreateScheduleContainer>
-          <TitleCon>
-            <FormTitle>Progress Report</FormTitle>
-          </TitleCon>
-          <Flexer>
-            <FormCon1>
-              {showDiv ? (
-                <TempCreateScheduleForm
-                  handleSubmit={handleSubmit}
-                  handleChange={handleChange}
-                  handleNameOfStudentChange={handleNameOfStudentChange}
-                  handleTempSoloDayChange={handleTempSoloDayChange}
-                  setValues={setValues}
-                  values={values}
-                />
-              ) : (
-                <IndTempCreateSchedule />
-              )}
-            </FormCon1>
-            <FormCon2>
-              <TempSchedule />
-            </FormCon2>
-          </Flexer>
-        </TempCreateScheduleContainer>
-      </Wrapper>
-    </Dots>
+    <Wrapper>
+      <TopBar />
+      <ResponsiveDrawer />
+      <CreateProgRequestContainer>
+        <TitleCon>
+          <FormTitle>Progress Report</FormTitle>
+        </TitleCon>
+        <Flexer>
+          <FormCon1>
+            <CreateProgRequestForm
+              handleSubmit={handleSubmit}
+              handleDayChange={handleDayChange}
+              handleNameOfStudentChange={handleNameOfStudentChange}
+              values={values}
+            />
+          </FormCon1>
+          <FormCon2>
+            <ProgressReportTable />
+          </FormCon2>
+        </Flexer>
+      </CreateProgRequestContainer>
+    </Wrapper>
   );
 };
 
-export default CreateWaitlistSchedule;
+export default CreateProgRequest;

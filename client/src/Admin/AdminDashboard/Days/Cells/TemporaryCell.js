@@ -57,7 +57,7 @@ const CellTemp = styled("div")({
   transition: "box-shadow .15s, transform .15s",
 
   "&:hover": {
-    animation: `${flowyBackground} 0.1s ease-in-out`,
+    animation: `${flowyBackground} 0.1s ease-in`,
     boxShadow: "rgba(0, 0, 0, 0.06) 0px 2px 4px",
     transform: "translateY(-1px)",
   },

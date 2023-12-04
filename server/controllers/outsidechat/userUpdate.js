@@ -45,10 +45,9 @@ const editUser = async (req, res) => {
     }
 
     // Update password if provided
-    if (password) {
-      // Hash and salt the new password
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
+    if (password && password !== user.password) {
+      // Check if the new password is different from the existing one
+      const hashedPassword = await bcrypt.hash(password, 10);
       user.password = hashedPassword;
     }
 

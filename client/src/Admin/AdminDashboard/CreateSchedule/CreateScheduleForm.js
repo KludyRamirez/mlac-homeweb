@@ -23,7 +23,6 @@ const Flexer = styled("div")({
 const FormContainer = styled("div")({
   width: "100%",
   borderRadius: "12px",
-
   "@media (max-width: 767px)": {
     borderRadius: "0px",
   },
@@ -160,10 +159,10 @@ const CustomSelect = styled("select")`
 const InputTitles = styled("div")({
   width: "100px",
   height: "20px",
-  fontSize: "12px",
+  fontSize: "13px",
   margin: "0px",
   color: "#122c8e",
-  fontWeight: "700",
+  fontWeight: "500",
   letterSpacing: "0.4px",
 });
 
@@ -189,7 +188,7 @@ const StatsCard = styled("div")({
   padding: "0px 12px",
   gap: "4px",
   boxShadow:
-    "rgba(0, 0, 0, 0.1) 0px 5px 10px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px",
+    "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
 });
 
 const TitleCon = styled("div")({
@@ -230,6 +229,7 @@ const CreateScheduleForm = ({
   handleParentChange,
   values,
   handleStudentTypeChange,
+  maxLength,
 }) => {
   // destructure
   const {
@@ -288,7 +288,7 @@ const CreateScheduleForm = ({
               width: "100%",
             }}
           >
-            <InputTitles>Name*</InputTitles>
+            <InputTitles>Name *</InputTitles>
 
             <div
               style={{
@@ -301,6 +301,7 @@ const CreateScheduleForm = ({
                 name="nameOfStudent"
                 value={nameOfStudent}
                 onChange={handleChange}
+                maxLength={maxLength}
               />
             </div>
           </div>
@@ -322,7 +323,7 @@ const CreateScheduleForm = ({
                 width: "50%",
               }}
             >
-              <InputTitles>Time*</InputTitles>
+              <InputTitles>Time *</InputTitles>
               <CustomSelect
                 name="timing"
                 value={timing}
@@ -345,7 +346,7 @@ const CreateScheduleForm = ({
                 width: "50%",
               }}
             >
-              <InputTitles>Day*</InputTitles>
+              <InputTitles>Day *</InputTitles>
               <CustomSelect name="day" value={day} onChange={handleChange}>
                 <option style={{ color: "rgba(0, 123, 255, 0.4)" }}></option>
                 {days.map((d) => (
@@ -380,9 +381,9 @@ const CreateScheduleForm = ({
                 value={parent}
                 onChange={handleParentChange}
               >
-                <option style={{ color: "rgba(0, 123, 255, 0.4)" }}></option>
+                <option></option>
                 {parents
-                  .filter((p) => p.role === "Administrator")
+                  .filter((p) => p.role !== "Administrator")
                   .map((p) => (
                     <option key={p._id} value={`${p.fullname} ${p.username}`}>
                       {p.fullname}
@@ -430,11 +431,11 @@ const CreateScheduleForm = ({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              gap: "8px",
+              gap: "12px",
             }}
           >
             <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
-              <FilterButton>
+              <FilterButton sx={{ borderBottomRightRadius: "4px" }}>
                 <BsClockFill style={{ fontSize: "18px" }} />
                 <span
                   style={{
@@ -447,7 +448,7 @@ const CreateScheduleForm = ({
               </FilterButton>
             </Link>
             <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
-              <FilterButton>
+              <FilterButton sx={{ borderBottomLeftRadius: "4px" }}>
                 <span
                   style={{
                     fontSize: "12px",
@@ -513,15 +514,32 @@ const CreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              background: "#3d66cc",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#122c8e",
+                outline: "1px solid #122c8e",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -534,7 +552,7 @@ const CreateScheduleForm = ({
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -546,15 +564,32 @@ const CreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              background: "orange",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#FFBF00",
+                outline: "1px solid #FFBF00",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -567,7 +602,7 @@ const CreateScheduleForm = ({
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
+
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
@@ -579,15 +614,31 @@ const CreateScheduleForm = ({
         <Tilt>
           <StatsCard
             sx={{
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              background: "#ff3131",
+              outline: "1px solid rgba(7, 187, 255, 0.4)",
+              background: "#f0ffff",
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+              cursor: "pointer",
+              listStyle: "none",
+              overflow: "hidden",
+              position: "relative",
+              textDecoration: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              touchAction: "manipulation",
+              willChange: "transform",
+              transition: "transform .15s",
+              color: "#122c8e",
+              ":hover": {
+                color: "white",
+                background: "#ff3131",
+                outline: "#ff3131",
+              },
             }}
           >
             <div
               style={{
                 fontSize: "14px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "400",
                 marginTop: "10px",
                 display: "flex",
@@ -600,7 +651,6 @@ const CreateScheduleForm = ({
             <div
               style={{
                 fontSize: "42px",
-                color: "rgba(255, 255, 255, 1)",
                 fontWeight: "600",
                 alignSelf: "flex-end",
               }}
