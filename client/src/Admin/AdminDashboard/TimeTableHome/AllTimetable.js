@@ -23,7 +23,8 @@ const Wrapper = styled("div")({
   height: "100vh",
   display: "flex",
   justifyContent: "center",
-  background: "#F0FFFF",
+  backgroundImage:
+    "radial-gradient(at bottom left, rgba(255, 255, 255, 0.15) 6%, rgba(7, 187, 255, 0.20) 47.6%, rgba(204, 251, 241, 0.15) 87.8%)",
 });
 
 const TitleCon = styled("div")({
@@ -33,18 +34,18 @@ const TitleCon = styled("div")({
 });
 
 const FormTitle = styled("div")({
-  padding: "30px 30px 0px 30px",
+  padding: "34px 0px 20px 38px",
+  fontSize: "16px",
+  fontWeight: "500",
   backgroundImage:
-    "radial-gradient(100% 100% at 0% 0, #122c8e 0, #007bff 100%)",
+    "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
   backgroundSize: "100%",
   backgroundRepeat: "repeat",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
   MozBackgroundClip: "text",
   MozTextFillColor: "transparent",
-  fontSize: "58px",
-  fontWeight: "700",
-  letterSpacing: "-2px",
+  textShadow: "none",
 
   "@media (max-width: 767px)": {
     fontSize: "48px",
@@ -91,7 +92,7 @@ const WeekContainer = styled("div")(({ theme }) => ({
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
+const AllTimetable = ({ setUserDetails }) => {
   const today = new Date();
   const dayOfWeek = today.toLocaleDateString("en-US", {
     weekday: "long",
@@ -121,7 +122,32 @@ const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
 
         <TimeTableCon>
           <TitleCon>
-            <FormTitle>Running Timetable</FormTitle>
+            <FormTitle
+              sx={{
+                paddingBottom: "0",
+              }}
+            >
+              {"<"} Mlac Homeweb <span style={{ fontSize: "12px" }}>/</span>{" "}
+            </FormTitle>
+            <FormTitle
+              sx={{
+                paddingLeft: "6px",
+              }}
+            >
+              Timetable
+            </FormTitle>
+          </TitleCon>
+          <TitleCon>
+            <FormTitle
+              sx={{
+                paddingTop: "0",
+                fontSize: "32px",
+                fontWeight: "500",
+                paddingBottom: "0px",
+              }}
+            >
+              Timetable
+            </FormTitle>
           </TitleCon>
           <Flexer>
             <WeekContainer>
@@ -147,7 +173,7 @@ const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
                   transition: "box-shadow .15s, transform .15s",
                   touchAction: "manipulation",
                   willChange: "box-shadow, transform",
-                  fontSize: "12px",
+                  fontSize: "13px",
                   fontWeight: "500",
 
                   ":focus": {
@@ -188,7 +214,7 @@ const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
                   transition: "box-shadow .15s, transform .15s",
                   touchAction: "manipulation",
                   willChange: "box-shadow, transform",
-                  fontSize: "12px",
+                  fontSize: "13px",
                   fontWeight: "500",
                   // borderBottom:
                   //   activeDay === "Tuesday" ? "none" : "1px solid #007bff",
@@ -235,7 +261,7 @@ const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
                   transition: "box-shadow .15s, transform .15s",
                   touchAction: "manipulation",
                   willChange: "box-shadow, transform",
-                  fontSize: "12px",
+                  fontSize: "13px",
                   fontWeight: "500",
                   // borderBottom:
                   //   activeDay === "Wednesday" ? "none" : "1px solid #007bff",
@@ -282,7 +308,7 @@ const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
                   transition: "box-shadow .15s, transform .15s",
                   touchAction: "manipulation",
                   willChange: "box-shadow, transform",
-                  fontSize: "12px",
+                  fontSize: "13px",
                   fontWeight: "500",
                   // borderBottom:
                   //   activeDay === "Thursday" ? "none" : "1px solid #007bff",
@@ -329,7 +355,7 @@ const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
                   transition: "box-shadow .15s, transform .15s",
                   touchAction: "manipulation",
                   willChange: "box-shadow, transform",
-                  fontSize: "12px",
+                  fontSize: "13px",
                   fontWeight: "500",
                   // borderBottom:
                   //   activeDay === "Friday" ? "none" : "1px solid #007bff",
@@ -376,7 +402,7 @@ const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
                   transition: "box-shadow .15s, transform .15s",
                   touchAction: "manipulation",
                   willChange: "box-shadow, transform",
-                  fontSize: "12px",
+                  fontSize: "13px",
                   fontWeight: "500",
                   // borderBottom:
                   //   activeDay === "Saturday" ? "none" : "1px solid #007bff",
@@ -408,9 +434,7 @@ const AllTimetable = ({ socket, userNotif, setUserDetails }) => {
             {activeDay === "Tuesday" && <Tuesday />}
             {activeDay === "Wednesday" && <Wednesday />}
             {activeDay === "Thursday" && <Thursday />}
-            {activeDay === "Friday" && (
-              <Friday socket={socket} userNotif={userNotif} />
-            )}
+            {activeDay === "Friday" && <Friday />}
             {activeDay === "Saturday" && <Saturday />}
           </Flexer>
         </TimeTableCon>

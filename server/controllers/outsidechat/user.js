@@ -335,6 +335,28 @@ const hashWaitlistUserPassword = async (req, res) => {
   }
 };
 
+// current user ------------------> //
+
+const currentUser = async (req, res) => {
+  try {
+    const userId = req.user;
+
+    try {
+      const userDetails = await User.findById(userId);
+
+      if (!userDetails) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json({ userDetails });
+    } catch (findError) {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   getUser,
   deleteUser,
@@ -358,4 +380,7 @@ module.exports = {
   // set isWaitlist
 
   hashWaitlistUserPassword,
+
+  // current user
+  currentUser,
 };

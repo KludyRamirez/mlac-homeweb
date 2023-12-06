@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
-import { BsCheckLg } from "react-icons/bs";
+import {
+  BsCheckCircle,
+  BsCheckCircleFill,
+  BsCheckLg,
+  BsQuestion,
+  BsQuestionLg,
+  BsXCircle,
+  BsXCircleFill,
+} from "react-icons/bs";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
@@ -16,9 +24,10 @@ import { ImCheckmark } from "react-icons/im";
 import { RxDash } from "react-icons/rx";
 
 const Cell = styled("div")({
+  background: "rgba(255, 255, 255, 0.24)",
   boxShadow:
     "rgba(0, 0, 0, 0.1) 0px 1px 1px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px",
-  border: "1px solid rgba(0, 123, 255, 0.6)",
+  border: "1px solid rgba(7, 187, 255, 0.6)",
   borderRadius: "10px",
   width: "176px",
   height: "106px",
@@ -31,9 +40,9 @@ const Cell = styled("div")({
   padding: "10px",
   cursor: "pointer",
   "&:hover": {
-    background: "white",
+    border: "1px solid rgba(0, 123, 255, 0.6)",
+    background: "#fefefe",
     transform: "translateY(-1px)",
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 2px 4px",
   },
 });
 
@@ -191,7 +200,8 @@ const PermanentCell = ({
         <div
           style={{
             color: "#007bff",
-            padding: "0px 0 0 3px",
+            padding: "0 0 0 3px",
+            fontWeight: "500",
           }}
         >
           {schedule.nameOfStudent}
@@ -206,24 +216,35 @@ const PermanentCell = ({
         />
       </div>
       <div style={{ padding: "0 0 0 3px", marginTop: "0px" }}>
+        {schedule.isActive === "Present" ? (
+          <div
+            style={{
+              fontSize: "13px",
+              fontWeight: "400",
+              color: "#2E8B57",
+            }}
+          >
+            {schedule.isActive}
+          </div>
+        ) : (
+          <div
+            style={{
+              fontSize: "13px",
+              fontWeight: "400",
+              color: "#ff3131",
+            }}
+          >
+            {schedule.isActive}
+          </div>
+        )}
         <div
           style={{
-            fontSize: "11px",
+            fontSize: "13px",
             fontWeight: "500",
             color: "#1434AF",
           }}
         >
-          {schedule.timing}
-        </div>
-        <div
-          style={{
-            fontSize: "11px",
-            fontWeight: "400",
-            color: "#1434A4",
-          }}
-        >
-          {schedule.studentType}
-          {schedule.dateTime ? schedule.dateTime.slice(0, -5) : ""}
+          {schedule.timing} | {schedule.studentType}
         </div>
       </div>
       <div
@@ -268,7 +289,7 @@ const PermanentCell = ({
                 <LowerIconDiv3>
                   <BsCheckLg style={{ fontSize: "14px" }} />
                 </LowerIconDiv3>
-                <LowerIconDiv4 onClick={() => handleNotifs(1)}>
+                <LowerIconDiv4>
                   <BlockIcon sx={{ fontSize: "14px" }} />
                 </LowerIconDiv4>
               </>
@@ -280,10 +301,16 @@ const PermanentCell = ({
               justifyContent: "flex-end",
             }}
           >
-            {schedule.schedType === "Temporary" ? (
-              <TimerIcon fontSize="small" sx={{ color: "#007bff" }} />
-            ) : (
-              <BookmarkAddedIcon fontSize="small" sx={{ color: "#007bff" }} />
+            {schedule.isActive === "Present" && (
+              <BsCheckCircleFill
+                style={{ color: "#007bff", fontSize: "18px" }}
+              />
+            )}
+            {schedule.isActive === "Absent" && (
+              <BsXCircleFill style={{ color: "#ff3131", fontSize: "18px" }} />
+            )}
+            {schedule.isActive === "No info yet" && (
+              <BsQuestionLg style={{ color: "#122c8e", fontSize: "18px" }} />
             )}
           </div>
         </div>

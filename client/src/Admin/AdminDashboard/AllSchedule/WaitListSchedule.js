@@ -445,7 +445,7 @@ const WaitlistSchedule = () => {
 
   const updateExpiredTemporarySchedule = async () => {
     try {
-      const res = await axios.put(
+      const res = await axios.delete(
         `${process.env.REACT_APP_API}/temp-schedule`,
         {},
         {
@@ -462,7 +462,7 @@ const WaitlistSchedule = () => {
 
   const updateExpiredTemporarySoloSchedule = async () => {
     try {
-      const res = await axios.put(
+      const res = await axios.delete(
         `${process.env.REACT_APP_API}/temp-soloschedule`,
         {},
         {
@@ -1345,27 +1345,6 @@ const WaitlistSchedule = () => {
       );
     } catch (error) {
       console.error("Error fetching schedules:", error);
-    }
-  };
-
-  const isVideoOffSwitch = async () => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
-
-      const headers = {
-        Authorization: `Bearer ${auth.userDetails.token}`,
-      };
-
-      await axios.put(
-        `${process.env.REACT_APP_API}/schedule-vidoff`,
-        {},
-        { headers }
-      );
-    } catch (error) {
-      console.error("Error updating schedules:", error);
     }
   };
 

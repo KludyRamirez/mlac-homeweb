@@ -9,8 +9,7 @@ export const authActions = {
 export const getActions = (dispatch) => {
   return {
     login: (userDetails, history) => dispatch(login(userDetails, history)),
-    register: (userDetails, history) =>
-      dispatch(register(userDetails, history)),
+    register: (userDetails) => dispatch(register(userDetails)),
     waitlist: (userDetails, history) =>
       dispatch(waitlist(userDetails, history)),
     setUserDetails: (userDetails) => dispatch(setUserDetails(userDetails)),
@@ -30,7 +29,6 @@ const login = (userDetails, history) => {
     console.log(response);
 
     if (response.error) {
-      // show message in alert
       dispatch(openAlertMessage(response?.exception?.response?.data));
     } else {
       const { userDetails } = response?.data;
@@ -48,7 +46,6 @@ const register = (userDetails) => {
     console.log(response);
 
     if (response.error) {
-      // show message in alert
       dispatch(openAlertMessage(response?.exception?.response?.data));
     } else {
       dispatch(openAlertMessage("Account Successfully Created!"));
@@ -62,7 +59,6 @@ const waitlist = (userDetails, history) => {
     console.log(response);
 
     if (response.error) {
-      // show message in alert
       dispatch(openAlertMessage(response?.exception?.response?.data));
     } else {
       dispatch(openAlertMessage("Details Successfully Submitted!"));

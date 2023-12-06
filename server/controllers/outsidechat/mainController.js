@@ -6,11 +6,13 @@ const { updateOneSchedule } = require("../outsidechat/schedule");
 const { deleteOneSchedule } = require("../outsidechat/schedule");
 const { isVideoOffHandler } = require("../outsidechat/schedule");
 const { isActiveDefHandler } = require("../outsidechat/schedule");
+
 // temporary schedule
 const { createTempSchedule } = require("../outsidechat/schedule");
 const { getTempSchedule } = require("../outsidechat/schedule");
 const { deleteOneTempSchedule } = require("../outsidechat/schedule");
 const { deleteTempSchedules } = require("../outsidechat/schedule");
+
 // temporary solo schedule
 const { createTempSoloSchedule } = require("../outsidechat/schedule");
 const { getTempSoloSchedule } = require("../outsidechat/schedule");
@@ -18,11 +20,9 @@ const { deleteOneTempSoloSchedule } = require("../outsidechat/schedule");
 const { deleteTempSoloSchedules } = require("../outsidechat/schedule");
 
 // absentCounter setter
-
 const { setPlusAbsentCounter } = require("../outsidechat/schedule");
 
 // presentCounter Setter
-
 const { setMinusAbsentCounter } = require("../outsidechat/schedule");
 
 // user
@@ -41,12 +41,15 @@ const { userOrders } = require("./user");
 const { createSchedOrder } = require("./user");
 
 // user present logs
-
 const { userConPresent } = require("./user");
 const { getUserConPresent } = require("./user");
 const { emptyConPresent } = require("./user");
 const { userOrdersPresent } = require("./user");
 const { createSchedOrderPresent } = require("./user");
+
+// current user
+
+const { currentUser } = require("./user");
 
 // holiday
 const { createHoliday } = require("./holiday");
@@ -54,7 +57,9 @@ const { getHoliday } = require("./holiday");
 
 //
 const { getLogs } = require("./logs");
-
+const { getLogsPresent } = require("./logs");
+const { getTempLogs } = require("./logs");
+const { getTempSoloLogs } = require("./logs");
 //
 const { setActive } = require("../outsidechat/schedule");
 const { setActiveTemp } = require("../outsidechat/schedule");
@@ -128,7 +133,12 @@ exports.controllers = {
   createHoliday,
   getHoliday,
 
+  //Logs
+
   getLogs,
+  getLogsPresent,
+  getTempLogs,
+  getTempSoloLogs,
 
   // absentCounter setters
   setPlusAbsentCounter,
@@ -148,4 +158,8 @@ exports.controllers = {
 
   setWaitlistStatus,
   hashWaitlistUserPassword,
+
+  //current user
+
+  currentUser,
 };

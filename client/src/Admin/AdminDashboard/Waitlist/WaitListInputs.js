@@ -135,7 +135,7 @@ const InputFields = styled("input")({
     border: "none",
   },
   "&::placeholder": {
-    color: "rgba(0, 0, 0, 0.4)",
+    color: "RGBA(18, 44, 142, 0.6)",
     fontSize: "12px",
     fontWeight: "500",
   },
@@ -403,6 +403,41 @@ const WaitListInputs = (props) => {
             <div
               style={{
                 display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "8px",
+                width: "100%",
+              }}
+            >
+              <InputTitles>
+                <div>Username *</div>
+              </InputTitles>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  width: "100%",
+                }}
+              >
+                <InputFields
+                  type="text"
+                  required
+                  name="Username"
+                  value={username}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 50) {
+                      setUsername(e.target.value);
+                    }
+                  }}
+                  placeholder="Enter username"
+                />
+              </div>
+            </div>
+            <br />
+            <div
+              style={{
+                display: "flex",
                 justifyContent: "flex-start",
                 gap: "10px",
                 width: "100%",
@@ -473,42 +508,6 @@ const WaitListInputs = (props) => {
                 />
               </div>
             </div>
-            <br />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "8px",
-                width: "100%",
-              }}
-            >
-              <InputTitles>
-                <div>Username *</div>
-              </InputTitles>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  width: "100%",
-                }}
-              >
-                <InputFields
-                  type="text"
-                  required
-                  name="Username"
-                  value={username}
-                  onChange={(e) => {
-                    if (e.target.value.length <= 50) {
-                      setUsername(e.target.value);
-                    }
-                  }}
-                  placeholder="Enter username"
-                />
-              </div>
-            </div>
-
             <div
               style={{
                 display: "flex",

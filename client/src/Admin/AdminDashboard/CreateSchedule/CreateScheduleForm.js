@@ -35,7 +35,7 @@ const FilterButton = styled("div")({
   gap: "8px",
   width: "88px",
   height: "40px",
-  background: "#f7fff7",
+  background: "#fefefe",
   border: "1px solid rgba(0, 123, 255, 0.6)",
   borderRadius: "36px",
   cursor: "pointer",
@@ -106,12 +106,12 @@ const NextDisabledButton = styled("button")({
 
 const InputFields = styled("input")({
   width: "100%",
-  background: "#f7fff7",
+  background: "#fefefe",
   outline: "1px solid rgba(0, 123, 255, 0.6)",
   border: "none",
   borderRadius: "24px",
   height: "44px",
-  padding: "0px 0px 0px 20px",
+  padding: "0px 20px 0px 20px",
   fontSize: "12px",
   fontWeight: "500",
   color: "#122c8e",
@@ -133,12 +133,12 @@ const InputFields = styled("input")({
 const CustomSelect = styled("select")`
   cursor: pointer;
   width: 100%;
-  background: #f7fff7;
+  background: #fefefe;
   border: none;
   outline: 1px solid rgba(0, 123, 255, 0.6);
   border-radius: 24px;
   height: 44px;
-  padding: 0px 0px 0px 20px;
+  padding: 0px 20px 0px 20px;
   font-size: 12px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;

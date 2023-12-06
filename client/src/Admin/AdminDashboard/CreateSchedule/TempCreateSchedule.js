@@ -42,25 +42,18 @@ const TitleCon = styled("div")({
 });
 
 const FormTitle = styled("div")({
-  padding: "34px 38px 20px 38px",
-  color: "#f7fff7",
-  textShadow:
-    "-1px -1px 1px rgba(255, 255, 255, 1), 1px 1px 1px rgba(0, 0, 0, 0.2)",
-  fontSize: "32px",
-  fontWeight: "700",
-  letterSpacing: "-0.4px",
-
-  "&:hover": {
-    backgroundImage:
-      "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-    backgroundSize: "100%",
-    backgroundRepeat: "repeat",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    MozBackgroundClip: "text",
-    MozTextFillColor: "transparent",
-    textShadow: "none",
-  },
+  padding: "34px 0px 20px 38px",
+  fontSize: "16px",
+  fontWeight: "500",
+  backgroundImage:
+    "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+  backgroundSize: "100%",
+  backgroundRepeat: "repeat",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  MozBackgroundClip: "text",
+  MozTextFillColor: "transparent",
+  textShadow: "none",
 
   "@media (max-width: 767px)": {
     fontSize: "48px",
@@ -201,7 +194,7 @@ const TempCreateSchedule = () => {
       setValues({
         ...values,
         dateTime: newSelectedDate,
-        day: dayOfWeek,
+        tempSoloDay: dayOfWeek,
       });
     }
   };
@@ -215,7 +208,15 @@ const TempCreateSchedule = () => {
       <ResponsiveDrawer />
       <TempCreateScheduleContainer>
         <TitleCon>
-          <FormTitle>Create Schedule</FormTitle>
+          <FormTitle>
+            {"<"} Create Schedule <span style={{ fontSize: "12px" }}>/</span>{" "}
+          </FormTitle>
+          <FormTitle sx={{ paddingLeft: "6px", paddingRight: "0" }}>
+            Temporary <span style={{ fontSize: "12px" }}>/</span>{" "}
+          </FormTitle>
+          <FormTitle sx={{ paddingLeft: "6px", paddingRight: "0" }}>
+            Dyad
+          </FormTitle>
         </TitleCon>
         <Flexer>
           <FormCon1>

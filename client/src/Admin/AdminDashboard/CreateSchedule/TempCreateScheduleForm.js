@@ -46,7 +46,7 @@ const FilterButton = styled("div")({
   gap: "8px",
   width: "88px",
   height: "40px",
-  background: "#f7fff7",
+  background: "#fefefe",
   border: "1px solid rgba(0, 123, 255, 0.6)",
   borderRadius: "36px",
   cursor: "pointer",
@@ -115,42 +115,16 @@ const NextDisabledButton = styled("button")({
   fontFamily: "Poppins, sans-serif",
 });
 
-const InputFields = styled("input")({
-  width: "100%",
-  background: "#f7fff7",
-  outline: "1px solid rgba(0, 123, 255, 0.6)",
-  border: "none",
-  borderRadius: "24px",
-  height: "44px",
-  padding: "0px 0px 0px 20px",
-  fontSize: "12px",
-  fontWeight: "500",
-  color: "#122c8e",
-  letterSpacing: "0.2px",
-  position: "relative",
-  fontFamily: "Poppins, sans-serif",
-
-  "&:focus": {
-    outline: "2px solid #007bff",
-    border: "none",
-  },
-  "&::placeholder": {
-    color: "rgba(0, 0, 0, 0.4)",
-    fontSize: "12px",
-    fontWeight: "500",
-  },
-});
-
 const CustomSelect = styled("select")`
   cursor: pointer;
   width: 100%;
-  background: #f7fff7;
+  background: #fefefe;
   border: none;
   outline: 1px solid rgba(0, 123, 255, 0.6);
   border-radius: 24px;
   height: 44px;
-  padding: 0px 0px 0px 20px;
-  font-size: 12px;
+  padding: 0px 20px 0px 20px;
+  font-size: 13px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   color: #122c8e;
@@ -170,13 +144,13 @@ const CustomSelect = styled("select")`
 const CustomSelectDatePicker = styled(DatePicker)`
   cursor: pointer;
   width: 227px;
-  background: #f7fff7;
+  background: #fefefe;
   border: none;
   outline: 1px solid rgba(0, 123, 255, 0.6);
   border-radius: 24px;
   height: 44px;
   padding: 0px 0px 0px 20px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   color: #122c8e;
@@ -196,10 +170,10 @@ const CustomSelectDatePicker = styled(DatePicker)`
 const InputTitles = styled("div")({
   width: "100px",
   height: "20px",
-  fontSize: "12px",
+  fontSize: "13px",
   margin: "0px",
   color: "#122c8e",
-  fontWeight: "700",
+  fontWeight: "500",
   letterSpacing: "0.4px",
 });
 
@@ -312,8 +286,8 @@ const TempCreateScheduleForm = ({
   };
 
   const handleDateChange = (newDate) => {
-    setSelectedDate(newDate);
     handleTempSoloDayChange(newDate);
+    setSelectedDate(newDate);
   };
 
   return (
@@ -439,7 +413,7 @@ const TempCreateScheduleForm = ({
                   )
                   .map((ps) => (
                     <option key={ps._id} value={ps._id}>
-                      {ps.nameOfStudent} - {ps.day} [{ps.timing}]
+                      {ps.nameOfStudent} | {ps.day} | {ps.timing}
                     </option>
                   ))}
               </CustomSelect>
@@ -471,7 +445,7 @@ const TempCreateScheduleForm = ({
                   <BsCalendarWeek style={{ fontSize: "18px" }} />
                   <span
                     style={{
-                      fontSize: "12px",
+                      fontSize: "13px",
                       fontWeight: "500",
                     }}
                   >
@@ -484,7 +458,7 @@ const TempCreateScheduleForm = ({
                   <BsHourglassSplit style={{ fontSize: "18px" }} />
                   <span
                     style={{
-                      fontSize: "12px",
+                      fontSize: "13px",
                       fontWeight: "500",
                     }}
                   >
@@ -501,7 +475,7 @@ const TempCreateScheduleForm = ({
                 <BsClockHistory style={{ fontSize: "18px" }} />
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "13px",
                     fontWeight: "500",
                   }}
                 >
@@ -545,12 +519,12 @@ const TempCreateScheduleForm = ({
           style={{
             fontSize: "16px",
             color: "#122c8e",
-            fontWeight: "600",
+            fontWeight: "500",
             marginTop: "-4px",
             whiteSpace: "nowrap",
           }}
         >
-          Global Statistics
+          Statistics
         </span>
         <div
           style={{

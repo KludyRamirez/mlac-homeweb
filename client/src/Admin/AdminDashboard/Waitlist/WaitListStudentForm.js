@@ -311,7 +311,6 @@ const WaitListStudentForm = ({
                 name="nameOfStudent"
                 value={nameOfStudent}
                 onChange={handleChange}
-                placeholder="Enter name"
               />
             </div>
           </div>

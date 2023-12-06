@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,7 +8,7 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 import LoginPage from "./authPages/LoginPage/LoginPage";
 import RegisterPage from "./authPages/RegisterPage/RegisterPage";
@@ -28,19 +28,20 @@ import EditSchedule from "./Admin/AdminDashboard/UpdateSchedule/EditSchedule";
 import Chat from "./Dashboard/Chat";
 import WaitList from "./Admin/AdminDashboard/Waitlist/WaitList";
 import CreateProgRequest from "./Admin/AdminDashboard/ProgRequest/CreateProgRequest";
+import AccountSettings from "./Admin/AdminDashboard/AccountSettings/AccountSettings";
 
 function App() {
-  const [userNotif, setUserNotif] = useState("");
-  const [socket, setSocket] = useState(null);
+  // const [userNotif, setUserNotif] = useState("");
+  // const [socket, setSocket] = useState(null);
 
-  useEffect(() => {
-    setSocket(io("http://localhost:5001"));
-  }, []);
+  // useEffect(() => {
+  //   setSocket(io("http://localhost:5001"));
+  // }, []);
 
-  useEffect(() => {
-    socket?.emit("newUser", userNotif);
-    console.log(userNotif);
-  }, [socket, userNotif]);
+  // useEffect(() => {
+  //   socket?.emit("newUser", userNotif);
+  //   console.log(userNotif);
+  // }, [socket, userNotif]);
 
   return (
     <>
@@ -63,7 +64,7 @@ function App() {
             <Redirect to="/login" />
           </Route>
           <Route exact path="/login">
-            <LoginPage setUserNotif={setUserNotif} />
+            <LoginPage />
           </Route>
           <Route exact path="/chat">
             <Chat />
@@ -87,7 +88,7 @@ function App() {
             <TempSoloCreateSched />
           </Route>
           <Route exact path="/timetable">
-            <AllTimetable userNotif={userNotif} socket={socket} />
+            <AllTimetable />
           </Route>
           <Route exact path="/children">
             <ParentSortSchedule />
@@ -100,6 +101,9 @@ function App() {
           </Route>
           <Route exact path="/report">
             <CreateProgRequest />
+          </Route>
+          <Route exact path="/account">
+            <AccountSettings />
           </Route>
         </Switch>
       </Router>

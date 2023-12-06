@@ -1,12 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { FaCircleXmark } from "react-icons/fa6";
 import { styled } from "@mui/material/styles";
-import InputLabel from "@mui/material/InputLabel";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { FormControl, MenuItem, Select } from "@mui/material";
 import { FaArrowRight } from "react-icons/fa6";
-import dots from "../../../images/dots.webp";
 
 const AsCard = styled("div")({
   width: "100%",

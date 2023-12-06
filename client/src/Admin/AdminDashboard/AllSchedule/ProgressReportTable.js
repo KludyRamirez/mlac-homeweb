@@ -1331,27 +1331,6 @@ const ProgressReportTable = () => {
     }
   };
 
-  const isVideoOffSwitch = async () => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
-
-      const headers = {
-        Authorization: `Bearer ${auth.userDetails.token}`,
-      };
-
-      await axios.put(
-        `${process.env.REACT_APP_API}/schedule-vidoff`,
-        {},
-        { headers }
-      );
-    } catch (error) {
-      console.error("Error updating schedules:", error);
-    }
-  };
-
   const handleClickVideo = (id) => {
     setVideoId(id);
     setShowVideoModal(true);

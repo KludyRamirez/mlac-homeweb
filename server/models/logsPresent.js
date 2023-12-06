@@ -7,7 +7,7 @@ const logsPresentSchema = new mongoose.Schema(
       {
         schedule: {
           type: ObjectId,
-          ref: "schedule",
+          ref: "scheds",
         },
         absentReason: String,
       },

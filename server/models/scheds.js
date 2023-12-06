@@ -107,6 +107,10 @@ const schedsSchema = new mongoose.Schema(
     medicalHistory: {
       type: String,
     },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

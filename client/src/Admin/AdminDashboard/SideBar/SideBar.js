@@ -11,12 +11,8 @@ import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import FriendSidebar from "../../../Dashboard/FriendSidebar/FriendSidebar";
-
-import { SlSocialStumbleupon } from "react-icons/sl";
 
 import { CgMenuLeft } from "react-icons/cg";
-import { AiOutlineLogout } from "react-icons/ai";
 import {
   BsArchive,
   BsArchiveFill,
@@ -25,21 +21,24 @@ import {
   BsCalendarWeek,
   BsCalendarWeekFill,
   BsChat,
-  BsChatDotsFill,
-  BsChatFill,
-  BsChatHeart,
   BsChatHeartFill,
   BsFolder2Open,
   BsFolderFill,
+  BsGear,
+  BsGearFill,
+  BsNut,
+  BsNutFill,
   BsPSquare,
   BsPSquareFill,
   BsPeople,
   BsPeopleFill,
+  BsReply,
   BsSticky,
   BsStickyFill,
 } from "react-icons/bs";
 
 import logomlac from "../../../images/logomlac.png";
+import { FaPowerOff } from "react-icons/fa6";
 
 const drawerWidth = 240;
 
@@ -47,8 +46,8 @@ const AppNavBar = styled(AppBar)({
   background: "transparent",
 
   boxShadow: "none",
-  width: { sm: "calc(100% - 240px)" },
-  ml: { sm: "240px" },
+  width: { sm: "calc(100% - 40px)" },
+  ml: { sm: "40px" },
   height: "36px",
   zIndex: "1",
 });
@@ -433,8 +432,35 @@ function ResponsiveDrawer(props) {
                 alignItems: "center",
               }}
             >
+              <Link to="/account">
+                {activeItem === "/account" ? (
+                  <RouteCon>
+                    <BsNutFill
+                      className={activeItem === "/account" ? "icon-active" : ""}
+                      style={{ fontSize: "20px" }}
+                    />
+                  </RouteCon>
+                ) : (
+                  <RouteCon>
+                    <BsNut
+                      style={{
+                        padding: "2px 0",
+                        fontSize: "20px",
+                      }}
+                    />
+                  </RouteCon>
+                )}
+              </Link>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <RouteCon>
-                <AiOutlineLogout
+                <BsReply
                   onClick={handleLogout}
                   style={{
                     fontSize: "24px",
@@ -445,7 +471,7 @@ function ResponsiveDrawer(props) {
             </div>
           </div>
         </div>
-        <FatBar>{/* <FriendSidebar /> */}</FatBar>
+        {/* <FatBar><FriendSidebar /></FatBar> */}
       </div>
     </>
   );

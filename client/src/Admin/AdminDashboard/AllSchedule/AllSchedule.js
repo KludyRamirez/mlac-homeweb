@@ -15,22 +15,26 @@ import DeletionModal from "./DeletionModal";
 import {
   BsCameraReels,
   BsX,
-  BsCalendar2Check,
-  BsCalendar2X,
-  BsExclamationCircle,
   BsInboxes,
   BsSortUp,
   BsSortDownAlt,
   BsSortAlphaDown,
   BsSortAlphaUpAlt,
+  BsExclamation,
+  BsCalendarCheck,
+  BsCalendarX,
+  BsArrowDownRight,
+  BsArrowDownShort,
+  BsExclamationCircle,
+  BsExclamationCircleFill,
+  BsCamera,
+  BsCameraVideo,
 } from "react-icons/bs";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { toast } from "react-toastify";
 import moment from "moment";
 import PresentConModal from "./PresentConModal";
 import PresentAuditModal from "./PresentAuditModal";
 import VideoModal from "./VideoModal";
-import dots from "../../../images/dots.webp";
 
 const StudentParentCon = styled("div")({
   display: "flex",
@@ -156,8 +160,18 @@ const IconSortContainer = styled("div")({
   alignItems: "center",
   borderRadius: "50%",
   cursor: "pointer",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
-    background: "rgba(255, 255, 255, 0.25)",
+    width: "32px",
+    height: "32px",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
   },
 });
 
@@ -170,7 +184,7 @@ const TableContainer = styled("div")(({ theme }) => ({
   border: "1px solid rgba(7, 187, 255, 0.4)",
   padding: "6px",
   borderRadius: "20px",
-  background: "#f7fff7",
+  background: "#fefefe",
 }));
 
 const SearchMainCon = styled("div")(({ theme }) => ({
@@ -186,7 +200,7 @@ const SearchMainCon = styled("div")(({ theme }) => ({
 const SearchBar = styled("input")(({ theme }) => ({
   width: "18%",
   height: "26px",
-  background: "#f7fff7",
+  background: "#fefefe",
   border: "none",
   borderTopRightRadius: "24px",
   borderBottomRightRadius: "24px",
@@ -194,7 +208,7 @@ const SearchBar = styled("input")(({ theme }) => ({
   borderBottomLeftRadius: "10px",
   zIndex: "1",
   padding: "6px 0px 6px 48px",
-  fontSize: "12px",
+  fontSize: "13px",
   fontWeight: "500",
   color: "#007bff",
   outline: "1px solid rgba(7, 187, 255, 0.4)",
@@ -255,7 +269,7 @@ const ZebraDiv = styled("div")({
   width: "100%",
   color: "#122c8e",
   "&:nth-child(even)": {
-    background: "rgba(255, 255, 255, 0.9)",
+    background: "rgba(255, 255, 255, 0.6)",
     borderTopLeftRadius: "10px",
     borderBottomLeftRadius: "10px",
     borderTopRightRadius: "40px",
@@ -264,8 +278,14 @@ const ZebraDiv = styled("div")({
   },
 
   "&:nth-child(odd)": {
-    background: "transparent",
+    // background: "rgba(255, 255, 255, 0.3)",
     border: "1px solid transparent",
+    WebkitBackdropFilter: "blur(4px)",
+    backdropFilter: "blur(4px)",
+    borderTopLeftRadius: "10px",
+    borderBottomLeftRadius: "10px",
+    borderTopRightRadius: "10px",
+    borderBottomRightRadius: "10px",
   },
 });
 
@@ -276,7 +296,7 @@ const FilterButton = styled("div")({
   color: "#122c8e",
   width: "40px",
   height: "38px",
-  background: "#f7fff7",
+  background: "#fefefe",
   outline: "1px solid rgba(7, 187, 255, 0.4)",
   borderRadius: "24px",
   cursor: "pointer",
@@ -290,9 +310,8 @@ const FilterButton = styled("div")({
     outline: "none",
     color: "white",
     transform: "translateY(-1px)",
-    background: "#33f641",
     backgroundImage:
-      "radial-gradient(at 16.0% 15.0%, hsl(55, 99%, 44%) 0px, transparent 50%),radial-gradient(at 12.0% 94.0%, hsl(74, 34%, 61%) 0px, transparent 50%),radial-gradient(at 98.0% 29.0%, hsl(90, 60%, 24%) 0px, transparent 50%),radial-gradient(at 1.0% 16.0%, hsl(105, 10%, 31%) 0px, transparent 50%),radial-gradient(at 28.0% 88.0%, hsl(148, 67%, 56%) 0px, transparent 50%)",
+      "linear-gradient(to left top, rgb(255, 128, 8), rgb(255, 200, 55))",
   },
   "&:active": {
     transform: "translateY(3px)",
@@ -438,9 +457,9 @@ const AllSchedule = () => {
 
   const updateExpiredTemporarySchedule = async () => {
     try {
-      const res = await axios.put(
+      const res = await axios.delete(
         `${process.env.REACT_APP_API}/temp-schedule`,
-        {},
+
         {
           headers: {
             Authorization: `Bearer ${auth.userDetails.token}`,
@@ -455,9 +474,8 @@ const AllSchedule = () => {
 
   const updateExpiredTemporarySoloSchedule = async () => {
     try {
-      const res = await axios.put(
+      const res = await axios.delete(
         `${process.env.REACT_APP_API}/temp-soloschedule`,
-        {},
         {
           headers: {
             Authorization: `Bearer ${auth.userDetails.token}`,
@@ -1341,27 +1359,6 @@ const AllSchedule = () => {
     }
   };
 
-  const isVideoOffSwitch = async () => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
-
-      const headers = {
-        Authorization: `Bearer ${auth.userDetails.token}`,
-      };
-
-      await axios.put(
-        `${process.env.REACT_APP_API}/schedule-vidoff`,
-        {},
-        { headers }
-      );
-    } catch (error) {
-      console.error("Error updating schedules:", error);
-    }
-  };
-
   const handleClickVideo = (id) => {
     setVideoId(id);
     setShowVideoModal(true);
@@ -1625,9 +1622,9 @@ const AllSchedule = () => {
                       borderTopLeftRadius: "10px",
                       borderBottomLeftRadius: "10px",
                       width: "68%",
-                      borderTop: "2px solid #122c8e",
-                      borderBottom: "2px solid #122c8e",
-                      borderLeft: "2px solid #122c8e",
+                      borderTop: "2px solid #007bff",
+                      borderBottom: "2px solid #007bff",
+                      borderLeft: "2px solid #007bff",
                     }}
                   >
                     <div
@@ -1708,12 +1705,11 @@ const AllSchedule = () => {
               <Flexer>
                 <div
                   style={{
-                    backgroundColor: "#f0ffff",
-                    backgroundImage: `url(${dots})`,
+                    backgroundColor: "transparent",
                     borderRadius: "12px",
                     border: "1px solid rgba(7, 187, 255, 0.4)",
-                    backdropFilter: "blur(4px)",
-                    WebkitBackdropFilter: "blur(4px)",
+                    // backdropFilter: "blur(4px)",
+                    // WebkitBackdropFilter: "blur(4px)",
                     padding: "4px 4px 4px 4px",
                     width: "100%",
                     height: "530px",
@@ -1746,19 +1742,22 @@ const AllSchedule = () => {
                             flexDirection: "column",
                             justifyContent: "center",
                             alignItems: "center",
-                            gap: "8px",
-                            marginTop: "-64px",
+                            gap: "6px",
+                            marginTop: "-60px",
+                            width: "90px",
+                            height: "90px",
+                            borderRadius: "50%",
                           }}
                         >
                           <BsInboxes
                             style={{
-                              fontSize: "28px",
-                              color: "rgba(0, 123, 255, 1)",
+                              fontSize: "24px",
+                              color: "#122c8e",
                             }}
                           />
                           <div
                             style={{
-                              color: "rgba(0, 123, 255, 1)",
+                              color: "#122c8e",
                               fontSize: "14px",
                             }}
                           >
@@ -1861,9 +1860,16 @@ const AllSchedule = () => {
                                       <div
                                         style={{
                                           display: "flex",
-                                          justifyContent: "flex-start",
+                                          justifyContent: "center",
                                           alignItems: "center",
                                           gap: "12px",
+                                          background:
+                                            "linear-gradient(to left top, rgb(28, 216, 210), rgb(147, 237, 199))",
+                                          width: "54px",
+                                          height: "26px",
+                                          borderRadius: "4px",
+                                          boxShadow:
+                                            "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                                         }}
                                       >
                                         <h5
@@ -1871,22 +1877,21 @@ const AllSchedule = () => {
                                             margin: "0px",
                                             fontWeight: "500",
                                             lineHeight: "22px",
-                                            fontSize: "13px",
-                                            letterSpacing: "0.2px",
+                                            fontSize: "12px",
+                                            letterSpacing: "0.4px",
+                                            color: "white",
                                           }}
                                         >
                                           {schedule.studentType}
                                         </h5>
                                       </div>
-                                      {"|"}
+
                                       <div
                                         style={{
                                           margin: "0px",
-
                                           fontWeight: "500",
                                           lineHeight: "22px",
                                           fontSize: "13px",
-                                          wordSpacing: "1px",
                                         }}
                                       >
                                         {schedule.isActive ===
@@ -1897,12 +1902,19 @@ const AllSchedule = () => {
                                               justifyContent: "center",
                                               alignItems: "center",
                                               gap: "8px",
+                                              background:
+                                                "linear-gradient(to left top, rgb(102, 153, 255), rgb(153, 204, 255))",
+                                              width: "66px",
+                                              height: "26px",
+                                              borderRadius: "4px",
+                                              boxShadow:
+                                                "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                                             }}
                                           >
                                             <div
                                               style={{
-                                                color: "#122c8e",
-                                                fontSize: "13px",
+                                                fontSize: "12px",
+                                                color: "white",
                                               }}
                                             >
                                               No info
@@ -1916,12 +1928,20 @@ const AllSchedule = () => {
                                               justifyContent: "center",
                                               alignItems: "center",
                                               gap: "8px",
+                                              background:
+                                                "linear-gradient(to left top, rgb(58, 123, 213), rgb(0, 210, 255))",
+                                              width: "66px",
+                                              height: "26px",
+                                              borderRadius: "4px",
+                                              boxShadow:
+                                                "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                                             }}
                                           >
                                             <div
                                               style={{
-                                                color: "#2AAA8A",
-                                                fontSize: "13px",
+                                                fontSize: "12px",
+                                                color: "white",
+                                                letterSpacing: "0.2px",
                                               }}
                                             >
                                               Present
@@ -1935,12 +1955,20 @@ const AllSchedule = () => {
                                               justifyContent: "center",
                                               alignItems: "center",
                                               gap: "8px",
+                                              background:
+                                                "linear-gradient(to left top, rgb(255, 102, 102), rgb(255, 204, 153))",
+                                              width: "66px",
+                                              height: "26px",
+                                              borderRadius: "4px",
+                                              boxShadow:
+                                                "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                                             }}
                                           >
                                             <div
                                               style={{
-                                                color: "#ff3131",
-                                                fontSize: "13px",
+                                                fontSize: "12px",
+                                                color: "white",
+                                                letterSpacing: "0.2px",
                                               }}
                                             >
                                               Absent
@@ -1948,14 +1976,14 @@ const AllSchedule = () => {
                                           </div>
                                         )}
                                       </div>
-                                      {"|"}
+
                                       {schedule.isActive !== "Absent" && (
                                         <div
                                           style={{
                                             margin: "0px",
                                             fontWeight: "500",
                                             lineHeight: "22px",
-                                            fontSize: "12px",
+                                            fontSize: "13px",
                                             wordSpacing: "1px",
                                           }}
                                         >
@@ -1968,26 +1996,56 @@ const AllSchedule = () => {
                                             }}
                                           >
                                             {schedule.isVideoOn ? (
-                                              <>
+                                              <div
+                                                style={{
+                                                  display: "flex",
+                                                  justifyContent: "center",
+                                                  alignItems: "center",
+                                                  gap: "8px",
+                                                  background:
+                                                    "linear-gradient(to left top, rgb(102, 153, 255), rgb(153, 204, 255))",
+                                                  width: "66px",
+                                                  height: "26px",
+                                                  borderRadius: "4px",
+                                                  boxShadow:
+                                                    "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                                                }}
+                                              >
                                                 <div
                                                   style={{
-                                                    color: "#007bff",
-                                                    fontSize: "13px",
+                                                    fontSize: "12px",
+                                                    color: "white",
+                                                    letterSpacing: "0.4px",
                                                   }}
                                                 >
                                                   Online
                                                 </div>
-                                              </>
+                                              </div>
                                             ) : (
-                                              <>
+                                              <div
+                                                style={{
+                                                  display: "flex",
+                                                  justifyContent: "center",
+                                                  alignItems: "center",
+                                                  gap: "8px",
+                                                  background:
+                                                    "linear-gradient(to left top, rgb(255, 128, 8), rgb(255, 200, 55))",
+                                                  width: "66px",
+                                                  height: "26px",
+                                                  borderRadius: "4px",
+                                                  boxShadow:
+                                                    "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+                                                }}
+                                              >
                                                 <div
                                                   style={{
-                                                    color: "#122c8e",
+                                                    fontSize: "12px",
+                                                    color: "white",
                                                   }}
                                                 >
-                                                  On-site
+                                                  Onsite
                                                 </div>
-                                              </>
+                                              </div>
                                             )}
                                           </div>
                                         </div>
@@ -1999,10 +2057,11 @@ const AllSchedule = () => {
                               <div
                                 style={{
                                   display: "flex",
-                                  justifyContent: "space-between",
+                                  justifyContent: "flex-start",
                                   alignItems: "center",
                                   width: "30%",
                                   padding: "16px 14px",
+                                  gap: "42px",
                                 }}
                               >
                                 <div
@@ -2031,86 +2090,72 @@ const AllSchedule = () => {
                                   </LowerIconDiv4>
                                 </div>
 
-                                {showExtraFunc ? (
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "center",
-                                    }}
-                                  >
-                                    {schedule.isVideoOn === false &&
-                                      schedule.isActive !== "Absent" && (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  {schedule.isActive !== "Present" &&
+                                    schedule.isActive !== "Absent" && (
+                                      <>
                                         <IconSortContainer
                                           onClick={() =>
-                                            handleClickVideo(schedule._id)
+                                            handleAddToContainerPresent(
+                                              schedule,
+                                              schedule._id
+                                            )
                                           }
                                         >
-                                          <BsCameraReels
+                                          <BsCalendarCheck
                                             style={{
-                                              color: "#007bff",
+                                              color: "#4CBB17",
                                               fontSize: "20px",
                                             }}
                                           />
                                         </IconSortContainer>
-                                      )}
-
-                                    {schedule.isActive !== "Present" &&
-                                      schedule.isActive !== "Absent" && (
-                                        <>
-                                          <IconSortContainer
-                                            onClick={() =>
-                                              handleAddToContainerPresent(
-                                                schedule,
-                                                schedule._id
-                                              )
-                                            }
-                                          >
-                                            <BsCalendar2Check
-                                              style={{
-                                                color: "#4CBB17",
-                                                fontSize: "20px",
-                                              }}
-                                            />
-                                          </IconSortContainer>
-                                          <IconSortContainer
-                                            onClick={() =>
-                                              handleAddToContainer(
-                                                schedule,
-                                                schedule._id
-                                              )
-                                            }
-                                          >
-                                            <BsCalendar2X
-                                              style={{
-                                                color: "#Ff3131",
-                                                fontSize: "20px",
-                                              }}
-                                            />
-                                          </IconSortContainer>
-                                        </>
-                                      )}
-
-                                    <IconSortContainer>
-                                      <BsExclamationCircle
-                                        style={{
-                                          color: "#FFBF00",
-                                          fontSize: "20px",
-                                        }}
-                                      />
-                                    </IconSortContainer>
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
-
-                                <BiDotsVerticalRounded
-                                  onClick={toggleExtraFunc}
-                                  style={{
-                                    fontSize: "24px",
-                                    color: "rgba(0, 123, 255, 0.6)",
-                                    cursor: "pointer",
-                                  }}
-                                />
+                                        <IconSortContainer
+                                          onClick={() =>
+                                            handleAddToContainer(
+                                              schedule,
+                                              schedule._id
+                                            )
+                                          }
+                                        >
+                                          <BsCalendarX
+                                            style={{
+                                              color: "#Ff3131",
+                                              fontSize: "20px",
+                                            }}
+                                          />
+                                        </IconSortContainer>
+                                      </>
+                                    )}
+                                  {schedule.isVideoOn === false &&
+                                    schedule.isActive !== "Absent" && (
+                                      <IconSortContainer
+                                        onClick={() =>
+                                          handleClickVideo(schedule._id)
+                                        }
+                                      >
+                                        <BsCameraVideo
+                                          style={{
+                                            color: "#007bff",
+                                            fontSize: "20px",
+                                          }}
+                                        />
+                                      </IconSortContainer>
+                                    )}
+                                  <IconSortContainer>
+                                    <BsExclamationCircle
+                                      style={{
+                                        color: "#007bff",
+                                        fontSize: "20px",
+                                      }}
+                                    />
+                                  </IconSortContainer>
+                                </div>
                               </div>
                             </ZebraDiv>
                           ))}

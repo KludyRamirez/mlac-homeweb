@@ -88,6 +88,8 @@ const isVideoOffHandler = () => {
   cron.schedule("59 23 * * *", isVideoOff);
 };
 
+isVideoOffHandler();
+
 const isActiveDef = async () => {
   try {
     const currentDay = new Date().toLocaleString("en-us", { weekday: "long" });
@@ -109,6 +111,8 @@ const updateSchedulesIsActiveDef = async (day) => {
 const isActiveDefHandler = () => {
   cron.schedule("59 23 * * *", isActiveDef);
 };
+
+isActiveDefHandler();
 
 const getOneSchedule = async (req, res) => {
   try {

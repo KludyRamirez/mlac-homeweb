@@ -240,6 +240,11 @@ const RegisterPageInputs = (props) => {
     maxLength,
   } = props;
 
+  console.log(
+    "----------------------------------------------------------->",
+    role
+  );
+
   return (
     <>
       <Flexer>
@@ -394,13 +399,13 @@ const RegisterPageInputs = (props) => {
               >
                 <option style={{ color: "rgba(0, 123, 255, 0.4)" }}></option>
 
-                <option key="Administrator" value="Administrator">
+                <option key="administrator" value="Administrator">
                   Administrator
                 </option>
-                <option key="Administrator" value="Therapist">
+                <option key="therapist" value="Therapist">
                   Therapist
                 </option>
-                <option key="Administrator" value="Parent">
+                <option key="parent" value="Parent">
                   Parent
                 </option>
               </CustomSelect>
@@ -453,7 +458,12 @@ const RegisterPageInputs = (props) => {
             </Link>
           </div>
 
-          {!username || !firstname || !lastname || !password || !isFormValid ? (
+          {!username ||
+          !firstname ||
+          !lastname ||
+          !password ||
+          !isFormValid ||
+          !role ? (
             <NextDisabledButton>
               <FaPlus style={{ color: "#122c8e", fontSize: "14px" }} />
             </NextDisabledButton>

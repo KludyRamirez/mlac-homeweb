@@ -48,11 +48,11 @@ const postRegister = async (req, res) => {
         role: user.role,
         fullname: user.fullname,
         username: user.username,
-        mail: user.mail,
       },
     });
   } catch (err) {
-    return res.status(500).send("Error occured. Please try again");
+    console.error(err);
+    return res.status(500).send("Error occurred. Please try again");
   }
 };
 

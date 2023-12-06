@@ -24,7 +24,6 @@ const LoginPage = ({ login, setUserNotif }) => {
       username,
     };
     login(userDetails, history);
-    setUserNotif(username);
   };
 
   return (

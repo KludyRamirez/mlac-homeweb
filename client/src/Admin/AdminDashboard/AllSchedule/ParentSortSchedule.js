@@ -36,6 +36,7 @@ import VideoModal from "./VideoModal";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
 import dots from "../../../images/dots.webp";
 import TimeBar from "../TimeBar/TimeBar";
+import TopBar from "../AppBar/AppBar";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -429,11 +430,6 @@ const ParentSortSchedule = () => {
   }, [auth, searchQuery]);
 
   useEffect(() => {
-    isVideoOffSwitch();
-    isActiveDefSwitch();
-  }, []);
-
-  useEffect(() => {
     const filtered = schedules.filter((schedule) => {
       return (
         schedule.nameOfStudent
@@ -486,9 +482,9 @@ const ParentSortSchedule = () => {
 
   const updateExpiredTemporarySchedule = async () => {
     try {
-      const res = await axios.put(
+      const res = await axios.delete(
         `${process.env.REACT_APP_API}/temp-schedule`,
-        {},
+
         {
           headers: {
             Authorization: `Bearer ${auth.userDetails.token}`,
@@ -503,7 +499,7 @@ const ParentSortSchedule = () => {
 
   const updateExpiredTemporarySoloSchedule = async () => {
     try {
-      const res = await axios.put(
+      const res = await axios.delete(
         `${process.env.REACT_APP_API}/temp-soloschedule`,
         {},
         {
@@ -1559,47 +1555,47 @@ const ParentSortSchedule = () => {
     }
   };
 
-  const isVideoOffSwitch = async () => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
+  // const isVideoOffSwitch = async () => {
+  //   try {
+  //     if (!auth.userDetails.token) {
+  //       console.error("Authentication token not found.");
+  //       return;
+  //     }
 
-      const headers = {
-        Authorization: `Bearer ${auth.userDetails.token}`,
-      };
+  //     const headers = {
+  //       Authorization: `Bearer ${auth.userDetails.token}`,
+  //     };
 
-      await axios.post(
-        `${process.env.REACT_APP_API}/schedule-vidoff`,
-        {},
-        { headers }
-      );
-    } catch (error) {
-      console.error("Error updating schedules:", error);
-    }
-  };
+  //     await axios.post(
+  //       `${process.env.REACT_APP_API}/schedule-vidoff`,
+  //       { schedules },
+  //       { headers }
+  //     );
+  //   } catch (error) {
+  //     console.error("Error updating schedules:", error);
+  //   }
+  // };
 
-  const isActiveDefSwitch = async () => {
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
+  // const isActiveDefSwitch = async () => {
+  //   try {
+  //     if (!auth.userDetails.token) {
+  //       console.error("Authentication token not found.");
+  //       return;
+  //     }
 
-      const headers = {
-        Authorization: `Bearer ${auth.userDetails.token}`,
-      };
+  //     const headers = {
+  //       Authorization: `Bearer ${auth.userDetails.token}`,
+  //     };
 
-      await axios.post(
-        `${process.env.REACT_APP_API}/schedule-isactivedef`,
-        {},
-        { headers }
-      );
-    } catch (error) {
-      console.error("Error updating schedules:", error);
-    }
-  };
+  //     await axios.post(
+  //       `${process.env.REACT_APP_API}/schedule-isactivedef`,
+  //       { schedules },
+  //       { headers }
+  //     );
+  //   } catch (error) {
+  //     console.error("Error updating schedules:", error);
+  //   }
+  // };
 
   const handleClickVideo = (id) => {
     setVideoId(id);
@@ -1620,6 +1616,7 @@ const ParentSortSchedule = () => {
 
   return (
     <Wrapper>
+      <TopBar />
       <ResponsiveDrawer />
       <Modal
         sx={{ border: "none", outline: "none" }}
