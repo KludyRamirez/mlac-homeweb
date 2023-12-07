@@ -6,6 +6,7 @@ import alertReducer from "./reducers/alertReducer";
 import { auditReducer } from "./reducers/auditReducer";
 import { conReducer } from "./reducers/conReducer";
 import friendsReducer from "./reducers/friendsReducer";
+import chatReducer from "./reducers/chatReducer";
 
 // Define a function to load state from localStorage
 const loadState = () => {
@@ -36,18 +37,17 @@ const rootReducer = combineReducers({
   con: conReducer,
   audit: auditReducer,
   friends: friendsReducer,
+  chat: chatReducer,
 });
 
-// Load the initial state from localStorage
 const initialState = loadState();
 
 const store = createStore(
   rootReducer,
-  initialState, // Pass the initial state here
+  initialState,
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-// Subscribe to store changes to save state to localStorage
 store.subscribe(() => {
   saveState(store.getState());
 });

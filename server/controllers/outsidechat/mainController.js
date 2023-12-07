@@ -50,6 +50,8 @@ const { createSchedOrderPresent } = require("./user");
 // current user
 
 const { currentUser } = require("./user");
+const { changePassword } = require("./user");
+const { changeEmail } = require("./user");
 
 // holiday
 const { createHoliday } = require("./holiday");
@@ -162,4 +164,6 @@ exports.controllers = {
   //current user
 
   currentUser,
+  changePassword,
+  changeEmail,
 };

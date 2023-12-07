@@ -479,7 +479,6 @@ const TempCreateScheduleForm = ({
                     fontWeight: "500",
                   }}
                 >
-                  {"  "}
                   Ind
                 </span>
               </FilterButton>

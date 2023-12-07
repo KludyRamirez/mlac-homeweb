@@ -44,6 +44,12 @@ router.post(
   mainController.controllers.hashWaitlistUserPassword
 );
 
-//
+// current user
+
+router.get("/currentUser", auth, mainController.controllers.currentUser);
+
+router.put("/change-password", auth, mainController.controllers.changePassword);
+
+router.put("/change-email", auth, mainController.controllers.changeEmail);
 
 module.exports = router;

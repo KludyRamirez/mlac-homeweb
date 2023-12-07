@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
+import FriendsList from "../../../Dashboard/FriendSidebar/FriendsList/FriendsList";
 
 import { CgMenuLeft } from "react-icons/cg";
 import {
@@ -39,6 +40,7 @@ import {
 
 import logomlac from "../../../images/logomlac.png";
 import { FaPowerOff } from "react-icons/fa6";
+import FriendSidebar from "../../../Dashboard/FriendSidebar/FriendSidebar";
 
 const drawerWidth = 240;
 
@@ -471,7 +473,9 @@ function ResponsiveDrawer(props) {
             </div>
           </div>
         </div>
-        {/* <FatBar><FriendSidebar /></FatBar> */}
+        <FatBar>
+          <FriendSidebar />
+        </FatBar>
       </div>
     </>
   );

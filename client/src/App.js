@@ -31,18 +31,6 @@ import CreateProgRequest from "./Admin/AdminDashboard/ProgRequest/CreateProgRequ
 import AccountSettings from "./Admin/AdminDashboard/AccountSettings/AccountSettings";
 
 function App() {
-  // const [userNotif, setUserNotif] = useState("");
-  // const [socket, setSocket] = useState(null);
-
-  // useEffect(() => {
-  //   setSocket(io("http://localhost:5001"));
-  // }, []);
-
-  // useEffect(() => {
-  //   socket?.emit("newUser", userNotif);
-  //   console.log(userNotif);
-  // }, [socket, userNotif]);
-
   return (
     <>
       <Router>

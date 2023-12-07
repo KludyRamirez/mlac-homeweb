@@ -150,7 +150,6 @@ const UpdateUserPage = () => {
         }
       );
 
-      console.log(res.data);
       window.alert(`"${values.username}" is updated`);
       window.location.reload();
     } catch (error) {

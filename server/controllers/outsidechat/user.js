@@ -339,10 +339,8 @@ const hashWaitlistUserPassword = async (req, res) => {
 
 const currentUser = async (req, res) => {
   try {
-    const userId = req.user;
-
     try {
-      const userDetails = await User.findById(userId);
+      const userDetails = await User.findOne({ user: req.user.username });
 
       if (!userDetails) {
         return res.status(404).json({ message: "User not found" });
@@ -357,12 +355,59 @@ const currentUser = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ username: req.user.username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+
+    if (!passwordMatch) {
+      return res.status(400).json({ message: "Old password is incorrect" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    return res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Error updating password", error });
+  }
+};
+
+const changeEmail = async (req, res) => {
+  const { mail } = req.body;
+
+  try {
+    const user = await User.findOne({ username: req.user.username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.email = mail; // Assuming 'mail' holds the new email address
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ message: "Email updated successfully", email: user.email });
+  } catch (error) {
+    return res.status(500).json({ message: "Error updating email", error });
+  }
+};
+
 module.exports = {
   getUser,
   deleteUser,
 
   // user absent logs
-
   userCon,
   getUserCon,
   emptyCon,
@@ -370,7 +415,6 @@ module.exports = {
   createSchedOrder,
 
   // user present logs
-
   userConPresent,
   getUserConPresent,
   emptyConPresent,
@@ -378,9 +422,10 @@ module.exports = {
   createSchedOrderPresent,
 
   // set isWaitlist
-
   hashWaitlistUserPassword,
 
   // current user
   currentUser,
+  changePassword,
+  changeEmail,
 };

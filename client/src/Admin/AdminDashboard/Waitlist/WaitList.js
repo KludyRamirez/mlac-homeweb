@@ -6,7 +6,7 @@ import { getActions } from "../../../store/actions/authActions";
 import { useHistory } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import WaitListInputs from "./WaitListInputs";
-import WaitlistSchedule from "../AllSchedule/WaitlistSchedule";
+import WaitlistSchedule from "../AllSchedule/WaitListSchedule";
 
 const Wrapper = styled("div")({
   width: "100%",
