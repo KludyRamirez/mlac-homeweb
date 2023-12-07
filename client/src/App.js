@@ -25,10 +25,10 @@ import ParentSortSchedule from "./Admin/AdminDashboard/AllSchedule/ParentSortSch
 import AllTimetable from "./Admin/AdminDashboard/TimeTableHome/AllTimetable";
 import Logs from "./Admin/AdminDashboard/Logs/Logs";
 import EditSchedule from "./Admin/AdminDashboard/UpdateSchedule/EditSchedule";
-import Chat from "./Dashboard/Chat";
 import WaitList from "./Admin/AdminDashboard/Waitlist/WaitList";
 import CreateProgRequest from "./Admin/AdminDashboard/ProgRequest/CreateProgRequest";
 import AccountSettings from "./Admin/AdminDashboard/AccountSettings/AccountSettings";
+import Messenger from "./Dashboard/Messenger/Messenger";
 
 function App() {
   return (
@@ -55,7 +55,7 @@ function App() {
             <LoginPage />
           </Route>
           <Route exact path="/chat">
-            <Chat />
+            <Messenger />
           </Route>
           <Route exact path="/user">
             <RegisterPage />

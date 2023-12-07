@@ -2,14 +2,13 @@ import React from "react";
 import { Button, Typography } from "@mui/material";
 import Avatar from "../../../shared/components/Avatar";
 import OnlineIndicator from "./OnlineIndicator";
-import { setChosenChatDetails } from "../../../store/actions/chatActions";
 import { chatTypes } from "../../../store/actions/chatActions";
 import { connect } from "react-redux";
 import { getActions } from "../../../store/actions/chatActions";
 
-const FriendsListItem = ({ id, username, isOnline }) => {
+const FriendsListItem = ({ id, username, isOnline, setChosenChatDetails }) => {
   const handleChooseActiveConversation = () => {
-    setChosenChatDetails({ _id: id, username: username }, chatTypes.DIRECT);
+    setChosenChatDetails({ id: id, username: username }, chatTypes.DIRECT);
   };
 
   return (
