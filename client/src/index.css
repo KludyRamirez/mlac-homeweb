@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: "antialiased";
+  -moz-osx-font-smoothing: "grayscale";
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.icon-active {
+  color: white;
+  padding: 2px 0;
+}
+
+input[type="date" i] {
+  cursor: pointer;
+  align-items: center;
+  display: inline-flex;
+  overflow: hidden;
+  padding: 0px 20px;
+}
+
+input[type="select" i] {
+  cursor: pointer;
+  align-items: center;
+  display: inline-flex;
+  overflow: hidden;
+  padding: 0px 20px;
+  font-size: 14px;
+}

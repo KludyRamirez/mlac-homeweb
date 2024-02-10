@@ -1,0 +1,41 @@
+{
+  "name": "mlac-homeweb",
+  "version": "1.0.0",
+  "description": "[IN PROGRESS] WEB APP where it automates the tedious task of organizing and reorganizing a weekly meeting with clients.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KludyRamirez/mlac-homeweb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KludyRamirez/mlac-homeweb/issues"
+  },
+  "homepage": "https://github.com/KludyRamirez/mlac-homeweb#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-joi-validation": "^5.0.1",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "mongodb": "^5.4.0",
+    "mongoose": "^6.2.4",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.7",
+    "nodemon": "^3.0.1",
+    "socket.io": "^4.7.2",
+    "uniqid": "^5.4.0",
+    "uuid": "^8.3.2"
+  }
+}
