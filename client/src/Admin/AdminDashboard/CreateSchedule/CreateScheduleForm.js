@@ -13,11 +13,9 @@ import {
 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import {
-  FormGroup,
   Radio,
   RadioGroup,
   FormControlLabel,
-  FormLabel,
   FormControl,
 } from "@mui/material";
 
@@ -62,13 +60,13 @@ const FilterButton = styled("div")({
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
-  outline: "1px solid rgba(0, 0, 0, 0.1)",
+  outline: "1px solid rgba(0, 0, 0, 0.16)",
   transition:
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
   "&:hover": {
     transform: "translateY(1px)",
     background: "#efefef",
-    outline: "1px solid rgba(0, 0, 0, 0.06)",
+    outline: "1px solid #606060",
   },
   "&:active": {
     transform: "translateY(3px)",
@@ -136,7 +134,7 @@ const InputFields = styled("input")({
   outline: "1px solid rgba(0, 0, 0, 0.1)",
 
   "&:focus": {
-    outline: "1px solid #909090",
+    outline: "1px solid #606060",
     border: "none",
     background: "#fff",
   },
@@ -163,7 +161,7 @@ const CustomSelect = styled("select")`
   outline: 1px solid rgba(0, 0, 0, 0.1);
 
   &:focus {
-    outline: 1px solid #929292;
+    outline: 1px solid #606060;
     border: none;
   }
 
@@ -226,7 +224,7 @@ const CreateScheduleForm = ({
     studentType,
     timings,
     timing,
-    pic,
+    profilePic,
   } = values;
 
   return (
@@ -257,74 +255,73 @@ const CreateScheduleForm = ({
         ></div>
 
         <FormContainer>
-          <FormControl>
-            <RadioGroup
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              value={pic}
-              onChange={handlePicChange}
-            >
-              <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                <FormControlLabel
-                  value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553210/kyfdgurocoefbuhmyih1.png"
-                  control={<Radio style={{ display: "none" }} />}
-                  label={
-                    <img
-                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553210/kyfdgurocoefbuhmyih1.png"
-                      alt="Stark"
-                      style={{
-                        outline:
-                          pic ===
-                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553210/kyfdgurocoefbuhmyih1.png"
-                            ? "1px solid rgba(0, 123, 255, 0.64)"
-                            : "none",
-                        width: "40px",
-                        height: "40px",
-                      }}
-                    />
-                  }
-                />
-                <FormControlLabel
-                  value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553209/vavfd7rz4an6xz9k6mlv.png"
-                  control={<Radio style={{ display: "none" }} />}
-                  label={
-                    <img
-                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553209/vavfd7rz4an6xz9k6mlv.png"
-                      alt="Fern"
-                      style={{
-                        outline:
-                          pic ===
-                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553209/vavfd7rz4an6xz9k6mlv.png"
-                            ? "1px solid rgba(0, 123, 255, 0.64)"
-                            : "none",
-                        width: "40px",
-                        height: "40px",
-                      }}
-                    />
-                  }
-                />
-                <FormControlLabel
-                  value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553209/kld9g29h06re7hvdbf7x.png"
-                  control={<Radio style={{ display: "none" }} />}
-                  label={
-                    <img
-                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553209/kld9g29h06re7hvdbf7x.png"
-                      alt="Frieren"
-                      style={{
-                        outline:
-                          pic ===
-                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707553209/kld9g29h06re7hvdbf7x.png"
-                            ? "2px solid rgba(0, 123, 255, 0.64)"
-                            : "none",
-                        width: "40px",
-                        height: "40px",
-                      }}
-                    />
-                  }
-                />
-              </div>
-            </RadioGroup>
-          </FormControl>
+          {/* <RadioGroup
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            value={profilePic}
+            onChange={handlePicChange}
+          >
+            <div style={{ display: "flex", justifyContent: "flex-start" }}>
+              <FormControlLabel
+                value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                control={<Radio />}
+                label={
+                  <img
+                    src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                    alt="Stark"
+                    style={{
+                      outline:
+                        profilePic ===
+                        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                          ? "1px solid rgba(0, 123, 255, 0.64)"
+                          : "none",
+                      width: "100px",
+                      height: "100px",
+                    }}
+                  />
+                }
+              />
+              <FormControlLabel
+                value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566895/glwpoiksr6gvencoso40.webp"
+                control={<Radio />}
+                label={
+                  <img
+                    src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566895/glwpoiksr6gvencoso40.webp"
+                    alt="Fern"
+                    style={{
+                      outline:
+                        profilePic ===
+                        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566895/glwpoiksr6gvencoso40.webp"
+                          ? "1px solid rgba(0, 123, 255, 0.64)"
+                          : "none",
+                      width: "100px",
+                      height: "100px",
+                    }}
+                  />
+                }
+              />
+              <FormControlLabel
+                value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
+                control={<Radio />}
+                label={
+                  <img
+                    src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
+                    alt="Frieren"
+                    style={{
+                      outline:
+                        profilePic ===
+                        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
+                          ? "2px solid rgba(0, 123, 255, 0.64)"
+                          : "none",
+                      width: "100px",
+                      height: "100px",
+                    }}
+                  />
+                }
+              />
+            </div>
+          </RadioGroup> */}
+
           <div
             style={{
               display: "flex",

@@ -113,11 +113,6 @@ const schedsSchema = new mongoose.Schema(
     },
     pic: {
       type: String,
-      enum: [
-        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707548367/k3nrm4nitn0ucbo9vx7i.jpg",
-        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707548367/vaiot3lxqvmgmtof6asj.jpg",
-        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707548367/rql0dkx7kfwhecmmwn2s.jpg",
-      ],
     },
   },
   { timestamps: true }

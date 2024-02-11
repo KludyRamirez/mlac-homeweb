@@ -91,7 +91,7 @@ const initialState = {
   notifLocator: "",
   isWaitlisteds: ["No"],
   isWaitlisted: "No",
-  pic: "",
+  profilePic: "",
 };
 
 const selectAuth = (state) => state.auth;
@@ -176,7 +176,7 @@ const CreateSchedule = () => {
   };
 
   const handlePicChange = (e) => {
-    setValues({ ...values, pic: e.target.value });
+    setValues({ ...values, profilePic: e.target.value });
   };
 
   return (
