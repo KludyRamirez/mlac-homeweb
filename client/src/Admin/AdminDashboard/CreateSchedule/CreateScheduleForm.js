@@ -54,13 +54,15 @@ const FilterButton = styled("div")({
   background: "#fff",
   borderRadius: "46px",
   cursor: "pointer",
-  color: "black",
+  color: "#303030",
   fontSize: "14px",
+  fontWeight: "500",
   userSelect: "none",
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
   outline: "1px solid rgba(0, 0, 0, 0.16)",
+  letterSpacing: "0.4px",
   transition:
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
   "&:hover": {
@@ -78,7 +80,7 @@ const NextRoundButton = styled("button")({
   color: "white",
   padding: "0",
   border: "none",
-  background: "#bfbfbf",
+  background: "#afafaf",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -95,7 +97,7 @@ const NextRoundButton = styled("button")({
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
     transform: "translateY(1px)",
-    background: "#afafaf",
+    background: "#9f9f9f",
   },
   "&:active": {
     transform: "translateY(3px)",
@@ -128,7 +130,7 @@ const InputFields = styled("input")({
   padding: "0px 16px 0px 16px",
   fontSize: "16px",
   fontWeight: "500",
-  color: "#606060",
+  color: "#303030",
   position: "relative",
   fontFamily: "Poppins, sans-serif",
   outline: "1px solid rgba(0, 0, 0, 0.1)",
@@ -156,7 +158,7 @@ const CustomSelect = styled("select")`
   font-size: 16px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
-  color: #606060;
+  color: #303030;
   appearance: none; /* Removes default dropdown arrow */
   outline: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -173,9 +175,9 @@ const CustomSelect = styled("select")`
 const InputTitles = styled("div")({
   width: "100%",
   height: "20px",
-  fontSize: "18px",
-  color: "black",
-  fontWeight: "500",
+  fontSize: "16px",
+  color: "#303030",
+  fontWeight: "600",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -492,7 +494,7 @@ const CreateScheduleForm = ({
               <span
                 style={{
                   fontSize: "14px",
-                  fontWeight: "500",
+                  fontWeight: "700",
                 }}
               >
                 Submit
@@ -504,7 +506,7 @@ const CreateScheduleForm = ({
               <span
                 style={{
                   fontSize: "14px",
-                  fontWeight: "500",
+                  fontWeight: "700",
                 }}
               >
                 Submit
@@ -548,27 +550,13 @@ const CreateScheduleForm = ({
         >
           <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
             <FilterButton>
-              <span
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                }}
-              >
-                Dyad
-              </span>
+              <span>Dyad</span>
               <BsClock style={{ fontSize: "18px" }} />
             </FilterButton>
           </Link>
           <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
             <FilterButton>
-              <span
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                }}
-              >
-                Solo
-              </span>
+              <span>Solo</span>
               <BsHourglassSplit style={{ fontSize: "18px" }} />
             </FilterButton>
           </Link>
