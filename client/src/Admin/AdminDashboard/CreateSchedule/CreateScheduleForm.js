@@ -50,7 +50,7 @@ const FilterButton = styled("div")({
   alignItems: "center",
   gap: "8px",
   width: "90px",
-  height: "46px",
+  height: "48px",
   background: "#fff",
   borderRadius: "46px",
   cursor: "pointer",
@@ -84,7 +84,7 @@ const NextRoundButton = styled("button")({
   alignItems: "center",
   gap: "6px",
   width: "100px",
-  height: "46px",
+  height: "48px",
   borderRadius: "100px",
   cursor: "pointer",
   userSelect: "none",
@@ -105,18 +105,18 @@ const NextRoundButton = styled("button")({
 const NextDisabledButton = styled("button")({
   fontFamily: "Poppins, sans-serif",
   padding: "0",
-  color: "black",
-  background: "#fff",
+  color: "#909090",
+  background: "transparent",
   border: "none",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "6px",
   width: "100px",
-  height: "46px",
-  borderRadius: "46px",
+  height: "48px",
+  borderRadius: "48px",
   cursor: "pointer",
-  outline: "1px solid rgba(0, 0, 0, 0.1)",
+  outline: "1px solid rgba(0, 0, 0, 0.16)",
 });
 
 const InputFields = styled("input")({
@@ -126,7 +126,7 @@ const InputFields = styled("input")({
   borderRadius: "10px",
   height: "54px",
   padding: "0px 16px 0px 16px",
-  fontSize: "14px",
+  fontSize: "16px",
   fontWeight: "500",
   color: "#606060",
   position: "relative",
@@ -153,7 +153,7 @@ const CustomSelect = styled("select")`
   border-radius: 10px;
   height: 54px;
   padding: 0px 16px 0px 16px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   color: #606060;
@@ -497,7 +497,7 @@ const CreateScheduleForm = ({
               >
                 Submit
               </span>
-              <FaPlus style={{ color: "#606060", fontSize: "14px" }} />
+              <FaPlus style={{ color: "#909090", fontSize: "14px" }} />
             </NextDisabledButton>
           ) : (
             <NextRoundButton onClick={handleSubmit}>
