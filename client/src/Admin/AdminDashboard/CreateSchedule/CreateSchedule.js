@@ -249,161 +249,161 @@ const CreateSchedule = () => {
                   style={{
                     display: "flex",
                     justifyContent: "flex-start",
+                    alignItems: "center",
                     width: "100%",
+                    height: "60px",
                     marginTop: "10px",
                     gap: "12px",
+                    border: "1px solid black",
                   }}
                 >
                   <div
                     style={{
+                      display: "flex",
+                      width: "100%",
+                      height: "100%",
+                      alignItems: "center",
+                      gap: "20px",
                       background: "#fefefe",
                       borderRadius: "10px",
-                      padding: "18px 22px 18px 22px",
                       outline: "1px solid #909090",
                     }}
                   >
                     <div
                       style={{
+                        width: "100%",
                         display: "flex",
+                        justifyContent: "center",
                         alignItems: "center",
-                        gap: "20px",
+                        gap: "12px",
+                        fontSize: "18px",
+                        fontWeight: "700",
                       }}
                     >
-                      <div
+                      <span
                         style={{
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          gap: "12px",
-                          fontSize: "18px",
-                          fontWeight: "700",
+                          backgroundImage:
+                            "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+                          backgroundSize: "100%",
+                          backgroundRepeat: "repeat",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          MozBackgroundClip: "text",
+                          MozTextFillColor: "transparent",
+                          textShadow: "none",
                         }}
                       >
-                        <span
-                          style={{
-                            backgroundImage:
-                              "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-                            backgroundSize: "100%",
-                            backgroundRepeat: "repeat",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            MozBackgroundClip: "text",
-                            MozTextFillColor: "transparent",
-                            textShadow: "none",
-                          }}
-                        >
-                          Editable
-                        </span>
-                        <BsPencil />
-                      </div>
-                      <div
+                        Editable
+                      </span>
+                      <BsPencil />
+                    </div>
+                    <div
+                      style={{
+                        width: "1px",
+                        height: "16px",
+                        background: "rgba(0, 0, 0, 0.2)",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "12px",
+                        fontSize: "18px",
+                        fontWeight: "700",
+                      }}
+                    >
+                      <span
                         style={{
-                          width: "1px",
-                          height: "16px",
-                          background: "rgba(0, 0, 0, 0.2)",
-                        }}
-                      ></div>
-                      <div
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          gap: "12px",
-                          fontSize: "18px",
-                          fontWeight: "700",
-                        }}
-                      >
-                        <span
-                          style={{
-                            backgroundImage:
-                              "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-                            backgroundSize: "100%",
-                            backgroundRepeat: "repeat",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            MozBackgroundClip: "text",
-                            MozTextFillColor: "transparent",
-                            textShadow: "none",
-                          }}
-                        >
-                          Flexible
-                        </span>
-                        <BsAspectRatio />
-                      </div>
-                      <div
-                        style={{
-                          width: "1px",
-                          height: "16px",
-                          background: "rgba(0, 0, 0, 0.2)",
-                        }}
-                      ></div>
-                      <div
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          gap: "12px",
-                          fontSize: "18px",
-                          fontWeight: "700",
+                          backgroundImage:
+                            "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+                          backgroundSize: "100%",
+                          backgroundRepeat: "repeat",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          MozBackgroundClip: "text",
+                          MozTextFillColor: "transparent",
+                          textShadow: "none",
                         }}
                       >
-                        <span
-                          style={{
-                            backgroundImage:
-                              "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-                            backgroundSize: "100%",
-                            backgroundRepeat: "repeat",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            MozBackgroundClip: "text",
-                            MozTextFillColor: "transparent",
-                            textShadow: "none",
-                          }}
-                        >
-                          Recurring
-                        </span>
-                        <BsRepeat />
-                      </div>
-                      <div
+                        Flexible
+                      </span>
+                      <BsAspectRatio />
+                    </div>
+                    <div
+                      style={{
+                        width: "1px",
+                        height: "16px",
+                        background: "rgba(0, 0, 0, 0.2)",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "12px",
+                        fontSize: "18px",
+                        fontWeight: "700",
+                      }}
+                    >
+                      <span
                         style={{
-                          width: "1px",
-                          height: "16px",
-                          background: "rgba(0, 0, 0, 0.2)",
-                        }}
-                      ></div>
-                      <div
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          gap: "8px",
-                          fontSize: "18px",
-                          fontWeight: "700",
+                          backgroundImage:
+                            "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+                          backgroundSize: "100%",
+                          backgroundRepeat: "repeat",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          MozBackgroundClip: "text",
+                          MozTextFillColor: "transparent",
+                          textShadow: "none",
                         }}
                       >
-                        <span
-                          style={{
-                            backgroundImage:
-                              "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-                            backgroundSize: "100%",
-                            backgroundRepeat: "repeat",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            MozBackgroundClip: "text",
-                            MozTextFillColor: "transparent",
-                            textShadow: "none",
-                          }}
-                        >
-                          Reusable
-                        </span>
-                        <BsRecycle />
-                      </div>
+                        Recurring
+                      </span>
+                      <BsRepeat />
+                    </div>
+                    <div
+                      style={{
+                        width: "1px",
+                        height: "16px",
+                        background: "rgba(0, 0, 0, 0.2)",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "8px",
+                        fontSize: "18px",
+                        fontWeight: "700",
+                      }}
+                    >
+                      <span
+                        style={{
+                          backgroundImage:
+                            "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
+                          backgroundSize: "100%",
+                          backgroundRepeat: "repeat",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          MozBackgroundClip: "text",
+                          MozTextFillColor: "transparent",
+                          textShadow: "none",
+                        }}
+                      >
+                        Reusable
+                      </span>
+                      <BsRecycle />
                     </div>
                   </div>
+
                   <div
                     style={{
                       display: "flex",
