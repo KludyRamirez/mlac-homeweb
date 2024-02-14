@@ -8,15 +8,11 @@ import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
 import AllSchedule from "../AllSchedule/AllSchedule";
 import {
-  BsAlignStart,
   BsAspectRatio,
-  BsCheck2Circle,
-  BsCheckCircleFill,
   BsPencil,
   BsRecycle,
   BsRepeat,
   BsRobot,
-  BsWindow,
 } from "react-icons/bs";
 
 const Wrapper = styled("div")({
@@ -251,10 +247,10 @@ const CreateSchedule = () => {
                     justifyContent: "flex-start",
                     alignItems: "center",
                     width: "100%",
-                    height: "60px",
+                    
                     marginTop: "10px",
                     gap: "12px",
-                    border: "1px solid black",
+                    
                   }}
                 >
                   <div
@@ -267,6 +263,8 @@ const CreateSchedule = () => {
                       background: "#fefefe",
                       borderRadius: "10px",
                       outline: "1px solid #909090",
+                      padding: "10px"
+                      
                     }}
                   >
                     <div
@@ -407,16 +405,20 @@ const CreateSchedule = () => {
                   <div
                     style={{
                       display: "flex",
-                      padding: "18px",
-                      gap: "12px",
+                      width: "100%",
+                      padding: "10px",
+                      alignItems: "center",
+                      gap: "20px",
+                      outline: "1px solid #606060",
+                      borderRadius: "10px"
                     }}
                   >
                     <div style={{ fontSize: "18px", fontWeight: "600" }}>
                       Talk to Dobot
                     </div>
-                    <div>
+                
                       <BsRobot style={{ fontSize: "24px" }} />
-                    </div>
+                   
                   </div>
                 </div>
                 <div

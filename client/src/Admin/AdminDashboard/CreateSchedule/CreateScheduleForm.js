@@ -24,9 +24,9 @@ const Flexer = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   borderRadius: "14px",
-  background: "transparent",
-  border: "2px solid #909090",
-  padding: "26px",
+  background: "#ebe9e1",
+  border: "2px solid #c0c0c0",
+  padding: "32px",
   "@media (max-width: 767px)": {
     padding: "40px 20px",
     borderRadius: "20px",
@@ -242,7 +242,7 @@ const CreateScheduleForm = ({
             justifyContent: "flex-start",
             fontSize: "42px",
             fontWeight: "600",
-            paddingTop: "12px",
+           
           }}
         >
           Create schedule
