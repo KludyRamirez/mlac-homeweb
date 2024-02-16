@@ -49,14 +49,14 @@ const Flexer = styled("div")({
 });
 
 const FormCon1 = styled("div")({
-  width: "30%",
+  width: "31%",
   "@media (max-width: 767px)": {
     width: "100%",
   },
 });
 
 const FormCon2 = styled("div")({
-  width: "60%",
+  width: "59%",
   display: "flex",
   justifyContent: "space-between",
   "@media (max-width: 767px)": {

@@ -24,8 +24,8 @@ const Flexer = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   borderRadius: "14px",
-  background: "#ebe9e1",
-  border: "2px solid #c0c0c0",
+  background: "#efefef",
+  border: "1px solid #e0e0e0",
   padding: "32px",
   "@media (max-width: 767px)": {
     padding: "40px 20px",

@@ -11,7 +11,7 @@ const postLogin = async (req, res) => {
     console.log(user);
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      // send new token
+
       const token = jwt.sign(
         {
           userId: user._id,
