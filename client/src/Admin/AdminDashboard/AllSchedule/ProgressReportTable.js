@@ -657,11 +657,6 @@ const ProgressReportTable = () => {
             },
           }
         );
-
-        console.log(
-          "--------------------------------------------------------------------------------->Success:",
-          response.data
-        );
       } else {
         console.error("Error: Unable to fetch current value");
       }
@@ -1167,7 +1162,6 @@ const ProgressReportTable = () => {
 
   const handleSetMinusPresentCounter = async (id) => {
     try {
-      // Fetch current value
       const currentValueResponse = await axios.get(
         `${process.env.REACT_APP_API}/schedule/${id}`,
         {
@@ -1190,11 +1184,6 @@ const ProgressReportTable = () => {
               Authorization: `Bearer ${auth.userDetails.token}`,
             },
           }
-        );
-
-        console.log(
-          "--------------------------------------------------------------------------------->Minus:",
-          response.data
         );
       } else {
         console.error("Error: Unable to fetch current value");

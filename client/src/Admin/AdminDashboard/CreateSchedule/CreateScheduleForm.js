@@ -23,10 +23,10 @@ const Flexer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  borderRadius: "14px",
-  background: "#efefef",
-  border: "1px solid #e0e0e0",
-  padding: "32px",
+  borderRadius: "10px",
+  background: "#ecebe2",
+
+  padding: "30px",
   "@media (max-width: 767px)": {
     padding: "40px 20px",
     borderRadius: "20px",
@@ -51,26 +51,27 @@ const FilterButton = styled("div")({
   justifyContent: "center",
   alignItems: "center",
   gap: "8px",
-  width: "90px",
+  width: "94px",
   height: "48px",
   background: "#fff",
   borderRadius: "46px",
   cursor: "pointer",
-  color: "#303030",
-  fontSize: "14px",
-  fontWeight: "500",
+  color: "#606060",
+  fontSize: "16px",
+  fontWeight: "600",
   userSelect: "none",
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
   outline: "1px solid rgba(0, 0, 0, 0.16)",
-  letterSpacing: "0.4px",
+
   transition:
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
   "&:hover": {
     transform: "translateY(1px)",
-    background: "#efefef",
-    outline: "1px solid #606060",
+    background: "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
+    color: "white",
+    outline: "none",
   },
   "&:active": {
     transform: "translateY(3px)",
@@ -82,12 +83,12 @@ const NextRoundButton = styled("button")({
   color: "white",
   padding: "0",
   border: "none",
-  background: "#afafaf",
+  background: "#9f9f9f",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "6px",
-  width: "100px",
+  width: "110px",
   height: "48px",
   borderRadius: "100px",
   cursor: "pointer",
@@ -99,7 +100,7 @@ const NextRoundButton = styled("button")({
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.4s ease-in-out",
   "&:hover": {
     transform: "translateY(1px)",
-    background: "#9f9f9f",
+    background: "#8f8f8f",
   },
   "&:active": {
     transform: "translateY(3px)",
@@ -116,7 +117,7 @@ const NextDisabledButton = styled("button")({
   justifyContent: "center",
   alignItems: "center",
   gap: "6px",
-  width: "100px",
+  width: "110px",
   height: "48px",
   borderRadius: "48px",
   cursor: "pointer",
@@ -242,7 +243,6 @@ const CreateScheduleForm = ({
             justifyContent: "flex-start",
             fontSize: "42px",
             fontWeight: "600",
-           
           }}
         >
           Create schedule
@@ -489,31 +489,31 @@ const CreateScheduleForm = ({
           }}
         >
           <FilterButton>
-            Help <BsQuestionCircle style={{ fontSize: "18px" }} />
+            FAQ <BsQuestionCircle style={{ fontSize: "18px" }} />
           </FilterButton>
           {!nameOfStudent || !studentType || !schedType || !day ? (
             <NextDisabledButton>
               <span
                 style={{
-                  fontSize: "14px",
-                  fontWeight: "700",
+                  fontSize: "16px",
+                  fontWeight: "600",
                 }}
               >
                 Submit
               </span>
-              <FaPlus style={{ color: "#909090", fontSize: "14px" }} />
+              <FaPlus style={{ color: "#909090", fontSize: "16px" }} />
             </NextDisabledButton>
           ) : (
             <NextRoundButton onClick={handleSubmit}>
               <span
                 style={{
-                  fontSize: "14px",
-                  fontWeight: "700",
+                  fontSize: "16px",
+                  fontWeight: "600",
                 }}
               >
                 Submit
               </span>
-              <FaPlus style={{ color: "white", fontSize: "14px" }} />
+              <FaPlus style={{ fontSize: "16px" }} />
             </NextRoundButton>
           )}
         </div>

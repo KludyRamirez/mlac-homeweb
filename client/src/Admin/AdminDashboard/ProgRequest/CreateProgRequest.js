@@ -172,7 +172,6 @@ const CreateProgRequest = () => {
   const handleDayChange = (newSelectedDate) => {
     const dateObj = new Date(newSelectedDate);
     const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
-    console.log("-------------------------------------->", dateObj);
     if (dayOfWeek === "Sunday") {
       toast.error("Closed on Sundays");
     } else {

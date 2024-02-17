@@ -7,8 +7,13 @@ import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
 import AllSchedule from "../AllSchedule/AllSchedule";
+import { RiChatSmile3Line } from "react-icons/ri";
+import { IoStatsChart } from "react-icons/io5";
 import {
   BsAspectRatio,
+  BsBarChart,
+  BsBarChartFill,
+  BsBarChartLine,
   BsPencil,
   BsRecycle,
   BsRepeat,
@@ -36,12 +41,11 @@ const CreateScheduleContainer = styled("div")({
 
 const Flexer = styled("div")({
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "space-between",
   alignItems: "flex-start",
   width: "100%",
   flexWrap: "wrap",
-  padding: "80px 80px 0px 80px",
-  gap: "80px",
+  padding: "60px 60px 0px 60px",
 
   "@media (max-width: 767px)": {
     padding: "0px 8px 0px 8px",
@@ -49,18 +53,47 @@ const Flexer = styled("div")({
 });
 
 const FormCon1 = styled("div")({
-  width: "31%",
+  width: "32%",
   "@media (max-width: 767px)": {
     width: "100%",
   },
 });
 
 const FormCon2 = styled("div")({
-  width: "59%",
+  width: "58%",
   display: "flex",
   justifyContent: "space-between",
   "@media (max-width: 767px)": {
     width: "100%",
+  },
+});
+
+const DobotCon = styled("div")({
+  fontWeight: "500",
+  display: "flex",
+  padding: "11px 12px",
+  alignItems: "center",
+  gap: "8px",
+  cursor: "pointer",
+  outline: "1px solid #909090",
+  color: "#303030",
+  borderRadius: "30px",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+  touchAction: "manipulation",
+  willChange: "box-shadow, transform",
+  transition:
+    "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
+  "@media (max-width: 767px)": {},
+  "&:hover": {
+    transform: "translateY(1px)",
+    backgroundImage:
+      "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
+    color: "white",
+    outline: "none",
+  },
+  "&:active": {
+    transform: "translateY(3px)",
   },
 });
 
@@ -97,6 +130,11 @@ const authSelector = createSelector([selectAuth], (auth) => auth);
 const CreateSchedule = () => {
   const [values, setValues] = useState(initialState);
   const [inputValue, setInputValue] = useState("");
+  const [activeInfo, setActiveInfo] = useState("Editable");
+
+  const handleInfoChange = (info) => {
+    setActiveInfo(info);
+  };
 
   const auth = useSelector(authSelector);
 
@@ -247,27 +285,21 @@ const CreateSchedule = () => {
                     justifyContent: "flex-start",
                     alignItems: "center",
                     width: "100%",
-                    
-                    marginTop: "10px",
-                    gap: "12px",
-                    
+                    marginTop: "14px",
+                    gap: "64px",
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
-                      width: "100%",
-                      height: "100%",
                       alignItems: "center",
-                      gap: "20px",
-                      background: "#fefefe",
+                      gap: "24px",
+                      background: "transparent",
                       borderRadius: "10px",
-                      outline: "1px solid #909090",
-                      padding: "10px"
-                      
                     }}
                   >
                     <div
+                      onClick={() => handleInfoChange("Editable")}
                       style={{
                         width: "100%",
                         display: "flex",
@@ -276,6 +308,13 @@ const CreateSchedule = () => {
                         gap: "12px",
                         fontSize: "18px",
                         fontWeight: "700",
+                        outline:
+                          activeInfo === "Editable"
+                            ? "1px solid #909090"
+                            : "none",
+                        padding: "10px",
+                        borderRadius: "30px",
+                        cursor: "pointer",
                       }}
                     >
                       <span
@@ -296,13 +335,7 @@ const CreateSchedule = () => {
                       <BsPencil />
                     </div>
                     <div
-                      style={{
-                        width: "1px",
-                        height: "16px",
-                        background: "rgba(0, 0, 0, 0.2)",
-                      }}
-                    ></div>
-                    <div
+                      onClick={() => handleInfoChange("Flexible")}
                       style={{
                         width: "100%",
                         display: "flex",
@@ -311,6 +344,13 @@ const CreateSchedule = () => {
                         gap: "12px",
                         fontSize: "18px",
                         fontWeight: "700",
+                        outline:
+                          activeInfo === "Flexible"
+                            ? "1px solid #909090"
+                            : "none",
+                        padding: "10px",
+                        borderRadius: "30px",
+                        cursor: "pointer",
                       }}
                     >
                       <span
@@ -331,13 +371,7 @@ const CreateSchedule = () => {
                       <BsAspectRatio />
                     </div>
                     <div
-                      style={{
-                        width: "1px",
-                        height: "16px",
-                        background: "rgba(0, 0, 0, 0.2)",
-                      }}
-                    ></div>
-                    <div
+                      onClick={() => handleInfoChange("Recurring")}
                       style={{
                         width: "100%",
                         display: "flex",
@@ -346,6 +380,13 @@ const CreateSchedule = () => {
                         gap: "12px",
                         fontSize: "18px",
                         fontWeight: "700",
+                        outline:
+                          activeInfo === "Recurring"
+                            ? "1px solid #909090"
+                            : "none",
+                        padding: "10px",
+                        borderRadius: "30px",
+                        cursor: "pointer",
                       }}
                     >
                       <span
@@ -366,21 +407,22 @@ const CreateSchedule = () => {
                       <BsRepeat />
                     </div>
                     <div
-                      style={{
-                        width: "1px",
-                        height: "16px",
-                        background: "rgba(0, 0, 0, 0.2)",
-                      }}
-                    ></div>
-                    <div
+                      onClick={() => handleInfoChange("Reusable")}
                       style={{
                         width: "100%",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        gap: "8px",
+                        gap: "12px",
                         fontSize: "18px",
                         fontWeight: "700",
+                        outline:
+                          activeInfo === "Reusable"
+                            ? "1px solid #909090"
+                            : "none",
+                        padding: "10px",
+                        borderRadius: "30px",
+                        cursor: "pointer",
                       }}
                     >
                       <span
@@ -405,22 +447,41 @@ const CreateSchedule = () => {
                   <div
                     style={{
                       display: "flex",
-                      width: "100%",
-                      padding: "10px",
-                      alignItems: "center",
-                      gap: "20px",
-                      outline: "1px solid #606060",
-                      borderRadius: "10px"
+                      gap: "10px",
                     }}
                   >
-                    <div style={{ fontSize: "18px", fontWeight: "600" }}>
-                      Talk to Dobot
-                    </div>
-                
-                      <BsRobot style={{ fontSize: "24px" }} />
-                   
+                    <DobotCon>
+                      <span style={{ fontSize: "18px" }}>Statistics</span>
+                      <BsBarChart style={{ fontSize: "20px" }} />
+                    </DobotCon>
+                    <DobotCon>
+                      <span style={{ fontSize: "18px" }}>Dobot</span>
+                      <RiChatSmile3Line style={{ fontSize: "24px" }} />
+                    </DobotCon>
                   </div>
                 </div>
+                {activeInfo === "Editable" && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        padding: "10px",
+                        background: "#efefef",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      ddfdsfdsfdf
+                    </div>
+                  </div>
+                )}
                 <div
                   style={{
                     color: "#606060",
