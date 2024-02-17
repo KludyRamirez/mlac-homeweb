@@ -53,14 +53,14 @@ const Flexer = styled("div")({
 });
 
 const FormCon1 = styled("div")({
-  width: "32%",
+  width: "34%",
   "@media (max-width: 767px)": {
     width: "100%",
   },
 });
 
 const FormCon2 = styled("div")({
-  width: "58%",
+  width: "56%",
   display: "flex",
   justifyContent: "space-between",
   "@media (max-width: 767px)": {
@@ -474,8 +474,9 @@ const CreateSchedule = () => {
                         width: "100%",
                         height: "200px",
                         padding: "10px",
-                        background: "#efefef",
+                        background: "#efebe3",
                         borderRadius: "10px",
+                        outline: "1px solid #c0c0c0",
                       }}
                     >
                       ddfdsfdsfdf

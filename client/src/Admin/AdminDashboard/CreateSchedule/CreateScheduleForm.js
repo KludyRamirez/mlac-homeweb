@@ -24,9 +24,9 @@ const Flexer = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   borderRadius: "10px",
-  background: "#ecebe2",
-
-  padding: "30px",
+  background: "#efebe3",
+  outline: "1px solid #c0c0c0",
+  padding: "40px",
   "@media (max-width: 767px)": {
     padding: "40px 20px",
     borderRadius: "20px",
@@ -53,7 +53,7 @@ const FilterButton = styled("div")({
   gap: "8px",
   width: "94px",
   height: "48px",
-  background: "#fff",
+  background: "none",
   borderRadius: "46px",
   cursor: "pointer",
   color: "#606060",
@@ -63,7 +63,7 @@ const FilterButton = styled("div")({
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
-  outline: "1px solid rgba(0, 0, 0, 0.16)",
+  outline: "1px solid rgba(0, 0, 0, 0.24)",
 
   transition:
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
@@ -110,7 +110,7 @@ const NextRoundButton = styled("button")({
 const NextDisabledButton = styled("button")({
   fontFamily: "Poppins, sans-serif",
   padding: "0",
-  color: "#909090",
+  color: "#606060",
   background: "transparent",
   border: "none",
   display: "flex",
@@ -121,7 +121,7 @@ const NextDisabledButton = styled("button")({
   height: "48px",
   borderRadius: "48px",
   cursor: "pointer",
-  outline: "1px solid rgba(0, 0, 0, 0.16)",
+  outline: "1px solid rgba(0, 0, 0, 0.26)",
 });
 
 const InputFields = styled("input")({
