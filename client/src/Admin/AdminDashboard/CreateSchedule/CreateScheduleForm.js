@@ -24,7 +24,7 @@ const Flexer = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   borderRadius: "10px",
-  background: "#efebe3",
+  background: "#f7f7f7",
   outline: "1px solid #c0c0c0",
   padding: "40px",
   "@media (max-width: 767px)": {
@@ -53,7 +53,7 @@ const FilterButton = styled("div")({
   gap: "8px",
   width: "94px",
   height: "48px",
-  background: "none",
+  background: "#f5f3eb",
   borderRadius: "46px",
   cursor: "pointer",
   color: "#606060",

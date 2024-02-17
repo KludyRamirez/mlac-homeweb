@@ -60,23 +60,25 @@ const FormCon1 = styled("div")({
 });
 
 const FormCon2 = styled("div")({
-  width: "56%",
+  width: "60.5%",
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "center",
+
   "@media (max-width: 767px)": {
     width: "100%",
   },
 });
 
 const DobotCon = styled("div")({
-  fontWeight: "500",
+  fontWeight: "600",
+  fontSize: "18px",
   display: "flex",
-  padding: "11px 12px",
+  padding: "10px 14px",
   alignItems: "center",
   gap: "8px",
   cursor: "pointer",
   outline: "1px solid #909090",
-  color: "#303030",
+  color: "#606060",
   borderRadius: "30px",
   userSelect: "none",
   WebkitUserSelect: "none",
@@ -451,11 +453,11 @@ const CreateSchedule = () => {
                     }}
                   >
                     <DobotCon>
-                      <span style={{ fontSize: "18px" }}>Statistics</span>
+                      <span>Statistics</span>
                       <BsBarChart style={{ fontSize: "20px" }} />
                     </DobotCon>
                     <DobotCon>
-                      <span style={{ fontSize: "18px" }}>Dobot</span>
+                      <span>Dobot</span>
                       <RiChatSmile3Line style={{ fontSize: "24px" }} />
                     </DobotCon>
                   </div>
@@ -474,12 +476,12 @@ const CreateSchedule = () => {
                         width: "100%",
                         height: "200px",
                         padding: "10px",
-                        background: "#efebe3",
+                        background: "#f7f7f7",
                         borderRadius: "10px",
                         outline: "1px solid #c0c0c0",
                       }}
                     >
-                      ddfdsfdsfdf
+                      kludy ramirez
                     </div>
                   </div>
                 )}
