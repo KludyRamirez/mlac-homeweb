@@ -39,7 +39,6 @@ const Flexer = styled("div")({
 const FormContainer = styled("div")({
   width: "100%",
   borderRadius: "12px",
-  paddingTop: "32px",
   "@media (max-width: 767px)": {
     borderRadius: "0px",
   },
@@ -63,7 +62,7 @@ const FilterButton = styled("div")({
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
-  outline: "1px solid rgba(0, 0, 0, 0.24)",
+  outline: "1px solid rgba(0, 0, 0, 0.16)",
 
   transition:
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
@@ -243,88 +242,100 @@ const CreateScheduleForm = ({
             justifyContent: "flex-start",
             fontSize: "42px",
             fontWeight: "600",
+            marginLeft: "-4px",
+            marginTop: "-6px",
           }}
         >
           Create schedule
         </div>
-        <div
-          style={{
-            width: "40%",
-            height: "2px",
-            background: "#606060",
-            backgroundImage: "linear-gradient(315deg, #f1f1f1 0%, #606060 74%)",
-            borderRadius: "100px",
-            marginTop: "10px",
-          }}
-        ></div>
 
         <FormContainer>
-          {/* <RadioGroup
+          <InputTitles sx={{ paddingTop: "22px" }}>
+            Photo <BsPencil style={{ fontSize: "16px", color: "#8f8f8f" }} />
+          </InputTitles>
+          <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
             value={profilePic}
             onChange={handlePicChange}
+            sx={{ paddingTop: "18px" }}
           >
-            <div style={{ display: "flex", justifyContent: "flex-start" }}>
-              <FormControlLabel
-                value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
-                control={<Radio />}
-                label={
-                  <img
-                    src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
-                    alt="Stark"
-                    style={{
-                      outline:
-                        profilePic ===
-                        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
-                          ? "1px solid rgba(0, 123, 255, 0.64)"
-                          : "none",
-                      width: "100px",
-                      height: "100px",
-                    }}
-                  />
-                }
-              />
-              <FormControlLabel
-                value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566895/glwpoiksr6gvencoso40.webp"
-                control={<Radio />}
-                label={
-                  <img
-                    src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566895/glwpoiksr6gvencoso40.webp"
-                    alt="Fern"
-                    style={{
-                      outline:
-                        profilePic ===
-                        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566895/glwpoiksr6gvencoso40.webp"
-                          ? "1px solid rgba(0, 123, 255, 0.64)"
-                          : "none",
-                      width: "100px",
-                      height: "100px",
-                    }}
-                  />
-                }
-              />
-              <FormControlLabel
-                value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
-                control={<Radio />}
-                label={
-                  <img
-                    src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
-                    alt="Frieren"
-                    style={{
-                      outline:
-                        profilePic ===
-                        "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
-                          ? "2px solid rgba(0, 123, 255, 0.64)"
-                          : "none",
-                      width: "100px",
-                      height: "100px",
-                    }}
-                  />
-                }
-              />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                gap: "10px",
+                marginLeft: "12px",
+              }}
+            >
+              <label htmlFor="stark" style={{ cursor: "pointer" }}>
+                <FormControlLabel
+                  value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                  control={<Radio id="stark" style={{ display: "none" }} />}
+                  label={
+                    <img
+                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                      alt="Stark"
+                      style={{
+                        outline:
+                          profilePic ===
+                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                            ? "1px solid rgba(0, 123, 255, 0.64)"
+                            : "none",
+                        width: "90px",
+                        height: "90px",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  }
+                />
+              </label>
+              <label htmlFor="stark" style={{ cursor: "pointer" }}>
+                <FormControlLabel
+                  value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                  control={<Radio id="stark" style={{ display: "none" }} />}
+                  label={
+                    <img
+                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                      alt="Stark"
+                      style={{
+                        outline:
+                          profilePic ===
+                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                            ? "1px solid rgba(0, 123, 255, 0.64)"
+                            : "none",
+                        width: "90px",
+                        height: "90px",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  }
+                />
+              </label>
+              <label htmlFor="stark" style={{ cursor: "pointer" }}>
+                <FormControlLabel
+                  value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                  control={<Radio id="stark" style={{ display: "none" }} />}
+                  label={
+                    <img
+                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                      alt="Stark"
+                      style={{
+                        outline:
+                          profilePic ===
+                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
+                            ? "1px solid rgba(0, 123, 255, 0.64)"
+                            : "none",
+                        width: "90px",
+                        height: "90px",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  }
+                />
+              </label>
             </div>
-          </RadioGroup> */}
+          </RadioGroup>
 
           <div
             style={{
@@ -333,6 +344,7 @@ const CreateScheduleForm = ({
               alignItems: "flex-start",
               gap: "12px",
               width: "100%",
+              paddingTop: "18px",
             }}
           >
             <InputTitles>
@@ -485,7 +497,7 @@ const CreateScheduleForm = ({
             width: "100%",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "54px 0 0 0",
+            padding: "44px 0 0 0",
           }}
         >
           <FilterButton>
@@ -523,7 +535,7 @@ const CreateScheduleForm = ({
             width: "100%",
             display: "flex",
             justifyContent: "flex-start",
-            paddingTop: "54px",
+            paddingTop: "38px",
             fontSize: "18px",
             fontWeight: "600",
           }}
@@ -547,7 +559,7 @@ const CreateScheduleForm = ({
             justifyContent: "flex-start",
             alignItems: "center",
             gap: "18px",
-            paddingTop: "42px",
+            paddingTop: "34px",
           }}
         >
           <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
