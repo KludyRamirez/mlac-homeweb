@@ -12,13 +12,15 @@ import { IoStatsChart } from "react-icons/io5";
 import {
   BsAspectRatio,
   BsBarChart,
-  BsBarChartFill,
-  BsBarChartLine,
   BsPencil,
   BsRecycle,
   BsRepeat,
-  BsRobot,
 } from "react-icons/bs";
+import mail from "../../../images/mail.png";
+import crown from "../../../images/crowncolor.png";
+import setting from "../../../images/setting.png";
+import flash from "../../../images/flash.png";
+import bookmark from "../../../images/bookmark.png";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -474,14 +476,215 @@ const CreateSchedule = () => {
                     <div
                       style={{
                         width: "100%",
-                        height: "200px",
-                        padding: "10px",
+                        height: "204px",
+                        padding: "20px 30px 20px 30px",
                         background: "#f7f7f7",
                         borderRadius: "10px",
                         outline: "1px solid #c0c0c0",
                       }}
                     >
-                      kludy ramirez
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            width: "76%",
+                            height: "200px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontSize: "32px",
+                              color: "#606060",
+                              fontWeight: "600",
+                            }}
+                          >
+                            How editable?
+                          </div>
+                          <div
+                            style={{
+                              fontSize: "18px",
+                              color: "#606060",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the
+                            industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book. when an
+                            unknown printer took a galley of type and scrambled
+                            it to make a type specimen book.
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            width: "200px",
+                            height: "204px",
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            alignItems: "flex-start",
+                            flexWrap: "wrap",
+                            gap: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              boxShadow:
+                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
+                            }}
+                          >
+                            <img
+                              src={crown}
+                              alt=""
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "55px",
+                              height: "56px",
+                              background: "rgba(255, 49, 49, 0.16)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              border: "3px solid #ff3131",
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              boxShadow:
+                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
+                            }}
+                          >
+                            <img
+                              src={setting}
+                              alt=""
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "55px",
+                              height: "56px",
+                              background: "rgba(255, 49, 49, 0.16)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              border: "3px solid #ff3131",
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              boxShadow:
+                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
+                            }}
+                          >
+                            <img
+                              src={flash}
+                              alt=""
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "55px",
+                              height: "56px",
+                              background: "rgba(255, 49, 49, 0.16)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              border: "3px solid #ff3131",
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              boxShadow:
+                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
+                            }}
+                          >
+                            <img
+                              src={bookmark}
+                              alt=""
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "55px",
+                              height: "56px",
+                              background: "rgba(255, 49, 49, 0.16)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              border: "3px solid #ff3131",
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "10px",
+                              boxShadow:
+                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
+                            }}
+                          >
+                            <img
+                              src={mail}
+                              alt=""
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
