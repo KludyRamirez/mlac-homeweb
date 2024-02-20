@@ -3,6 +3,7 @@ import { openAlertMessage } from "./alertActions";
 
 export const authActions = {
   SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",
+  REFRESH_TOKEN: "AUTH.REFRESH_TOKEN",
 };
 
 export const getActions = (dispatch) => {

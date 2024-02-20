@@ -25,10 +25,10 @@ const Flexer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  borderRadius: "10px",
+  borderRadius: "32px",
   background: "#f7f7f7",
   outline: "1px solid #c0c0c0",
-  padding: "40px 40px 40px 40px",
+  padding: "40px",
   "@media (max-width: 767px)": {
     padding: "40px 20px",
     borderRadius: "20px",
@@ -64,7 +64,7 @@ const FilterButton = styled("div")({
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
-  outline: "1px solid rgba(0, 0, 0, 0.16)",
+  outline: "1px solid rgba(0, 0, 0, 0.26)",
 
   transition:
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
@@ -122,7 +122,7 @@ const NextDisabledButton = styled("button")({
   height: "48px",
   borderRadius: "48px",
   cursor: "pointer",
-  outline: "1px solid rgba(0, 0, 0, 0.16)",
+  outline: "1px solid rgba(0, 0, 0, 0.26)",
 });
 
 const InputFields = styled("input")({
@@ -137,7 +137,7 @@ const InputFields = styled("input")({
   color: "#303030",
   position: "relative",
   fontFamily: "Poppins, sans-serif",
-  outline: "1px solid rgba(0, 0, 0, 0.14)",
+  outline: "1px solid rgba(0, 0, 0, 0.24)",
 
   "&:focus": {
     outline: "1px solid #606060",
@@ -164,7 +164,7 @@ const CustomSelect = styled("select")`
   font-family: "Poppins", sans-serif;
   color: #303030;
   appearance: none; /* Removes default dropdown arrow */
-  outline: 1px solid rgba(0, 0, 0, 0.14);
+  outline: 1px solid rgba(0, 0, 0, 0.24);
 
   &:focus {
     outline: 1px solid #606060;
@@ -179,9 +179,9 @@ const CustomSelect = styled("select")`
 const InputTitles = styled("div")({
   width: "100%",
   height: "20px",
-  fontSize: "16px",
+  fontSize: "18px",
   color: "#303030",
-  fontWeight: "600",
+  fontWeight: "500",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -242,10 +242,10 @@ const CreateScheduleForm = ({
             width: "100%",
             display: "flex",
             justifyContent: "flex-start",
-            fontSize: "42px",
+            fontSize: "46px",
             fontWeight: "600",
             marginLeft: "-4px",
-            marginTop: "-6px",
+            marginTop: "-8px",
           }}
         >
           Create schedule
@@ -261,7 +261,7 @@ const CreateScheduleForm = ({
             name="controlled-radio-buttons-group"
             value={profilePic}
             onChange={handlePicChange}
-            sx={{ paddingTop: "18px" }}
+            sx={{ paddingTop: "16px" }}
           >
             <div
               style={{
@@ -276,18 +276,18 @@ const CreateScheduleForm = ({
                   value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
                   control={<Radio id="stark" style={{ display: "none" }} />}
                   label={
-                    <img
-                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
-                      alt="Stark"
+                    <div
                       style={{
                         outline:
                           profilePic ===
                           "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
-                            ? "2px solid #606060"
+                            ? "1px solid #606060"
                             : "none",
-                        width: "80px",
-                        height: "80px",
-                        borderRadius: "50%",
+                        width: "64px",
+                        height: "64px",
+                        borderRadius: "14px",
+                        background:
+                          "linear-gradient(315deg, #606060 0%, #f1f1f1 74%)",
                       }}
                     />
                   }
@@ -298,18 +298,18 @@ const CreateScheduleForm = ({
                   value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
                   control={<Radio id="stark" style={{ display: "none" }} />}
                   label={
-                    <img
-                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
-                      alt="Stark"
+                    <div
                       style={{
                         outline:
                           profilePic ===
                           "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
-                            ? "2px solid #606060"
+                            ? "1px solid #606060"
                             : "none",
-                        width: "80px",
-                        height: "80px",
-                        borderRadius: "50%",
+                        width: "64px",
+                        height: "64px",
+                        borderRadius: "14px",
+                        background:
+                          "linear-gradient(315deg, #606060 0%, #f1f1f1 74%)",
                       }}
                     />
                   }
@@ -320,18 +320,18 @@ const CreateScheduleForm = ({
                   value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
                   control={<Radio id="stark" style={{ display: "none" }} />}
                   label={
-                    <img
-                      src="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
-                      alt="Stark"
+                    <div
                       style={{
                         outline:
                           profilePic ===
                           "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
-                            ? "2px solid #606060"
+                            ? "1px solid #606060"
                             : "none",
-                        width: "80px",
-                        height: "80px",
-                        borderRadius: "50%",
+                        width: "64px",
+                        height: "64px",
+                        borderRadius: "14px",
+                        background:
+                          "linear-gradient(315deg, #606060 0%, #f1f1f1 74%)",
                       }}
                     />
                   }
@@ -347,7 +347,7 @@ const CreateScheduleForm = ({
               alignItems: "flex-start",
               gap: "12px",
               width: "100%",
-              paddingTop: "18px",
+              paddingTop: "24px",
             }}
           >
             <InputTitles>
@@ -377,7 +377,7 @@ const CreateScheduleForm = ({
               justifyContent: "flex-start",
               gap: "20px",
               width: "100%",
-              paddingTop: "28px",
+              paddingTop: "24px",
             }}
           >
             <div
@@ -500,7 +500,7 @@ const CreateScheduleForm = ({
             width: "100%",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "48px 0 0 0",
+            padding: "42px 0 0 0",
           }}
         >
           <FilterButton>
@@ -532,15 +532,16 @@ const CreateScheduleForm = ({
             </NextRoundButton>
           )}
         </div>
+
         <div
           style={{
             color: "#606060",
             width: "100%",
             display: "flex",
             justifyContent: "flex-start",
-            paddingTop: "50px",
             fontSize: "18px",
             fontWeight: "600",
+            paddingTop: "48px",
           }}
         >
           Create temporary schedule?
@@ -552,7 +553,7 @@ const CreateScheduleForm = ({
             background: "#606060",
             backgroundImage: "linear-gradient(315deg, #606060 0%, #f1f1f1 74%)",
             borderRadius: "4px",
-            marginTop: "12px",
+            marginTop: "16px",
           }}
         ></div>
         <div
@@ -562,7 +563,7 @@ const CreateScheduleForm = ({
             justifyContent: "flex-start",
             alignItems: "center",
             gap: "18px",
-            paddingTop: "30px",
+            paddingTop: "22px",
           }}
         >
           <Link to="/temp-schedule" style={{ textDecoration: "none" }}>

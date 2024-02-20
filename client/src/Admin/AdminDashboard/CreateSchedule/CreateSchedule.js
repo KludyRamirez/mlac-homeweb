@@ -296,6 +296,7 @@ const CreateSchedule = () => {
                   <div
                     style={{
                       display: "flex",
+                      width: "100%",
                       alignItems: "center",
                       gap: "24px",
                       background: "transparent",
@@ -479,7 +480,7 @@ const CreateSchedule = () => {
                         height: "204px",
                         padding: "20px 30px 20px 30px",
                         background: "#f7f7f7",
-                        borderRadius: "10px",
+                        borderRadius: "24px",
                         outline: "1px solid #c0c0c0",
                       }}
                     >
@@ -537,16 +538,14 @@ const CreateSchedule = () => {
                         >
                           <div
                             style={{
-                              width: "60px",
-                              height: "60px",
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              width: "58px",
+                              height: "58px",
+                              border: "1px solid #a0a0a0",
+                              background: "#fff",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              boxShadow:
-                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
                             }}
                           >
                             <img
@@ -557,28 +556,26 @@ const CreateSchedule = () => {
                           </div>
                           <div
                             style={{
-                              width: "55px",
+                              width: "56px",
                               height: "56px",
-                              background: "rgba(255, 49, 49, 0.16)",
+                              background: "#dfdfdf",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              border: "3px solid #ff3131",
+                              border: "1px solid #a0a0a0",
                             }}
                           ></div>
                           <div
                             style={{
-                              width: "60px",
-                              height: "60px",
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              width: "58px",
+                              height: "58px",
+                              border: "1px solid #a0a0a0",
+                              background: "#fff",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              boxShadow:
-                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
                             }}
                           >
                             <img
@@ -589,28 +586,26 @@ const CreateSchedule = () => {
                           </div>
                           <div
                             style={{
-                              width: "55px",
+                              width: "56px",
                               height: "56px",
-                              background: "rgba(255, 49, 49, 0.16)",
+                              background: "#dfdfdf",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              border: "3px solid #ff3131",
+                              border: "1px solid #a0a0a0",
                             }}
                           ></div>
                           <div
                             style={{
-                              width: "60px",
-                              height: "60px",
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              width: "58px",
+                              height: "58px",
+                              border: "1px solid #a0a0a0",
+                              background: "#fff",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              boxShadow:
-                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
                             }}
                           >
                             <img
@@ -621,28 +616,26 @@ const CreateSchedule = () => {
                           </div>
                           <div
                             style={{
-                              width: "55px",
+                              width: "56px",
                               height: "56px",
-                              background: "rgba(255, 49, 49, 0.16)",
+                              background: "#dfdfdf",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              border: "3px solid #ff3131",
+                              border: "1px solid #a0a0a0",
                             }}
                           ></div>
                           <div
                             style={{
-                              width: "60px",
-                              height: "60px",
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              width: "58px",
+                              height: "58px",
+                              border: "1px solid #a0a0a0",
+                              background: "#fff",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              boxShadow:
-                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
                             }}
                           >
                             <img
@@ -653,28 +646,26 @@ const CreateSchedule = () => {
                           </div>
                           <div
                             style={{
-                              width: "55px",
+                              width: "56px",
                               height: "56px",
-                              background: "rgba(255, 49, 49, 0.16)",
+                              background: "#dfdfdf",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              border: "3px solid #ff3131",
+                              border: "1px solid #a0a0a0",
                             }}
                           ></div>
                           <div
                             style={{
-                              width: "60px",
-                              height: "60px",
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #077bff 100%)",
+                              width: "58px",
+                              height: "58px",
+                              border: "1px solid #a0a0a0",
+                              background: "#fff",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "10px",
-                              boxShadow:
-                                "0px 8px 24px rgba(0, 123, 255, 0.25), 0px 0px 0px 1px rgba(0, 123, 255, 0.05)",
                             }}
                           >
                             <img
