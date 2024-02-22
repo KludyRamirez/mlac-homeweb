@@ -16,11 +16,12 @@ import {
   BsRecycle,
   BsRepeat,
 } from "react-icons/bs";
-import mail from "../../../images/mail.png";
-import crown from "../../../images/crowncolor.png";
+import calendar from "../../../images/calendar.png";
+import chat from "../../../images/chat.png";
+import chart from "../../../images/chart.png";
+import folder from "../../../images/folder.png";
 import setting from "../../../images/setting.png";
-import flash from "../../../images/flash.png";
-import bookmark from "../../../images/bookmark.png";
+import moon from "../../../images/moon.png";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -540,16 +541,16 @@ const CreateSchedule = () => {
                             style={{
                               width: "58px",
                               height: "58px",
-                              border: "1px solid #a0a0a0",
-                              background: "#fff",
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              borderRadius: "10px",
+                              borderRadius: "12px",
                             }}
                           >
                             <img
-                              src={crown}
+                              src={folder}
                               alt=""
                               style={{ width: "50px", height: "50px" }}
                             />
@@ -558,118 +559,122 @@ const CreateSchedule = () => {
                             style={{
                               width: "56px",
                               height: "56px",
-                              background: "#dfdfdf",
+                              background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              borderRadius: "10px",
-                              border: "1px solid #a0a0a0",
+                              borderRadius: "12px",
+                              border: "1px solid #b0b0b0",
                             }}
                           ></div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-                              border: "1px solid #a0a0a0",
-                              background: "#fff",
+
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              borderRadius: "10px",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <img
+                              src={chat}
+                              alt=""
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "56px",
+                              height: "56px",
+                              background: "#f5f3eb",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              border: "1px solid #b0b0b0",
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <img
+                              src={chart}
+                              alt=""
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "56px",
+                              height: "56px",
+                              background: "#f5f3eb",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              border: "1px solid #b0b0b0",
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <img
+                              src={calendar}
+                              alt=""
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "56px",
+                              height: "56px",
+                              background: "#f5f3eb",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              border: "1px solid #b0b0b0",
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+
+                              background:
+                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
                             }}
                           >
                             <img
                               src={setting}
-                              alt=""
-                              style={{ width: "50px", height: "50px" }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "56px",
-                              height: "56px",
-                              background: "#dfdfdf",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "10px",
-                              border: "1px solid #a0a0a0",
-                            }}
-                          ></div>
-                          <div
-                            style={{
-                              width: "58px",
-                              height: "58px",
-                              border: "1px solid #a0a0a0",
-                              background: "#fff",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "10px",
-                            }}
-                          >
-                            <img
-                              src={flash}
-                              alt=""
-                              style={{ width: "50px", height: "50px" }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "56px",
-                              height: "56px",
-                              background: "#dfdfdf",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "10px",
-                              border: "1px solid #a0a0a0",
-                            }}
-                          ></div>
-                          <div
-                            style={{
-                              width: "58px",
-                              height: "58px",
-                              border: "1px solid #a0a0a0",
-                              background: "#fff",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "10px",
-                            }}
-                          >
-                            <img
-                              src={bookmark}
-                              alt=""
-                              style={{ width: "50px", height: "50px" }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "56px",
-                              height: "56px",
-                              background: "#dfdfdf",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "10px",
-                              border: "1px solid #a0a0a0",
-                            }}
-                          ></div>
-                          <div
-                            style={{
-                              width: "58px",
-                              height: "58px",
-                              border: "1px solid #a0a0a0",
-                              background: "#fff",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "10px",
-                            }}
-                          >
-                            <img
-                              src={mail}
                               alt=""
                               style={{ width: "50px", height: "50px" }}
                             />
@@ -679,6 +684,7 @@ const CreateSchedule = () => {
                     </div>
                   </div>
                 )}
+
                 <div
                   style={{
                     color: "#606060",

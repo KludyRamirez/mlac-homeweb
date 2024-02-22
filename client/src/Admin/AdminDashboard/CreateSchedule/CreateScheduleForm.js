@@ -242,7 +242,7 @@ const CreateScheduleForm = ({
             width: "100%",
             display: "flex",
             justifyContent: "flex-start",
-            fontSize: "46px",
+            fontSize: "44px",
             fontWeight: "600",
             marginLeft: "-4px",
             marginTop: "-8px",
