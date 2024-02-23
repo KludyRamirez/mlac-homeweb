@@ -10,7 +10,6 @@ import {
   BsPencil,
   BsPeople,
   BsPersonArmsUp,
-  BsPersonCircle,
   BsQuestionCircle,
 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
@@ -20,6 +19,9 @@ import {
   FormControlLabel,
   FormControl,
 } from "@mui/material";
+
+import girl from "../../../images/girl.png";
+import boy from "../../../images/boy.png";
 
 const Flexer = styled("div")({
   display: "flex",
@@ -127,7 +129,7 @@ const NextDisabledButton = styled("button")({
 
 const InputFields = styled("input")({
   width: "100%",
-  background: "#fff",
+  background: "#f5f3eb",
   border: "none",
   borderRadius: "10px",
   height: "54px",
@@ -137,7 +139,7 @@ const InputFields = styled("input")({
   color: "#303030",
   position: "relative",
   fontFamily: "Poppins, sans-serif",
-  outline: "1px solid rgba(0, 0, 0, 0.24)",
+  outline: "1px solid rgba(0, 0, 0, 0.16)",
 
   "&:focus": {
     outline: "1px solid #606060",
@@ -154,7 +156,7 @@ const InputFields = styled("input")({
 const CustomSelect = styled("select")`
   cursor: pointer;
   width: 100%;
-  background: #fff;
+  background: #f5f3eb;
   border: none;
   border-radius: 10px;
   height: 54px;
@@ -164,7 +166,7 @@ const CustomSelect = styled("select")`
   font-family: "Poppins", sans-serif;
   color: #303030;
   appearance: none; /* Removes default dropdown arrow */
-  outline: 1px solid rgba(0, 0, 0, 0.24);
+  outline: 1px solid rgba(0, 0, 0, 0.16);
 
   &:focus {
     outline: 1px solid #606060;
@@ -267,7 +269,7 @@ const CreateScheduleForm = ({
               style={{
                 display: "flex",
                 justifyContent: "flex-start",
-                gap: "20px",
+                gap: "14px",
                 marginLeft: "12px",
               }}
             >
@@ -276,18 +278,18 @@ const CreateScheduleForm = ({
                   value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
                   control={<Radio id="stark" style={{ display: "none" }} />}
                   label={
-                    <div
+                    <img
+                      src={boy}
                       style={{
                         outline:
                           profilePic ===
                           "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
-                            ? "1px solid #606060"
-                            : "none",
+                            ? "1px solid #909090"
+                            : "1px solid rgba(0, 0, 0, 0.2)",
                         width: "64px",
                         height: "64px",
                         borderRadius: "14px",
-                        background:
-                          "linear-gradient(315deg, #606060 0%, #f1f1f1 74%)",
+                        background: "#f5f3eb",
                       }}
                     />
                   }
@@ -298,40 +300,18 @@ const CreateScheduleForm = ({
                   value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
                   control={<Radio id="stark" style={{ display: "none" }} />}
                   label={
-                    <div
+                    <img
+                      src={girl}
                       style={{
-                        outline:
+                        border:
                           profilePic ===
                           "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
-                            ? "1px solid #606060"
-                            : "none",
+                            ? "1px solid #909090"
+                            : "1px solid rgba(0, 0, 0, 0.2)",
                         width: "64px",
                         height: "64px",
                         borderRadius: "14px",
-                        background:
-                          "linear-gradient(315deg, #606060 0%, #f1f1f1 74%)",
-                      }}
-                    />
-                  }
-                />
-              </label>
-              <label htmlFor="stark" style={{ cursor: "pointer" }}>
-                <FormControlLabel
-                  value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
-                  control={<Radio id="stark" style={{ display: "none" }} />}
-                  label={
-                    <div
-                      style={{
-                        outline:
-                          profilePic ===
-                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/zqpjk4brscwi4voxopce.webp"
-                            ? "1px solid #606060"
-                            : "none",
-                        width: "64px",
-                        height: "64px",
-                        borderRadius: "14px",
-                        background:
-                          "linear-gradient(315deg, #606060 0%, #f1f1f1 74%)",
+                        background: "#f5f3eb",
                       }}
                     />
                   }

@@ -8,10 +8,9 @@ import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
 import AllSchedule from "../AllSchedule/AllSchedule";
 import { RiChatSmile3Line } from "react-icons/ri";
-import { IoStatsChart } from "react-icons/io5";
 import {
   BsAspectRatio,
-  BsBarChart,
+  BsBodyText,
   BsPencil,
   BsRecycle,
   BsRepeat,
@@ -20,21 +19,22 @@ import calendar from "../../../images/calendar.png";
 import chat from "../../../images/chat.png";
 import chart from "../../../images/chart.png";
 import folder from "../../../images/folder.png";
-import setting from "../../../images/setting.png";
-import moon from "../../../images/moon.png";
+import bell from "../../../images/bell.png";
+import video from "../../../images/video.png";
 
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
   justifyContent: "center",
-  backgroundColor: "#f5f3eb",
 });
 
 const CreateScheduleContainer = styled("div")({
   display: "flex",
   justifyContent: "center",
   width: "100%",
+  height: "100%",
+  backgroundColor: "#f5f3eb",
   "@media (max-width: 767px)": {
     overflow: "hidden",
     overflowY: "scroll",
@@ -44,8 +44,9 @@ const CreateScheduleContainer = styled("div")({
 
 const Flexer = styled("div")({
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "center",
   alignItems: "flex-start",
+  gap: "72px",
   width: "100%",
   flexWrap: "wrap",
   padding: "60px 60px 0px 60px",
@@ -458,7 +459,7 @@ const CreateSchedule = () => {
                   >
                     <DobotCon>
                       <span>Statistics</span>
-                      <BsBarChart style={{ fontSize: "20px" }} />
+                      <BsBodyText style={{ fontSize: "20px" }} />
                     </DobotCon>
                     <DobotCon>
                       <span>Dobot</span>
@@ -541,8 +542,8 @@ const CreateSchedule = () => {
                             style={{
                               width: "58px",
                               height: "58px",
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
+                              background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -552,59 +553,15 @@ const CreateSchedule = () => {
                             <img
                               src={folder}
                               alt=""
-                              style={{ width: "50px", height: "50px" }}
+                              style={{ width: "56px", height: "56px" }}
                             />
                           </div>
                           <div
                             style={{
-                              width: "56px",
-                              height: "56px",
-                              background: "#f5f3eb",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "12px",
-                              border: "1px solid #b0b0b0",
-                            }}
-                          ></div>
-                          <div
-                            style={{
                               width: "58px",
                               height: "58px",
-
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "12px",
-                            }}
-                          >
-                            <img
-                              src={chat}
-                              alt=""
-                              style={{ width: "50px", height: "50px" }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "56px",
-                              height: "56px",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
                               background: "#f5f3eb",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "12px",
-                              border: "1px solid #b0b0b0",
-                            }}
-                          ></div>
-                          <div
-                            style={{
-                              width: "58px",
-                              height: "58px",
-
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -614,28 +571,33 @@ const CreateSchedule = () => {
                             <img
                               src={chart}
                               alt=""
-                              style={{ width: "50px", height: "50px" }}
+                              style={{ width: "56px", height: "56px" }}
                             />
                           </div>
                           <div
                             style={{
-                              width: "56px",
-                              height: "56px",
+                              width: "58px",
+                              height: "58px",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
                               background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
-                              border: "1px solid #b0b0b0",
                             }}
-                          ></div>
+                          >
+                            <img
+                              src={chat}
+                              alt=""
+                              style={{ width: "56px", height: "56px" }}
+                            />
+                          </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
+                              background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -645,28 +607,15 @@ const CreateSchedule = () => {
                             <img
                               src={calendar}
                               alt=""
-                              style={{ width: "50px", height: "50px" }}
+                              style={{ width: "56px", height: "56px" }}
                             />
                           </div>
                           <div
                             style={{
-                              width: "56px",
-                              height: "56px",
-                              background: "#f5f3eb",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "12px",
-                              border: "1px solid #b0b0b0",
-                            }}
-                          ></div>
-                          <div
-                            style={{
                               width: "58px",
                               height: "58px",
-
-                              background:
-                                "radial-gradient(100% 100% at 0% 0, #07bbff 0, #007bff 100%)",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
+                              background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -674,11 +623,68 @@ const CreateSchedule = () => {
                             }}
                           >
                             <img
-                              src={setting}
+                              src={video}
                               alt=""
-                              style={{ width: "50px", height: "50px" }}
+                              style={{ width: "56px", height: "56px" }}
                             />
                           </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
+                              background: "#f5f3eb",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <img
+                              src={bell}
+                              alt=""
+                              style={{ width: "56px", height: "56px" }}
+                            />
+                          </div>
+
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "#f5f3eb",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
+                            }}
+                          ></div>
+
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "#f5f3eb",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
+                            }}
+                          ></div>
+
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "#f5f3eb",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              border: "1px solid rgba(0, 0, 0, 0.2)",
+                            }}
+                          ></div>
                         </div>
                       </div>
                     </div>
