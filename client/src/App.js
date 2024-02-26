@@ -28,6 +28,7 @@ import AccountSettings from "./Admin/AdminDashboard/AccountSettings/AccountSetti
 import AlertNotification from "./shared/components/AlertNotification";
 import Dashboard from "./Dashboard/Dashboard";
 import PasswordReset from "./Admin/AdminDashboard/AccountSettings/PasswordReset";
+import PersistLogin from "./authPages/PersistLogin";
 
 function App() {
   return (
@@ -50,9 +51,11 @@ function App() {
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
+
           <Route exact path="/login">
             <LoginPage />
           </Route>
+
           <Route exact path="/chat">
             <Dashboard />
           </Route>

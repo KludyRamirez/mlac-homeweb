@@ -58,6 +58,17 @@ export const waitlist = async (data) => {
   }
 };
 
+export const refreshToken = async (data) => {
+  try {
+    return await apiClient.get("/refresh", data);
+  } catch (exception) {
+    return {
+      error: true,
+      exception,
+    };
+  }
+};
+
 // secure routes
 
 export const sendFriendInvitation = async (data) => {

@@ -288,8 +288,8 @@ const CreateScheduleForm = ({
                             : "1px solid rgba(0, 0, 0, 0.2)",
                         width: "64px",
                         height: "64px",
-                        borderRadius: "14px",
-                        background: "#f5f3eb",
+                        borderRadius: "50%",
+                        background: "#fff",
                       }}
                     />
                   }
@@ -310,8 +310,8 @@ const CreateScheduleForm = ({
                             : "1px solid rgba(0, 0, 0, 0.2)",
                         width: "64px",
                         height: "64px",
-                        borderRadius: "14px",
-                        background: "#f5f3eb",
+                        borderRadius: "50%",
+                        background: "#fff",
                       }}
                     />
                   }
@@ -327,7 +327,7 @@ const CreateScheduleForm = ({
               alignItems: "flex-start",
               gap: "12px",
               width: "100%",
-              paddingTop: "24px",
+              paddingTop: "18px",
             }}
           >
             <InputTitles>

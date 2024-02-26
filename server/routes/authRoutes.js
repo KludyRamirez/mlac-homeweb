@@ -3,9 +3,6 @@ const router = express.Router();
 const authControllers = require("../controllers/auth/authControllers");
 const Joi = require("joi");
 const validator = require("express-joi-validation").createValidator({});
-const { verifyToken } = require("../middleware/auth");
-
-const auth = verifyToken;
 
 // backend validation middleware
 
@@ -49,5 +46,7 @@ router.post(
   validator.body(loginSchema), // backend validation middleware
   authControllers.controllers.postLogin
 );
+
+router.get("/refresh", authControllers.controllers.getRefreshToken);
 
 module.exports = router;

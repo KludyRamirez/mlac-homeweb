@@ -9,7 +9,6 @@ import Wednesday from "../Days/Wednesday";
 import Friday from "../Days/Friday";
 import Thursday from "../Days/Thursday";
 import Saturday from "../Days/Saturday";
-import TopBar from "../AppBar/AppBar";
 import { connect } from "react-redux";
 import { getActions } from "../../../store/actions/authActions";
 

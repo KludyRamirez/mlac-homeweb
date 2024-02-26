@@ -22,6 +22,9 @@ import folder from "../../../images/folder.png";
 import bell from "../../../images/bell.png";
 import video from "../../../images/video.png";
 
+import { connect } from "react-redux";
+import { getActions } from "../../../store/actions/authActions";
+
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
@@ -542,7 +545,7 @@ const CreateSchedule = () => {
                             style={{
                               width: "58px",
                               height: "58px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
+
                               background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
@@ -553,14 +556,14 @@ const CreateSchedule = () => {
                             <img
                               src={folder}
                               alt=""
-                              style={{ width: "56px", height: "56px" }}
+                              style={{ width: "46px", height: "46px" }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
+
                               background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
@@ -571,14 +574,14 @@ const CreateSchedule = () => {
                             <img
                               src={chart}
                               alt=""
-                              style={{ width: "56px", height: "56px" }}
+                              style={{ width: "46px", height: "46px" }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
+
                               background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
@@ -589,14 +592,14 @@ const CreateSchedule = () => {
                             <img
                               src={chat}
                               alt=""
-                              style={{ width: "56px", height: "56px" }}
+                              style={{ width: "46px", height: "46px" }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
+
                               background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
@@ -607,14 +610,14 @@ const CreateSchedule = () => {
                             <img
                               src={calendar}
                               alt=""
-                              style={{ width: "56px", height: "56px" }}
+                              style={{ width: "46px", height: "46px" }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
+
                               background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
@@ -625,14 +628,14 @@ const CreateSchedule = () => {
                             <img
                               src={video}
                               alt=""
-                              style={{ width: "56px", height: "56px" }}
+                              style={{ width: "46px", height: "46px" }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
+
                               background: "#f5f3eb",
                               display: "flex",
                               justifyContent: "center",
@@ -643,7 +646,7 @@ const CreateSchedule = () => {
                             <img
                               src={bell}
                               alt=""
-                              style={{ width: "56px", height: "56px" }}
+                              style={{ width: "46px", height: "46px" }}
                             />
                           </div>
 
@@ -656,7 +659,6 @@ const CreateSchedule = () => {
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
                             }}
                           ></div>
 
@@ -669,7 +671,6 @@ const CreateSchedule = () => {
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
                             }}
                           ></div>
 
@@ -682,7 +683,6 @@ const CreateSchedule = () => {
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
-                              border: "1px solid rgba(0, 0, 0, 0.2)",
                             }}
                           ></div>
                         </div>
@@ -735,4 +735,10 @@ const CreateSchedule = () => {
   );
 };
 
-export default CreateSchedule;
+const mapActionsToProps = (dispatch) => {
+  return {
+    ...getActions(dispatch),
+  };
+};
+
+export default connect(null, mapActionsToProps)(CreateSchedule);
