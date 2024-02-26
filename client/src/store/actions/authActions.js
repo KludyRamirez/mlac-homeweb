@@ -13,7 +13,6 @@ export const getActions = (dispatch) => {
     waitlist: (userDetails, history) =>
       dispatch(waitlist(userDetails, history)),
     setUserDetails: (userDetails) => dispatch(setUserDetails(userDetails)),
-    refreshToken: (userDetails) => dispatch(refreshToken(userDetails)),
   };
 };
 
@@ -62,23 +61,6 @@ const waitlist = (userDetails, history) => {
     } else {
       dispatch(openAlertMessage("Details Successfully Submitted!"));
       history.push("/waitlist");
-    }
-  };
-};
-
-const refreshToken = (userDetails) => {
-  return async (dispatch) => {
-    try {
-      const response = await api.refreshToken(userDetails);
-      if (!response.error) {
-        const { userDetails } = response.data;
-        localStorage.setItem("user", JSON.stringify(userDetails));
-        dispatch(setUserDetails(userDetails));
-      } else {
-        console.error("Token refresh failed:", response.error);
-      }
-    } catch (error) {
-      console.error("Token refresh failed:", error);
     }
   };
 };

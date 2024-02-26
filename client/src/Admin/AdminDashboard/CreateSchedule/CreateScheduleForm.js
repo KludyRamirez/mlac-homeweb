@@ -1,7 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import Tilt from "react-parallax-tilt";
 import {
   BsClock,
   BsHourglassSplit,

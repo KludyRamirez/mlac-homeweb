@@ -47,6 +47,4 @@ router.post(
   authControllers.controllers.postLogin
 );
 
-router.get("/refresh", authControllers.controllers.getRefreshToken);
-
 module.exports = router;
