@@ -310,8 +310,6 @@ const hashWaitlistUserPassword = async (req, res) => {
       // Assuming 'schedule' is an object with a 'schedule' property that contains a string
       const slicedSchedule = schedule.parent.split(" ").pop();
 
-      console.log("----------------------->", slicedSchedule);
-
       const user = await User.findOne({
         username: slicedSchedule,
       });
@@ -376,7 +374,8 @@ const changeEmail = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.email = mail; // Assuming 'mail' holds the new email address
+    user.email = mail;
+
     await user.save();
 
     return res
@@ -384,6 +383,49 @@ const changeEmail = async (req, res) => {
       .json({ message: "Email updated successfully", email: user.email });
   } catch (error) {
     return res.status(500).json({ message: "Error updating email", error });
+  }
+};
+
+const forgotPassword = async (req, res) => {
+  const { mail } = req.body;
+
+  try {
+    const user = await User.findOne({ mail });
+
+    if (!user) {
+      return res.send({ Status: "User not existed" });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1d",
+    });
+
+    const transporter = nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: user.mail,
+      subject: "Reset Password Link",
+      text: `${process.env.APP_BASE_URL}/reset_password/${user._id}/${token}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.send({ Status: "Failed to send reset email" });
+      } else {
+        return res.send({ Status: "Success" });
+      }
+    });
+  } catch (error) {
+    console.error("Error in forgotPassword:", error);
+    return res.status(500).send({ Status: "Internal Server Error" });
   }
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom;";
 import axios from "axios";
 
 function PasswordReset() {
@@ -7,31 +8,38 @@ function PasswordReset() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post(
+      const res = await axios.post(
         `${process.env.REACT_APP_API}/forgot-password`,
         { mail }
       );
-      setMessage(response.data.message);
-      window.location = `/reset-password?token=${response.data.resetToken}`;
+
+      if (res.data.Status === "Success") {
+        setMessage(res.data.message);
+        navigate("/login");
+      } else {
+        console.log("Unexpected res status:", res.data.Status);
+      }
     } catch (error) {
+      console.error("Failed to send reset email.", error);
       setMessage("Failed to send reset email.");
     }
   };
 
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="Enter your email"
+          placeholder="example@gmail.com"
           value={mail}
           onChange={(e) => setMail(e.target.value)}
         />
         <button type="submit">Reset Password</button>
       </form>
       {message && <p>{message}</p>}
-    </div>
+    </>
   );
 }
 
