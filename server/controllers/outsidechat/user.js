@@ -454,7 +454,10 @@ module.exports = {
   hashWaitlistUserPassword,
 
   // current user
-
   changePassword,
   changeEmail,
+
+  //forgot password
+
+  forgotPassword,
 };

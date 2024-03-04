@@ -164,5 +164,7 @@ exports.controllers = {
   //current user
   changePassword,
   changeEmail,
+
+  //forgot password
   forgotPassword,
 };

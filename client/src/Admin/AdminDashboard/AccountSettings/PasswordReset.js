@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom;";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 function PasswordReset() {
   const [mail, setMail] = useState("");
   const [message, setMessage] = useState("");
+
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ function PasswordReset() {
 
       if (res.data.Status === "Success") {
         setMessage(res.data.message);
-        navigate("/login");
+        history.push("/login");
       } else {
         console.log("Unexpected res status:", res.data.Status);
       }

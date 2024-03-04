@@ -7,20 +7,24 @@ import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import CreateScheduleForm from "./CreateScheduleForm";
 import AllSchedule from "../AllSchedule/AllSchedule";
-import { RiChatSmile3Line } from "react-icons/ri";
 import {
   BsAspectRatio,
-  BsBodyText,
+  BsCalendar2MonthFill,
+  BsChatSquareQuoteFill,
+  BsCloudHaze2Fill,
+  BsCloudMoonFill,
+  BsFloppy2,
+  BsHandIndexThumbFill,
+  BsKanbanFill,
+  BsLifePreserver,
+  BsMegaphoneFill,
+  BsPenFill,
   BsPencil,
   BsRecycle,
   BsRepeat,
 } from "react-icons/bs";
-import calendar from "../../../images/calendar.png";
-import chat from "../../../images/chat.png";
-import chart from "../../../images/chart.png";
-import folder from "../../../images/folder.png";
-import bell from "../../../images/bell.png";
-import video from "../../../images/video.png";
+
+import { MdOutlineAreaChart } from "react-icons/md";
 
 import { connect } from "react-redux";
 import { getActions } from "../../../store/actions/authActions";
@@ -47,13 +51,11 @@ const CreateScheduleContainer = styled("div")({
 
 const Flexer = styled("div")({
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "space-between",
   alignItems: "flex-start",
-  gap: "72px",
   width: "100%",
   flexWrap: "wrap",
-  padding: "60px 60px 0px 60px",
-
+  padding: "50px 80px 0px 80px",
   "@media (max-width: 767px)": {
     padding: "0px 8px 0px 8px",
   },
@@ -78,11 +80,11 @@ const FormCon2 = styled("div")({
 
 const DobotCon = styled("div")({
   fontWeight: "600",
-  fontSize: "18px",
+  fontSize: "16px",
   display: "flex",
   padding: "10px 14px",
   alignItems: "center",
-  gap: "8px",
+  gap: "12px",
   cursor: "pointer",
   outline: "1px solid #909090",
   color: "#606060",
@@ -252,7 +254,6 @@ const CreateSchedule = () => {
                     letterSpacing: "-3px",
                     fontSize: "78px",
                     fontWeight: "600",
-                    color: "#606060",
                   }}
                 >
                   Permanent
@@ -301,7 +302,7 @@ const CreateSchedule = () => {
                   <div
                     style={{
                       display: "flex",
-                      width: "100%",
+                      width: "70%",
                       alignItems: "center",
                       gap: "24px",
                       background: "transparent",
@@ -317,7 +318,7 @@ const CreateSchedule = () => {
                         alignItems: "center",
                         gap: "12px",
                         fontSize: "18px",
-                        fontWeight: "700",
+                        fontWeight: "500",
                         outline:
                           activeInfo === "Editable"
                             ? "1px solid #909090"
@@ -329,20 +330,12 @@ const CreateSchedule = () => {
                     >
                       <span
                         style={{
-                          backgroundImage:
-                            "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-                          backgroundSize: "100%",
-                          backgroundRepeat: "repeat",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          MozBackgroundClip: "text",
-                          MozTextFillColor: "transparent",
-                          textShadow: "none",
+                          color: "#606060",
                         }}
                       >
                         Editable
                       </span>
-                      <BsPencil />
+                      <BsPencil style={{ color: "#606060" }} />
                     </div>
                     <div
                       onClick={() => handleInfoChange("Flexible")}
@@ -353,7 +346,7 @@ const CreateSchedule = () => {
                         alignItems: "center",
                         gap: "12px",
                         fontSize: "18px",
-                        fontWeight: "700",
+                        fontWeight: "500",
                         outline:
                           activeInfo === "Flexible"
                             ? "1px solid #909090"
@@ -365,20 +358,16 @@ const CreateSchedule = () => {
                     >
                       <span
                         style={{
-                          backgroundImage:
-                            "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-                          backgroundSize: "100%",
-                          backgroundRepeat: "repeat",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          MozBackgroundClip: "text",
-                          MozTextFillColor: "transparent",
-                          textShadow: "none",
+                          color: "#606060",
                         }}
                       >
                         Flexible
                       </span>
-                      <BsAspectRatio />
+                      <BsAspectRatio
+                        style={{
+                          color: "#606060",
+                        }}
+                      />
                     </div>
                     <div
                       onClick={() => handleInfoChange("Recurring")}
@@ -389,7 +378,7 @@ const CreateSchedule = () => {
                         alignItems: "center",
                         gap: "12px",
                         fontSize: "18px",
-                        fontWeight: "700",
+                        fontWeight: "500",
                         outline:
                           activeInfo === "Recurring"
                             ? "1px solid #909090"
@@ -401,20 +390,16 @@ const CreateSchedule = () => {
                     >
                       <span
                         style={{
-                          backgroundImage:
-                            "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-                          backgroundSize: "100%",
-                          backgroundRepeat: "repeat",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          MozBackgroundClip: "text",
-                          MozTextFillColor: "transparent",
-                          textShadow: "none",
+                          color: "#606060",
                         }}
                       >
                         Recurring
                       </span>
-                      <BsRepeat />
+                      <BsRepeat
+                        style={{
+                          color: "#606060",
+                        }}
+                      />
                     </div>
                     <div
                       onClick={() => handleInfoChange("Reusable")}
@@ -425,7 +410,7 @@ const CreateSchedule = () => {
                         alignItems: "center",
                         gap: "12px",
                         fontSize: "18px",
-                        fontWeight: "700",
+                        fontWeight: "500",
                         outline:
                           activeInfo === "Reusable"
                             ? "1px solid #909090"
@@ -437,20 +422,16 @@ const CreateSchedule = () => {
                     >
                       <span
                         style={{
-                          backgroundImage:
-                            "radial-gradient(100% 100% at 0% 0, #007bff 0, #122c8e 100%)",
-                          backgroundSize: "100%",
-                          backgroundRepeat: "repeat",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          MozBackgroundClip: "text",
-                          MozTextFillColor: "transparent",
-                          textShadow: "none",
+                          color: "#606060",
                         }}
                       >
                         Reusable
                       </span>
-                      <BsRecycle />
+                      <BsRecycle
+                        style={{
+                          color: "#606060",
+                        }}
+                      />
                     </div>
                   </div>
 
@@ -458,15 +439,19 @@ const CreateSchedule = () => {
                     style={{
                       display: "flex",
                       gap: "10px",
+                      width: "30%",
+                      justifyContent: "flex-end",
                     }}
                   >
                     <DobotCon>
+                      <MdOutlineAreaChart style={{ fontSize: "24px" }} />
                       <span>Statistics</span>
-                      <BsBodyText style={{ fontSize: "20px" }} />
                     </DobotCon>
                     <DobotCon>
-                      <span>Dobot</span>
-                      <RiChatSmile3Line style={{ fontSize: "24px" }} />
+                      <BsCloudHaze2Fill
+                        style={{ fontSize: "24px", marginTop: "-4px" }}
+                      />
+                      <span>Weather</span>
                     </DobotCon>
                   </div>
                 </div>
@@ -543,148 +528,170 @@ const CreateSchedule = () => {
                         >
                           <div
                             style={{
-                              width: "58px",
-                              height: "58px",
-
-                              background: "#f5f3eb",
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.33)",
                             }}
                           >
-                            <img
-                              src={folder}
-                              alt=""
-                              style={{ width: "46px", height: "46px" }}
+                            <BsKanbanFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.33)",
+                              }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-
-                              background: "#f5f3eb",
+                              background: "rgba(0, 0, 0, 0.33)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
                             }}
                           >
-                            <img
-                              src={chart}
-                              alt=""
-                              style={{ width: "46px", height: "46px" }}
+                            <BsPenFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.33)",
+                            }}
+                          >
+                            <BsMegaphoneFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.33)",
+                              }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-
-                              background: "#f5f3eb",
+                              background: "rgba(0, 0, 0, 0.33)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
                             }}
                           >
-                            <img
-                              src={chat}
-                              alt=""
-                              style={{ width: "46px", height: "46px" }}
+                            <BsFloppy2
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-
-                              background: "#f5f3eb",
+                              background: "rgba(0, 0, 0, 0.33)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
                             }}
                           >
-                            <img
-                              src={calendar}
-                              alt=""
-                              style={{ width: "46px", height: "46px" }}
+                            <BsHandIndexThumbFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.33)",
+                            }}
+                          >
+                            <BsLifePreserver
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.33)",
+                              }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-
-                              background: "#f5f3eb",
+                              background: "rgba(0, 0, 0, 0.33)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
                             }}
                           >
-                            <img
-                              src={video}
-                              alt=""
-                              style={{ width: "46px", height: "46px" }}
+                            <BsCalendar2MonthFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.33)",
+                            }}
+                          >
+                            <BsChatSquareQuoteFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.33)",
+                              }}
                             />
                           </div>
                           <div
                             style={{
                               width: "58px",
                               height: "58px",
-
-                              background: "#f5f3eb",
+                              background: "rgba(0, 0, 0, 0.33)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
                             }}
                           >
-                            <img
-                              src={bell}
-                              alt=""
-                              style={{ width: "46px", height: "46px" }}
+                            <BsCloudMoonFill
+                              style={{
+                                fontSize: "32px",
+                                color: "white",
+                              }}
                             />
                           </div>
-
-                          <div
-                            style={{
-                              width: "58px",
-                              height: "58px",
-                              background: "#f5f3eb",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "12px",
-                            }}
-                          ></div>
-
-                          <div
-                            style={{
-                              width: "58px",
-                              height: "58px",
-                              background: "#f5f3eb",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "12px",
-                            }}
-                          ></div>
-
-                          <div
-                            style={{
-                              width: "58px",
-                              height: "58px",
-                              background: "#f5f3eb",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: "12px",
-                            }}
-                          ></div>
                         </div>
                       </div>
                     </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import {
+  BsCamera,
   BsClock,
   BsHourglassSplit,
   BsKeyboard,
@@ -12,12 +13,7 @@ import {
   BsQuestionCircle,
 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
-import {
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-} from "@mui/material";
+import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
 
 import girl from "../../../images/girl.png";
 import boy from "../../../images/boy.png";
@@ -27,8 +23,8 @@ const Flexer = styled("div")({
   flexDirection: "column",
   alignItems: "flex-start",
   borderRadius: "32px",
+  outline: "1px solid rgba(0, 0, 0, 0.16)",
   background: "#f7f7f7",
-  outline: "1px solid #c0c0c0",
   padding: "40px",
   "@media (max-width: 767px)": {
     padding: "40px 20px",
@@ -52,7 +48,7 @@ const FilterButton = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: "8px",
+  gap: "10px",
   width: "94px",
   height: "48px",
   background: "#fff",
@@ -65,7 +61,7 @@ const FilterButton = styled("div")({
   WebkitUserSelect: "none",
   touchAction: "manipulation",
   willChange: "box-shadow, transform",
-  outline: "1px solid rgba(0, 0, 0, 0.26)",
+  outline: "1px solid rgba(0, 0, 0, 0.16)",
 
   transition:
     "box-shadow .15s, transform .15s, width 0.2s ease-in, height 0.2s ease-in, color 0.16s ease-in-out",
@@ -118,24 +114,24 @@ const NextDisabledButton = styled("button")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: "6px",
+  gap: "10px",
   width: "110px",
   height: "48px",
   borderRadius: "48px",
   cursor: "pointer",
-  outline: "1px solid rgba(0, 0, 0, 0.26)",
+  outline: "1px solid rgba(0, 0, 0, 0.16)",
 });
 
 const InputFields = styled("input")({
   width: "100%",
-  background: "#f5f3eb",
+  background: "#fff",
   border: "none",
   borderRadius: "10px",
   height: "54px",
   padding: "0px 16px 0px 16px",
   fontSize: "16px",
   fontWeight: "500",
-  color: "#303030",
+  color: "#606060",
   position: "relative",
   fontFamily: "Poppins, sans-serif",
   outline: "1px solid rgba(0, 0, 0, 0.16)",
@@ -155,7 +151,7 @@ const InputFields = styled("input")({
 const CustomSelect = styled("select")`
   cursor: pointer;
   width: 100%;
-  background: #f5f3eb;
+  background: #fff;
   border: none;
   border-radius: 10px;
   height: 54px;
@@ -163,7 +159,7 @@ const CustomSelect = styled("select")`
   font-size: 16px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
-  color: #303030;
+  color: #606060;
   appearance: none; /* Removes default dropdown arrow */
   outline: 1px solid rgba(0, 0, 0, 0.16);
 
@@ -180,8 +176,8 @@ const CustomSelect = styled("select")`
 const InputTitles = styled("div")({
   width: "100%",
   height: "20px",
-  fontSize: "18px",
-  color: "#303030",
+  fontSize: "16px",
+  color: "#606060",
   fontWeight: "500",
   display: "flex",
   justifyContent: "space-between",
@@ -244,7 +240,8 @@ const CreateScheduleForm = ({
             display: "flex",
             justifyContent: "flex-start",
             fontSize: "44px",
-            fontWeight: "600",
+            fontWeight: "500",
+            letterSpacing: "-2px",
             marginLeft: "-4px",
             marginTop: "-8px",
           }}
@@ -254,8 +251,7 @@ const CreateScheduleForm = ({
 
         <FormContainer>
           <InputTitles sx={{ paddingTop: "22px" }}>
-            Photo{" "}
-            <BsPersonArmsUp style={{ fontSize: "16px", color: "#8f8f8f" }} />
+            Photo <BsCamera style={{ fontSize: "16px", color: "#8f8f8f" }} />
           </InputTitles>
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
@@ -482,11 +478,12 @@ const CreateScheduleForm = ({
             padding: "42px 0 0 0",
           }}
         >
-          <FilterButton>
-            FAQ <BsQuestionCircle style={{ fontSize: "18px" }} />
+          <FilterButton sx={{ gap: "12px" }}>
+            <BsQuestionCircle style={{ fontSize: "18px" }} /> FAQ
           </FilterButton>
           {!nameOfStudent || !studentType || !schedType || !day ? (
             <NextDisabledButton>
+              <FaPlus style={{ color: "#909090", fontSize: "16px" }} />
               <span
                 style={{
                   fontSize: "16px",
@@ -495,7 +492,6 @@ const CreateScheduleForm = ({
               >
                 Submit
               </span>
-              <FaPlus style={{ color: "#909090", fontSize: "16px" }} />
             </NextDisabledButton>
           ) : (
             <NextRoundButton onClick={handleSubmit}>
@@ -547,14 +543,14 @@ const CreateScheduleForm = ({
         >
           <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
             <FilterButton>
-              <span>Dyad</span>
               <BsClock style={{ fontSize: "18px" }} />
+              <span>Dyad</span>
             </FilterButton>
           </Link>
           <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
             <FilterButton>
-              <span>Solo</span>
               <BsHourglassSplit style={{ fontSize: "18px" }} />
+              <span>Solo</span>
             </FilterButton>
           </Link>
         </div>
