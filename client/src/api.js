@@ -6,28 +6,9 @@ const apiClient = axios.create({
   timeout: 1000,
 });
 
-apiClient.interceptors.request.use(
-  (config) => {
-    const userDetails = localStorage.getItem("user");
-
-    if (userDetails) {
-      const token = JSON.parse(userDetails).token;
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-  },
-
-  (err) => {
-    return Promise.reject(err);
-  }
-);
-
-//public routes
-
 export const login = async (data) => {
   try {
-    return await apiClient.post("/auth/login", data);
+    return await apiClient.post("/login", data);
   } catch (exception) {
     return {
       error: true,
@@ -38,7 +19,7 @@ export const login = async (data) => {
 
 export const register = async (data) => {
   try {
-    return await apiClient.post("/auth/register", data);
+    return await apiClient.post("/register", data);
   } catch (exception) {
     return {
       error: true,
@@ -49,7 +30,7 @@ export const register = async (data) => {
 
 export const waitlist = async (data) => {
   try {
-    return await apiClient.post("/auth/waitlist", data);
+    return await apiClient.post("/waitlist", data);
   } catch (exception) {
     return {
       error: true,

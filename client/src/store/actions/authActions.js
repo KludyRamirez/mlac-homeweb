@@ -45,7 +45,7 @@ const register = (userDetails, history) => {
     if (response.error) {
       dispatch(openAlertMessage(response?.exception?.response?.data));
     } else {
-      dispatch(openAlertMessage("Details Successfully Submitted!"));
+      dispatch(openAlertMessage("Registered Sucessfully!"));
       history.push("/timetable");
     }
   };

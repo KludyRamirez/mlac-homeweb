@@ -24,7 +24,7 @@ import {
   BsRepeat,
 } from "react-icons/bs";
 
-import { MdOutlineAreaChart } from "react-icons/md";
+import { FaChartPie } from "react-icons/fa";
 
 import { connect } from "react-redux";
 import { getActions } from "../../../store/actions/authActions";
@@ -82,7 +82,7 @@ const DobotCon = styled("div")({
   fontWeight: "600",
   fontSize: "16px",
   display: "flex",
-  padding: "10px 14px",
+  padding: "10px 16px",
   alignItems: "center",
   gap: "12px",
   cursor: "pointer",
@@ -119,14 +119,15 @@ const initialState = {
   studentTypes: ["Solo", "Dyad"],
   studentType: "",
   timings: [
-    "8 AM to 9 AM",
-    "9 AM to 10 AM",
-    "10 AM to 11 AM",
-    "11 AM to 12 NN",
-    "1 PM to 2 PM",
-    "2 PM to 3 PM",
-    "3 PM to 4 PM",
-    "4 PM to 5 PM",
+    "8:00 AM - 9:00 AM",
+    "9:00 AM - 10:00 AM",
+    "10:00 AM - 11:00 AM",
+    "11:00 AM - 12:00 NN",
+    "12:00 NN - 1:00 PM",
+    "1:00 PM - 2:00 PM",
+    "2:00 PM - 3:00 PM",
+    "3:00 PM - 4:00 PM",
+    "4:00 PM - 5:00 PM",
   ],
   timing: "",
   notifLocator: "",
@@ -444,12 +445,22 @@ const CreateSchedule = () => {
                     }}
                   >
                     <DobotCon>
-                      <MdOutlineAreaChart style={{ fontSize: "24px" }} />
+                      <FaChartPie
+                        style={{
+                          fontSize: "22px",
+                          marginTop: "-2px",
+                          color: "rgba(0, 0, 0, 0.33)",
+                        }}
+                      />
                       <span>Statistics</span>
                     </DobotCon>
                     <DobotCon>
                       <BsCloudHaze2Fill
-                        style={{ fontSize: "24px", marginTop: "-4px" }}
+                        style={{
+                          fontSize: "24px",
+                          marginTop: "-2px",
+                          color: "rgba(0, 0, 0, 0.33)",
+                        }}
                       />
                       <span>Weather</span>
                     </DobotCon>
@@ -535,13 +546,13 @@ const CreateSchedule = () => {
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
-                              outline: "1px solid rgba(0, 0, 0, 0.33)",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
                             }}
                           >
                             <BsKanbanFill
                               style={{
                                 fontSize: "30px",
-                                color: "rgba(0, 0, 0, 0.33)",
+                                color: "rgba(0, 0, 0, 0.3)",
                               }}
                             />
                           </div>
@@ -549,7 +560,7 @@ const CreateSchedule = () => {
                             style={{
                               width: "58px",
                               height: "58px",
-                              background: "rgba(0, 0, 0, 0.33)",
+                              background: "rgba(0, 0, 0, 0.3)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -572,13 +583,13 @@ const CreateSchedule = () => {
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
-                              outline: "1px solid rgba(0, 0, 0, 0.33)",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
                             }}
                           >
                             <BsMegaphoneFill
                               style={{
                                 fontSize: "30px",
-                                color: "rgba(0, 0, 0, 0.33)",
+                                color: "rgba(0, 0, 0, 0.3)",
                               }}
                             />
                           </div>
@@ -586,7 +597,7 @@ const CreateSchedule = () => {
                             style={{
                               width: "58px",
                               height: "58px",
-                              background: "rgba(0, 0, 0, 0.33)",
+                              background: "rgba(0, 0, 0, 0.3)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -604,7 +615,7 @@ const CreateSchedule = () => {
                             style={{
                               width: "58px",
                               height: "58px",
-                              background: "rgba(0, 0, 0, 0.33)",
+                              background: "rgba(0, 0, 0, 0.3)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -627,13 +638,13 @@ const CreateSchedule = () => {
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
-                              outline: "1px solid rgba(0, 0, 0, 0.33)",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
                             }}
                           >
                             <BsLifePreserver
                               style={{
                                 fontSize: "30px",
-                                color: "rgba(0, 0, 0, 0.33)",
+                                color: "rgba(0, 0, 0, 0.3)",
                               }}
                             />
                           </div>
@@ -641,7 +652,7 @@ const CreateSchedule = () => {
                             style={{
                               width: "58px",
                               height: "58px",
-                              background: "rgba(0, 0, 0, 0.33)",
+                              background: "rgba(0, 0, 0, 0.3)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -664,13 +675,13 @@ const CreateSchedule = () => {
                               justifyContent: "center",
                               alignItems: "center",
                               borderRadius: "12px",
-                              outline: "1px solid rgba(0, 0, 0, 0.33)",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
                             }}
                           >
                             <BsChatSquareQuoteFill
                               style={{
                                 fontSize: "30px",
-                                color: "rgba(0, 0, 0, 0.33)",
+                                color: "rgba(0, 0, 0, 0.3)",
                               }}
                             />
                           </div>
@@ -678,7 +689,7 @@ const CreateSchedule = () => {
                             style={{
                               width: "58px",
                               height: "58px",
-                              background: "rgba(0, 0, 0, 0.33)",
+                              background: "rgba(0, 0, 0, 0.3)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",

@@ -4,6 +4,8 @@ import { createSelector } from "reselect";
 import { useParams } from "react-router-dom";
 import { styled } from "@mui/system";
 import { toast } from "react-toastify";
+import { connect } from "react-redux";
+import { getActions } from "../../../store/actions/authActions";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import AllSchedule from "../AllSchedule/AllSchedule";
@@ -105,16 +107,15 @@ const initialState = {
   studentTypes: ["Solo", "Dyad"],
   studentType: "",
   timings: [
-    "7 AM to 8 AM",
-    "8 AM to 9 AM",
-    "9 AM to 10 AM",
-    "10 AM to 11 AM",
-    "11 AM to 12 NN",
-    "12 NN to 1 PM",
-    "1 PM to 2 PM",
-    "2 PM to 3 PM",
-    "3 PM to 4 PM",
-    "4 PM to 5 PM",
+    "8:00 AM - 9:00 AM",
+    "9:00 AM - 10:00 AM",
+    "10:00 AM - 11:00 AM",
+    "11:00 AM - 12:00 NN",
+    "12:00 NN - 1:00 PM",
+    "1:00 PM - 2:00 PM",
+    "2:00 PM - 3:00 PM",
+    "3:00 PM - 4:00 PM",
+    "4:00 PM - 5:00 PM",
   ],
   timing: "",
 };
@@ -152,6 +153,7 @@ const EditSchedule = () => {
       console.error("Error fetching users:", err);
     }
   };
+
   const getOneSchedule = async () => {
     if (!auth.userDetails.token) {
       console.error("Authentication token not found.");
@@ -171,6 +173,7 @@ const EditSchedule = () => {
       console.error("Error fetching users:", err);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     values.parent = selectedParent ? selectedParent : values.parent;
@@ -189,7 +192,7 @@ const EditSchedule = () => {
         }
       );
       console.log(res);
-      window.alert(`"${res.data.nameOfStudent}" is updated`);
+      window.alert(`${res.data.nameOfStudent} is updated`);
       window.location.reload();
     } catch (error) {
       if (error.response && error.response.data) {
@@ -199,18 +202,17 @@ const EditSchedule = () => {
       }
     }
   };
+
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+
   const handleParentChange = (e) => {
     e.preventDefault();
-    console.log("CLICKED Parent", e.target.value);
     setValues({ ...values, parent: e.target.value });
     setSelectedParent(e.target.value);
-    if (values.parent._id === e.target.value) {
-      getOneSchedule();
-    }
   };
+
   const handleStudentTypeChange = (e) => {
     setValues({ ...values, studentType: e.target.value });
   };

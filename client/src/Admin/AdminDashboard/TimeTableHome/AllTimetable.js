@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { createSelector } from "reselect";
-import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
 import Monday from "../Days/Monday";
@@ -11,10 +9,6 @@ import Thursday from "../Days/Thursday";
 import Saturday from "../Days/Saturday";
 import { connect } from "react-redux";
 import { getActions } from "../../../store/actions/authActions";
-
-const Dots = styled("div")({
-  background: "",
-});
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -97,17 +91,8 @@ const dayOfWeek = today.toLocaleDateString("en-US", {
   weekday: "long",
 });
 
-const AllTimetable = ({ setUserDetails }) => {
+const AllTimetable = () => {
   const [activeDay, setActiveDay] = useState(dayOfWeek);
-
-  useEffect(() => {
-    const userDetails = localStorage.getItem("user");
-    if (!userDetails) {
-      window.location.pathname = "login";
-    } else {
-      setUserDetails(JSON.parse(userDetails));
-    }
-  }, []);
 
   const handleDayChange = (day) => {
     setActiveDay(day);

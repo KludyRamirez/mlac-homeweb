@@ -3,20 +3,22 @@ import { styled } from "@mui/system";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import {
   BsCamera,
+  BsChevronExpand,
   BsClock,
+  BsClockFill,
   BsHourglassSplit,
   BsKeyboard,
   BsMoon,
+  BsMoonFill,
   BsPencil,
   BsPeople,
   BsPersonArmsUp,
   BsQuestionCircle,
+  BsQuestionCircleFill,
+  BsSunFill,
 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
-
-import girl from "../../../images/girl.png";
-import boy from "../../../images/boy.png";
 
 const Flexer = styled("div")({
   display: "flex",
@@ -54,7 +56,7 @@ const FilterButton = styled("div")({
   background: "#fff",
   borderRadius: "46px",
   cursor: "pointer",
-  color: "#606060",
+  color: "#909090",
   fontSize: "16px",
   fontWeight: "600",
   userSelect: "none",
@@ -108,13 +110,13 @@ const NextRoundButton = styled("button")({
 const NextDisabledButton = styled("button")({
   fontFamily: "Poppins, sans-serif",
   padding: "0",
-  color: "#606060",
+  color: "#909090",
   background: "#fff",
   border: "none",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: "10px",
+  gap: "8px",
   width: "110px",
   height: "48px",
   borderRadius: "48px",
@@ -265,7 +267,7 @@ const CreateScheduleForm = ({
                 display: "flex",
                 justifyContent: "flex-start",
                 gap: "14px",
-                marginLeft: "12px",
+                marginLeft: "10px",
               }}
             >
               <label htmlFor="stark" style={{ cursor: "pointer" }}>
@@ -273,20 +275,33 @@ const CreateScheduleForm = ({
                   value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
                   control={<Radio id="stark" style={{ display: "none" }} />}
                   label={
-                    <img
-                      src={boy}
+                    <div
                       style={{
                         outline:
                           profilePic ===
                           "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
-                            ? "1px solid #909090"
-                            : "1px solid rgba(0, 0, 0, 0.2)",
+                            ? "none"
+                            : "1px solid rgba(0, 0, 0, 0.3)",
                         width: "64px",
-                        height: "64px",
-                        borderRadius: "50%",
-                        background: "#fff",
+                        height: "62px",
+                        borderRadius: "18px",
+                        background:
+                          profilePic ===
+                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
+                            ? "rgba(0, 0, 0, 0.3)"
+                            : "transparent",
+                        color:
+                          profilePic ===
+                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707566600/gakpqdtqmnyv4pp5uv2l.webp"
+                            ? "white"
+                            : "rgba(0, 0, 0, 0.3)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
-                    />
+                    >
+                      <BsSunFill style={{ fontSize: "32px" }} />
+                    </div>
                   }
                 />
               </label>
@@ -295,20 +310,33 @@ const CreateScheduleForm = ({
                   value="https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
                   control={<Radio id="stark" style={{ display: "none" }} />}
                   label={
-                    <img
-                      src={girl}
+                    <div
                       style={{
-                        border:
+                        outline:
                           profilePic ===
                           "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
-                            ? "1px solid #909090"
-                            : "1px solid rgba(0, 0, 0, 0.2)",
+                            ? "none"
+                            : "1px solid rgba(0, 0, 0, 0.3)",
                         width: "64px",
-                        height: "64px",
-                        borderRadius: "50%",
-                        background: "#fff",
+                        height: "62px",
+                        borderRadius: "18px",
+                        background:
+                          profilePic ===
+                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
+                            ? "rgba(0, 0, 0, 0.3)"
+                            : "transparent",
+                        color:
+                          profilePic ===
+                          "https://res.cloudinary.com/dni1vtbsv/image/upload/v1707565823/gcdo7cp8fewjhovxol8n.webp"
+                            ? "white"
+                            : "rgba(0, 0, 0, 0.3)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
-                    />
+                    >
+                      <BsMoonFill style={{ fontSize: "32px" }} />
+                    </div>
                   }
                 />
               </label>
@@ -326,7 +354,8 @@ const CreateScheduleForm = ({
             }}
           >
             <InputTitles>
-              Name <BsPencil style={{ fontSize: "16px", color: "#8f8f8f" }} />
+              Name
+              <BsChevronExpand style={{ fontSize: "18px", color: "#8f8f8f" }} />
             </InputTitles>
 
             <div
@@ -365,7 +394,10 @@ const CreateScheduleForm = ({
               }}
             >
               <InputTitles>
-                Time <BsClock style={{ fontSize: "16px", color: "#8f8f8f" }} />
+                Time{" "}
+                <BsChevronExpand
+                  style={{ fontSize: "18px", color: "#8f8f8f" }}
+                />
               </InputTitles>
               <CustomSelect
                 name="timing"
@@ -390,7 +422,10 @@ const CreateScheduleForm = ({
               }}
             >
               <InputTitles>
-                Day <BsMoon style={{ fontSize: "16px", color: "#8f8f8f" }} />
+                Day{" "}
+                <BsChevronExpand
+                  style={{ fontSize: "18px", color: "#8f8f8f" }}
+                />
               </InputTitles>
               <CustomSelect name="day" value={day} onChange={handleChange}>
                 <option style={{ color: "rgba(0, 123, 255, 0.4)" }}></option>
@@ -423,7 +458,9 @@ const CreateScheduleForm = ({
             >
               <InputTitles>
                 Parent
-                <BsPeople style={{ fontSize: "16px", color: "#8f8f8f" }} />
+                <BsChevronExpand
+                  style={{ fontSize: "18px", color: "#8f8f8f" }}
+                />
               </InputTitles>
               <CustomSelect
                 name="parent"
@@ -450,8 +487,10 @@ const CreateScheduleForm = ({
               }}
             >
               <InputTitles>
-                Type{" "}
-                <BsKeyboard style={{ fontSize: "16px", color: "#8f8f8f" }} />
+                Type
+                <BsChevronExpand
+                  style={{ fontSize: "18px", color: "#8f8f8f" }}
+                />
               </InputTitles>
               <CustomSelect
                 name="studentType"
@@ -478,12 +517,12 @@ const CreateScheduleForm = ({
             padding: "42px 0 0 0",
           }}
         >
-          <FilterButton sx={{ gap: "12px" }}>
-            <BsQuestionCircle style={{ fontSize: "18px" }} /> FAQ
+          <FilterButton>
+            <BsQuestionCircleFill style={{ fontSize: "18px" }} /> FAQs
           </FilterButton>
           {!nameOfStudent || !studentType || !schedType || !day ? (
             <NextDisabledButton>
-              <FaPlus style={{ color: "#909090", fontSize: "16px" }} />
+              <FaPlus style={{ fontSize: "16px" }} />
               <span
                 style={{
                   fontSize: "16px",
@@ -543,7 +582,7 @@ const CreateScheduleForm = ({
         >
           <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
             <FilterButton>
-              <BsClock style={{ fontSize: "18px" }} />
+              <BsClockFill style={{ fontSize: "18px" }} />
               <span>Dyad</span>
             </FilterButton>
           </Link>

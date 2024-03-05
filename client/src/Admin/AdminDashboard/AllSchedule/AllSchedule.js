@@ -3,10 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/system";
 import { createSelector } from "reselect";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
-import PersonIcon from "@mui/icons-material/Person";
 import { RiSearchLine } from "react-icons/ri";
 import Modal from "@mui/material/Modal";
 import AbsentScheduleCard from "./AbsentScheduleCard";
@@ -23,7 +21,6 @@ import {
   BsCalendarX,
   BsCameraVideo,
 } from "react-icons/bs";
-import { toast } from "react-toastify";
 import moment from "moment";
 import PresentConModal from "./PresentConModal";
 import PresentAuditModal from "./PresentAuditModal";
@@ -323,7 +320,6 @@ const PermanentTitle = styled("div")({
   fontSize: "24px",
   fontWeight: "700",
 
-
   "@media (max-width: 767px)": {},
 });
 
@@ -376,10 +372,9 @@ const AllSchedule = () => {
   const auth = useSelector(authSelector);
   const con = useSelector(conSelector);
   const audit = useSelector(auditSelector);
+
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const { id } = useParams();
 
   useEffect(() => {
     updateExpiredTemporarySchedule();
