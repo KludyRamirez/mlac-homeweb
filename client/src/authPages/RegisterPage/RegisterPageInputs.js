@@ -240,11 +240,6 @@ const RegisterPageInputs = (props) => {
     maxLength,
   } = props;
 
-  console.log(
-    "----------------------------------------------------------->",
-    role
-  );
-
   return (
     <>
       <Flexer>

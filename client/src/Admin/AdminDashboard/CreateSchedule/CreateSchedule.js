@@ -9,12 +9,13 @@ import CreateScheduleForm from "./CreateScheduleForm";
 import AllSchedule from "../AllSchedule/AllSchedule";
 import {
   BsAspectRatio,
+  BsBarChart,
   BsCalendar2MonthFill,
   BsChatSquareQuoteFill,
-  BsCloudHaze2Fill,
+  BsCloudHaze2,
   BsCloudMoonFill,
   BsFloppy2,
-  BsHandIndexThumbFill,
+  BsCursorFill,
   BsKanbanFill,
   BsLifePreserver,
   BsMegaphoneFill,
@@ -79,6 +80,7 @@ const FormCon2 = styled("div")({
 });
 
 const DobotCon = styled("div")({
+  letterSpacing: "0.2px",
   fontWeight: "600",
   fontSize: "16px",
   display: "flex",
@@ -445,21 +447,19 @@ const CreateSchedule = () => {
                     }}
                   >
                     <DobotCon>
-                      <FaChartPie
+                      <BsBarChart
                         style={{
                           fontSize: "22px",
                           marginTop: "-2px",
-                          color: "rgba(0, 0, 0, 0.33)",
                         }}
                       />
                       <span>Statistics</span>
                     </DobotCon>
                     <DobotCon>
-                      <BsCloudHaze2Fill
+                      <BsCloudHaze2
                         style={{
                           fontSize: "24px",
                           marginTop: "-2px",
-                          color: "rgba(0, 0, 0, 0.33)",
                         }}
                       />
                       <span>Weather</span>
@@ -622,7 +622,734 @@ const CreateSchedule = () => {
                               borderRadius: "12px",
                             }}
                           >
-                            <BsHandIndexThumbFill
+                            <BsCursorFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsLifePreserver
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCalendar2MonthFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsChatSquareQuoteFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCloudMoonFill
+                              style={{
+                                fontSize: "32px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeInfo === "Flexible" && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "204px",
+                        padding: "20px 30px 20px 30px",
+                        background: "#f7f7f7",
+                        borderRadius: "24px",
+                        outline: "1px solid #c0c0c0",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            width: "76%",
+                            height: "200px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontSize: "32px",
+                              color: "#606060",
+                              fontWeight: "600",
+                            }}
+                          >
+                            How flexible?
+                          </div>
+                          <div
+                            style={{
+                              fontSize: "18px",
+                              color: "#606060",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the
+                            industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book. when an
+                            unknown printer took a galley of type and scrambled
+                            it to make a type specimen book.
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            width: "200px",
+                            height: "204px",
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            alignItems: "flex-start",
+                            flexWrap: "wrap",
+                            gap: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsKanbanFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsPenFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsMegaphoneFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsFloppy2
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCursorFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsLifePreserver
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCalendar2MonthFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsChatSquareQuoteFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCloudMoonFill
+                              style={{
+                                fontSize: "32px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {activeInfo === "Recurring" && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "204px",
+                        padding: "20px 30px 20px 30px",
+                        background: "#f7f7f7",
+                        borderRadius: "24px",
+                        outline: "1px solid #c0c0c0",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            width: "76%",
+                            height: "200px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontSize: "32px",
+                              color: "#606060",
+                              fontWeight: "600",
+                            }}
+                          >
+                            How recurring?
+                          </div>
+                          <div
+                            style={{
+                              fontSize: "18px",
+                              color: "#606060",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the
+                            industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book. when an
+                            unknown printer took a galley of type and scrambled
+                            it to make a type specimen book.
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            width: "200px",
+                            height: "204px",
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            alignItems: "flex-start",
+                            flexWrap: "wrap",
+                            gap: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsKanbanFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsPenFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsMegaphoneFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsFloppy2
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCursorFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsLifePreserver
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCalendar2MonthFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsChatSquareQuoteFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCloudMoonFill
+                              style={{
+                                fontSize: "32px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {activeInfo === "Reusable" && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "204px",
+                        padding: "20px 30px 20px 30px",
+                        background: "#f7f7f7",
+                        borderRadius: "24px",
+                        outline: "1px solid #c0c0c0",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            width: "76%",
+                            height: "200px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontSize: "32px",
+                              color: "#606060",
+                              fontWeight: "600",
+                            }}
+                          >
+                            How reusable?
+                          </div>
+                          <div
+                            style={{
+                              fontSize: "18px",
+                              color: "#606060",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the
+                            industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book. when an
+                            unknown printer took a galley of type and scrambled
+                            it to make a type specimen book.
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            width: "200px",
+                            height: "204px",
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            alignItems: "flex-start",
+                            flexWrap: "wrap",
+                            gap: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsKanbanFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsPenFill
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "57px",
+                              height: "56px",
+                              background: "transparent",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                              outline: "1px solid rgba(0, 0, 0, 0.3)",
+                            }}
+                          >
+                            <BsMegaphoneFill
+                              style={{
+                                fontSize: "30px",
+                                color: "rgba(0, 0, 0, 0.3)",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsFloppy2
+                              style={{
+                                fontSize: "30px",
+                                color: "white",
+                              }}
+                            />
+                          </div>
+                          <div
+                            style={{
+                              width: "58px",
+                              height: "58px",
+                              background: "rgba(0, 0, 0, 0.3)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <BsCursorFill
                               style={{
                                 fontSize: "30px",
                                 color: "white",
@@ -711,28 +1438,68 @@ const CreateSchedule = () => {
 
                 <div
                   style={{
-                    color: "#606060",
+                    marginTop: "20px",
                     width: "100%",
+                    height: "260px",
                     display: "flex",
-                    justifyContent: "flex-start",
-                    paddingTop: "54px",
-                    fontSize: "18px",
-                    fontWeight: "600",
+                    justifyContent: "space-between",
                   }}
                 >
-                  New students
+                  <div
+                    style={{
+                      width: "30%",
+                      height: "100%",
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "12px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "47%",
+                        height: "47%",
+                        border: "1px solid ",
+                        borderRadius: "18px",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "47%",
+                        height: "47%",
+                        border: "1px solid ",
+                        borderRadius: "18px",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "47%",
+                        height: "47%",
+                        border: "1px solid ",
+                        borderRadius: "18px",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        width: "47%",
+                        height: "47%",
+                        border: "1px solid ",
+                        borderRadius: "18px",
+                      }}
+                    ></div>
+                  </div>
+                  <div
+                    style={{
+                      width: "68%",
+                      height: "100%",
+                      border: "1px solid blue",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div style={{ padding: "20px" }}>kljkluu</div>
+                  </div>
                 </div>
-                <div
-                  style={{
-                    width: "14.8%",
-                    height: "2px",
-                    background: "#606060",
-                    backgroundImage:
-                      "linear-gradient(315deg, #606060 0%, #f1f1f1 74%)",
-                    borderRadius: "4px",
-                    marginTop: "12px",
-                  }}
-                ></div>
               </div>
             </div>
           </FormCon2>

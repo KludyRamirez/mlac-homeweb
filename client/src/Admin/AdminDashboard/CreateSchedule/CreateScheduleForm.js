@@ -4,17 +4,16 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import {
   BsCamera,
   BsChevronExpand,
-  BsClock,
   BsClockFill,
   BsHourglassSplit,
-  BsKeyboard,
-  BsMoon,
+  BsLifePreserver,
   BsMoonFill,
-  BsPencil,
   BsPeople,
-  BsPersonArmsUp,
+  BsPerson,
   BsQuestionCircle,
   BsQuestionCircleFill,
+  BsQuestionDiamond,
+  BsQuestionOctagon,
   BsSunFill,
 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
@@ -51,8 +50,7 @@ const FilterButton = styled("div")({
   justifyContent: "center",
   alignItems: "center",
   gap: "10px",
-  width: "94px",
-  height: "48px",
+  padding: "10px 16px",
   background: "#fff",
   borderRadius: "46px",
   cursor: "pointer",
@@ -87,9 +85,8 @@ const NextRoundButton = styled("button")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: "6px",
-  width: "110px",
-  height: "48px",
+  gap: "8px",
+  padding: "10px 16px",
   borderRadius: "100px",
   cursor: "pointer",
   userSelect: "none",
@@ -117,8 +114,7 @@ const NextDisabledButton = styled("button")({
   justifyContent: "center",
   alignItems: "center",
   gap: "8px",
-  width: "110px",
-  height: "48px",
+  padding: "10px 16px",
   borderRadius: "48px",
   cursor: "pointer",
   outline: "1px solid rgba(0, 0, 0, 0.16)",
@@ -518,7 +514,7 @@ const CreateScheduleForm = ({
           }}
         >
           <FilterButton>
-            <BsQuestionCircleFill style={{ fontSize: "18px" }} /> FAQs
+            <BsQuestionOctagon style={{ fontSize: "18px" }} /> FAQs
           </FilterButton>
           {!nameOfStudent || !studentType || !schedType || !day ? (
             <NextDisabledButton>
@@ -582,13 +578,13 @@ const CreateScheduleForm = ({
         >
           <Link to="/temp-schedule" style={{ textDecoration: "none" }}>
             <FilterButton>
-              <BsClockFill style={{ fontSize: "18px" }} />
+              <BsPeople style={{ fontSize: "18px" }} />
               <span>Dyad</span>
             </FilterButton>
           </Link>
           <Link to="/temp-soloschedule" style={{ textDecoration: "none" }}>
             <FilterButton>
-              <BsHourglassSplit style={{ fontSize: "18px" }} />
+              <BsPerson style={{ fontSize: "18px" }} />
               <span>Solo</span>
             </FilterButton>
           </Link>

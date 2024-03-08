@@ -26,22 +26,16 @@ import {
   BsFolderFill,
   BsGear,
   BsGearFill,
-  BsNut,
-  BsNutFill,
   BsPSquare,
   BsPSquareFill,
   BsPeople,
   BsPeopleFill,
-  BsReply,
   BsSticky,
   BsStickyFill,
 } from "react-icons/bs";
 
-import logomlac from "../../../images/logomlac.png";
-
 const AppNavBar = styled(AppBar)({
   background: "transparent",
-
   boxShadow: "none",
   width: { sm: "calc(100% - 40px)" },
   ml: { sm: "40px" },
@@ -533,4 +527,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export { ResponsiveDrawer };
+export default ResponsiveDrawer;
