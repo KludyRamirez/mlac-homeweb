@@ -74,13 +74,8 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
-  const [showOtherOptions, setShowOtherOptions] = useState(false);
 
   const auth = useSelector(authSelector);
-
-  const toggleDiv = () => {
-    setShowOtherOptions(!showOtherOptions);
-  };
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -527,4 +522,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export { ResponsiveDrawer };

@@ -25,8 +25,6 @@ import {
   BsRepeat,
 } from "react-icons/bs";
 
-import { FaChartPie } from "react-icons/fa";
-
 import { connect } from "react-redux";
 import { getActions } from "../../../store/actions/authActions";
 
