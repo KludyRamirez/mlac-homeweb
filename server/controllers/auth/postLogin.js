@@ -14,6 +14,7 @@ const postLogin = async (req, res) => {
       const token = jwt.sign(
         {
           userId: user._id,
+          role: user.role,
           username,
         },
         process.env.TOKEN_KEY,

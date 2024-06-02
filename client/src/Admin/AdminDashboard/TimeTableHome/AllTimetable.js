@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
 import Monday from "../Days/Monday";
@@ -7,8 +7,6 @@ import Wednesday from "../Days/Wednesday";
 import Friday from "../Days/Friday";
 import Thursday from "../Days/Thursday";
 import Saturday from "../Days/Saturday";
-import { connect } from "react-redux";
-import { getActions } from "../../../store/actions/authActions";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -409,10 +407,4 @@ const AllTimetable = () => {
   );
 };
 
-const mapActionsToProps = (dispatch) => {
-  return {
-    ...getActions(dispatch),
-  };
-};
-
-export default connect(null, mapActionsToProps)(AllTimetable);
+export default AllTimetable;

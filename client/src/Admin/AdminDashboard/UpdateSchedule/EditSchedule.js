@@ -4,8 +4,6 @@ import { createSelector } from "reselect";
 import { useParams } from "react-router-dom";
 import { styled } from "@mui/system";
 import { toast } from "react-toastify";
-import { connect } from "react-redux";
-import { getActions } from "../../../store/actions/authActions";
 import { ResponsiveDrawer } from "../SideBar/SideBar";
 import axios from "axios";
 import AllSchedule from "../AllSchedule/AllSchedule";

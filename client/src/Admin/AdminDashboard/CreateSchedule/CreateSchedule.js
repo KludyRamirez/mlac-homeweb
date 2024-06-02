@@ -25,9 +25,6 @@ import {
   BsRepeat,
 } from "react-icons/bs";
 
-import { connect } from "react-redux";
-import { getActions } from "../../../store/actions/authActions";
-
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
@@ -141,7 +138,6 @@ const authSelector = createSelector([selectAuth], (auth) => auth);
 
 const CreateSchedule = () => {
   const [values, setValues] = useState(initialState);
-  const [inputValue, setInputValue] = useState("");
   const [activeInfo, setActiveInfo] = useState("Editable");
 
   const handleInfoChange = (info) => {
@@ -201,10 +197,6 @@ const CreateSchedule = () => {
   };
 
   const handleChange = (e) => {
-    if (e.target.value.length <= maxLength) {
-      setInputValue(e.target.value);
-    }
-
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
@@ -215,7 +207,6 @@ const CreateSchedule = () => {
   const handleParentChange = (e) => {
     e.preventDefault();
     const parentName = e.target.value;
-    console.log(parentName);
     setValues({
       ...values,
       parent: parentName,
@@ -1518,10 +1509,4 @@ const CreateSchedule = () => {
   );
 };
 
-const mapActionsToProps = (dispatch) => {
-  return {
-    ...getActions(dispatch),
-  };
-};
-
-export default connect(null, mapActionsToProps)(CreateSchedule);
+export default CreateSchedule;
