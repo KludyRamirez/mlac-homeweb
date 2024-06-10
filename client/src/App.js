@@ -1,103 +1,211 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import toast, { Toaster } from "react-hot-toast";
 
-import LoginPage from "./authPages/LoginPage/LoginPage";
-import RegisterPage from "./authPages/RegisterPage/RegisterPage";
+import Students from "./pages/students/studentsBase/Students";
+import Login from "./pages/auth/login/loginBase/Login";
+import Register from "./pages/auth/register/registerBase/Register";
+import Cases from "./pages/cases/casesBase/Cases";
+import Statistics from "./pages/statistics/statisticsBase/Statistics";
+import History from "./pages/history/historyBase/History";
+import StudentProfile from "./pages/studentsProfile/studentsProfileBase/StudentProfile";
+import Settings from "./pages/settings/settingsBase/Settings";
+import AccountSettings from "./pages/accountSettings/accountSettingsBase/AccountSettings";
+import SecureRoles from "./externalUtils/SecureRoles";
+import Error403 from "./externalComponents/Errors/Error403";
+import Forgot from "./pages/auth/forgot/forgotBase/Forgot";
+import Reset from "./pages/auth/reset/resetBase/Reset";
+import Loading from "./externalUtils/Loading";
+import PersistLogin from "./externalUtils/PersistLogin";
 
-//admin
+import { default as axios } from "./api";
+import Schedules from "./pages/schedules/schedulesBase/Schedules";
 
-import "./App.css";
-import UserUpdate from "./Admin/AdminDashboard/UserPages/UserUpdate";
-import CreateSchedule from "./Admin/AdminDashboard/CreateSchedule/CreateSchedule";
-import TempCreateSchedule from "./Admin/AdminDashboard/CreateSchedule/TempCreateSchedule";
-import TempSoloCreateSched from "./Admin/AdminDashboard/CreateSchedule/TempSoloCreateSched";
-import ParentSortSchedule from "./Admin/AdminDashboard/AllSchedule/ParentSortSchedule";
-import AllTimetable from "./Admin/AdminDashboard/TimeTableHome/AllTimetable";
-import Logs from "./Admin/AdminDashboard/Logs/Logs";
-import EditSchedule from "./Admin/AdminDashboard/UpdateSchedule/EditSchedule";
-import WaitList from "./Admin/AdminDashboard/Waitlist/WaitList";
-import CreateProgRequest from "./Admin/AdminDashboard/ProgRequest/CreateProgRequest";
-import AccountSettings from "./Admin/AdminDashboard/AccountSettings/AccountSettings";
-import AlertNotification from "./shared/components/AlertNotification";
-import Dashboard from "./Dashboard/Dashboard";
-import PasswordReset from "./Admin/AdminDashboard/AccountSettings/PasswordReset";
+// Selectors
+const selectAuth = (state) => state.auth;
+const authSelector = createSelector([selectAuth], (auth) => auth);
+
+const AppRoutes = ({ auth, setLoading, toast, axios }) => (
+  <Routes>
+    <Route
+      path="*"
+      element={
+        auth?.userDetails?.token ? (
+          <Statistics auth={auth} setLoading={setLoading} toast={toast} />
+        ) : (
+          <Login setLoading={setLoading} toast={toast} />
+        )
+      }
+    />
+    <Route path="/error" element={<Error403 />} />
+    <Route
+      path="/forgot"
+      element={<Forgot setLoading={setLoading} toast={toast} axios={axios} />}
+    />
+    <Route
+      path="/reset-password/:id/:token"
+      element={<Reset setLoading={setLoading} toast={toast} axios={axios} />}
+    />
+
+    {/* Persist Login Routes */}
+    <Route element={<PersistLogin auth={auth} />}>
+      <Route
+        path="/"
+        element={
+          auth?.userDetails?.token ? (
+            <Statistics auth={auth} setLoading={setLoading} toast={toast} />
+          ) : (
+            <Login setLoading={setLoading} toast={toast} />
+          )
+        }
+      />
+
+      <Route
+        path="/account"
+        element={
+          <AccountSettings
+            auth={auth}
+            setLoading={setLoading}
+            toast={toast}
+            axios={axios}
+            allowedRoles={["Administrator", "Parent", "Student"]}
+          />
+        }
+      />
+
+      {/* Admin and Parent Routes */}
+      <Route
+        element={
+          <SecureRoles auth={auth} allowedRoles={["Administrator", "Parent"]} />
+        }
+      >
+        <Route
+          path="/schedules"
+          element={
+            <Schedules
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+        <Route
+          path="/students"
+          element={
+            <Students
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <StudentProfile
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+        <Route
+          path="/statistics"
+          element={
+            <Statistics
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator", "Parent"]}
+            />
+          }
+        />
+      </Route>
+
+      {/* Admin Only Routes */}
+      <Route
+        element={<SecureRoles auth={auth} allowedRoles={["Administrator"]} />}
+      >
+        <Route
+          path="/users"
+          element={
+            <Register
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <Settings
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+        <Route
+          path="/notification"
+          element={
+            <History
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+      </Route>
+    </Route>
+  </Routes>
+);
 
 function App() {
+  const [loading, setLoading] = useState(false);
+  const auth = useSelector(authSelector);
+
   return (
     <>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            fontWeight: "600",
+            textAlign: "center",
+            border: "1px solid #606060",
+            backgroundColor: "white",
+          },
+        }}
+      />
       <Router>
-        <ToastContainer
-          position="top-right"
-          autoClose={4000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/login" />
-          </Route>
-          <Route exact path="/login">
-            <LoginPage />
-          </Route>
-          <Route exact path="/chat">
-            <Dashboard />
-          </Route>
-          <Route exact path="/user">
-            <RegisterPage />
-          </Route>
-          <Route exact path="/user/:id">
-            <UserUpdate />
-          </Route>
-          <Route exact path="/schedule">
-            <CreateSchedule />
-          </Route>
-          <Route exact path="/schedule/:id">
-            <EditSchedule />
-          </Route>
-          <Route exact path="/temp-schedule">
-            <TempCreateSchedule />
-          </Route>
-          <Route exact path="/temp-soloschedule">
-            <TempSoloCreateSched />
-          </Route>
-          <Route exact path="/timetable">
-            <AllTimetable />
-          </Route>
-          <Route exact path="/children">
-            <ParentSortSchedule />
-          </Route>
-          <Route exact path="/waitlist">
-            <WaitList />
-          </Route>
-          <Route exact path="/logs">
-            <Logs />
-          </Route>
-          <Route exact path="/report">
-            <CreateProgRequest />
-          </Route>
-          <Route exact path="/account">
-            <AccountSettings />
-          </Route>
-          <Route exact path="/reset-password">
-            <PasswordReset />
-          </Route>
-        </Switch>
+        {loading ? (
+          <Loading />
+        ) : (
+          <AppRoutes
+            auth={auth}
+            setLoading={setLoading}
+            toast={toast}
+            axios={axios}
+          />
+        )}
       </Router>
-      <AlertNotification />
     </>
   );
 }

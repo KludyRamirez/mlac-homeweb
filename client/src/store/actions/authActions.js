@@ -1,66 +1,56 @@
 import * as api from "../../api";
-import { openAlertMessage } from "./alertActions";
+import toast from "react-hot-toast";
 
-export const authActions = {
+export const AuthActions = {
   SET_USER_DETAILS: "AUTH.SET_USER_DETAILS",
+  LOGOUT: "LOGOUT",
 };
 
 export const getActions = (dispatch) => {
   return {
-    login: (userDetails, history) => dispatch(login(userDetails, history)),
-    register: (userDetails, history) =>
-      dispatch(register(userDetails, history)),
-    waitlist: (userDetails, history) =>
-      dispatch(waitlist(userDetails, history)),
+    login: (userDetails, navigate) => dispatch(login(userDetails, navigate)),
+    register: (userDetails, authToken) =>
+      dispatch(register(userDetails, authToken)),
     setUserDetails: (userDetails) => dispatch(setUserDetails(userDetails)),
   };
 };
 
-const setUserDetails = (userDetails) => {
+export const logout = () => ({
+  type: AuthActions.LOGOUT,
+});
+
+export const setUserDetails = (userDetails) => {
   return {
-    type: authActions.SET_USER_DETAILS,
+    type: AuthActions.SET_USER_DETAILS,
     userDetails,
   };
 };
 
-const login = (userDetails, history) => {
+const login = (userDetails, navigate) => {
   return async (dispatch) => {
     const response = await api.login(userDetails);
-    console.log(response);
     if (response.error) {
-      dispatch(openAlertMessage(response?.exception?.response?.data));
+      dispatch(toast.error(response?.exception?.response?.data.message));
     } else {
       const { userDetails } = response?.data;
       localStorage.setItem("user", JSON.stringify(userDetails));
       dispatch(setUserDetails(userDetails));
-      history.push("/timetable");
+      navigate("/statistics");
     }
   };
 };
 
-const register = (userDetails, history) => {
+const register = (userDetails, authToken) => {
   return async (dispatch) => {
-    const response = await api.register(userDetails);
-    console.log(response);
-    if (response.error) {
-      dispatch(openAlertMessage(response?.exception?.response?.data));
-    } else {
-      dispatch(openAlertMessage("Registered Sucessfully!"));
-      history.push("/timetable");
-    }
-  };
-};
-
-const waitlist = (userDetails, history) => {
-  return async (dispatch) => {
-    const response = await api.waitlist(userDetails);
-    console.log(response);
-
-    if (response.error) {
-      dispatch(openAlertMessage(response?.exception?.response?.data));
-    } else {
-      dispatch(openAlertMessage("Details Successfully Submitted!"));
-      history.push("/waitlist");
+    try {
+      const response = await api.register(userDetails, authToken);
+      if (response.error) {
+        dispatch(toast.error(response?.exception?.response?.data.message));
+      } else {
+        dispatch(toast.success(response.data.message));
+      }
+    } catch (err) {
+      console.error("Error on creating new user. Please try again", err);
     }
   };
 };

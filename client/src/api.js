@@ -1,14 +1,43 @@
 import axios from "axios";
-import { logout } from "./shared/utils/auth";
+
+export const handleCsrfToken = async () => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URI}/api/csrf-token`,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res.data.csrfToken;
+  } catch (error) {
+    console.error(
+      "Error getting CSRF token. Please reload the browser.",
+      error
+    );
+    throw error;
+  }
+};
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:5002/api",
-  timeout: 1000,
+  baseURL: process.env.REACT_APP_API_URI,
+  withCredentials: true,
 });
+
+handleCsrfToken()
+  .then((csrfToken) => {
+    apiClient.defaults.headers.common["X-CSRF-Token"] = csrfToken;
+    apiClient.defaults.headers.common["Content-Type"] = "application/json";
+  })
+  .catch((error) => {
+    console.error("CSRF token not found in cookies", error);
+  });
 
 export const login = async (data) => {
   try {
-    return await apiClient.post("/login", data);
+    return await apiClient.post("/api/login", data);
   } catch (exception) {
     return {
       error: true,
@@ -17,9 +46,13 @@ export const login = async (data) => {
   }
 };
 
-export const register = async (data) => {
+export const register = async (data, authToken) => {
   try {
-    return await apiClient.post("/register", data);
+    return await apiClient.post("/api/register", data, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
   } catch (exception) {
     return {
       error: true,
@@ -28,59 +61,4 @@ export const register = async (data) => {
   }
 };
 
-export const waitlist = async (data) => {
-  try {
-    return await apiClient.post("/waitlist", data);
-  } catch (exception) {
-    return {
-      error: true,
-      exception,
-    };
-  }
-};
-
-// secure routes
-
-export const sendFriendInvitation = async (data) => {
-  try {
-    return await apiClient.post("/friend-invitation/invite", data);
-  } catch (exception) {
-    checkResponseCode(exception);
-    return {
-      error: true,
-      exception,
-    };
-  }
-};
-
-export const acceptFriendInvitation = async (data) => {
-  try {
-    return await apiClient.post("/friend-invitation/accept", data);
-  } catch (exception) {
-    checkResponseCode(exception);
-    return {
-      error: true,
-      exception,
-    };
-  }
-};
-
-export const rejectFriendInvitation = async (data) => {
-  try {
-    return await apiClient.post("/friend-invitation/reject", data);
-  } catch (exception) {
-    checkResponseCode(exception);
-    return {
-      error: true,
-      exception,
-    };
-  }
-};
-
-const checkResponseCode = (exception) => {
-  const responseCode = exception?.response?.status;
-
-  if (responseCode) {
-    (responseCode === 401 || responseCode === 403) && logout();
-  }
-};
+export default apiClient;
