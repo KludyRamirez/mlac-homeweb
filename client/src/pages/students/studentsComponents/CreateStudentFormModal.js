@@ -37,22 +37,21 @@ const CreateStudentFormModal = ({
     guardianContactNo: guardianContactNoError,
   } = errors;
 
+  const handleClick = () => {
+    if (handleCloseModal) {
+      handleCloseModal();
+    } else if (handleCloseModalCreateStudent) {
+      handleCloseModalCreateStudent();
+    }
+  };
+
   return (
     <>
       <form onSubmit={handleCreateStudent}>
         <div className="p-10">
           <div className="text-[28px] text-[#077bff] font-semibold flex justify-between">
             Create New Student
-            <BsX
-              onClick={
-                handleCloseModal
-                  ? handleCloseModal
-                  : handleCloseModalCreateStudent
-                  ? handleCloseModalCreateStudent
-                  : handleCloseModal
-              }
-              className="text-[36px] cursor-pointer"
-            />
+            <BsX onClick={handleClick} className="text-[36px] cursor-pointer" />
           </div>
           <br />
           <div className="text-[#606060] flex flex-col gap-2">

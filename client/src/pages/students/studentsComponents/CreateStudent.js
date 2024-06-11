@@ -3,6 +3,7 @@ import Modal from "@mui/material/Modal";
 import CreateStudentFormModal from "./CreateStudentFormModal";
 import { FaPlus } from "react-icons/fa6";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
+import { useLocation } from "react-router-dom";
 
 const initialState = {
   studentNo: "",
@@ -32,7 +33,7 @@ const errorsInitialState = {
 const CreateStudent = ({
   selectedUser,
   auth,
-  setloading,
+  setLoading,
   axios,
   toast,
   getStudents,
@@ -43,6 +44,8 @@ const CreateStudent = ({
   const [values, setValues] = useState(initialState);
   const [showCreateStudentModal, setShowCreateStudentModal] = useState(false);
   const [errors, setErrors] = useState(errorsInitialState);
+
+  const location = useLocation();
 
   const handleCreateStudent = async (e) => {
     e.preventDefault();
@@ -167,45 +170,61 @@ const CreateStudent = ({
 
   return (
     <>
-      <div className="w-100 text-[14px] text-[#404040] pb-6 ">
-        Office of Student Affairs / Students
-      </div>
-      <div className="w-100 text-[26px] text-[#077bff] font-bold pb-6 flex justify-between items-center">
-        <div>Students List</div>
-        {allowedRoles?.find((ar) => auth?.userDetails?.role?.includes(ar)) ? (
-          <div
-            onClick={handleOpenModal}
-            className="cursor-pointer py-3 px-3 bg-gradient-to-br from-[#07bbff] to-[#007bff] text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+      {location.pathname === "/students" ? (
+        <>
+          <div className="w-100 text-[14px] text-[#404040] pb-6 ">
+            Office of Student Affairs / Students
+          </div>
+          <div className="w-100 text-[26px] text-[#077bff] font-bold pb-6 flex justify-between items-center">
+            <div>Students List</div>
+            {allowedRoles?.find((ar) =>
+              auth?.userDetails?.role?.includes(ar)
+            ) ? (
+              <div
+                onClick={handleOpenModal}
+                className="cursor-pointer py-3 px-3 bg-gradient-to-br from-[#07bbff] to-[#007bff] text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+              >
+                <FaPlus />
+                <div>Add Student</div>
+              </div>
+            ) : (
+              <div className="cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px]">
+                <FaPlus />
+                <div>Add Student</div>
+              </div>
+            )}
+          </div>
+          <Modal
+            sx={{ border: "none", outline: "none" }}
+            open={showCreateStudentModal}
+            onClose={handleCloseModal}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
           >
-            <FaPlus />
-            <div>Add Student</div>
-          </div>
-        ) : (
-          <div className="cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px]">
-            <FaPlus />
-            <div>Add Student</div>
-          </div>
-        )}
-      </div>
-      <Modal
-        sx={{ border: "none", outline: "none" }}
-        open={showCreateStudentModal}
-        onClose={handleCloseModal}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <ModalBox>
-          <CreateStudentFormModal
-            cads={cads}
-            errors={errors}
-            values={values}
-            handleChange={handleChange}
-            handleCreateStudent={handleCreateStudent}
-            handleCloseModal={handleCloseModal}
-            handleCloseModalCreateStudent={handleCloseModalCreateStudent}
-          />
-        </ModalBox>
-      </Modal>
+            <ModalBox>
+              <CreateStudentFormModal
+                cads={cads}
+                errors={errors}
+                values={values}
+                handleChange={handleChange}
+                handleCreateStudent={handleCreateStudent}
+                handleCloseModal={handleCloseModal}
+                handleCloseModalCreateStudent={handleCloseModalCreateStudent}
+              />
+            </ModalBox>
+          </Modal>
+        </>
+      ) : (
+        <CreateStudentFormModal
+          cads={cads}
+          errors={errors}
+          values={values}
+          handleChange={handleChange}
+          handleCreateStudent={handleCreateStudent}
+          handleCloseModal={handleCloseModal}
+          handleCloseModalCreateStudent={handleCloseModalCreateStudent}
+        />
+      )}
     </>
   );
 };

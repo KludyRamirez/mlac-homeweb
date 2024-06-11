@@ -188,6 +188,7 @@ const UsersTable = ({
             auth={auth}
             toast={toast}
             axios={axios}
+            setLoading={setLoading}
           />
         </ModalBox>
       </Modal>
