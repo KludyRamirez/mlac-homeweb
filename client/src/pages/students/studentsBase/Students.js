@@ -76,7 +76,7 @@ const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
     <>
       <div className="flex justify-start">
         <Sidebar />
-        <div className="w-full h-screen flex justify-start bg-[#007bff]">
+        <div className="w-full h-screen flex justify-start bg-[#22272e]">
           <div className="w-full bg-[#fefefe] mt-[80px] rounded-tl-[24px] phone:rounded-tl-[0px] px-8 phone:px-4 pt-8">
             <CreateStudent
               getStudents={getStudents}

@@ -6,6 +6,11 @@ import {
   BsCalendarDate,
   BsHourglassSplit,
   BsHourglass,
+  BsCalendarDateFill,
+  BsCheckCircleFill,
+  BsGearWideConnected,
+  BsCalendar4Event,
+  BsCalendar2DayFill,
 } from "react-icons/bs";
 import SchedulesTable from "./SchedulesTable";
 
@@ -100,7 +105,7 @@ const SchedulesFilter = ({
 
   return (
     <>
-      <div className="w-100 bg-[#2d333b] text-[#c5d1de] rounded-[10px] flex flex-col border-[2px] border-[#2d333b]">
+      <div className="w-100 bg-[#2d333b] text-[#c5d1de] rounded-tl-[10px] rounded-tr-[10px] flex flex-col border-[0px] border-[#2d333b]">
         <div className="px-3 w-100 h-[58px] flex justify-start gap-2 border-b-2 border-[#2D333b]">
           <div
             onClick={() => handleMainFilterChange("All")}
@@ -127,68 +132,68 @@ const SchedulesFilter = ({
           </div>
         </div>
 
-        <div className="py-4 px-6 text-[18px] flex items-center gap-2">
+        <div className="pt-5 pb-4 px-6 text-[18px] flex items-center gap-2">
           Filter by <BsFilter className="text-[24px]" />
         </div>
+      </div>
 
-        <div className="w-100 flex justify-start bg-[#2d333b] p-4 rounded-bl-[10px] rounded-br-[10px]">
-          <div className="w-100 flex flex-wrap justify-start items-center gap-4 phone:gap-2">
-            <div className="phone:w-[50%] flex flex-col items-start gap-2">
-              <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
-                <div className="flex gap-2 items-center">
-                  <div>Day</div> <BsChevronBarDown />
-                </div>
-                <BsCalendarDate />
+      <div className="w-100 flex justify-start bg-[#22272e] p-4 rounded-bl-[10px] rounded-br-[10px] border-[1px] border-[#2d333b] mt-4 text-[#c5d1de]">
+        <div className="w-100 flex flex-wrap justify-start items-center gap-4 phone:gap-2">
+          <div className="phone:w-[50%] flex flex-col items-start gap-2">
+            <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
+              <div className="flex gap-2 items-center">
+                <div>Day</div> <BsChevronBarDown />
               </div>
-              <select
-                onChange={(e) => setDay(e.target.value)}
-                className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#22272e] border-[1px] border-[#22272e] appearance-none focus:outline-none focus:border-[#c5d1de] focus:bg-[#22272e] cursor-pointer"
-              >
-                <option value="All">All</option>
-                {days?.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-              </select>
+              <BsCalendar2DayFill />
             </div>
+            <select
+              onChange={(e) => setDay(e.target.value)}
+              className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+            >
+              <option value="All">All</option>
+              {days?.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <div className="phone:w-[47.8%] flex flex-col items-start gap-2">
-              <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
-                <div className="flex gap-2 items-center">
-                  <div>Type</div> <BsChevronBarDown />
-                </div>
-                <BsCheckCircle />
+          <div className="phone:w-[47.8%] flex flex-col items-start gap-2">
+            <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
+              <div className="flex gap-2 items-center">
+                <div>Type</div> <BsChevronBarDown />
               </div>
-              <select
-                onChange={(e) => setType(e.target.value)}
-                className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#22272e] border-[1px] border-[#22272e] appearance-none focus:outline-none focus:border-[#c5d1de] focus:bg-[#22272e] cursor-pointer"
-              >
-                <option value="All">All</option>
-                <option value="Dyad">Dyad</option>
-                <option value="Solo">Solo</option>
-              </select>
+              <BsGearWideConnected />
             </div>
+            <select
+              onChange={(e) => setType(e.target.value)}
+              className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+            >
+              <option value="All">All</option>
+              <option value="Dyad">Dyad</option>
+              <option value="Solo">Solo</option>
+            </select>
+          </div>
 
-            <div className="phone:w-[50%] flex flex-col items-start gap-2">
-              <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
-                <div className="flex gap-2 items-center">
-                  <div>Timing</div> <BsChevronBarDown />
-                </div>
-                <BsHourglass />
+          <div className="phone:w-[50%] flex flex-col items-start gap-2">
+            <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
+              <div className="flex gap-2 items-center">
+                <div>Timing</div> <BsChevronBarDown />
               </div>
-              <select
-                onChange={(e) => setTiming(e.target.value)}
-                className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#22272e] border-[1px] border-[#22272e] appearance-none focus:outline-none focus:border-[#c5d1de] focus:bg-[#22272e] cursor-pointer"
-              >
-                <option value="All">All</option>
-                {timings?.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
+              <BsHourglassSplit />
             </div>
+            <select
+              onChange={(e) => setTiming(e.target.value)}
+              className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+            >
+              <option value="All">All</option>
+              {timings?.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>

@@ -310,11 +310,11 @@ const SchedulesTable = ({
         </ModalBox>
       </Modal>
       <div
-        className={` border-[#c5d1de] bg-[#2d333b] flex flex-col rounded-[10px] text-[#c5d1de] phone:overflow-x-scroll ${
+        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] phone:overflow-x-scroll ${
           schedules && schedules.length > 5 ? "overflow-y-scroll" : ""
         }`}
       >
-        <div className="phone:w-[fit-content] flex items-center gap-4 px-6">
+        <div className="phone:w-[fit-content] flex items-center gap-4 px-6 bg-[#2d333b] rounded-[10px]">
           <div className="w-[30px] h-[60px] flex justify-start items-center">
             <input
               type="checkbox"
@@ -323,25 +323,25 @@ const SchedulesTable = ({
               onChange={toggleSelectAll}
             />
           </div>
-          <div className="w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
             Schedule ID
           </div>
-          <div className="w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
             Owner
           </div>
-          <div className=" w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
             Day
           </div>
-          <div className=" w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
             Timing
           </div>
-          <div className=" w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
             Type
           </div>
-          <div className=" w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
             Parent
           </div>
-          <div className=" w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
             Status
           </div>
           {selectedSchedules.length > 1 ? (
@@ -365,12 +365,12 @@ const SchedulesTable = ({
                 </div>
               </>
             ) : (
-              <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] bg-[#22272e] py-1 px-4 rounded-[24px]">
+              <div className="w-[170px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] bg-[#22272e] py-1 px-4 rounded-[24px]">
                 <span>Actions</span>
               </div>
             )
           ) : (
-            <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] bg-[#22272e] py-1 px-4 rounded-[24px]">
+            <div className="w-[170px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] bg-[#22272e] py-1 px-4 rounded-[24px]">
               <span>Actions</span>
             </div>
           )}
@@ -394,29 +394,29 @@ const SchedulesTable = ({
                     onChange={() => toggleScheduleSelection(s?._id)}
                   />
                 </div>
-                <div className="w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.scheduleId}
                 </div>
-                <div className="w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.nameOfStudent}
                 </div>
-                <div className="w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.day}
                 </div>
-                <div className="w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.timing}
                 </div>
-                <div className="w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.studentType}
                 </div>
-                <div className="w-[160px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.student?.parent}
                 </div>
-                <div className=" w-[160px] flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className=" w-[170px] flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.isActive?.slice(0, 7)}...
                 </div>
 
-                <div className="w-[160px] whitespace-nowrap flex justify-start items-center px-2 gap-2">
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center px-2 gap-2">
                   {selectedSchedules.length < 2 ? (
                     allowedRoles?.find((ar) =>
                       auth?.userDetails?.role?.includes(ar)
