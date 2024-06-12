@@ -15,6 +15,7 @@ const UsersFilter = ({
   auth,
   setLoading,
   axios,
+  toast,
 }) => {
   const [searchTerm, setSearchTerm] = useState("All");
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -51,12 +52,14 @@ const UsersFilter = ({
 
   return (
     <>
-      <div className="w-100 bg-[white] text-[#404040] rounded-[10px] flex flex-col border-[1px]">
-        <div className="px-3 w-100 h-[58px] flex justify-start gap-1 border-b-2 border-white ">
+      <div className="w-100 bg-[#2d333b] text-[#c5d1de] rounded-tl-[10px] rounded-tr-[10px] flex flex-col border-[1px] border-[#2d333b]">
+        <div className="px-3 w-100 h-[58px] flex justify-start gap-2 border-b-2 border-[#2D333b]">
           <div
             onClick={() => handleMainFilterChange("All")}
-            className={`px-3 h-[58px] hover:border-b-2 border-blue-600 flex justify-center items-center text-[18px] ${
-              activeMainFilter === "All" ? "border-b-2 border-blue-600" : ""
+            className={`px-3 h-[58px] hover:border-b-2 hover:border-[#c5d1de] flex justify-center items-center text-[18px] ${
+              activeMainFilter === "All"
+                ? "border-b-2 border-[#c5d1de]"
+                : "border-b-2 border-[#2D333b]"
             }`}
           >
             All Users
@@ -69,56 +72,57 @@ const UsersFilter = ({
             type="text"
             autoComplete="off"
             placeholder="Search by case number, student name, etc."
-            className="p-3 rounded-[6px] w-[97%] phone:w-[100%] bg-gradient-to-br from-gray-100 to-gray-100 focus:outline-none focus:border-[1px] focus:border-[#cdcdcd]"
+            className="p-3 rounded-[6px] w-[97%] phone:w-[100%] bg-[#22272e] border-[1px] border-[#22272e] focus:outline-none focus:border-[#c5d1de]"
           />
-          <div className="flex justify-center items-center w-[50px] h-[48px] rounded-[8px] bg-gradient-to-br from-[#07bbff] to-[#007bff] text-white phone:hidden">
+          <div className="flex justify-center items-center w-[50px] h-[48px] rounded-[8px] bg-[#2d333b] text-white phone:hidden">
             <BsFilter className="text-[24px]" />
           </div>
         </div>
 
-        <div className="py-4 px-6 text-[18px] flex items-center gap-2">
+        <div className="pt-5 pb-4 px-6 text-[18px] flex items-center gap-2">
           Filter by <BsFilter className="text-[24px]" />
         </div>
+      </div>
 
-        <div className="w-[100%] flex justify-start bg-gray-100 flex p-4 rounded-bl-[10px] rounded-br-[10px]">
-          <div className="w-[100%] flex flex-wrap justify-start items-center gap-4 phone:gap-2">
-            <div className="phone:w-[49%] flex flex-col items-start gap-2">
-              <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
-                <div className="flex gap-2 items-center">
-                  <div>Status</div> <BsChevronBarDown />
-                </div>
-                <BsCheckCircle />
+      <div className="bg-[#22272e] p-4 rounded-bl-[10px] rounded-br-[10px] border-l-[1px] border-r-[1px] border-b-[1px]  border-[#2d333b] text-[#c5d1de]">
+        <div className="flex flex-wrap justify-start items-center gap-4 phone:gap-2">
+          <div className="phone:w-[49%] flex flex-col items-start gap-2">
+            <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
+              <div className="flex gap-2 items-center">
+                <div>Status</div> <BsChevronBarDown />
               </div>
-              <select
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="px-3 py-2 w-[242px] phone:w-[100%] rounded-[6px] bg-[#ffffff] appearance-none focus:outline-none focus:border-[#aaaaaa] focus:border-[1px] border-[1px] "
-              >
-                <option value="All">All</option>
-                <option value="Enabled">Enabled</option>
-                <option value="Disabled">Disabled</option>
-              </select>
+              <BsCheckCircle />
             </div>
+            <select
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+            >
+              <option value="All">All</option>
+              <option value="Enabled">Enabled</option>
+              <option value="Disabled">Disabled</option>
+            </select>
+          </div>
 
-            <div className="phone:w-[48.8%] flex flex-col items-start gap-2">
-              <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
-                <div className="flex gap-2 items-center">
-                  <div>Role</div> <BsChevronBarDown />
-                </div>
-                <BsGear className="text-[20px]" />
+          <div className="phone:w-[48.8%] flex flex-col items-start gap-2">
+            <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
+              <div className="flex gap-2 items-center">
+                <div>Role</div> <BsChevronBarDown />
               </div>
-              <select
-                onChange={(e) => setRole(e.target.value)}
-                className="px-3 py-2 w-[242px] phone:w-[100%] rounded-[6px] bg-[#ffffff] appearance-none focus:outline-none focus:border-[#aaaaaa] focus:border-[1px] border-[1px] "
-              >
-                <option value="All">All</option>
-                <option value="Student">Student</option>
-                <option value="Parent">Parent</option>
-                <option value="Administrator">Administrator</option>
-              </select>
+              <BsGear className="text-[20px]" />
             </div>
+            <select
+              onChange={(e) => setRole(e.target.value)}
+              className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+            >
+              <option value="All">All</option>
+              <option value="Student">Student</option>
+              <option value="Parent">Parent</option>
+              <option value="Administrator">Administrator</option>
+            </select>
           </div>
         </div>
       </div>
+
       <div className="py-8">
         <UsersTable
           users={combinedFilteredUsers}
@@ -129,6 +133,7 @@ const UsersFilter = ({
           auth={auth}
           setLoading={setLoading}
           axios={axios}
+          toast={toast}
         />
       </div>
     </>

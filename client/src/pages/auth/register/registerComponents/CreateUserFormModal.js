@@ -32,17 +32,17 @@ const CreateUserFormModal = ({
   return (
     <>
       <form onSubmit={handleCreateUser}>
+        <div className="phone:w-[100%] phone:mt-[0px] phone:ml-[0px] phone:transform rotate-[0deg] w-[102%] mt-[-40px] ml-[-9px] transform rotate-[-2deg] w-[100%] px-8 py-6 text-[28px] text-[#c5d1de] font-semibold flex justify-between rounded-tl-[12px] rounded-tr-[12px] bg-gradient-to-br from-[#2d333b] to-[#22272e]">
+          <span className="transform rotate-[2deg]">Create New User</span>
+          <BsX
+            onClick={handleCloseModal}
+            className="text-[36px] cursor-pointer"
+          />
+        </div>
         <div className="p-10">
-          <div className="text-[28px] text-[#077bff] font-semibold flex justify-between">
-            Create New User
-            <BsX
-              onClick={handleCloseModal}
-              className="text-[36px] cursor-pointer"
-            />
-          </div>
-          <div className="text-[#606060] pt-8 flex gap-2">
+          <div className="text-[#c5d1de] flex gap-2 pt-2">
             <div className="flex flex-col gap-2 w-[100%]">
-              <div className="ml-2">Username</div>
+              <div className="">Username</div>
               <input
                 required
                 name="userName"
@@ -52,19 +52,21 @@ const CreateUserFormModal = ({
                 maxLength="24"
                 autoComplete="off"
                 placeholder="e.g. kluds19"
-                className={`border-[1px] px-6 py-3 rounded-[24px] w-[100%] bg-white ${
-                  userNameError === "" ? "" : "border-[red]"
-                } focus:outline-none focus:border-[#007bff]`}
+                className={`border-[1px] border-[#22272e] px-4 py-3 rounded-[8px] w-[100%] bg-[transparent] ${
+                  userNameError === ""
+                    ? "focus:border-[#c5d1de]"
+                    : "border-[red]"
+                } focus:outline-none`}
               />
               {userNameError && (
-                <p className="text-red-500 ml-2">{userNameError}</p>
+                <p className="text-[#ff3131] ">{userNameError}</p>
               )}
             </div>
           </div>
 
-          <div className="text-[#606060] pt-5 flex gap-2">
+          <div className="text-[#c5d1de] pt-5 flex gap-2">
             <div className="flex flex-col gap-2 w-[100%]">
-              <div className="ml-2">First Name</div>
+              <div className="">First Name</div>
               <input
                 required
                 name="firstName"
@@ -73,17 +75,17 @@ const CreateUserFormModal = ({
                 type="text"
                 autoComplete="off"
                 placeholder="e.g. Kludy"
-                className={`border-[1px] px-6 py-3 rounded-[24px] w-[100%] bg-white ${
-                  firstNameError === "" ? "" : "border-red-400"
-                } focus:outline-none focus:border-[#007bff]`}
+                className={`border-[1px] border-[#22272e] px-4 py-3 rounded-[8px] w-[100%] bg-gradient-to-br from-[#2d333b] to-[#22272e] ${
+                  firstNameError === "" ? "border-[#c5d1de]" : "border-[red]"
+                } focus:outline-none`}
               />
               {firstNameError && (
-                <p className="text-red-500 ml-2">{firstNameError}</p>
+                <p className="text-[#ff3131] ">{firstNameError}</p>
               )}
             </div>
 
             <div className="flex flex-col gap-2 w-[100%]">
-              <div className="ml-2">Surname</div>
+              <div className="">Surname</div>
               <input
                 required
                 name="surName"
@@ -92,19 +94,21 @@ const CreateUserFormModal = ({
                 type="text"
                 autoComplete="off"
                 placeholder="e.g. Ramirez"
-                className={`border-[1px] px-6 py-3 rounded-[24px] w-[100%] bg-white ${
-                  surNameError === "" ? "" : "border-red-400"
-                } focus:outline-none focus:border-[#007bff]`}
+                className={`border-[1px] border-[#22272e] px-4 py-3 rounded-[8px] w-[100%] bg-[transparent] ${
+                  surNameError === ""
+                    ? "focus:border-[#c5d1de]"
+                    : "border-[red]"
+                } focus:outline-none`}
               />
               {surNameError && (
-                <p className="text-red-500 ml-2">{surNameError}</p>
+                <p className="text-[#ff3131] ">{surNameError}</p>
               )}
             </div>
           </div>
 
-          <div className="text-[#606060] pt-5 flex gap-2">
+          <div className="text-[#c5d1de] pt-5 flex gap-2">
             <div className="flex flex-col gap-2 w-[50%]">
-              <div className="ml-2">Email</div>
+              <div className="">Email</div>
               <input
                 required
                 name="email"
@@ -114,15 +118,15 @@ const CreateUserFormModal = ({
                 maxLength="32"
                 autoComplete="off"
                 placeholder="e.g. example@gmail.com"
-                className={`border-[1px] px-6 py-3 rounded-[24px] w-[100%] bg-white ${
-                  emailError === "" ? "" : "border-red-400"
-                } focus:outline-none focus:border-[#007bff]`}
+                className={`border-[1px] border-[#22272e] px-4 py-3 rounded-[8px] w-[100%] bg-[transparent] ${
+                  emailError === "" ? "focus:border-[#c5d1de]" : "border-[red]"
+                } focus:outline-none`}
               />
-              {emailError && <p className="text-red-500 ml-2">{emailError}</p>}
+              {emailError && <p className="text-[#ff3131] ">{emailError}</p>}
             </div>
 
             <div className="flex flex-col gap-2 w-[50%]">
-              <div className="ml-2">Password</div>
+              <div className="">Password</div>
               <input
                 required
                 name="password"
@@ -132,27 +136,27 @@ const CreateUserFormModal = ({
                 maxLength="32"
                 autoComplete="off"
                 placeholder="Enter password"
-                className={`border-[1px] px-6 py-3 rounded-[24px] w-[100%] bg-white ${
-                  passwordError === "" ? "" : "border-red-400"
-                } focus:outline-none focus:border-[#007bff]`}
+                className={`border-[1px] border-[#22272e] px-4 py-3 rounded-[8px] w-[100%] bg-gradient-to-br from-[#2d333b] to-[#22272e] ${
+                  passwordError === "" ? "border-[#c5d1de]" : "border-[red]"
+                } focus:outline-none`}
               />
               {passwordError && (
-                <p className="text-red-500 ml-2">{passwordError}</p>
+                <p className="text-[#ff3131] ">{passwordError}</p>
               )}
             </div>
           </div>
 
-          <div className="text-[#606060] pt-5 flex gap-2">
+          <div className="text-[#c5d1de] pt-5 flex gap-2">
             <div className="flex flex-col gap-2 w-[50%]">
               <div className="flex gap-2 items-center">
-                <span className="ml-2">Role</span>
+                <span className="">Role</span>
                 <BsChevronBarDown />
               </div>
               <select
                 name="role"
                 value={role}
                 onChange={handleChange}
-                className="appearance-none px-6 py-3 rounded-[24px] bg-white focus:outline-none border-[1px] focus:border-[#007bff]"
+                className="appearance-none px-6 py-3 rounded-[10px] bg-[#22272e] focus:outline-none focus:border-[1px] focus:border-[#c5d1de]"
               >
                 <option key="" value="">
                   Select Role
@@ -166,7 +170,7 @@ const CreateUserFormModal = ({
             </div>
 
             <div className="flex flex-col gap-2 w-[50%]">
-              <div className="ml-2">Contact No.</div>
+              <div className="">Contact No.</div>
               <input
                 required
                 name="contactNo"
@@ -176,17 +180,19 @@ const CreateUserFormModal = ({
                 autoComplete="off"
                 placeholder="e.g. 09123456789"
                 maxLength="13"
-                className={`border-[1px] px-6 py-3 rounded-[24px] w-[100%] bg-white ${
-                  contactNoError === "" ? "" : "border-red-400"
-                } focus:outline-none focus:border-[#007bff]`}
+                className={`px-4 py-3 rounded-[8px] w-[100%] bg-[#22272e] ${
+                  contactNoError === ""
+                    ? "focus:border-[1px] focus:border-[#c5d1de]"
+                    : "border-[1px] border-[red]"
+                } focus:outline-none`}
               />
               {contactNoError && (
-                <p className="text-red-500 ml-2">{contactNoError}</p>
+                <p className="text-[#ff3131] ">{contactNoError}</p>
               )}
             </div>
           </div>
 
-          <div className="w-100 pt-10 flex justify-end items-center">
+          <div className="w-100 pt-12 flex justify-end items-center">
             {userNameError === "" &&
             firstNameError === "" &&
             surNameError === "" &&
@@ -195,7 +201,7 @@ const CreateUserFormModal = ({
             role !== "" ? (
               <button
                 type="submit"
-                className="py-3 px-3 bg-[#007bff] text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="cursor-pointer py-3 px-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[10px]"
               >
                 <FaPlus />
                 <div>Add User</div>
@@ -203,7 +209,7 @@ const CreateUserFormModal = ({
             ) : (
               <button
                 disabled
-                className="py-3 px-3 bg-blue-300 text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="py-3 px-3 border-[1px] border-[#22272e] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
               >
                 <FaPlus />
                 <div>Add User</div>

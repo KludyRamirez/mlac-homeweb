@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  BsFolder2Open,
-  BsPen,
-  BsPenFill,
-  BsTrash3,
-  BsTrash3Fill,
-} from "react-icons/bs";
+import { BsTrash3Fill } from "react-icons/bs";
 import Modal from "@mui/material/Modal";
 import DeleteUserModal from "./DeleteUserModal";
 import DeleteManyUserModal from "./DeleteManyUserModal";
@@ -13,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import EditUser from "./EditUser";
 import { ModalBox } from "./CreateUser";
 import CreateStudent from "../../../students/studentsComponents/CreateStudent";
-import { FaPlus } from "react-icons/fa6";
+import { FaPenToSquare, FaUserPlus, FaTrashCan } from "react-icons/fa6";
 
 const UsersTable = ({
   users,
@@ -239,11 +233,11 @@ const UsersTable = ({
         </ModalBox>
       </Modal>
       <div
-        className={`w-100 h-[380px] bg-white flex flex-col rounded-[10px] border-[1px] text-[#505050] phone:overflow-x-scroll ${
+        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] border-[1px] border-[#2d333b] phone:overflow-x-scroll ${
           users && users?.length > 5 ? "overflow-y-scroll" : ""
         }`}
       >
-        <div className="phone:w-[fit-content] flex items-center gap-4 px-6">
+        <div className="phone:w-[fit-content] flex items-center gap-4 px-6 bg-[#2d333b] rounded-[10px]">
           <div className="w-[30px] h-[60px] flex justify-start items-center">
             <input
               type="checkbox"
@@ -252,28 +246,28 @@ const UsersTable = ({
               onChange={toggleSelectAll}
             />
           </div>
-          <div className="w-[60px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+          <div className="w-[60px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             UID
           </div>
-          <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+          <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Username
           </div>
-          <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+          <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Surname
           </div>
-          <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+          <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             First name
           </div>
-          <div className="w-[240px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+          <div className="w-[240px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Email
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Role
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Contact No.
           </div>
-          <div className=" w-[100px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+          <div className=" w-[100px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Status
           </div>
           {selectedUsers.length > 1 ? (
@@ -281,9 +275,8 @@ const UsersTable = ({
               auth?.userDetails?.role?.includes(ar)
             ) ? (
               <>
-                <div className="w-[1px] h-[20px] border-[1px]"></div>
                 <div
-                  className="flex gap-2 justify-start items-center py-1 px-2 bg-[#ff3131] border-[1px] border-[#ff3131] text-white text-[14px] rounded-[4px] cursor-pointer"
+                  className="flex gap-2 justify-start items-center py-1 px-2 bg-[#ff3131] border-[1px] border-[#22272e] border-[#ff3131] text-white text-[14px] rounded-[4px] cursor-pointer"
                   onClick={handleOpenModalDeleteMany}
                 >
                   <span>Delete</span>
@@ -291,12 +284,12 @@ const UsersTable = ({
                 </div>
               </>
             ) : (
-              <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+              <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
                 <span>Actions</span>
               </div>
             )
           ) : (
-            <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] py-1 px-3 rounded-[24px]">
+            <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
               <span>Actions</span>
             </div>
           )}
@@ -306,9 +299,12 @@ const UsersTable = ({
           <>
             {users?.map((user, k) => (
               <div
-                className={`phone:w-[fit-content] flex items-center gap-4 px-6 ${
-                  k % 2 === 0 ? "bg-gray-100" : "bg-white"
-                }`}
+                className={`phone:w-[fit-content]
+              flex items-center gap-4 px-6 ${
+                k % 2 === 0
+                  ? "bg-[#22272e] rounded-bl-[8px] rounded-br-[8px]"
+                  : "bg-transparent"
+              }`}
                 key={k}
               >
                 <div className="w-[30px] h-[60px] flex justify-start items-center">
@@ -350,43 +346,47 @@ const UsersTable = ({
                     ) ? (
                       <>
                         <div
-                          onClick={() => handleUserEditClick(user)}
-                          className="p-2 bg-[white] border-[1px] border-[#FFBF00] rounded-[18px] cursor-pointer"
+                          onClick={() => handleCreateStudentClick(user)}
+                          className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
                         >
-                          <BsPen className="text-[18px] text-[#FFBF00]" />
+                          <FaUserPlus className="text-[18px]" />
+                        </div>
+                        <div
+                          onClick={() => handleUserEditClick(user)}
+                          className="p-2 flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
+                        >
+                          <FaPenToSquare className="text-[18px]" />
                         </div>
                         <div
                           onClick={() => handleClickDelete(user?._id)}
-                          className="p-2 bg-[white] border-[1px] border-[#FF3131] rounded-[18px] cursor-pointer"
+                          className="p-2 flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
                         >
-                          <BsTrash3 className="text-[18px] text-[#FF3131]" />
-                        </div>
-                        <div
-                          onClick={() => handleCreateStudentClick(user)}
-                          className="p-2 bg-[white] border-[1px] border-[#007bff] rounded-[18px] cursor-pointer"
-                        >
-                          <FaPlus className="text-[18px] text-[#007bff]" />
+                          <FaTrashCan className="text-[18px]" />
                         </div>
                       </>
                     ) : (
                       <>
-                        <div className="p-2 bg-gray-200 rounded-[18px]">
-                          <BsPenFill className="text-[18px] text-white" />
+                        <div className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
+                          <FaUserPlus className="text-[18px]" />
                         </div>
+                        <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]"></div>
 
-                        <div className="p-2 bg-gray-200 rounded-[18px]">
-                          <BsTrash3Fill className="text-[18px] text-white" />
+                        <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
+                          <FaTrashCan className="text-[18px]" />
                         </div>
                       </>
                     )
                   ) : (
                     <>
-                      <div className="p-2 bg-gray-200 rounded-[18px]">
-                        <BsPenFill className="text-[18px] text-white" />
+                      <div className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
+                        <FaUserPlus className="text-[18px]" />
+                      </div>
+                      <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
+                        <FaPenToSquare className="text-[18px]" />
                       </div>
 
-                      <div className="p-2 bg-gray-200 rounded-[18px]">
-                        <BsTrash3Fill className="text-[18px] text-white" />
+                      <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
+                        <FaTrashCan className="text-[18px]" />
                       </div>
                     </>
                   )}
@@ -395,10 +395,7 @@ const UsersTable = ({
             ))}
           </>
         ) : (
-          <div className="w-100 h-[306px] flex flex-col justify-center items-center gap-2 text-[#707070] border-t-[1px] border-t-[#f0f0f0]">
-            <BsFolder2Open className="text-[42px]" />
-            <div className="text-[16px]">No users available</div>
-          </div>
+          <div className="bg-transparent w-[100%] flex flex-col justify-center items-center gap-2 text-[#c5d1de] rounded-bl-[12px] rounded-br-[12px]"></div>
         )}
       </div>
     </>

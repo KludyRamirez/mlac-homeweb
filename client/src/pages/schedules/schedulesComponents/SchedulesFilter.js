@@ -105,7 +105,7 @@ const SchedulesFilter = ({
 
   return (
     <>
-      <div className="w-100 bg-[#2d333b] text-[#c5d1de] rounded-tl-[10px] rounded-tr-[10px] flex flex-col border-[0px] border-[#2d333b]">
+      <div className="w-100 bg-[#2d333b] text-[#c5d1de] rounded-tl-[10px] rounded-tr-[10px] flex flex-col border-[1px] border-[#2d333b]">
         <div className="px-3 w-100 h-[58px] flex justify-start gap-2 border-b-2 border-[#2D333b]">
           <div
             onClick={() => handleMainFilterChange("All")}
@@ -137,8 +137,8 @@ const SchedulesFilter = ({
         </div>
       </div>
 
-      <div className="w-100 flex justify-start bg-[#22272e] p-4 rounded-bl-[10px] rounded-br-[10px] border-[1px] border-[#2d333b] mt-4 text-[#c5d1de]">
-        <div className="w-100 flex flex-wrap justify-start items-center gap-4 phone:gap-2">
+      <div className="bg-[#22272e] p-4 rounded-bl-[10px] rounded-br-[10px] border-l-[1px] border-r-[1px] border-b-[1px]  border-[#2d333b] text-[#c5d1de]">
+        <div className="flex flex-wrap justify-start items-center gap-4 phone:gap-2">
           <div className="phone:w-[50%] flex flex-col items-start gap-2">
             <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
               <div className="flex gap-2 items-center">

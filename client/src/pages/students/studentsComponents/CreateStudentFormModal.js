@@ -1,6 +1,7 @@
 import React from "react";
 import { BsChevronBarDown, BsX } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
+import { useLocation } from "react-router-dom";
 
 const CreateStudentFormModal = ({
   handleCloseModalCreateStudent,
@@ -37,10 +38,12 @@ const CreateStudentFormModal = ({
     guardianContactNo: guardianContactNoError,
   } = errors;
 
+  const location = useLocation();
+
   const handleClick = () => {
-    if (handleCloseModal) {
+    if (location.pathname === "/students") {
       handleCloseModal();
-    } else if (handleCloseModalCreateStudent) {
+    } else if (location.pathname === "/users") {
       handleCloseModalCreateStudent();
     }
   };

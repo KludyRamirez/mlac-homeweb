@@ -310,7 +310,7 @@ const SchedulesTable = ({
         </ModalBox>
       </Modal>
       <div
-        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] phone:overflow-x-scroll ${
+        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] border-[1px] border-[#2d333b] phone:overflow-x-scroll ${
           schedules && schedules.length > 5 ? "overflow-y-scroll" : ""
         }`}
       >
@@ -323,25 +323,25 @@ const SchedulesTable = ({
               onChange={toggleSelectAll}
             />
           </div>
-          <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Schedule ID
           </div>
-          <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Owner
           </div>
-          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Day
           </div>
-          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Timing
           </div>
-          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Type
           </div>
-          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Parent
           </div>
-          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] bg-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Status
           </div>
           {selectedSchedules.length > 1 ? (
@@ -365,12 +365,12 @@ const SchedulesTable = ({
                 </div>
               </>
             ) : (
-              <div className="w-[170px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] bg-[#22272e] py-1 px-4 rounded-[24px]">
+              <div className="w-[170px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
                 <span>Actions</span>
               </div>
             )
           ) : (
-            <div className="w-[170px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] bg-[#22272e] py-1 px-4 rounded-[24px]">
+            <div className="w-[170px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
               <span>Actions</span>
             </div>
           )}
@@ -472,7 +472,7 @@ const SchedulesTable = ({
             ))}
           </>
         ) : (
-          <div className="bg-transparent w-[100%] h-[360px] flex flex-col justify-center items-center gap-2 text-[#c5d1de] rounded-bl-[12px] rounded-br-[12px]"></div>
+          <div className="bg-transparent w-[100%] flex flex-col justify-center items-center gap-2 text-[#c5d1de] rounded-bl-[12px] rounded-br-[12px]"></div>
         )}
       </div>
     </>

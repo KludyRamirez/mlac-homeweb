@@ -54,7 +54,7 @@ const EditUser = ({
       );
       toast.success(res?.data?.message);
     } catch (err) {
-      toast.error(err?.response?.data);
+      toast.error(err?.response?.data?.message);
     } finally {
       setValues(initialState);
       handleCloseModalEdit();

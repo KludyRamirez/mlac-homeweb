@@ -495,7 +495,7 @@ function Sidebar(props) {
               boxSizing: "border-box",
               width: "240px",
               border: "none",
-              overflow: "hidden",
+              overflowY: "hidden",
             },
           }}
         >
@@ -509,6 +509,7 @@ function Sidebar(props) {
               boxSizing: "border-box",
               width: "240px",
               border: "none",
+              overflowY: "hidden",
             },
           }}
           open
