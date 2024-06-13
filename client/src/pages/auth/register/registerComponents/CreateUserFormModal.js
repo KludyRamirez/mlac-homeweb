@@ -1,6 +1,6 @@
 import React from "react";
 import { BsChevronBarDown, BsX } from "react-icons/bs";
-import { FaPlus, FaUserGroup } from "react-icons/fa6";
+import { FaPlus, FaUserSecret } from "react-icons/fa6";
 
 const CreateUserFormModal = ({
   handleChange,
@@ -35,7 +35,7 @@ const CreateUserFormModal = ({
         <div className="w-[100%] mt-[-40px] w-[100%] px-8 py-6 font-semibold flex justify-between items-center rounded-tl-[12px] rounded-tr-[12px] bg-gradient-to-r from-[#2d333b] to-[#22272e]">
           <div className="text-[#ffffff] text-[24px] flex gap-4 items-center">
             <span>Add User</span>
-            <FaUserGroup />
+            <FaUserSecret />
           </div>
           <BsX
             onClick={handleCloseModal}
@@ -175,9 +175,7 @@ const CreateUserFormModal = ({
                   onChange={handleChange}
                   className="border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
                 >
-                  <option key="" value="">
-                    Select Role
-                  </option>
+                  <option value="">Select Role</option>
                   {roles.map((r) => (
                     <option key={r} value={r}>
                       {r}

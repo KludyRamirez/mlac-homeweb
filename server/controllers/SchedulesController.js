@@ -72,7 +72,7 @@ const getSchedule = async (req, res) => {
   try {
     const schedules = await Schedule.find().sort({ updatedAt: -1 });
     res.status(200).json({
-      schedules: schedules,
+      schedules,
       message: "Successful getting the schedules!",
     });
   } catch (error) {

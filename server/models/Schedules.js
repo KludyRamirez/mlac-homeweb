@@ -64,20 +64,6 @@ const schedulesSchema = new mongoose.Schema(
       enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
     },
 
-    absentReason: {
-      type: String,
-      default: "Busy",
-      enum: [
-        "Busy",
-        "Sickness",
-        "No Transportation",
-        "Family Matter",
-        "Tiredness",
-        "Conflict of Schedule",
-        "Bad Weather",
-      ],
-    },
-
     isWaitlisted: {
       type: String,
       default: "No",

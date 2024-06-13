@@ -3,7 +3,8 @@ const Notification = require("../models/Notifications");
 
 const createStudent = async (req, res) => {
   try {
-    const { firstName, surName, studentNo, selectedUser } = req.body;
+    const { firstName, surName, studentNo } = req.body;
+    const { selectedUser } = req.body;
 
     if (!firstName || !surName || !studentNo) {
       return res.status(400).send("Missing required fields.");
@@ -55,7 +56,9 @@ const createStudent = async (req, res) => {
 
 const getStudents = async (req, res) => {
   try {
-    const students = await Student.find();
+    const students = await Student.find()
+      .populate("parent", "firstName surName contactNo")
+      .exec();
     const currentDate = new Date();
 
     for (const student of students) {

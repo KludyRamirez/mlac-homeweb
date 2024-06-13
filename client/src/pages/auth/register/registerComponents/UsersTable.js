@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BsTrash3Fill } from "react-icons/bs";
 import Modal from "@mui/material/Modal";
 import DeleteUserModal from "./DeleteUserModal";
 import DeleteManyUserModal from "./DeleteManyUserModal";
@@ -56,6 +55,7 @@ const UsersTable = ({
 
     if (!selectAll) {
       setSelectedUsers(users.map((user) => user._id));
+      console.log(selectedUsers);
     } else {
       setSelectedUsers([]);
     }
@@ -227,7 +227,7 @@ const UsersTable = ({
       >
         <ModalBox sx={{ width: "fit-content" }}>
           <DeleteManyUserModal
-            deleteSelectedusers={deleteSelectedUsers}
+            deleteSelectedUsers={deleteSelectedUsers}
             handleCloseModalDeleteMany={handleCloseModalDeleteMany}
           />
         </ModalBox>

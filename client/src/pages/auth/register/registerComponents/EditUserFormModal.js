@@ -1,6 +1,6 @@
 import React from "react";
 import { BsChevronBarDown, BsX } from "react-icons/bs";
-import { FaPlus, FaUserGroup } from "react-icons/fa6";
+import { FaPlus, FaUserSecret } from "react-icons/fa6";
 
 const EditStudentFormModal = ({
   handleChange,
@@ -27,7 +27,7 @@ const EditStudentFormModal = ({
         <div className="w-[100%] mt-[-40px] w-[100%] px-8 py-6 font-semibold flex justify-between items-center rounded-tl-[12px] rounded-tr-[12px] bg-gradient-to-r from-[#2d333b] to-[#22272e]">
           <div className="text-[#ffffff] text-[24px] flex gap-4 items-center">
             <span>Edit User</span>
-            <FaUserGroup />
+            <FaUserSecret />
           </div>
           <BsX
             onClick={handleCloseModalEdit}

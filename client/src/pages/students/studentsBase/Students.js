@@ -6,12 +6,12 @@ import CreateStudent from "../studentsComponents/CreateStudent";
 const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
   const [students, setStudents] = useState([]);
   const [cases, setCases] = useState([]);
-  const [cads, setCads] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     getStudents();
     getCases();
-    getCads();
+    getUsers();
   }, []);
 
   const getStudents = async () => {
@@ -52,13 +52,13 @@ const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
     }
   };
 
-  const getCads = async () => {
+  const getUsers = async () => {
     try {
       if (!auth.userDetails.token) {
         console.error("Authentication token not found.");
         return;
       }
-      const url = `/api/cad`;
+      const url = `/api/user`;
       const res = await axios.get(url, {
         withCredentials: true,
         headers: {
@@ -66,7 +66,7 @@ const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
         },
       });
 
-      setCads(res.data);
+      setUsers(res.data);
     } catch (err) {
       console.error("Error fetching users!", err);
     }
@@ -80,7 +80,7 @@ const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
           <div className="w-full bg-[#22272e] mt-[28px] rounded-tl-[24px] phone:rounded-tl-[0px] px-8 phone:px-4 pt-8">
             <CreateStudent
               getStudents={getStudents}
-              cads={cads}
+              users={users}
               allowedRoles={allowedRoles}
               auth={auth}
               toast={toast}
@@ -95,7 +95,7 @@ const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
               students={students}
               cases={cases}
               getStudents={getStudents}
-              cads={cads}
+              users={users}
               allowedRoles={allowedRoles}
             />
           </div>

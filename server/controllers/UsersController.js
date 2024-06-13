@@ -108,6 +108,8 @@ const deleteManyUser = async (req, res) => {
   try {
     const { users } = req.body;
 
+    const userData = req.user;
+
     if (!users) {
       return res.status(404).json({ error: "Cannot find selected users." });
     }

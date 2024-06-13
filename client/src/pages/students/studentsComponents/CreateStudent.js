@@ -9,25 +9,16 @@ const initialState = {
   studentNo: "",
   firstName: "",
   surName: "",
-  middleName: "",
-  college: "",
-  department: "",
-  year: Number,
-  section: "",
+  studentTypes: ["Solo", "Dyad"],
+  studentType: "",
   sex: "",
-  contactNo: "",
-  guardianContactNo: "",
-  email: "",
+  parent: "",
 };
 
 const errorsInitialState = {
   studentNo: "",
   firstName: "",
   surName: "",
-  middleName: "",
-  email: "",
-  contactNo: "",
-  guardianContactNo: "",
 };
 
 const CreateStudent = ({
@@ -37,7 +28,7 @@ const CreateStudent = ({
   axios,
   toast,
   getStudents,
-  cads,
+  users,
   allowedRoles,
   handleCloseModalCreateStudent,
 }) => {
@@ -58,7 +49,7 @@ const CreateStudent = ({
 
       const res = await axios.post(
         `/api/student`,
-        { values, selectedUser },
+        { ...values, selectedUser },
         {
           withCredentials: true,
           headers: {
@@ -86,7 +77,7 @@ const CreateStudent = ({
 
     let formattedValue = value;
 
-    if (name === "firstName" || name === "middleName" || name === "surName") {
+    if (name === "firstName" || name === "surName") {
       formattedValue =
         value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     }
@@ -98,14 +89,6 @@ const CreateStudent = ({
         newErrors[name] = "First name must be at least 3 characters long.";
       } else if (value.length > 48) {
         newErrors[name] = "First name must be at most 48 characters long.";
-      } else {
-        newErrors[name] = "";
-      }
-    } else if (name === "middleName") {
-      if (value.length < 3) {
-        newErrors[name] = "Middlename must be at least 3 characters long.";
-      } else if (value.length > 48) {
-        newErrors[name] = "Middlename must be at most 48 characters long.";
       } else {
         newErrors[name] = "";
       }
@@ -126,36 +109,17 @@ const CreateStudent = ({
         } else {
           newErrors[name] = "";
         }
-      } else if (name === "email") {
-        if (value.length < 11) {
-          newErrors[name] = "Email must be at least 11 characters long.";
-        } else if (value.length > 48) {
-          newErrors[name] = "Email must be at most 48 characters long.";
-        } else {
-          newErrors[name] = "";
-        }
-      } else if (name === "contactNo") {
-        if (value.length < 11) {
-          newErrors[name] = "Contact No. must be at least 11 characters long.";
-        } else if (value.length > 48) {
-          newErrors[name] = "Contact No. must be at most 48 characters long.";
-        } else {
-          newErrors[name] = "";
-        }
-      } else if (name === "guardianContactNo") {
-        if (value.length < 11) {
-          newErrors[name] = "Guardian No. must be at least 11 characters long.";
-        } else if (value.length > 48) {
-          newErrors[name] = "Guardian No. must be at most 48 characters long.";
-        } else {
-          newErrors[name] = "";
-        }
       }
     }
     setErrors(newErrors);
   };
 
   // create student modal functions
+
+  const handleParentChange = (e) => {
+    e.preventDefault();
+    setValues({ ...values, parent: e.target.value });
+  };
 
   const handleOpenModal = () => {
     setShowCreateStudentModal(true);
@@ -201,26 +165,28 @@ const CreateStudent = ({
           >
             <ModalBox>
               <CreateStudentFormModal
-                cads={cads}
+                users={users}
                 errors={errors}
                 values={values}
                 handleChange={handleChange}
                 handleCreateStudent={handleCreateStudent}
                 handleCloseModal={handleCloseModal}
                 handleCloseModalCreateStudent={handleCloseModalCreateStudent}
+                handleParentChange={handleParentChange}
               />
             </ModalBox>
           </Modal>
         </>
       ) : (
         <CreateStudentFormModal
-          cads={cads}
+          users={users}
           errors={errors}
           values={values}
           handleChange={handleChange}
           handleCreateStudent={handleCreateStudent}
           handleCloseModal={handleCloseModal}
           handleCloseModalCreateStudent={handleCloseModalCreateStudent}
+          handleParentChange={handleParentChange}
         />
       )}
     </>
