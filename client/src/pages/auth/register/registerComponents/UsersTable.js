@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import EditUser from "./EditUser";
 import { ModalBox } from "./CreateUser";
 import CreateStudent from "../../../students/studentsComponents/CreateStudent";
-import { FaPenToSquare, FaUserPlus, FaTrashCan } from "react-icons/fa6";
+import { FaPenToSquare, FaUserTie, FaTrashCan } from "react-icons/fa6";
 
 const UsersTable = ({
   users,
@@ -211,7 +211,7 @@ const UsersTable = ({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "22%" }}>
+        <ModalBox sx={{ width: "fit-content" }}>
           <DeleteUserModal
             handleConfirmDelete={handleConfirmDelete}
             handleCloseModal={handleCloseModal}
@@ -225,7 +225,7 @@ const UsersTable = ({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "22%" }}>
+        <ModalBox sx={{ width: "fit-content" }}>
           <DeleteManyUserModal
             deleteSelectedusers={deleteSelectedUsers}
             handleCloseModalDeleteMany={handleCloseModalDeleteMany}
@@ -267,7 +267,7 @@ const UsersTable = ({
           <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Contact No.
           </div>
-          <div className=" w-[100px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[120px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Status
           </div>
           {selectedUsers.length > 1 ? (
@@ -276,11 +276,10 @@ const UsersTable = ({
             ) ? (
               <>
                 <div
-                  className="flex gap-2 justify-start items-center py-1 px-2 bg-[#ff3131] border-[1px] border-[#22272e] border-[#ff3131] text-white text-[14px] rounded-[4px] cursor-pointer"
+                  className="flex gap-2 justify-start items-center py-1 px-3 bg-[#ff3131] border-[1px] border-[#22272e] border-[#ff3131] text-white text-[16px] rounded-[4px] cursor-pointer"
                   onClick={handleOpenModalDeleteMany}
                 >
                   <span>Delete</span>
-                  <BsTrash3Fill className="text-[14px]" />
                 </div>
               </>
             ) : (
@@ -300,10 +299,8 @@ const UsersTable = ({
             {users?.map((user, k) => (
               <div
                 className={`phone:w-[fit-content]
-              flex items-center gap-4 px-6 ${
-                k % 2 === 0
-                  ? "bg-[#22272e] rounded-bl-[8px] rounded-br-[8px]"
-                  : "bg-transparent"
+              flex items-center gap-4 px-6 last:rounded-bl-[8px] last:rounded-br-[8px] ${
+                k % 2 === 0 ? "bg-[#22272e] " : "bg-transparent"
               }`}
                 key={k}
               >
@@ -330,13 +327,13 @@ const UsersTable = ({
                 <div className="w-[240px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
                   {user?.email}
                 </div>
-                <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px] text-[#007bff]">
+                <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
                   {user?.role}
                 </div>
                 <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
                   {user?.contactNo}
                 </div>
-                <div className="w-[100px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px] text-[green]">
+                <div className="w-[120px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px] text-[#0FFF50]">
                   {user?.statusOfUser}
                 </div>
                 <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-1 rounded-[4px] gap-2">
@@ -347,9 +344,9 @@ const UsersTable = ({
                       <>
                         <div
                           onClick={() => handleCreateStudentClick(user)}
-                          className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
+                          className="relative container w-[35px] h-[35px] flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
                         >
-                          <FaUserPlus className="text-[18px]" />
+                          <FaUserTie className="text-[18px]" />
                         </div>
                         <div
                           onClick={() => handleUserEditClick(user)}
@@ -366,8 +363,8 @@ const UsersTable = ({
                       </>
                     ) : (
                       <>
-                        <div className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                          <FaUserPlus className="text-[18px]" />
+                        <div className="relative container w-[35px] h-[35px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
+                          <FaUserTie className="text-[18px]" />
                         </div>
                         <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]"></div>
 
@@ -378,8 +375,8 @@ const UsersTable = ({
                     )
                   ) : (
                     <>
-                      <div className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                        <FaUserPlus className="text-[18px]" />
+                      <div className="relative container w-[35px] h-[35px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
+                        <FaUserTie className="text-[18px]" />
                       </div>
                       <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
                         <FaPenToSquare className="text-[18px]" />

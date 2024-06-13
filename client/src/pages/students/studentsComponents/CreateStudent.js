@@ -166,23 +166,21 @@ const CreateStudent = ({
     setErrors(errorsInitialState);
   };
 
-  // const uniqueColleges = [...new Set(cads.map((c) => c.college))];
-
   return (
     <>
       {location.pathname === "/students" ? (
         <>
-          <div className="w-100 text-[14px] text-[#404040] pb-6 ">
-            Office of Student Affairs / Students
+          <div className="w-100 text-[14px] text-[#c5d1de] pb-6">
+            Maria Luisa Aguedan Carsula Homeweb / Students
           </div>
-          <div className="w-100 text-[26px] text-[#077bff] font-bold pb-6 flex justify-between items-center">
+          <div className="w-100 text-[26px] text-[#c5d1de] font-bold pb-6 flex justify-between items-center">
             <div>Students List</div>
             {allowedRoles?.find((ar) =>
               auth?.userDetails?.role?.includes(ar)
             ) ? (
               <div
                 onClick={handleOpenModal}
-                className="cursor-pointer py-3 px-3 bg-gradient-to-br from-[#07bbff] to-[#007bff] text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="cursor-pointer py-3 px-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[10px]"
               >
                 <FaPlus />
                 <div>Add Student</div>

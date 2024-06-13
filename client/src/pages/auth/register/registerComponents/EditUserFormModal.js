@@ -1,6 +1,6 @@
 import React from "react";
 import { BsChevronBarDown, BsX } from "react-icons/bs";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaUserGroup } from "react-icons/fa6";
 
 const EditStudentFormModal = ({
   handleChange,
@@ -24,155 +24,185 @@ const EditStudentFormModal = ({
   return (
     <>
       <form onSubmit={handleEditUser}>
-        <div className="p-10">
-          <div className="text-[28px] text-[#077bff] font-semibold flex justify-between">
-            Edit Existing User
-            <BsX
-              onClick={handleCloseModalEdit}
-              className="text-[36px] cursor-pointer"
-            />
+        <div className="w-[100%] mt-[-40px] w-[100%] px-8 py-6 font-semibold flex justify-between items-center rounded-tl-[12px] rounded-tr-[12px] bg-gradient-to-r from-[#2d333b] to-[#22272e]">
+          <div className="text-[#ffffff] text-[24px] flex gap-4 items-center">
+            <span>Edit User</span>
+            <FaUserGroup />
           </div>
-          <div className="text-[#606060] pt-8 flex gap-2">
+          <BsX
+            onClick={handleCloseModalEdit}
+            className="text-[#c5d1de] text-[34px] cursor-pointer"
+          />
+        </div>
+        <div className="p-10">
+          <div className="flex gap-2 text-[#c5d1de]">
             <div className="flex flex-col gap-2 w-[100%]">
-              <div>Username</div>
-              <input
-                required
-                name="userName"
-                value={updatedValues?.userName}
-                onChange={handleChange}
-                type="text"
-                maxLength="24"
-                autoComplete="off"
-                placeholder="e.g. kluds19"
-                className={`border-[1px] border-blue-400 p-3 rounded-[6px] w-[100%] bg-[#f5f5f5] ${
-                  userNameError === "" ? "" : "border-[red]"
-                } focus:outline-none `}
-              />
+              <div className="text-[#c5d1de]">Username</div>
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <input
+                  required
+                  name="userName"
+                  value={updatedValues?.userName}
+                  onChange={handleChange}
+                  type="text"
+                  maxLength="24"
+                  autoComplete="off"
+                  placeholder="e.g. kluds19"
+                  className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
+                    userNameError === ""
+                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      : "border-[#ff3131]"
+                  } focus:outline-none`}
+                />
+              </div>
               {userNameError && <p className="text-red-500">{userNameError}</p>}
             </div>
           </div>
 
-          <div className="text-[#606060] pt-6 flex gap-2">
+          <div className="text-[#c5d1de] pt-5 flex gap-2">
             <div className="flex flex-col gap-2 w-[100%]">
               <div className="">First Name</div>
-              <input
-                required
-                name="firstName"
-                value={updatedValues?.firstName}
-                onChange={handleChange}
-                type="text"
-                autoComplete="off"
-                placeholder="e.g. Kludy"
-                className={`border-[1px] p-3 rounded-[6px] w-[100%] bg-[#f5f5f5] ${
-                  firstNameError === "" ? "" : "border-[red]"
-                } focus:outline-none focus:border-blue-400`}
-              />
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <input
+                  required
+                  name="firstName"
+                  value={updatedValues?.firstName}
+                  onChange={handleChange}
+                  type="text"
+                  autoComplete="off"
+                  placeholder="e.g. Ramirez"
+                  className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
+                    firstNameError === ""
+                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      : "border-[#ff3131]"
+                  } focus:outline-none`}
+                />
+              </div>
               {firstNameError && (
-                <p className="text-red-500">{firstNameError}</p>
+                <p className="text-[#ff3131] ">{firstNameError}</p>
               )}
             </div>
 
             <div className="flex flex-col gap-2 w-[100%]">
               <div className="">Surname</div>
-              <input
-                required
-                name="surName"
-                value={updatedValues?.surName}
-                onChange={handleChange}
-                type="text"
-                autoComplete="off"
-                placeholder="e.g. Ramirez"
-                className={`border-[1px] p-3 rounded-[6px] w-[100%] bg-[#f5f5f5] ${
-                  surNameError === "" ? "" : "border-[red]"
-                } focus:outline-none focus:border-blue-400`}
-              />
-              {surNameError && <p className="text-red-500">{surNameError}</p>}
-            </div>
-          </div>
-
-          <div className="text-[#606060] pt-6 flex gap-2">
-            <div className="flex flex-col gap-2 w-[50%]">
-              <div className="">Email</div>
-              <input
-                required
-                name="email"
-                value={updatedValues?.email}
-                onChange={handleChange}
-                type="email"
-                maxLength="32"
-                autoComplete="off"
-                placeholder="e.g. example@gmail.com"
-                className={`border-[1px] p-3 rounded-[6px] w-[100%] bg-[#f5f5f5] ${
-                  emailError === "" ? "" : "border-[red]"
-                } focus:outline-none focus:border-blue-400`}
-              />
-              {emailError && <p className="text-red-500 pt-2">{emailError}</p>}
-            </div>
-
-            <div className="flex flex-col gap-2 w-[50%]">
-              <div className="">Password</div>
-              <input
-                required
-                name="password"
-                value={updatedValues?.password}
-                onChange={handleChange}
-                type="password"
-                maxLength="32"
-                autoComplete="off"
-                placeholder="Enter password"
-                className={`border-[1px] p-3 rounded-[6px] w-[100%] bg-[#f5f5f5] ${
-                  passwordError === "" ? "" : "border-[red]"
-                } focus:outline-none focus:border-blue-400`}
-              />
-              {passwordError && <p className="text-red-500">{passwordError}</p>}
-            </div>
-          </div>
-
-          <div className="text-[#606060] pt-6 flex gap-2">
-            <div className="flex flex-col gap-2 w-[50%]">
-              <div className="flex gap-2 items-center">
-                <span>Role</span>
-                <BsChevronBarDown />
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <input
+                  required
+                  name="surName"
+                  value={updatedValues?.surName}
+                  onChange={handleChange}
+                  type="text"
+                  autoComplete="off"
+                  placeholder="e.g. Ramirez"
+                  className={`border-[1px]  w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
+                    surNameError === ""
+                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      : "border-[#ff3131]"
+                  } focus:outline-none`}
+                />
               </div>
-              <select
-                name="role"
-                value={updatedValues?.role}
-                onChange={handleChange}
-                className="appearance-none p-3 rounded-[6px] bg-[#f5f5f5] focus:outline-none border-[1px] focus:border-blue-400"
-              >
-                <option key="" value="">
-                  Select Role
-                </option>
-                {roles.map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-2 w-[50%]">
-              <div>Contact No.</div>
-              <input
-                required
-                name="contactNo"
-                value={updatedValues?.contactNo?.replace(/[^0-9+]/g, "")}
-                onChange={handleChange}
-                type="text"
-                autoComplete="off"
-                placeholder="e.g. 09123456789"
-                maxLength="13"
-                className={`border-[1px] p-3 rounded-[6px] w-[100%] bg-[#f5f5f5] ${
-                  contactNoError === "" ? "" : "border-[red]"
-                } focus:outline-none focus:border-blue-400`}
-              />
-              {contactNoError && (
-                <p className="text-red-500">{contactNoError}</p>
+              {surNameError && (
+                <p className="text-[#ff3131] ">{surNameError}</p>
               )}
             </div>
           </div>
 
-          <div className="w-100 pt-10 flex justify-end items-center">
+          <div className="text-[#c5d1de] pt-5 flex gap-2">
+            <div className="flex flex-col gap-2 w-[50%]">
+              <div className="">Email</div>
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <input
+                  required
+                  name="email"
+                  value={updatedValues?.email}
+                  onChange={handleChange}
+                  type="text"
+                  autoComplete="off"
+                  placeholder="example@domain.com"
+                  className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
+                    emailError === ""
+                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      : "border-[#ff3131]"
+                  } focus:outline-none`}
+                />
+              </div>
+              {emailError && <p className="text-[#ff3131]">{emailError}</p>}
+            </div>
+
+            <div className="flex flex-col gap-2 w-[50%]">
+              <div className="">Password</div>
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <input
+                  required
+                  name="password"
+                  value={updatedValues?.password}
+                  onChange={handleChange}
+                  type="password"
+                  autoComplete="off"
+                  placeholder="admin123"
+                  className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
+                    passwordError === ""
+                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      : "border-[#ff3131]"
+                  } focus:outline-none`}
+                />
+              </div>
+              {passwordError && (
+                <p className="text-[#ff3131]">{passwordError}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="text-[#c5d1de] pt-5 flex gap-2">
+            <div className="flex flex-col gap-2 w-[50%]">
+              <div className="flex gap-2 items-center">
+                <span className="">Role</span>
+                <BsChevronBarDown />
+              </div>
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <select
+                  name="role"
+                  value={updatedValues?.role}
+                  onChange={handleChange}
+                  className="border-[1px] border-[#2d333b] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                >
+                  <option key="" value="">
+                    Select Role
+                  </option>
+                  {roles.map((r) => (
+                    <option key={r} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 w-[50%]">
+              <div className="">Contact No.</div>
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <input
+                  required
+                  name="contactNo"
+                  value={updatedValues?.contactNo?.replace(/[^0-9+]/g, "")}
+                  onChange={handleChange}
+                  type="text"
+                  autoComplete="off"
+                  placeholder="admin123"
+                  className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
+                    contactNoError === ""
+                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      : "border-[#ff3131]"
+                  } focus:outline-none`}
+                />
+              </div>
+              {contactNoError && (
+                <p className="text-[#ff3131]">{contactNoError}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="w-[100%] pt-12 flex items-center">
             {userNameError === "" &&
             firstNameError === "" &&
             surNameError === "" &&
@@ -181,7 +211,7 @@ const EditStudentFormModal = ({
             updatedValues?.role !== "" ? (
               <button
                 type="submit"
-                className="py-3 px-3 bg-[#007bff] text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
               >
                 <FaPlus />
                 <div>Edit User</div>
@@ -189,8 +219,7 @@ const EditStudentFormModal = ({
             ) : (
               <button
                 disabled
-                type="submit"
-                className="py-3 px-3 bg-blue-300 text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
               >
                 <FaPlus />
                 <div>Edit User</div>

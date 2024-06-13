@@ -14,7 +14,7 @@ export const ModalBox = styled("div")({
   width: "42%",
   borderRadius: "12px",
   transform: "translate(-50%, -50%)",
-  background: "#2d333b",
+  background: "#22272e",
   border: "none",
   outline: "none",
 
