@@ -209,8 +209,6 @@ const SchedulesTable = ({
     setShowRemarksScheduleModal(false);
   };
 
-  // export to pdf
-
   const exportPDF = () => {
     setExportTrigger(true);
   };

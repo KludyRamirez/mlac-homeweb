@@ -209,7 +209,7 @@ const CreateUserFormModal = ({
             </div>
           </div>
 
-          <div className="w-[100%] pt-12 flex items-center">
+          <div className="w-[100%] pt-11 flex items-center">
             {userNameError === "" &&
             firstNameError === "" &&
             surNameError === "" &&
@@ -218,7 +218,7 @@ const CreateUserFormModal = ({
             role !== "" ? (
               <button
                 type="submit"
-                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[6px]"
               >
                 <FaPlus />
                 <div>Add User</div>
@@ -226,7 +226,7 @@ const CreateUserFormModal = ({
             ) : (
               <button
                 disabled
-                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[6px]"
               >
                 <FaPlus />
                 <div>Add User</div>

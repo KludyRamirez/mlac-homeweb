@@ -13,7 +13,7 @@ const role = VerifyRoles;
 router.post(
   "/schedule",
   auth,
-  role(["Administrator", "Parent"]),
+  role(["Administrator"]),
   mainController.controllers.createSchedule
 );
 router.get(
@@ -32,14 +32,21 @@ router.get(
 router.put(
   "/schedule/:id",
   auth,
-  role(["Administrator", "Parent"]),
+  role(["Administrator"]),
   mainController.controllers.updateOneSchedule
 );
 router.delete(
   "/schedule/:id",
   auth,
-  role(["Administrator", "Parent"]),
+  role(["Administrator"]),
   mainController.controllers.deleteOneSchedule
+);
+
+router.delete(
+  "/schedules/deleteSelected",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.deleteManySchedule
 );
 
 // temporary schedule

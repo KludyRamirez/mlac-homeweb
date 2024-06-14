@@ -56,9 +56,9 @@ const SidebarOptions = styled("div")({
 
   "&:hover": {
     transform: "translateY(-1px)",
-    background: "rgba(255, 255, 255, 0.2)",
+    background: "#2d333b",
     borderRadius: "6px",
-    border: "1px solid rgba(0, 0, 0, 0.16)",
+    color: "white",
   },
   "&:active": {
     transform: "translateY(1px)",

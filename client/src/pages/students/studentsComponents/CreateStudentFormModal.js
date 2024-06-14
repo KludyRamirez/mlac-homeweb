@@ -218,7 +218,7 @@ const CreateStudentFormModal = ({
             sex !== "" ? (
               <button
                 type="submit"
-                className="w-[100%] font-bold cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[4px]"
+                className="w-[100%] font-bold cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[6px]"
               >
                 <FaPlus />
                 <div>Add Student</div>
@@ -227,7 +227,7 @@ const CreateStudentFormModal = ({
               <button
                 disabled
                 type="submit"
-                className="w-[100%] font-bold cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[4px]"
+                className="w-[100%] font-bold cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[6px]"
               >
                 <FaPlus />
                 <div>Add Student</div>

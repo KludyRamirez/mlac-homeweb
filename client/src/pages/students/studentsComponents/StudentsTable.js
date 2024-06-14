@@ -14,7 +14,7 @@ import DeleteStudentModal from "./DeleteStudentModal";
 import { useNavigate } from "react-router-dom";
 import EditStudent from "./EditStudent";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
-import { FaEye, FaPenToSquare, FaRegEye, FaTrashCan } from "react-icons/fa6";
+import { FaEye, FaPenToSquare, FaListUl, FaTrashCan } from "react-icons/fa6";
 
 const StudentsTable = ({
   auth,
@@ -331,7 +331,47 @@ const StudentsTable = ({
                   </div>
 
                   <div
-                    className={`w-[140px] flex justify-center items-center py-1 px-3 rounded-[4px] font-bold ${
+                    className={`${
+                      k % 2 === 0
+                        ? "bg-[#2d333b] "
+                        : "border-[1px] border-[#22272e]"
+                    } w-[140px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
+                      schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
+                    }`}
+                  >
+                    {schedulesCount}
+                  </div>
+
+                  <div
+                    className={`${
+                      k % 2 === 0
+                        ? "bg-[#2d333b] "
+                        : "border-[1px] border-[#22272e]"
+                    } w-[140px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
+                      schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
+                    }`}
+                  >
+                    {schedulesCount}
+                  </div>
+
+                  <div
+                    className={`${
+                      k % 2 === 0
+                        ? "bg-[#2d333b] "
+                        : "border-[1px] border-[#22272e]"
+                    } w-[140px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
+                      schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
+                    }`}
+                  >
+                    {schedulesCount}
+                  </div>
+
+                  <div
+                    className={`${
+                      k % 2 === 0
+                        ? "bg-[#2d333b] "
+                        : "border-[1px] border-[#22272e]"
+                    } w-[140px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
                       schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
                     }`}
                   >
@@ -344,11 +384,11 @@ const StudentsTable = ({
                         onClick={() => handleClickProfile(student?._id)}
                         className="relative container w-[35px] h-[35px] flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
                       >
-                        <FaRegEye className="text-[18px]" />
+                        <FaListUl className="text-[18px]" />
                       </div>
                     ) : (
-                      <div className="relative container w-[35px] h-[35px] flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]">
-                        <FaEye className="text-[18px]" />
+                      <div className="relative container w-[35px] h-[35px] flex justify-center items-center bg-[transparent] text-white rounded-[18px]">
+                        <FaListUl className="text-[18px]" />
                       </div>
                     )}
 

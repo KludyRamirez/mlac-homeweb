@@ -2,6 +2,7 @@ const Schedule = require("../models/Schedules");
 const PastSchedule = require("../models/PastSchedules");
 const TempSchedule = require("../models/TempSchedules");
 const TempSolo = require("../models/TempSoloSchedules");
+const Notification = require("../models/Notifications");
 const uniqid = require("uniqid");
 const cron = require("node-cron");
 
@@ -32,23 +33,26 @@ const createSchedule = async (req, res) => {
 
   if (scheduleExists) {
     return res.status(409).json({
-      message: "A new schedule has been added to the database.",
+      message: "You cannot duplicate existing schedules.",
     });
   } else if (dyadExists && studentType === "Solo") {
     return res.status(409).json({
-      message: "A new schedule has been added to the database.",
+      message:
+        "You cannot combine solo-type schedules with any other schedules.",
     });
   } else if (isVideoExistsPerm) {
     return res.status(409).json({
-      message: "A new schedule has been added to the database.",
+      message: "You cannot combine online schedules with offline schedules.",
     });
   } else if (dyadTempExists && studentType === "Solo") {
     return res.status(409).json({
-      message: "A new schedule has been added to the database.",
+      message:
+        "You cannot combine temporary dyad schedules with solo schedules or temporary solo schedules.",
     });
   } else if (tempSoloScheduleExists) {
     return res.status(409).json({
-      message: "A new schedule has been added to the database.",
+      message:
+        "You cannot combine temporary solo schedules with any other schedules",
     });
   } else {
     try {
@@ -224,6 +228,29 @@ const deleteOneSchedule = async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     res.status(400).json({ message: "Error deleting schedule" });
+  }
+};
+
+const deleteManySchedule = async (req, res) => {
+  try {
+    const { schedules } = req.body;
+    const userData = req.user;
+
+    await Schedule.deleteMany({ _id: { $in: schedules } });
+
+    await Notification.create({
+      userId: userData._id,
+      typeOfNotif: "Schedule",
+      actionOfNotif: "Delete",
+      message: `Selected schedules has been deleted successfully.`,
+      createdAt: new Date(),
+    });
+
+    res
+      .status(200)
+      .json({ message: "Selected schedules has been deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -569,6 +596,7 @@ module.exports = {
   getOneSchedule,
   updateOneSchedule,
   deleteOneSchedule,
+  deleteManySchedule,
 
   // createTempSchedule,
   // getTempSchedule,

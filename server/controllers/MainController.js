@@ -16,6 +16,7 @@ const { getSchedule } = require("../controllers/SchedulesController");
 const { getOneSchedule } = require("../controllers/SchedulesController");
 const { updateOneSchedule } = require("../controllers/SchedulesController");
 const { deleteOneSchedule } = require("../controllers/SchedulesController");
+const { deleteManySchedule } = require("../controllers/SchedulesController");
 const { isVideoOffHandler } = require("../controllers/SchedulesController");
 const { isActiveDefHandler } = require("../controllers/SchedulesController");
 
@@ -75,6 +76,7 @@ exports.controllers = {
   getOneSchedule,
   updateOneSchedule,
   deleteOneSchedule,
+  deleteManySchedule,
   //
   createStudent,
   getStudents,
