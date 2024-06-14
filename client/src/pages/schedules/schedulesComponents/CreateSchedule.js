@@ -5,7 +5,9 @@ import CreateScheduleFormModal from "./CreateScheduleFormModal";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
 
 const initialState = {
+  student: "",
   nameOfStudent: "",
+  parent: "",
   days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
   day: "",
   timings: [
@@ -68,19 +70,21 @@ const CreateSchedule = ({
     setValues({ ...values, [name]: formattedValue });
   };
 
-  const handleNameOfStudentChange = (e) => {
+  const handleStudentChange = (e) => {
     e.preventDefault();
 
-    const selectedName = e.target.value;
-    const selectedStudentId =
-      e.target.options[e.target.selectedIndex].getAttribute("data-student");
-    const selectedStudentType =
-      e.target.options[e.target.selectedIndex].getAttribute("data-studenttype");
+    const selectedStudent = e.target.value;
+    const selectedNameOfStudent =
+      e.target.options[e.target.selectedIndex].getAttribute(
+        "data-nameofstudent"
+      );
+    const selectedParent =
+      e.target.options[e.target.selectedIndex].getAttribute("data-parent");
     setValues({
       ...values,
-      nameOfStudent: selectedName,
-      student: selectedStudentId,
-      studentType: selectedStudentType,
+      student: selectedStudent,
+      nameOfStudent: selectedNameOfStudent,
+      parent: selectedParent,
     });
   };
 
@@ -138,7 +142,7 @@ const CreateSchedule = ({
             handleChange={handleChange}
             handleCreateSchedule={handleCreateSchedule}
             handleCloseModal={handleCloseModal}
-            handleNameOfStudentChange={handleNameOfStudentChange}
+            handleStudentChange={handleStudentChange}
           />
         </ModalBox>
       </Modal>

@@ -70,7 +70,9 @@ const createSchedule = async (req, res) => {
 
 const getSchedule = async (req, res) => {
   try {
-    const schedules = await Schedule.find().sort({ updatedAt: -1 });
+    const schedules = await Schedule.find()
+      .populate("student", "studentNo studentType parent")
+      .exec();
     res.status(200).json({
       schedules,
       message: "Successful getting the schedules!",

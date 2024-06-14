@@ -14,7 +14,7 @@ const StudentsFilter = ({
   setLoading,
   axios,
   students,
-  cases,
+  schedules,
   getStudents,
   allowedRoles,
 }) => {
@@ -196,7 +196,7 @@ const StudentsFilter = ({
           getStudents={getStudents}
           selectedStudents={selectedStudents}
           setSelectedStudents={setSelectedStudents}
-          cases={cases}
+          schedules={schedules}
           allowedRoles={allowedRoles}
         />
       </div>

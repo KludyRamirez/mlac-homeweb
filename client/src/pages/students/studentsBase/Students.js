@@ -5,12 +5,12 @@ import CreateStudent from "../studentsComponents/CreateStudent";
 
 const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
   const [students, setStudents] = useState([]);
-  const [cases, setCases] = useState([]);
+  const [schedules, setSchedules] = useState([]);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     getStudents();
-    getCases();
+    getSchedules();
     getUsers();
   }, []);
 
@@ -24,31 +24,31 @@ const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
       const res = await axios.get(url, {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
       setStudents(res.data);
     } catch (err) {
-      console.error("Error fetching users!", err);
+      console.error("Error fetching students!", err);
     }
   };
 
-  const getCases = async () => {
+  const getSchedules = async () => {
     try {
       if (!auth.userDetails.token) {
         console.error("Authentication token not found.");
         return;
       }
-      const url = `/api/case`;
+      const url = `/api/schedule`;
       const res = await axios.get(url, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${auth.userDetails.token}`,
         },
       });
-      setCases(res.data);
+      setSchedules(res.data.schedules);
     } catch (err) {
-      console.error("Error fetching users!", err);
+      console.error("Error fetching schedules!", err);
     }
   };
 
@@ -93,7 +93,7 @@ const Students = ({ auth, setLoading, toast, axios, allowedRoles }) => {
               setLoading={setLoading}
               axios={axios}
               students={students}
-              cases={cases}
+              schedules={schedules}
               getStudents={getStudents}
               users={users}
               allowedRoles={allowedRoles}

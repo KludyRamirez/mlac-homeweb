@@ -9,8 +9,9 @@ const CreateScheduleFormModal = ({
   handleCloseModal,
   values,
   students,
+  handleStudentChange,
 }) => {
-  const { nameOfStudent, days, day, timings, timing } = values;
+  const { student, days, day, timings, timing } = values;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStudents, setFilteredStudents] = useState(students);
@@ -77,9 +78,9 @@ const CreateScheduleFormModal = ({
               <BsChevronBarDown />
             </div>
             <select
-              name="nameOfStudent"
-              value={nameOfStudent}
-              onChange={handleChange}
+              name="student"
+              value={student}
+              onChange={handleStudentChange}
               className="appearance-none p-3 rounded-[6px] bg-[#f5f5f5] focus:outline-none border-[1px] focus:border-[#007bff]"
             >
               <option value="">Select Student</option>
@@ -101,9 +102,9 @@ const CreateScheduleFormModal = ({
                 ?.map((s) => (
                   <option
                     key={s?._id}
-                    value={`${s?.firstName} ${s?.surName}`}
-                    data-student={s?._id}
-                    data-studenttype={s?.studentType}
+                    value={s?._id}
+                    data-nameofstudent={`${s?.firstName} ${s?.surName}`}
+                    data-parent={`${s?.parent?.firstName} ${s?.parent?.surName}`}
                   >
                     {s?.firstName} {s?.surName}
                   </option>
@@ -147,7 +148,7 @@ const CreateScheduleFormModal = ({
           </div>
 
           <div className="w-100 pt-10 flex justify-end items-center">
-            {nameOfStudent !== "" && day !== "" && timing !== "" ? (
+            {student !== "" && day !== "" && timing !== "" ? (
               <button
                 type="submit"
                 className="cursor-pointer py-3 px-3 bg-[#007bff] text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"

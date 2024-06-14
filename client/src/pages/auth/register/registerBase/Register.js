@@ -5,9 +5,11 @@ import UsersFilter from "../registerComponents/UsersFilter";
 
 const Register = ({ auth, setLoading, toast, axios, allowedRoles }) => {
   const [users, setUsers] = useState([]);
+  const [students, setStudents] = useState([]);
 
   useEffect(() => {
     getUsers();
+    getStudents();
   }, []);
 
   const getUsers = async () => {
@@ -29,6 +31,25 @@ const Register = ({ auth, setLoading, toast, axios, allowedRoles }) => {
     }
   };
 
+  const getStudents = async () => {
+    try {
+      if (!auth?.userDetails?.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+      const url = `/api/student`;
+      const res = await axios.get(url, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
+        },
+      });
+      setStudents(res.data);
+    } catch (err) {
+      console.error("Error fetching users!", err);
+    }
+  };
+
   return (
     <>
       <div className="flex justify-start h-screen w-screen bg-[#22272e]">
@@ -42,10 +63,13 @@ const Register = ({ auth, setLoading, toast, axios, allowedRoles }) => {
               setLoading={setLoading}
               toast={toast}
               axios={axios}
+              students={students}
             />
             <UsersFilter
+              students={students}
               users={users}
               getUsers={getUsers}
+              getStudents={getStudents}
               allowedRoles={allowedRoles}
               auth={auth}
               setLoading={setLoading}

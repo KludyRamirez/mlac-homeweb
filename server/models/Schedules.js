@@ -8,12 +8,21 @@ const schedulesSchema = new mongoose.Schema(
       ref: "Students",
     },
 
-    scheduleId: {
+    // dependent attributes from student
+
+    nameOfStudent: {
       type: String,
       trim: true,
     },
 
-    nameOfStudent: {
+    parent: {
+      type: String,
+      trim: true,
+    },
+
+    // independent attributes
+
+    scheduleId: {
       type: String,
       trim: true,
     },
@@ -32,16 +41,6 @@ const schedulesSchema = new mongoose.Schema(
     schedType: {
       type: String,
       default: "Permanent",
-    },
-
-    studentType: {
-      type: String,
-      enum: ["Solo", "Dyad"],
-    },
-
-    parent: {
-      type: String,
-      trim: true,
     },
 
     timing: {
@@ -68,11 +67,6 @@ const schedulesSchema = new mongoose.Schema(
       type: String,
       default: "No",
       enum: ["Yes", "No"],
-    },
-
-    absencesCounter: {
-      type: Number,
-      default: 0,
     },
 
     isDisabled: {

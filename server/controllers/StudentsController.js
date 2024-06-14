@@ -28,7 +28,7 @@ const createStudent = async (req, res) => {
     if (selectedUser && selectedUser.firstName && selectedUser.surName) {
       newStudent = await Student.create({
         ...req.body,
-        parent: `${selectedUser.firstName} ${selectedUser.surName}`,
+        parent: selectedUser._id,
       });
     } else {
       newStudent = await Student.create(req.body);
@@ -154,6 +154,8 @@ const deleteOneStudent = async (req, res) => {
 const deleteManyStudent = async (req, res) => {
   try {
     const { students } = req.body;
+    const userData = req.user;
+
     await Student.deleteMany({ _id: { $in: students } });
 
     await Notification.create({

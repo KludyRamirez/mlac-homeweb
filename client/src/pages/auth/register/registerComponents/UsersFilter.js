@@ -11,11 +11,13 @@ import UsersTable from "./UsersTable";
 const UsersFilter = ({
   users,
   getUsers,
+  getStudents,
   allowedRoles,
   auth,
   setLoading,
   axios,
   toast,
+  students,
 }) => {
   const [searchTerm, setSearchTerm] = useState("All");
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -134,6 +136,8 @@ const UsersFilter = ({
           setLoading={setLoading}
           axios={axios}
           toast={toast}
+          students={students}
+          getStudents={getStudents}
         />
       </div>
     </>

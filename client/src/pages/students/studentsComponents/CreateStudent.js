@@ -62,7 +62,11 @@ const CreateStudent = ({
       toast.error(err?.response?.data);
     } finally {
       setValues(initialState);
-      handleCloseModal();
+      if (location.pathname === "/students") {
+        handleCloseModal();
+      } else if (location.pathname === "/users") {
+        handleCloseModalCreateStudent();
+      }
       getStudents();
     }
   };

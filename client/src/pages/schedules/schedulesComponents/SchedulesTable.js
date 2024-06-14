@@ -381,7 +381,7 @@ const SchedulesTable = ({
             {schedules?.map((s, k) => (
               <div
                 className={`phone:w-[fit-content]
-              flex items-center gap-4 px-6 ${
+              flex items-center gap-4 px-6 last:rounded-bl-[10px] rounded-br-[10px] ${
                 k % 2 === 0 ? "bg-[#22272e]" : "bg-transparent"
               }`}
                 key={k}
@@ -395,7 +395,7 @@ const SchedulesTable = ({
                   />
                 </div>
                 <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
-                  {s?.scheduleId}
+                  {s?.scheduleId.slice(11)}
                 </div>
                 <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.nameOfStudent}
@@ -407,10 +407,10 @@ const SchedulesTable = ({
                   {s?.timing}
                 </div>
                 <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
-                  {s?.studentType}
+                  {s?.student?.studentType}
                 </div>
                 <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
-                  {s?.student?.parent}
+                  {s?.parent?.slice(0, 7)}...
                 </div>
                 <div className=" w-[170px] flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.isActive?.slice(0, 7)}...

@@ -18,6 +18,7 @@ const UsersTable = ({
   setLoading,
   toast,
   axios,
+  getStudents,
 }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [userDeleteId, setUserDeleteId] = useState("");
@@ -183,6 +184,7 @@ const UsersTable = ({
             toast={toast}
             axios={axios}
             setLoading={setLoading}
+            getStudents={getStudents}
           />
         </ModalBox>
       </Modal>

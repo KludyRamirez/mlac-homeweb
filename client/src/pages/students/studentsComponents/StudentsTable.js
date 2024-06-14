@@ -25,8 +25,7 @@ const StudentsTable = ({
   getStudents,
   selectedStudents,
   setSelectedStudents,
-  cases,
-  cads,
+  schedules,
   allowedRoles,
 }) => {
   const [selectAll, setSelectAll] = useState(false);
@@ -172,7 +171,7 @@ const StudentsTable = ({
     setShowEditStudentModal(false);
   };
 
-  const casesData = [...cases];
+  const schedulesData = [...schedules];
 
   return (
     <>
@@ -192,7 +191,6 @@ const StudentsTable = ({
             toast={toast}
             axios={axios}
             getStudents={getStudents}
-            cads={cads}
           />
         </ModalBox>
       </Modal>
@@ -241,32 +239,28 @@ const StudentsTable = ({
           <div className="w-[60px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             ID
           </div>
-          <div className="w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
-            Surname
+          <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+            Name
           </div>
-          <div className="w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
-            First name
-          </div>
-
-          <div className=" w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
-            Sex
-          </div>
-          <div className=" w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Type
           </div>
-          <div className=" w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Status
           </div>
-          <div className=" w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+            Parent
+          </div>
+          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Permanent
           </div>
-          <div className=" w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Dyad
           </div>
-          <div className=" w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Solo
           </div>
-          <div className=" w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Attendance
           </div>
 
@@ -283,12 +277,12 @@ const StudentsTable = ({
                 </div>
               </>
             ) : (
-              <div className="w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+              <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
                 <span>Actions</span>
               </div>
             )
           ) : (
-            <div className="w-[118px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+            <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
               <span>Actions</span>
             </div>
           )}
@@ -297,8 +291,8 @@ const StudentsTable = ({
         {students.length > 0 ? (
           <>
             {students?.map((student, k) => {
-              const casesCount = casesData.filter(
-                (c) => c?.student?.studentNo === student?.studentNo
+              const schedulesCount = schedulesData.filter(
+                (s) => s?.student?.studentNo === student?.studentNo
               ).length;
 
               return (
@@ -318,83 +312,30 @@ const StudentsTable = ({
                     />
                   </div>
                   <div className="w-[60px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
-                    {student?.studentNo?.slice(0, 1)}
+                    {student?.studentNo?.slice(0, 3)}
                   </div>
-                  <div className="w-[118px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
-                    {student?.surName}
+                  <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
+                    {student?.firstName} {student?.surName}
                   </div>
-                  <div className="w-[118px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
-                    {student?.firstName}
-                  </div>
-                  <div className="w-[118px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
-                    {student?.sex}
-                  </div>
-                  <div className="w-[118px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
+
+                  <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
                     {student?.studentType}
                   </div>
-                  <div
-                    className={`w-[118px] flex justify-between items-center py-1 px-3 rounded-[4px] ${
-                      student?.statusOfStudent === "Dismissed"
-                        ? "text-[#ff3131] font-bold"
-                        : "text-[#0FFF50]"
-                    }`}
-                  >
+
+                  <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
                     {student?.statusOfStudent}
                   </div>
 
-                  <div
-                    className={`w-[118px] flex justify-between items-center py-1 px-3 rounded-[4px] ${
-                      casesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
-                    }`}
-                  >
-                    <div>{casesCount}</div>
-
-                    {/* {casesCount < 2 ? (
-                      <div className="w-[14px] h-[14px] rounded-[50%] bg-[#0FFF50]"></div>
-                    ) : (
-                      <div className="w-[14px] h-[14px] rounded-[50%] bg-[#ff3131]"></div>
-                    )} */}
+                  <div className="w-[140px] flex justify-between items-center py-1 px-3 rounded-[4px]">
+                    {student?.parent?.firstName} {student?.parent?.surName}
                   </div>
+
                   <div
-                    className={`w-[118px] flex justify-between items-center py-1 px-3 rounded-[4px] ${
-                      casesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
+                    className={`w-[140px] flex justify-center items-center py-1 px-3 rounded-[4px] font-bold ${
+                      schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
                     }`}
                   >
-                    <div className="">
-                      {student?.parent?.firstName} {student?.parent?.surName}
-                    </div>
-
-                    {/* {casesCount < 2 ? (
-                      <div className="w-[14px] h-[14px] rounded-[50%] bg-[#0FFF50]"></div>
-                    ) : (
-                      <div className="w-[14px] h-[14px] rounded-[50%] bg-[#ff3131]"></div>
-                    )} */}
-                  </div>
-                  <div
-                    className={`w-[118px] flex justify-between items-center py-1 px-3 rounded-[4px] ${
-                      casesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
-                    }`}
-                  >
-                    <div>{casesCount}</div>
-
-                    {/* {casesCount < 2 ? (
-                      <div className="w-[14px] h-[14px] rounded-[50%] bg-[#0FFF50]"></div>
-                    ) : (
-                      <div className="w-[14px] h-[14px] rounded-[50%] bg-[#ff3131]"></div>
-                    )} */}
-                  </div>
-                  <div
-                    className={`w-[118px] flex justify-between items-center py-1 px-3 rounded-[4px] ${
-                      casesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
-                    }`}
-                  >
-                    <div>{casesCount}</div>
-
-                    {/* {casesCount < 2 ? (
-                      <div className="w-[14px] h-[14px] rounded-[50%] bg-[#0FFF50]"></div>
-                    ) : (
-                      <div className="w-[14px] h-[14px] rounded-[50%] bg-[#ff3131]"></div>
-                    )} */}
+                    {schedulesCount}
                   </div>
 
                   <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-1 rounded-[4px] gap-2">
