@@ -241,32 +241,29 @@ const StudentsTable = ({
               onChange={toggleSelectAll}
             />
           </div>
-          <div className="w-[60px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className="w-[120px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             ID
           </div>
-          <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className="w-[180px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Name
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[120px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Type
           </div>
           <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Status
           </div>
-          <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className="w-[180px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Parent
           </div>
           <div className=" w-[130px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
-            Permanent
+            Schedules
           </div>
           <div className=" w-[130px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
-            Dyad
+            Fulfilled
           </div>
           <div className=" w-[130px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
-            Solo
-          </div>
-          <div className=" w-[130px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
-            Attendance
+            Behind by
           </div>
 
           {selectedStudents.length > 1 ? (
@@ -282,12 +279,12 @@ const StudentsTable = ({
                 </div>
               </>
             ) : (
-              <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+              <div className="w-[180px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
                 <span>Actions</span>
               </div>
             )
           ) : (
-            <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+            <div className="w-[180px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
               <span>Actions</span>
             </div>
           )}
@@ -316,14 +313,14 @@ const StudentsTable = ({
                       className="w-[18px] h-[18px]"
                     />
                   </div>
-                  <div className="w-[60px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
-                    {student?.studentNo?.slice(0, 3)}
+                  <div className="w-[120px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
+                    {student?.studentNo}
                   </div>
-                  <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
+                  <div className="w-[180px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
                     {student?.firstName} {student?.surName}
                   </div>
 
-                  <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
+                  <div className="w-[120px] whitespace-nowrap flex justify-between items-center py-1 px-3 rounded-[4px]">
                     {student?.studentType}
                   </div>
 
@@ -331,18 +328,16 @@ const StudentsTable = ({
                     {student?.statusOfStudent}
                   </div>
 
-                  <div className="w-[140px] flex justify-between items-center py-1 px-3 rounded-[4px]">
+                  <div className="w-[180px] flex justify-between items-center py-1 px-3 rounded-[4px]">
                     {student?.parent?.firstName} {student?.parent?.surName}
                   </div>
 
                   <div
                     className={`${
                       k % 2 === 0
-                        ? "border-[1px] border-[#2d333b]"
-                        : "bg-[#22272e]"
-                    } w-[130px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
-                      schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
-                    }`}
+                        ? "bg-gradient-to-r from-[#0437F2] to-[#22272e] hover:to-[#0437F2] cursor-pointer"
+                        : "bg-gradient-to-r from-[#0437F2] to-[#2d333b] hover:to-[#0437F2] cursor-pointer"
+                    } w-[130px] flex justify-center items-center py-1 px-4 rounded-[24px] font-bold `}
                   >
                     {schedulesCount}
                   </div>
@@ -350,11 +345,9 @@ const StudentsTable = ({
                   <div
                     className={`${
                       k % 2 === 0
-                        ? "border-[1px] border-[#2d333b]"
-                        : "bg-[#22272e]"
-                    } w-[130px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
-                      schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
-                    }`}
+                        ? "bg-gradient-to-r from-[#008000] to-[#22272e] hover:to-[#008000] cursor-pointer"
+                        : "bg-gradient-to-r from-[#008000] to-[#2d333b] hover:to-[#008000] cursor-pointer"
+                    } w-[130px] flex justify-center items-center py-1 px-4 rounded-[24px] font-bold `}
                   >
                     {schedulesCount}
                   </div>
@@ -362,28 +355,14 @@ const StudentsTable = ({
                   <div
                     className={`${
                       k % 2 === 0
-                        ? "border-[1px] border-[#2d333b]"
-                        : "bg-[#22272e]"
-                    } w-[130px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
-                      schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
-                    }`}
+                        ? "bg-gradient-to-r from-[#ff3131] to-[#22272e] hover:to-[#ff3131] cursor-pointer"
+                        : "bg-gradient-to-r from-[#ff3131] to-[#2d333b] hover:to-[#ff3131] cursor-pointer"
+                    } w-[130px] flex justify-center items-center py-1 px-4 rounded-[24px] font-bold `}
                   >
                     {schedulesCount}
                   </div>
 
-                  <div
-                    className={`${
-                      k % 2 === 0
-                        ? "border-[1px] border-[#2d333b]"
-                        : "bg-[#22272e]"
-                    } w-[130px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
-                      schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
-                    }`}
-                  >
-                    {schedulesCount}
-                  </div>
-
-                  <div className="w-[130px] flex justify-start items-center px-1 rounded-[4px] gap-2">
+                  <div className="w-[140px] flex justify-start items-center px-1 rounded-[4px] gap-2">
                     {selectedStudents.length < 2 ? (
                       <div
                         onClick={() => handleClickProfile(student?._id)}

@@ -6,6 +6,10 @@ module.exports = {
       screens: {
         phone: { max: "767px" },
       },
+      backgroundImage: {
+        "custom-gradient":
+          "linear-gradient(to right, #22272e 25%, #2d333b 50%, #22272e 75%)",
+      },
     },
   },
   plugins: [],
