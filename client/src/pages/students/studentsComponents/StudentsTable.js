@@ -14,7 +14,12 @@ import DeleteStudentModal from "./DeleteStudentModal";
 import { useNavigate } from "react-router-dom";
 import EditStudent from "./EditStudent";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
-import { FaEye, FaPenToSquare, FaListUl, FaTrashCan } from "react-icons/fa6";
+import {
+  FaPenToSquare,
+  FaArrowUpRightFromSquare,
+  FaTrashCan,
+} from "react-icons/fa6";
+import Ellipsis from "../../../externalUtils/Ellipsis";
 
 const StudentsTable = ({
   auth,
@@ -251,16 +256,16 @@ const StudentsTable = ({
           <div className="w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Parent
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[130px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Permanent
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[130px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Dyad
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[130px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Solo
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
+          <div className=" w-[130px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-3 rounded-[24px]">
             Attendance
           </div>
 
@@ -333,9 +338,9 @@ const StudentsTable = ({
                   <div
                     className={`${
                       k % 2 === 0
-                        ? "bg-[#2d333b] "
-                        : "border-[1px] border-[#22272e]"
-                    } w-[140px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
+                        ? "border-[1px] border-[#2d333b]"
+                        : "bg-[#22272e]"
+                    } w-[130px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
                       schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
                     }`}
                   >
@@ -345,9 +350,9 @@ const StudentsTable = ({
                   <div
                     className={`${
                       k % 2 === 0
-                        ? "bg-[#2d333b] "
-                        : "border-[1px] border-[#22272e]"
-                    } w-[140px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
+                        ? "border-[1px] border-[#2d333b]"
+                        : "bg-[#22272e]"
+                    } w-[130px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
                       schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
                     }`}
                   >
@@ -357,9 +362,9 @@ const StudentsTable = ({
                   <div
                     className={`${
                       k % 2 === 0
-                        ? "bg-[#2d333b] "
-                        : "border-[1px] border-[#22272e]"
-                    } w-[140px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
+                        ? "border-[1px] border-[#2d333b]"
+                        : "bg-[#22272e]"
+                    } w-[130px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
                       schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
                     }`}
                   >
@@ -369,26 +374,26 @@ const StudentsTable = ({
                   <div
                     className={`${
                       k % 2 === 0
-                        ? "bg-[#2d333b] "
-                        : "border-[1px] border-[#22272e]"
-                    } w-[140px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
+                        ? "border-[1px] border-[#2d333b]"
+                        : "bg-[#22272e]"
+                    } w-[130px] flex justify-center items-center py-1 px-3 rounded-[24px] font-bold ${
                       schedulesCount < 2 ? "text-[#0FFF50]" : "text-[#ff3131]"
                     }`}
                   >
                     {schedulesCount}
                   </div>
 
-                  <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-1 rounded-[4px] gap-2">
+                  <div className="w-[130px] flex justify-start items-center px-1 rounded-[4px] gap-2">
                     {selectedStudents.length < 2 ? (
                       <div
                         onClick={() => handleClickProfile(student?._id)}
-                        className="relative container w-[35px] h-[35px] flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
+                        className="p-2 flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
                       >
-                        <FaListUl className="text-[18px]" />
+                        <FaArrowUpRightFromSquare className="text-[18px]" />
                       </div>
                     ) : (
-                      <div className="relative container w-[35px] h-[35px] flex justify-center items-center bg-[transparent] text-white rounded-[18px]">
-                        <FaListUl className="text-[18px]" />
+                      <div className="p-2 flex justify-center items-center bg-[transparent] text-white rounded-[18px]">
+                        <FaArrowUpRightFromSquare className="text-[18px]" />
                       </div>
                     )}
 
@@ -413,24 +418,25 @@ const StudentsTable = ({
                       ) : (
                         <>
                           <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                            <FaPenToSquare className="text-[18px] text-white" />
+                            <FaPenToSquare className="text-[18px]" />
                           </div>
                           <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                            <FaTrashCan className="text-[18px] text-white" />
+                            <FaTrashCan className="text-[18px]" />
                           </div>
                         </>
                       )
                     ) : (
                       <>
                         <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                          <FaPenToSquare className="text-[18px] text-white" />
+                          <FaPenToSquare className="text-[18px]" />
                         </div>
                         <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                          <FaTrashCan className="text-[18px] text-white" />
+                          <FaTrashCan className="text-[18px]" />
                         </div>
                       </>
                     )}
                   </div>
+                  <Ellipsis item={student} />
                 </div>
               );
             })}
