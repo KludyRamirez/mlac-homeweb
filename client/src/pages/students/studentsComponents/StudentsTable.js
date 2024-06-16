@@ -340,6 +340,9 @@ const StudentsTable = ({
                     } w-[130px] flex justify-center items-center py-1 px-4 rounded-[24px] font-bold `}
                   >
                     {schedulesCount}
+                    <span className="text-[14px] font-normal ml-1 mt-[-1px]">
+                      scheds
+                    </span>
                   </div>
 
                   <div
@@ -350,6 +353,9 @@ const StudentsTable = ({
                     } w-[130px] flex justify-center items-center py-1 px-4 rounded-[24px] font-bold `}
                   >
                     {schedulesCount}
+                    <span className="text-[14px] font-normal ml-1 mt-[-1px]">
+                      scheds
+                    </span>
                   </div>
 
                   <div
@@ -359,7 +365,10 @@ const StudentsTable = ({
                         : "bg-gradient-to-r from-[#ff3131] to-[#2d333b] hover:to-[#ff3131] cursor-pointer"
                     } w-[130px] flex justify-center items-center py-1 px-4 rounded-[24px] font-bold `}
                   >
-                    {schedulesCount}
+                    {student?.behindByCounter}{" "}
+                    <span className="text-[14px] font-normal ml-1 mt-[-1px]">
+                      scheds
+                    </span>
                   </div>
 
                   <div className="w-[140px] flex justify-start items-center px-1 rounded-[4px] gap-2">

@@ -1,5 +1,4 @@
 const Schedule = require("../models/Schedules");
-const PastSchedule = require("../models/PastSchedules");
 const TempSchedule = require("../models/TempSchedules");
 const TempSolo = require("../models/TempSoloSchedules");
 const Notification = require("../models/Notifications");
@@ -136,58 +135,6 @@ const isActiveDefHandler = () => {
 
 isActiveDefHandler();
 
-const updateSchedulesIsActiveToAbsent = async () => {
-  try {
-    const today = new Date();
-
-    const todayDay = today.toLocaleString("en-us", { weekday: "long" });
-
-    await updateSchedulesIsActiveToAbsentDef(todayDay);
-  } catch (error) {
-    console.error("Error updating schedules:", error);
-  }
-};
-
-const updateSchedulesIsActiveToAbsentDef = async (day) => {
-  try {
-    const schedules = await Schedule.find({
-      day: day,
-      isActive: "No information yet",
-    });
-
-    if (schedules.length > 0) {
-      const pastSchedulesPromises = schedules.map((schedule) => {
-        const pastScheduleData = {
-          ...schedule.toObject(),
-          _id: new mongoose.Types.ObjectId(),
-        };
-
-        const pastSchedule = new PastSchedule(pastScheduleData);
-        return pastSchedule.save();
-      });
-
-      await Promise.all(pastSchedulesPromises);
-
-      const ids = schedules.map((schedule) => schedule._id);
-      await Schedule.updateMany(
-        { _id: { $in: ids } },
-        {
-          $set: { isActive: "Absent" },
-          $inc: { absentCounter: 1 },
-        }
-      );
-    }
-  } catch (error) {
-    throw new Error(`Failed to update schedules for ${day}: ${error.message}`);
-  }
-};
-
-const isActiveAbsentHandler = () => {
-  cron.schedule("00 00 * * *", updateSchedulesIsActiveToAbsent);
-};
-
-isActiveAbsentHandler();
-
 const getOneSchedule = async (req, res) => {
   try {
     const schedule = await Schedule.findById(req.params.id);
@@ -215,6 +162,41 @@ const updateOneSchedule = async (req, res) => {
     res.json(schedule);
   } catch (error) {
     return res.status(400).json({ message: "Error updating schedule" });
+  }
+};
+
+const updateScheduleReason = async (req, res) => {
+  try {
+    const userData = req.user;
+
+    const { nameOfStudent } = req.body;
+
+    const { id } = req.params;
+
+    const schedule = await Schedule.findByIdAndUpdate(
+      id,
+      {
+        ...req.body,
+      },
+      {
+        new: true,
+      }
+    );
+
+    await Notification.create({
+      userId: userData._id,
+      typeOfNotif: "Schedules",
+      actionOfNotif: "Update One",
+      message: `${nameOfStudent}'s schedule reason has been added succesfully.`,
+      createdAt: new Date(),
+    });
+
+    res.status(200).json({
+      data: schedule,
+      message: `${nameOfStudent}'s schedule reason has been added succesfully.`,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update schedule reason" });
   }
 };
 
@@ -595,6 +577,7 @@ module.exports = {
   getSchedule,
   getOneSchedule,
   updateOneSchedule,
+  updateScheduleReason,
   deleteOneSchedule,
   deleteManySchedule,
 

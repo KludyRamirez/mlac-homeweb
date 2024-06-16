@@ -15,6 +15,7 @@ const { createSchedule } = require("../controllers/SchedulesController");
 const { getSchedule } = require("../controllers/SchedulesController");
 const { getOneSchedule } = require("../controllers/SchedulesController");
 const { updateOneSchedule } = require("../controllers/SchedulesController");
+const { updateScheduleReason } = require("../controllers/SchedulesController");
 const { deleteOneSchedule } = require("../controllers/SchedulesController");
 const { deleteManySchedule } = require("../controllers/SchedulesController");
 const { isVideoOffHandler } = require("../controllers/SchedulesController");
@@ -58,8 +59,10 @@ const { deleteOneCad } = require("./CollegesAndDepartmentsController");
 const { deleteManyCad } = require("./CollegesAndDepartmentsController");
 
 // csrf
-
 const { getCsrf } = require("../controllers/SecurityControllers");
+
+// logs
+const { createLogs } = require("./LogsControllers");
 
 exports.controllers = {
   login,
@@ -75,6 +78,7 @@ exports.controllers = {
   getSchedule,
   getOneSchedule,
   updateOneSchedule,
+  updateScheduleReason,
   deleteOneSchedule,
   deleteManySchedule,
   //
@@ -106,4 +110,6 @@ exports.controllers = {
   deleteManyCad,
   //
   getCsrf,
+  //
+  createLogs,
 };

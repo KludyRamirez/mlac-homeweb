@@ -21,6 +21,10 @@ const studentsSchema = new mongoose.Schema(
       default: "Enrolled",
       enum: ["Enrolled", "Dismissed"],
     },
+    behindByCounter: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

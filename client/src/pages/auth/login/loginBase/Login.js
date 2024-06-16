@@ -9,8 +9,10 @@ import { FormTitle } from "../../../../externalComponents/sidebarBase/Sidebar";
 
 import {
   BsFacebook,
+  BsGithub,
   BsInstagram,
   BsMegaphone,
+  BsMessenger,
   BsTwitterX,
 } from "react-icons/bs";
 
@@ -51,28 +53,15 @@ const Login = ({ login, setLoading }) => {
       <div className="w-full flex flex-col gap-[80px]">
         <div className="w-full fixed px-16 zIndex-3">
           <div className="h-[160px] flex justify-between items-center gap-10 relative">
-            <div className="absolute flex gap-6 text-[white] left-[200px] cursor-pointer">
-              <Link to="https://facebook.com">
-                <BsFacebook className="text-[24px] cursor-pointer" />
-              </Link>
-              <Link to="https://twitter.com">
-                <BsTwitterX className="text-[24px] cursor-pointer" />
-              </Link>
-              <Link to="https://instagram.com">
-                <BsInstagram className="text-[24px] cursor-pointer" />
-              </Link>
-            </div>
-            <div className="absolute flex gap-4 text-[white] left-[650px] cursor-pointer items-center">
-              <span className="hover:underline">FAQ</span>
-              <span className="hover:underline">Terms and Conditions</span>
+            <div className="absolute flex gap-4 text-[white] left-[700px] cursor-pointer items-center">
               <span className="hover:underline">Privacy Policy</span>
+              <span className="hover:underline">Terms and Conditions</span>
             </div>
             <div className="flex justify-center items-center gap-10">
               <div className="flex items-center gap-6">
-                <img src={osaLogo} alt="" className="w-[46px] h-[46px]" />
+                <img src={osaLogo} alt="" className="w-[36px] h-[36px]" />
                 <FormTitle
                   sx={{
-                    lineHeight: "134px",
                     fontSize: "24px",
                     backgroundImage:
                       "radial-gradient(100% 100% at 100% 0, #ffffff 0, #efefef 100%)",
@@ -174,9 +163,16 @@ const Login = ({ login, setLoading }) => {
             <div className="absolute top-[196px] right-[-12px] w-[20px] h-[20px] transform rotate-[45deg] bg-white"></div>
             <div className="absolute top-[886px] right-[-12px] w-[20px] h-[20px] transform rotate-[45deg] bg-white"></div>
 
-            <div className="absolute flex items-center gap-4 bottom-[40px] left-[60px] zIndex-3 text-white">
-              <FaRegCopyright className="text-[18px]" />
-              <span>Copyright 2024 Kludy Ramirez. All Rights Reserved.</span>
+            <div className="absolute flex items-center gap-4 bottom-[40px] left-[52px] zIndex-3 text-white">
+              <Link to="https://facebook.com">
+                <BsFacebook className="text-[24px] cursor-pointer" />
+              </Link>
+              <Link to="https://twitter.com">
+                <BsMessenger className="text-[24px] cursor-pointer" />
+              </Link>
+              <Link to="https://instagram.com">
+                <BsGithub className="text-[24px] cursor-pointer" />
+              </Link>
             </div>
           </div>
           <div className="relative flex justify-center items-center w-[40%] h-screen">

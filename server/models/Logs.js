@@ -1,13 +1,28 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
-const pastSchedulesSchema = new mongoose.Schema(
+const logsSchema = new mongoose.Schema(
   {
-    scheduleId: {
+    student: {
+      type: ObjectId,
+      ref: "Students",
+    },
+
+    // dependent attributes from student
+
+    nameOfStudent: {
       type: String,
       trim: true,
     },
 
-    nameOfStudent: {
+    parent: {
+      type: String,
+      trim: true,
+    },
+
+    // independent attributes
+
+    scheduleId: {
       type: String,
       trim: true,
     },
@@ -26,16 +41,6 @@ const pastSchedulesSchema = new mongoose.Schema(
     schedType: {
       type: String,
       default: "Permanent",
-    },
-
-    studentType: {
-      type: String,
-      enum: ["Solo", "Dyad"],
-    },
-
-    parent: {
-      type: String,
-      trim: true,
     },
 
     timing: {
@@ -64,26 +69,13 @@ const pastSchedulesSchema = new mongoose.Schema(
 
     absentReason: {
       type: String,
-      default: "Busy",
-      enum: [
-        "Busy",
-        "Sickness",
-        "No Transportation",
-        "Family Matter",
-        "Tiredness",
-        "Conflict of Schedule",
-        "Bad Weather",
-      ],
+      trim: true,
     },
 
     isWaitlisted: {
       type: String,
+      default: "No",
       enum: ["Yes", "No"],
-    },
-
-    absencesCounter: {
-      type: Number,
-      default: 0,
     },
 
     isDisabled: {
@@ -94,8 +86,4 @@ const pastSchedulesSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-pastSchedulesSchema.index(
-  { nameOfStudent: 1, day: 1, timing: 1 },
-  { unique: true }
-);
-module.exports = mongoose.model("PastSchedules", pastSchedulesSchema);
+module.exports = mongoose.model("Logs", logsSchema);

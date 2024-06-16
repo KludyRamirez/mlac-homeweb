@@ -5,7 +5,7 @@ import DeleteManyScheduleModal from "./DeleteManyScheduleModal";
 import { useNavigate } from "react-router-dom";
 import EditSchedule from "./EditSchedule";
 import PatchScheduleStatus from "./PatchScheduleStatus";
-import RemarksSchedule from "./RemarksSchedule";
+import RemarksSchedule from "./ReasonSchedule";
 import pdfExporter from "../../../externalUtils/pdfExporter";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
 import {
@@ -13,6 +13,7 @@ import {
   FaPenToSquare,
   FaTrashCan,
 } from "react-icons/fa6";
+import Ellipsis from "../../../externalUtils/Ellipsis";
 
 const SchedulesTable = ({
   auth,
@@ -321,8 +322,8 @@ const SchedulesTable = ({
               onChange={toggleSelectAll}
             />
           </div>
-          <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
-            Schedule ID
+          <div className="w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+            ID
           </div>
           <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Owner
@@ -392,7 +393,7 @@ const SchedulesTable = ({
                     onChange={() => toggleScheduleSelection(s?._id)}
                   />
                 </div>
-                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.scheduleId.slice(11)}
                 </div>
                 <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
@@ -410,7 +411,13 @@ const SchedulesTable = ({
                 <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.parent?.slice(0, 7)}...
                 </div>
-                <div className=" w-[170px] flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div
+                  className={`${
+                    k % 2 === 0
+                      ? "bg-gradient-to-r from-[#c5d1de] to-[#22272e] hover:to-[#c5d1de] cursor-pointer"
+                      : "bg-gradient-to-r from-[#c5d1de] to-[#2d333b] hover:to-[#c5d1de] cursor-pointer"
+                  } w-[170px] text-[#22272e] flex justify-center items-center py-1 px-4 rounded-[24px]`}
+                >
                   {s?.isActive?.slice(0, 7)}...
                 </div>
 
@@ -466,6 +473,14 @@ const SchedulesTable = ({
                     </>
                   )}
                 </div>
+                <Ellipsis
+                  item={s}
+                  auth={auth}
+                  axios={axios}
+                  setLoading={setLoading}
+                  toast={toast}
+                  getSchedules={getSchedules}
+                />
               </div>
             ))}
           </>

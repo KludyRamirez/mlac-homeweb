@@ -35,6 +35,14 @@ router.put(
   role(["Administrator"]),
   mainController.controllers.updateOneSchedule
 );
+
+router.put(
+  "/scheduleReason/:id",
+  auth,
+  role(["Administrator", "Parent"]),
+  mainController.controllers.updateScheduleReason
+);
+
 router.delete(
   "/schedule/:id",
   auth,

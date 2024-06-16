@@ -11,6 +11,10 @@ import {
   BsGearWideConnected,
   BsCalendar4Event,
   BsCalendar2DayFill,
+  BsCalendar2,
+  BsGear,
+  BsHourglassTop,
+  BsClock,
 } from "react-icons/bs";
 import SchedulesTable from "./SchedulesTable";
 
@@ -144,7 +148,7 @@ const SchedulesFilter = ({
               <div className="flex gap-2 items-center">
                 <div>Day</div> <BsChevronBarDown />
               </div>
-              <BsCalendar2DayFill />
+              <BsCalendar2 className="text-[18px]" />
             </div>
             <select
               onChange={(e) => setDay(e.target.value)}
@@ -164,7 +168,7 @@ const SchedulesFilter = ({
               <div className="flex gap-2 items-center">
                 <div>Type</div> <BsChevronBarDown />
               </div>
-              <BsGearWideConnected />
+              <BsGear className="text-[18px]" />
             </div>
             <select
               onChange={(e) => setType(e.target.value)}
@@ -181,7 +185,7 @@ const SchedulesFilter = ({
               <div className="flex gap-2 items-center">
                 <div>Timing</div> <BsChevronBarDown />
               </div>
-              <BsHourglassSplit />
+              <BsClock className="text-[18px]" />
             </div>
             <select
               onChange={(e) => setTiming(e.target.value)}

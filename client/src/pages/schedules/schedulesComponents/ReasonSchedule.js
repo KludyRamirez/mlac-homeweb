@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import RemarksScheduleFormModal from "./RemarksScheduleFormModal";
+import ReasonScheduleFormModal from "./ReasonScheduleFormModal";
 
-const RemarksSchedule = ({
+const ReasonSchedule = ({
   toast,
   auth,
   setLoading,
   axios,
   getSchedules,
-  selectedScheduleRemarks,
-  handleCloseModalRemarks,
+  selectedScheduleReason,
+  handleCloseModalReason,
+  handlePostScheduleDate,
+  attendance,
 }) => {
-  const [updatedValues, setUpdatedValues] = useState(selectedScheduleRemarks);
+  const [updatedValues, setUpdatedValues] = useState(selectedScheduleReason);
 
-  const handleRemarksSchedule = async (e) => {
+  const handleReasonSchedule = async (e) => {
     e.preventDefault();
     try {
       if (!auth.userDetails.token) {
@@ -21,7 +23,7 @@ const RemarksSchedule = ({
       }
 
       const res = await axios.put(
-        `/api/caseRemarks/${selectedScheduleRemarks._id}`,
+        `/api/scheduleReason/${selectedScheduleReason._id}`,
         updatedValues,
         {
           withCredentials: true,
@@ -30,13 +32,20 @@ const RemarksSchedule = ({
           },
         }
       );
-      await toast.success(res?.data?.message);
+      toast.success(res?.data?.message);
     } catch (err) {
-      toast.error(err?.response?.data);
+      toast.error("Failed to update schedule reason");
     } finally {
+      await handlePostScheduleDate(
+        updatedValues,
+        auth,
+        toast,
+        axios,
+        getSchedules,
+        attendance
+      );
       setUpdatedValues({});
-      handleCloseModalRemarks();
-      getSchedules();
+      handleCloseModalReason();
     }
   };
 
@@ -57,15 +66,15 @@ const RemarksSchedule = ({
 
   return (
     <>
-      <RemarksScheduleFormModal
+      <ReasonScheduleFormModal
         updatedValues={updatedValues}
         setUpdatedValues={setUpdatedValues}
         handleChange={handleChange}
-        handleRemarksSchedule={handleRemarksSchedule}
-        handleCloseModalRemarks={handleCloseModalRemarks}
+        handleReasonSchedule={handleReasonSchedule}
+        handleCloseModalReason={handleCloseModalReason}
       />
     </>
   );
 };
 
-export default RemarksSchedule;
+export default ReasonSchedule;

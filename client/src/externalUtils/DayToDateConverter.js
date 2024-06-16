@@ -1,8 +1,11 @@
-import { default as axios } from "../api";
-
-const handlePostScheduleDate = async (e, schedule, auth, toast) => {
-  e.preventDefault();
-
+const handlePostScheduleDate = async (
+  updatedValues,
+  auth,
+  toast,
+  axios,
+  getSchedules,
+  attendance
+) => {
   if (!auth.userDetails.token) {
     console.error("Authentication token not found.");
     return;
@@ -20,7 +23,7 @@ const handlePostScheduleDate = async (e, schedule, auth, toast) => {
     "Friday",
     "Saturday",
   ];
-  const targetDayIndex = daysOfWeek.indexOf(schedule.day);
+  const targetDayIndex = daysOfWeek.indexOf(updatedValues.day);
 
   if (targetDayIndex === -1) {
     console.error("Invalid schedule day.");
@@ -33,8 +36,8 @@ const handlePostScheduleDate = async (e, schedule, auth, toast) => {
 
   try {
     const res = await axios.post(
-      `/api/past-schedule`,
-      { date: targetDate, schedule },
+      `/api/logs`,
+      { date: targetDate, attendance, ...updatedValues },
       {
         withCredentials: true,
         headers: {
@@ -43,8 +46,9 @@ const handlePostScheduleDate = async (e, schedule, auth, toast) => {
       }
     );
     toast.success(res?.data?.message);
+    getSchedules();
   } catch (err) {
-    toast.error(err?.response?.data);
+    toast.error("An error occurred while adding logs");
   }
 };
 

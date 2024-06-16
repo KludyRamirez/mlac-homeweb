@@ -110,21 +110,21 @@ const CreateSchedule = ({
       <div className="w-100 text-[14px] text-[#c5d1de] pb-6 ">
         MLAC / Schedules
       </div>
-      <div className="w-100 text-[26px] text-[#c5d1de] font-bold pb-6 flex justify-between items-center">
+      <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
         <div className="font-bold">Schedules List</div>
 
         {allowedRoles?.find((ar) => auth?.userDetails?.role?.includes(ar)) ? (
           <div
             onClick={handleOpenModal}
-            className="cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[10px]"
+            className="cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
           >
             <FaPlus />
-            <div>Add</div>
+            <div>Add Schedule</div>
           </div>
         ) : (
           <div className="cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px] font-bold">
             <FaPlus />
-            <div>Add</div>
+            <div>Add Schedule</div>
           </div>
         )}
       </div>
