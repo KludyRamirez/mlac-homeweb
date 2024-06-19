@@ -13,17 +13,26 @@ import { useLocation } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 import { CgMenuLeft } from "react-icons/cg";
 import {
+  BsArchive,
+  BsArchiveFill,
   BsCalendar4,
+  BsCalendar4Event,
   BsCalendar4Range,
+  BsCalendar4Week,
+  BsCalendarEventFill,
   BsCalendarFill,
   BsCalendarRangeFill,
+  BsCalendarWeekFill,
+  BsChevronDown,
+  BsChevronUp,
   BsGear,
   BsGearFill,
   BsHourglass,
   BsHourglassSplit,
   BsPeople,
   BsPeopleFill,
-  BsPersonSquare,
+  BsPerson,
+  BsPersonFill,
   BsPieChart,
   BsPieChartFill,
 } from "react-icons/bs";
@@ -92,9 +101,15 @@ const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
 function Sidebar(props) {
+  const initialScheduleMenuState =
+    localStorage.getItem("isScheduleMenuOpen") === "true";
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
+  const [isScheduleMenuOpen, setIsScheduleMenuOpen] = useState(
+    initialScheduleMenuState
+  );
 
   const auth = useSelector(authSelector);
 
@@ -106,6 +121,12 @@ function Sidebar(props) {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleScheduleMenuToggle = () => {
+    const state = !isScheduleMenuOpen;
+    setIsScheduleMenuOpen(state);
+    localStorage.setItem("isScheduleMenuOpen", state);
   };
 
   const drawer = (
@@ -160,11 +181,7 @@ function Sidebar(props) {
                     }}
                   >
                     <RouteCon>
-                      <BsCalendarRangeFill
-                        className={
-                          activeItem === "/timetable" ? "icon-active" : ""
-                        }
-                      />
+                      <BsCalendarRangeFill />
                       <p className="text-[18px]">Timetable</p>
                     </RouteCon>
                   </SidebarOptions>
@@ -196,11 +213,7 @@ function Sidebar(props) {
                     }}
                   >
                     <RouteCon>
-                      <BsPieChartFill
-                        className={
-                          activeItem === "/statistics" ? "icon-active" : ""
-                        }
-                      />
+                      <BsPieChartFill />
                       <p className="text-[18px]">Statistics</p>
                     </RouteCon>
                   </SidebarOptions>
@@ -214,41 +227,102 @@ function Sidebar(props) {
                 )}
               </Link>
             </div>
-            <div className="w-full">
-              <Link to="/schedules">
-                {activeItem === "/schedules" ? (
-                  <SidebarOptions
-                    sx={{
-                      background:
-                        "radial-gradient(100% 100% at 100% 0, #2d333b 0, #2d333b 100%)",
-                      borderRadius: "6px",
-                      "&:hover": {
-                        transform: "translateY(0px)",
-                        color: "white",
-                        border: "none",
-                      },
-                      "&:active": { transform: "translateY(0px)" },
-                    }}
-                  >
-                    <RouteCon>
-                      <BsCalendarFill
-                        className={
-                          activeItem === "/schedules" ? "icon-active" : ""
-                        }
-                      />
-                      <p className="text-[18px]">Schedules</p>
-                    </RouteCon>
-                  </SidebarOptions>
-                ) : (
-                  <SidebarOptions>
-                    <RouteCon>
-                      <BsCalendar4 />
-                      <p className="text-[18px]">Schedules</p>
-                    </RouteCon>
-                  </SidebarOptions>
-                )}
-              </Link>
+
+            <div onClick={handleScheduleMenuToggle} className="w-full">
+              {isScheduleMenuOpen ? (
+                <SidebarOptions>
+                  <RouteCon>
+                    <BsCalendarFill />
+                    <p className="text-[18px]">Schedules</p>
+                    <BsChevronUp className="text-[18px] ml-4" />
+                  </RouteCon>
+                </SidebarOptions>
+              ) : (
+                <SidebarOptions>
+                  <RouteCon>
+                    <BsCalendar4 />
+                    <p className="text-[18px]">Schedules</p>
+                    <BsChevronDown className="text-[18px] ml-4" />
+                  </RouteCon>
+                </SidebarOptions>
+              )}
             </div>
+
+            {isScheduleMenuOpen ? (
+              <>
+                <div className="w-[100%]">
+                  <Link to="/schedules">
+                    {activeItem === "/schedules" ? (
+                      <SidebarOptions
+                        sx={{
+                          background:
+                            "radial-gradient(100% 100% at 100% 0, #2d333b 0, #2d333b 100%)",
+                          borderRadius: "6px",
+                          "&:hover": {
+                            transform: "translateY(0px)",
+                            color: "white",
+                            border: "none",
+                          },
+                          "&:active": { transform: "translateY(0px)" },
+                        }}
+                      >
+                        <RouteCon
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <BsCalendarEventFill />
+                          <p className="text-[18px]">Permanent</p>
+                        </RouteCon>
+                      </SidebarOptions>
+                    ) : (
+                      <SidebarOptions>
+                        <RouteCon
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <BsCalendar4Event />
+                          <p className="text-[18px]">Permanent</p>
+                        </RouteCon>
+                      </SidebarOptions>
+                    )}
+                  </Link>
+                </div>
+                <div className="w-[100%]">
+                  <Link to="/temp-schedules">
+                    {activeItem === "/temp-schedules" ? (
+                      <SidebarOptions
+                        sx={{
+                          background:
+                            "radial-gradient(100% 100% at 100% 0, #2d333b 0, #2d333b 100%)",
+                          borderRadius: "6px",
+                          "&:hover": {
+                            transform: "translateY(0px)",
+                            color: "white",
+                            border: "none",
+                          },
+                          "&:active": { transform: "translateY(0px)" },
+                        }}
+                      >
+                        <RouteCon
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <BsCalendarWeekFill />
+                          <p className="text-[18px]">Temporary</p>
+                        </RouteCon>
+                      </SidebarOptions>
+                    ) : (
+                      <SidebarOptions>
+                        <RouteCon
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <BsCalendar4Week />
+                          <p className="text-[18px]">Temporary</p>
+                        </RouteCon>
+                      </SidebarOptions>
+                    )}
+                  </Link>
+                </div>
+              </>
+            ) : null}
+
             <div className="w-full">
               <Link to="/students">
                 {activeItem === "/students" ? (
@@ -266,11 +340,7 @@ function Sidebar(props) {
                     }}
                   >
                     <RouteCon>
-                      <BsPeopleFill
-                        className={
-                          activeItem === "/student" ? "icon-active" : ""
-                        }
-                      />
+                      <BsPeopleFill />
                       <p className="text-[18px]">Students</p>
                     </RouteCon>
                   </SidebarOptions>
@@ -284,6 +354,7 @@ function Sidebar(props) {
                 )}
               </Link>
             </div>
+
             {auth?.userDetails?.role === "Administrator" ? (
               <div className="w-full">
                 <Link to="/users">
@@ -302,19 +373,49 @@ function Sidebar(props) {
                       }}
                     >
                       <RouteCon>
-                        <BsPersonSquare
-                          className={
-                            activeItem === "/users" ? "icon-active" : ""
-                          }
-                        />
+                        <BsPersonFill />
                         <p className="text-[18px]">Users</p>
                       </RouteCon>
                     </SidebarOptions>
                   ) : (
                     <SidebarOptions>
                       <RouteCon>
-                        <BsPersonSquare />
+                        <BsPerson />
                         <p className="text-[18px]">Users</p>
+                      </RouteCon>
+                    </SidebarOptions>
+                  )}
+                </Link>
+              </div>
+            ) : null}
+
+            {auth?.userDetails?.role === "Administrator" ? (
+              <div className="w-full">
+                <Link to="/logs">
+                  {activeItem === "/logs" ? (
+                    <SidebarOptions
+                      sx={{
+                        background:
+                          "radial-gradient(100% 100% at 100% 0, #2d333b 0, #2d333b 100%)",
+                        borderRadius: "6px",
+                        "&:hover": {
+                          transform: "translateY(0px)",
+                          color: "white",
+                          border: "none",
+                        },
+                        "&:active": { transform: "translateY(0px)" },
+                      }}
+                    >
+                      <RouteCon>
+                        <BsArchiveFill />
+                        <p className="text-[18px]">Logs</p>
+                      </RouteCon>
+                    </SidebarOptions>
+                  ) : (
+                    <SidebarOptions>
+                      <RouteCon>
+                        <BsArchive />
+                        <p className="text-[18px]">Logs</p>
                       </RouteCon>
                     </SidebarOptions>
                   )}
@@ -340,11 +441,7 @@ function Sidebar(props) {
                       }}
                     >
                       <RouteCon>
-                        <BsHourglassSplit
-                          className={
-                            activeItem === "/notification" ? "icon-active" : ""
-                          }
-                        />
+                        <BsHourglassSplit />
                         <p className="text-[18px]">History</p>
                       </RouteCon>
                     </SidebarOptions>
@@ -387,11 +484,7 @@ function Sidebar(props) {
                         }}
                       >
                         <RouteCon>
-                          <BsGearFill
-                            className={
-                              activeItem === "/settings" ? "icon-active" : ""
-                            }
-                          />
+                          <BsGearFill />
                           <p className="text-[18px]">Settings</p>
                         </RouteCon>
                       </SidebarOptions>

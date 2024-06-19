@@ -59,33 +59,40 @@ router.delete(
 
 // temporary schedule
 
-// router.post(
-//   "/temp-schedule",
-//   auth,
+router.post(
+  "/temp-schedule",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.createTempSchedule
+);
 
-//   mainController.controllers.createTempSchedule
-// );
+router.get(
+  "/temp-schedule",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.getTempSchedule
+);
 
-// router.get(
-//   "/temp-schedule",
-//   auth,
+router.delete(
+  "/temp-schedule/:id",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.deleteOneTempSchedule
+);
 
-//   mainController.controllers.getTempSchedule
-// );
+router.delete(
+  "/temp-schedule",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.deleteTempSchedules
+);
 
-// router.delete(
-//   "/temp-schedule/:id",
-//   auth,
-
-//   mainController.controllers.deleteOneTempSchedule
-// );
-
-// router.delete(
-//   "/temp-schedule",
-//   auth,
-
-//   mainController.controllers.deleteTempSchedules
-// );
+router.delete(
+  "/temp-schedules/deleteSelected",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.deleteManyTempSchedule
+);
 
 // Temporary Solo Schedule
 

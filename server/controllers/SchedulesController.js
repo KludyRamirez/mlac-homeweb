@@ -1,9 +1,12 @@
 const Schedule = require("../models/Schedules");
+const Student = require("../models/Students");
+const Logs = require("../models/Logs");
 const TempSchedule = require("../models/TempSchedules");
 const TempSolo = require("../models/TempSoloSchedules");
 const Notification = require("../models/Notifications");
 const uniqid = require("uniqid");
 const cron = require("node-cron");
+const moment = require("moment");
 
 // schedule
 
@@ -23,11 +26,11 @@ const createSchedule = async (req, res) => {
   });
 
   const dyadTempExists = await TempSchedule.exists({
-    $and: [{ studentType: "Dyad" }, { tempSoloDay: day }, { timing: timing }],
+    $and: [{ studentType: "Dyad" }, { day: day }, { timing: timing }],
   });
 
   const tempSoloScheduleExists = await TempSolo.exists({
-    $and: [{ tempSoloDay: day }, { timing: timing }],
+    $and: [{ day: day }, { timing: timing }],
   });
 
   if (scheduleExists) {
@@ -51,7 +54,7 @@ const createSchedule = async (req, res) => {
   } else if (tempSoloScheduleExists) {
     return res.status(409).json({
       message:
-        "You cannot combine temporary solo schedules with any other schedules",
+        "You cannot combine temporary solo schedules with any other schedules.",
     });
   } else {
     try {
@@ -236,130 +239,192 @@ const deleteManySchedule = async (req, res) => {
   }
 };
 
-// const createTempSchedule = async (req, res) => {
-//   const { tempSoloDay, timing, dateTime } = req.body;
+const createTempSchedule = async (req, res) => {
+  const { day, timing, dateTime } = req.body;
 
-//   const today = moment().tz("Asia/Manila").format("YYYY-MM-DD");
-//   const tomorrow = moment().add(1, "day").startOf("day");
+  const today = moment();
+  const tomorrow = moment().add(1, "day").startOf("day");
 
-//   if (today === dateTime) {
-//     return res.status(409).send("Cannot schedule on same day!");
-//   }
+  if (moment(dateTime).isSame(today, "day")) {
+    return res
+      .status(409)
+      .json({ message: "You can't schedule on the same day." });
+  }
 
-//   if (moment(dateTime).isBefore(today, "day")) {
-//     return res.status(409).send("Selected date is in the past!");
-//   }
+  if (moment(dateTime).isBefore(today, "day")) {
+    return res
+      .status(409)
+      .json({ message: "You can't select a date in the past." });
+  }
 
-//   if (moment(dateTime).isAfter(tomorrow.add(5, "days"), "day")) {
-//     return res
-//       .status(409)
-//       .send("Selected date is more than 6 days from tomorrow!");
-//   }
+  if (moment(dateTime).isAfter(tomorrow.clone().add(5, "days"), "day")) {
+    return res
+      .status(409)
+      .json({ message: "Selected date is more than 6 days from tomorrow!" });
+  }
 
-//   const scheduleExists = await Schedule.exists({
-//     $and: [{ studentType: "Solo" }, { day: tempSoloDay }, { timing: timing }],
-//   });
+  const scheduleExists = await Schedule.exists({
+    $and: [{ studentType: "Solo" }, { day: day }, { timing: timing }],
+  });
 
-//   if (scheduleExists) {
-//     return res.status(409).send("Conflict with 'Solo' student!");
-//   }
+  if (scheduleExists) {
+    return res.status(409).json({
+      message:
+        "You cannot combine temporary dyad schedules with solo schedules.",
+    });
+  }
 
-//   const tempSoloScheduleExists = await TempSolo.exists({
-//     $and: [{ tempSoloDay: tempSoloDay }, { timing: timing }],
-//   });
+  const tempSoloScheduleExists = await TempSolo.exists({
+    $and: [{ day: day }, { timing: timing }],
+  });
 
-//   if (tempSoloScheduleExists) {
-//     return res.status(409).send("Conflict with 'Solo' student!");
-//   }
+  if (tempSoloScheduleExists) {
+    return res.status(409).json({
+      message:
+        "You cannot combine temporary dyad schedules with temporary solo schedules.",
+    });
+  }
 
-//   try {
-//     const newSchedule = await new TempSchedule({
-//       ...req.body,
-//       cardId: uniqid(),
-//     }).save();
-//     res.json(newSchedule);
-//   } catch (err) {
-//     console.log(err);
-//     res
-//       .status(400)
-//       .json("Error creating temporary schedule! Please try again.");
-//   }
-// };
+  try {
+    const tempSchedule = await new TempSchedule({
+      ...req.body,
+      scheduleId: uniqid(),
+    }).save();
+    res.status(200).json({
+      data: tempSchedule,
+      message: "A new temporary schedule has been added.",
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "Error creating temporary schedule. Please try again.",
+    });
+  }
+};
 
-// const getTempSchedule = async (req, res) => {
-//   try {
-//     const tempScheds = await TempSchedule.find()
-//       .populate(
-//         "permanentSched",
-//         "day timing parent nameOfStudent cardId isVideoOn"
-//       )
-//       .populate("tempStudentName", "parent nameOfStudent studentType schedType")
-//       .exec();
+const getTempSchedule = async (req, res) => {
+  try {
+    const temporarySchedules = await TempSchedule.find()
+      .populate(
+        "companion",
+        "day timing parent nameOfStudent studentType scheduleType scheduleId isVideoOn"
+      )
+      .populate(
+        "student",
+        "day timing parent nameOfStudent studentType scheduleType scheduleId isVideoOn"
+      )
+      .exec();
 
-//     res.json(tempScheds);
-//   } catch (error) {
-//     return res.status(500).send("Error occured. Please try again");
-//   }
-// };
+    res.status(200).json({ tempSchedules: temporarySchedules });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error getting temporary schedules." });
+  }
+};
 
-// const deleteOneTempSchedule = async (req, res) => {
-//   try {
-//     const deletedTempSched = await TempSchedule.findByIdAndDelete(
-//       req.params.id
-//     );
-//     if (!deletedTempSched) {
-//       return res.status(404).json({ error: "Item not found" });
-//     }
-//     res.json({ success: true });
-//   } catch (err) {
-//     res.status(400).json("Deletion failed.");
-//   }
-// };
+const deleteOneTempSchedule = async (req, res) => {
+  try {
+    const deletedTempSched = await TempSchedule.findByIdAndDelete(
+      req.params.id
+    );
+    if (!deletedTempSched) {
+      return res
+        .status(404)
+        .json({ message: "Sorry, we can't find your schedule." });
+    }
+    res.status(200).json({
+      message: "Your schedule has been deleted successfully",
+      success: true,
+    });
+  } catch (err) {
+    res.status(400).json({ message: "Error deleting your schedule" });
+  }
+};
 
-// const deleteTempSchedules = async (req, res) => {
-//   try {
-//     const currentDate = new Date();
-//     const formattedDate = new Date(
-//       currentDate.getFullYear(),
-//       currentDate.getMonth(),
-//       currentDate.getDate()
-//     );
+const deleteTempSchedules = async (req, res) => {
+  try {
+    const currentDate = new Date();
 
-//     const schedulesToClone = await TempSchedule.find({
-//       dateTime: { $lt: formattedDate },
-//     });
+    const schedules = await TempSchedule.find({
+      attendance: { $in: ["Absent", "Present"] },
+      dateTime: { $lt: currentDate },
+    });
 
-//     console.log("Schedules to be cloned:", schedulesToClone);
+    await Logs.insertMany(schedules);
 
-//     const clonedSchedules = await TempLogs.insertMany(schedulesToClone);
+    const tempScheduleAttendanceStatusReset = schedules.map((schedule) => {
+      return Schedule.updateOne(
+        { _id: schedule?.student },
+        {
+          $set: { isActive: "No information" },
+        }
+      );
+    });
 
-//     console.log("Cloned schedules:", clonedSchedules);
+    const studentBehindByCounterUpdate = schedules.map((schedule) => {
+      return Student.updateOne(
+        { _id: schedule?.student?.student },
+        {
+          $inc: {
+            behindByCounter:
+              schedule.isActive === "Absent" ||
+              schedule.isActive === "No information"
+                ? 0
+                : schedule.isActive <= 0
+                ? 0
+                : -1,
+          },
+        }
+      );
+    });
 
-//     const deleteResult = await TempSchedule.deleteMany({
-//       dateTime: { $lt: formattedDate },
-//     });
+    await Promise.all(
+      tempScheduleAttendanceStatusReset,
+      studentBehindByCounterUpdate
+    );
 
-//     console.log("Schedules deleted:", deleteResult);
+    await TempSchedule.deleteMany({
+      dateTime: { $lt: currentDate },
+    });
 
-//     await Schedule.updateMany(
-//       {
-//         _id: {
-//           $in: schedulesToClone.map((schedule) => schedule.tempStudentName),
-//         },
-//       },
-//       { $set: { isActive: "Present" } }
-//     );
+    res.status(200).json({
+      message:
+        "Expired temporary schedules has been cloned and deleted successfully.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error cloning and deleting expired temporary schedules.",
+    });
+  }
+};
 
-//     res.status(200).json("Expired schedules deleted and cloned.");
-//   } catch (error) {
-//     res.status(500).json("Error deleting expired schedules and cloning.");
-//   }
-// };
+const deleteManyTempSchedule = async (req, res) => {
+  try {
+    const { schedules } = req.body;
+    const userData = req.user;
+
+    await TempSchedule.deleteMany({ _id: { $in: schedules } });
+
+    await Notification.create({
+      userId: userData._id,
+      typeOfNotif: "Schedule",
+      actionOfNotif: "Delete",
+      message: "Selected schedules has been deleted successfully.",
+      createdAt: new Date(),
+    });
+
+    res
+      .status(200)
+      .json({ message: "Selected schedules has been deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error." });
+  }
+};
 
 // // temporary solo schedule
 
 // const createTempSoloSchedule = async (req, res) => {
-//   const { day, timing, tempSoloDay, dateTime } = req.body;
+//   const { day, timing, day, dateTime } = req.body;
 
 //   const today = moment().tz("Asia/Manila").format("YYYY-MM-DD");
 //   const tomorrow = moment().add(1, "day").startOf("day");
@@ -391,7 +456,7 @@ const deleteManySchedule = async (req, res) => {
 //   }
 
 //   const tempScheduleExists = await TempSchedule.exists({
-//     $and: [{ tempSoloDay: tempSoloDay }, { timing: timing }],
+//     $and: [{ day: day }, { timing: timing }],
 //   });
 
 //   if (tempScheduleExists) {
@@ -412,11 +477,11 @@ const deleteManySchedule = async (req, res) => {
 
 // const getTempSoloSchedule = async (req, res) => {
 //   try {
-//     const tempScheds = await TempSolo.find()
-//       .populate("tempStudentName", "parent nameOfStudent studentType schedType")
+//     const temporarySchedules = await TempSolo.find()
+//       .populate("student", "parent nameOfStudent studentType schedType")
 //       .exec();
 
-//     res.json(tempScheds);
+//     res.json(temporarySchedules);
 //   } catch (error) {
 //     return res.status(500).send("Error occured. Please try again");
 //   }
@@ -443,13 +508,13 @@ const deleteManySchedule = async (req, res) => {
 //       currentDate.getDate()
 //     );
 
-//     const schedulesToClone = await TempSolo.find({
+//     const schedules = await TempSolo.find({
 //       dateTime: { $lt: formattedDate },
 //     });
 
-//     console.log("Schedules to be cloned:", schedulesToClone);
+//     console.log("Schedules to be cloned:", schedules);
 
-//     const clonedSchedules = await TempSoloLogs.insertMany(schedulesToClone);
+//     const clonedSchedules = await TempSoloLogs.insertMany(schedules);
 
 //     console.log("Cloned schedules:", clonedSchedules);
 
@@ -462,7 +527,7 @@ const deleteManySchedule = async (req, res) => {
 //     await Schedule.updateMany(
 //       {
 //         _id: {
-//           $in: schedulesToClone.map((schedule) => schedule.tempStudentName),
+//           $in: schedules.map((schedule) => schedule.student),
 //         },
 //       },
 //       { $set: { isActive: "Present" } }
@@ -581,10 +646,11 @@ module.exports = {
   deleteOneSchedule,
   deleteManySchedule,
 
-  // createTempSchedule,
-  // getTempSchedule,
-  // deleteOneTempSchedule,
-  // deleteTempSchedules,
+  createTempSchedule,
+  getTempSchedule,
+  deleteOneTempSchedule,
+  deleteTempSchedules,
+  deleteManyTempSchedule,
 
   // createTempSoloSchedule,
   // getTempSoloSchedule,

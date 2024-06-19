@@ -7,7 +7,6 @@ import toast, { Toaster } from "react-hot-toast";
 import Students from "./pages/students/studentsBase/Students";
 import Login from "./pages/auth/login/loginBase/Login";
 import Register from "./pages/auth/register/registerBase/Register";
-import Cases from "./pages/cases/casesBase/Cases";
 import Statistics from "./pages/statistics/statisticsBase/Statistics";
 import History from "./pages/history/historyBase/History";
 import StudentProfile from "./pages/studentsProfile/studentsProfileBase/StudentProfile";
@@ -22,6 +21,7 @@ import PersistLogin from "./externalUtils/PersistLogin";
 
 import { default as axios } from "./api";
 import Schedules from "./pages/schedules/schedulesBase/Schedules";
+import TempSchedules from "./pages/tempSchedules/tempSchedulesBase/TempSchedules";
 
 // Selectors
 const selectAuth = (state) => state.auth;
@@ -94,6 +94,18 @@ const AppRoutes = ({ auth, setLoading, toast, axios }) => (
           }
         />
         <Route
+          path="/temp-schedules"
+          element={
+            <TempSchedules
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+        <Route
           path="/students"
           element={
             <Students
@@ -119,6 +131,18 @@ const AppRoutes = ({ auth, setLoading, toast, axios }) => (
         />
         <Route
           path="/statistics"
+          element={
+            <Statistics
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator", "Parent"]}
+            />
+          }
+        />
+        <Route
+          path="/chats"
           element={
             <Statistics
               auth={auth}
@@ -163,6 +187,19 @@ const AppRoutes = ({ auth, setLoading, toast, axios }) => (
           path="/notification"
           element={
             <History
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+
+        <Route
+          path="/logs"
+          element={
+            <Register
               auth={auth}
               setLoading={setLoading}
               toast={toast}

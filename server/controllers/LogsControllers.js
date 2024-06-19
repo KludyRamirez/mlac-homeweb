@@ -18,11 +18,25 @@ const createLogs = async (req, res) => {
       }
     );
 
-    const studentUpdatePromise = Student.findByIdAndUpdate(student._id, {
-      $inc: {
-        behindByCounter: attendance === "Absent" ? 1 : -1,
+    const studentFind = await Student.findById(student._id);
+
+    let incrementValue;
+
+    if (attendance === "Absent") {
+      incrementValue = 1;
+    } else {
+      incrementValue = studentFind.behindByCounter === 0 ? 0 : -1;
+    }
+
+    const studentUpdatePromise = await Student.findByIdAndUpdate(
+      student._id,
+      {
+        $inc: {
+          behindByCounter: incrementValue,
+        },
       },
-    });
+      { new: true }
+    );
 
     const logCreatePromise = Log.create({
       ...req.body,

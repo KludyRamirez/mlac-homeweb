@@ -5,8 +5,12 @@ import {
   BsCalendar2,
   BsGear,
   BsClock,
+  BsCalendar4Week,
 } from "react-icons/bs";
-import SchedulesTable from "./SchedulesTable";
+import TempSchedulesTable from "./TempSchedulesTable";
+import DatePicker from "react-datepicker";
+import moment from "moment";
+import "react-datepicker/dist/react-datepicker.css";
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -22,10 +26,9 @@ const timings = [
   "4:00 PM - 5:00 PM",
 ];
 
-const SchedulesFilter = ({
-  schedules,
-  students,
-  getSchedules,
+const TempSchedulesFilter = ({
+  tempSchedules,
+  getTempSchedules,
   allowedRoles,
   auth,
   setLoading,
@@ -35,6 +38,7 @@ const SchedulesFilter = ({
   const [searchTerm, setSearchTerm] = useState("All");
   const [type, setType] = useState("All");
   const [day, setDay] = useState("All");
+  const [date, setDate] = useState(null);
   const [timing, setTiming] = useState("All");
   const [selectedSchedules, setSelectedSchedules] = useState([]);
   const [activeMainFilter, setActiveMainFilter] = useState("All");
@@ -44,58 +48,77 @@ const SchedulesFilter = ({
   };
 
   const filterSchedules = (
-    schedules,
+    tempSchedules,
     searchTerm,
     type,
     day,
+    date,
     timing,
     activeMainFilter
   ) => {
-    return schedules?.filter((s) => {
+    return tempSchedules?.filter((s) => {
       const searchMatch =
         searchTerm === "All" ||
         s?.scheduleId?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-        s?.nameOfStudent?.toLowerCase().includes(searchTerm?.toLowerCase());
+        s?.student?.nameOfStudent
+          ?.toLowerCase()
+          .includes(searchTerm?.toLowerCase());
 
       const dayMatch = day === "All" || s?.day === day;
 
-      const typeMatch = type === "All" || s?.student?.studentType === type;
+      const typeMatch = type === "All" || s?.studentType === type;
 
       const timingMatch = timing === "All" || s?.timing === timing;
+
+      const dateMatch =
+        date === null ||
+        new Date(s.dateTime).toLocaleDateString("en-PH", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        }) ===
+          new Date(date).toLocaleDateString("en-PH", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          });
 
       const mainFilterMatch = activeMainFilter === "All";
 
       return (
-        searchMatch && dayMatch && typeMatch && timingMatch && mainFilterMatch
+        searchMatch &&
+        dayMatch &&
+        typeMatch &&
+        timingMatch &&
+        mainFilterMatch &&
+        dateMatch
       );
     });
   };
 
   const filteredSchedules = filterSchedules(
-    schedules,
+    tempSchedules,
     searchTerm,
     type,
     day,
+    date,
     timing,
     activeMainFilter
   );
 
   let combinedFilteredSchedules = [...filteredSchedules];
 
-  // const isSunday = (date) => {
-  //   return date.getDay() === 0; // 0 represents Sunday
-  // };
+  const isSunday = (date) => {
+    return moment(date).day() === 0;
+  };
 
-  // const isDisabled = (date) => {
-  //   return !isSunday(date);
-  // };
+  const isSaturday = (date) => {
+    return moment(date).day() === 6;
+  };
 
-  // const isDisabledDateReported = (date) => {
-  //   return (
-  //     moment(date).isAfter(moment(dateOfIncident).subtract(1, "day"), "day") &&
-  //     !isSunday(date)
-  //   );
-  // };
+  const filterDate = (date) => {
+    return !isSunday(date) && !isSaturday(date);
+  };
 
   return (
     <>
@@ -189,18 +212,35 @@ const SchedulesFilter = ({
               ))}
             </select>
           </div>
+
+          <div className="phone:w-[50%] flex flex-col items-start gap-2">
+            <div className="pl-2 w-[242px] phone:w-[100%] flex justify-between items-center">
+              <div className="flex gap-2 items-center">
+                <div>Date</div> <BsChevronBarDown />
+              </div>
+              <BsCalendar4Week className="text-[18px]" />
+            </div>
+            <DatePicker
+              filterDate={filterDate}
+              placeholderText="Enter Date"
+              selected={date}
+              onChange={(date) => {
+                setDate(date);
+              }}
+              className="px-3 h-[44px] w-[242px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+            />
+          </div>
         </div>
       </div>
       <div className="py-8">
-        <SchedulesTable
+        <TempSchedulesTable
           auth={auth}
           setLoading={setLoading}
           toast={toast}
           axios={axios}
           allowedRoles={allowedRoles}
-          schedules={combinedFilteredSchedules}
-          students={students}
-          getSchedules={getSchedules}
+          tempSchedules={combinedFilteredSchedules}
+          getTempSchedules={getTempSchedules}
           selectedSchedules={selectedSchedules}
           setSelectedSchedules={setSelectedSchedules}
         />
@@ -209,4 +249,4 @@ const SchedulesFilter = ({
   );
 };
 
-export default SchedulesFilter;
+export default TempSchedulesFilter;

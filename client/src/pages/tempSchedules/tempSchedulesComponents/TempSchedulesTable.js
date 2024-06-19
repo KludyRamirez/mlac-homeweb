@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
-import DeleteScheduleModal from "./DeleteScheduleModal";
-import DeleteManyScheduleModal from "./DeleteManyScheduleModal";
 import { useNavigate } from "react-router-dom";
-import EditSchedule from "./EditSchedule";
-import PatchScheduleStatus from "./PatchScheduleStatus";
 import pdfExporter from "../../../externalUtils/pdfExporter";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
-import {
-  FaArrowUpRightFromSquare,
-  FaPenToSquare,
-  FaTrashCan,
-} from "react-icons/fa6";
+import { FaTrashCan } from "react-icons/fa6";
 import Ellipsis from "../../../externalUtils/Ellipsis";
-import ReasonSchedule from "./ReasonSchedule";
+import DeleteTempScheduleModal from "./DeleteTempScheduleModal";
+import DeleteManyTempScheduleModal from "./DeleteManyTempScheduleModal";
 
-const SchedulesTable = ({
+const TempSchedulesTable = ({
   auth,
   axios,
   setLoading,
   toast,
-  schedules,
-  students,
-  getSchedules,
+  tempSchedules,
+  getTempSchedules,
   selectedSchedules,
   setSelectedSchedules,
   allowedRoles,
@@ -32,25 +24,20 @@ const SchedulesTable = ({
   const [showDeleteScheduleModal, setShowDeleteScheduleModal] = useState(false);
   const [showDeleteManyScheduleModal, setShowDeleteManyScheduleModal] =
     useState(false);
-  const [showEditScheduleModal, setShowEditScheduleModal] = useState(false);
-  const [selectedScheduleEdit, setSelectedScheduleEdit] = useState(null);
-  const [showPatchScheduleModal, setShowPatchScheduleModal] = useState(false);
-  const [selectedSchedulePatch, setSelectedSchedulePatch] = useState(null);
-  const [showRemarksScheduleModal, setShowRemarksScheduleModal] =
-    useState(false);
-  const [selectedScheduleRemarks, setSelectedScheduleRemarks] = useState(null);
-
   const [exportTrigger, setExportTrigger] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (schedules.length > 0 && selectedSchedules.length === schedules.length) {
+    if (
+      tempSchedules.length > 0 &&
+      selectedSchedules.length === tempSchedules.length
+    ) {
       setSelectAll(true);
     } else {
       setSelectAll(false);
     }
-  }, [selectedSchedules, schedules]);
+  }, [selectedSchedules, tempSchedules]);
 
   const toggleScheduleSelection = (scheduleId) => {
     let updatedSelectedSchedules = [...selectedSchedules];
@@ -70,7 +57,7 @@ const SchedulesTable = ({
     setSelectAll(!selectAll);
 
     if (!selectAll) {
-      setSelectedSchedules(schedules.map((s) => s._id));
+      setSelectedSchedules(tempSchedules.map((s) => s._id));
     } else {
       setSelectedSchedules([]);
     }
@@ -79,13 +66,12 @@ const SchedulesTable = ({
   const deleteSelectedSchedules = async () => {
     try {
       if (!auth.userDetails || !auth.userDetails.token) {
-        console.error("Authentication token not found.");
         navigate("/");
         return;
       }
 
-      const res = await axios.delete(`/api/schedules/deleteSelected`, {
-        data: { schedules: selectedSchedules },
+      const res = await axios.delete(`/api/temp-schedules/deleteSelected`, {
+        data: { tempSchedules: selectedSchedules },
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${auth?.userDetails?.token}`,
@@ -93,16 +79,15 @@ const SchedulesTable = ({
       });
       setSelectedSchedules([]);
       setSelectAll(false);
-      getSchedules();
+      getTempSchedules();
       toast.success(res?.data?.message);
     } catch (error) {
-      console.error("Error deleting selected schedules:", error);
       if (error.response) {
         if (error.response.status === 403) {
-          console.error("Unauthorized access. Please check your permissions.");
+          toast.error("Unauthorized access. Please check your permissions.");
           navigate("/error");
         } else {
-          toast.error(error.response.data.message);
+          toast.error(error?.response?.data?.message);
         }
       } else {
         toast.error("An error occurred while deleting the selected schedules.");
@@ -116,16 +101,16 @@ const SchedulesTable = ({
         console.error("Authentication token not found.");
         return;
       }
-      const res = await axios.delete(`/api/schedule/${id}`, {
+      const res = await axios.delete(`/api/temp-schedule/${id}`, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
-      getSchedules();
+      getTempSchedules();
       toast.success(res.data.message);
     } catch (error) {
-      console.error("Error deleting Schedule:", error);
+      toast.error("Error deleting specified schedule.");
     }
   };
 
@@ -143,7 +128,7 @@ const SchedulesTable = ({
       console.error("Error deleting schedule:", error);
     } finally {
       setShowDeleteScheduleModal(false);
-      getSchedules();
+      getTempSchedules();
     }
   };
 
@@ -163,121 +148,20 @@ const SchedulesTable = ({
 
   // edit Schedule functions
 
-  const handleScheduleEditClick = (cas) => {
-    try {
-      setSelectedScheduleEdit(cas);
-    } catch (error) {
-      console.error("Error handling schedule edit click:", error);
-    } finally {
-      setShowEditScheduleModal(true);
-    }
-  };
-
-  const handleCloseModalEdit = () => {
-    setShowEditScheduleModal(false);
-  };
-
   // patch statusOfSchedule
 
-  const handleSchedulePatchClick = (cas) => {
-    try {
-      setSelectedSchedulePatch(cas);
-    } catch (error) {
-      console.error("Error handling schedule Patch click:", error);
-    } finally {
-      setShowPatchScheduleModal(true);
-    }
-  };
-
-  const handleCloseModalPatch = () => {
-    setShowPatchScheduleModal(false);
-  };
-
   // schedule remarks
-
-  // const handleScheduleRemarksClick = (cas) => {
-  //   try {
-  //     setSelectedScheduleRemarks(cas);
-  //     console.log(cas);
-  //   } catch (error) {
-  //     console.error("Error handling schedule Remarks click:", error);
-  //   } finally {
-  //     setShowRemarksScheduleModal(true);
-  //   }
-  // };
-
-  const handleCloseModalRemarks = () => {
-    setShowRemarksScheduleModal(false);
-  };
 
   const exportPDF = () => {
     setExportTrigger(true);
   };
 
   if (exportTrigger) {
-    pdfExporter(selectedSchedules, schedules, setExportTrigger);
+    pdfExporter(selectedSchedules, tempSchedules, setExportTrigger);
   }
 
   return (
     <>
-      <Modal
-        sx={{ border: "none", outline: "none" }}
-        open={showEditScheduleModal}
-        onClose={handleCloseModalEdit}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <ModalBox>
-          <EditSchedule
-            handleCloseModalEdit={handleCloseModalEdit}
-            selectedScheduleEdit={selectedScheduleEdit}
-            auth={auth}
-            setLoading={setLoading}
-            toast={toast}
-            axios={axios}
-            getSchedules={getSchedules}
-            students={students}
-          />
-        </ModalBox>
-      </Modal>
-      <Modal
-        sx={{ border: "none", outline: "none" }}
-        open={showPatchScheduleModal}
-        onClose={handleCloseModalPatch}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <ModalBox sx={{ width: "38%" }}>
-          <PatchScheduleStatus
-            handleCloseModalPatch={handleCloseModalPatch}
-            selectedSchedulePatch={selectedSchedulePatch}
-            auth={auth}
-            setLoading={setLoading}
-            toast={toast}
-            axios={axios}
-            getSchedules={getSchedules}
-          />
-        </ModalBox>
-      </Modal>
-      <Modal
-        sx={{ border: "none", outline: "none" }}
-        open={showRemarksScheduleModal}
-        onClose={handleCloseModalRemarks}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <ModalBox sx={{ width: "38%" }}>
-          <ReasonSchedule
-            handleCloseModalRemarks={handleCloseModalRemarks}
-            selectedScheduleRemarks={selectedScheduleRemarks}
-            auth={auth}
-            setLoading={setLoading}
-            toast={toast}
-            axios={axios}
-            getSchedules={getSchedules}
-          />
-        </ModalBox>
-      </Modal>
       <Modal
         sx={{ border: "none", outline: "none" }}
         open={showDeleteScheduleModal}
@@ -286,7 +170,7 @@ const SchedulesTable = ({
         aria-describedby="parent-modal-description"
       >
         <ModalBox sx={{ width: "22%" }}>
-          <DeleteScheduleModal
+          <DeleteTempScheduleModal
             handleConfirmDelete={handleConfirmDelete}
             handleCloseModal={handleCloseModal}
           />
@@ -300,7 +184,7 @@ const SchedulesTable = ({
         aria-describedby="parent-modal-description"
       >
         <ModalBox sx={{ width: "22%" }}>
-          <DeleteManyScheduleModal
+          <DeleteManyTempScheduleModal
             deleteSelectedSchedules={deleteSelectedSchedules}
             handleCloseModalDeleteMany={handleCloseModalDeleteMany}
           />
@@ -308,7 +192,7 @@ const SchedulesTable = ({
       </Modal>
       <div
         className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] border-[1px] border-[#2d333b] phone:overflow-x-scroll ${
-          schedules && schedules.length > 5 ? "overflow-y-scroll" : ""
+          tempSchedules && tempSchedules.length > 5 ? "overflow-y-scroll" : ""
         }`}
       >
         <div className="phone:w-[fit-content] flex items-center gap-4 px-6 bg-[#2d333b] rounded-[10px]">
@@ -323,20 +207,23 @@ const SchedulesTable = ({
           <div className="w-[80px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             ID
           </div>
-          <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Student
           </div>
           <div className=" w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+            Date
+          </div>
+          <div className=" w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Day
           </div>
-          <div className=" w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Timing
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className=" w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Type
           </div>
-          <div className=" w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
-            Parent
+          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+            Companion
           </div>
           <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Status
@@ -373,9 +260,9 @@ const SchedulesTable = ({
           )}
         </div>
 
-        {schedules.length > 0 ? (
+        {tempSchedules.length > 0 ? (
           <>
-            {schedules?.map((s, k) => (
+            {tempSchedules?.map((s, k) => (
               <div
                 className={`phone:w-[fit-content]
               flex items-center gap-4 px-6 last:rounded-bl-[10px] rounded-br-[10px] ${
@@ -394,20 +281,27 @@ const SchedulesTable = ({
                 <div className="w-[80px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.scheduleId.slice(11)}
                 </div>
-                <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
-                  {s?.nameOfStudent}
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                  {s?.studentName}
                 </div>
                 <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                  {new Date(s?.dateTime)?.toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </div>
+                <div className="w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.day}
                 </div>
-                <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.timing}
                 </div>
-                <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
-                  {s?.student?.studentType}
+                <div className="w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                  {s?.studentType}
                 </div>
-                <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
-                  {s?.parent}
+                <div className="w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                  {s?.companion?.nameOfStudent}
                 </div>
                 <div
                   className={`${
@@ -426,18 +320,6 @@ const SchedulesTable = ({
                     ) ? (
                       <>
                         <div
-                          onClick={() => handleSchedulePatchClick(s)}
-                          className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
-                        >
-                          <FaArrowUpRightFromSquare className="text-[18px]" />
-                        </div>
-                        <div
-                          onClick={() => handleScheduleEditClick(s)}
-                          className="p-2 bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
-                        >
-                          <FaPenToSquare className="text-[18px]" />
-                        </div>
-                        <div
                           onClick={() => handleClickDelete(s?._id)}
                           className="p-2 bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
                         >
@@ -446,12 +328,6 @@ const SchedulesTable = ({
                       </>
                     ) : (
                       <>
-                        <div className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                          <FaArrowUpRightFromSquare className="text-[18px]" />
-                        </div>
-                        <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                          <FaPenToSquare className="text-[18px]" />
-                        </div>
                         <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
                           <FaTrashCan className="text-[18px]" />
                         </div>
@@ -459,12 +335,6 @@ const SchedulesTable = ({
                     )
                   ) : (
                     <>
-                      <div className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                        <FaArrowUpRightFromSquare className="text-[18px]" />
-                      </div>
-                      <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                        <FaPenToSquare className="text-[18px]" />
-                      </div>
                       <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
                         <FaTrashCan className="text-[18px]" />
                       </div>
@@ -477,7 +347,7 @@ const SchedulesTable = ({
                   axios={axios}
                   setLoading={setLoading}
                   toast={toast}
-                  getSchedules={getSchedules}
+                  getTempSchedules={getTempSchedules}
                 />
               </div>
             ))}
@@ -490,4 +360,4 @@ const SchedulesTable = ({
   );
 };
 
-export default SchedulesTable;
+export default TempSchedulesTable;

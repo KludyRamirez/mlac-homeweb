@@ -9,7 +9,7 @@ const { register } = require("../controllers/authentication/Register");
 const { changeEmail } = require("../controllers/authentication/CurrentUser");
 const { changePassword } = require("../controllers/authentication/CurrentUser");
 
-//schedule
+//permanent schedule
 
 const { createSchedule } = require("../controllers/SchedulesController");
 const { getSchedule } = require("../controllers/SchedulesController");
@@ -18,8 +18,16 @@ const { updateOneSchedule } = require("../controllers/SchedulesController");
 const { updateScheduleReason } = require("../controllers/SchedulesController");
 const { deleteOneSchedule } = require("../controllers/SchedulesController");
 const { deleteManySchedule } = require("../controllers/SchedulesController");
-const { isVideoOffHandler } = require("../controllers/SchedulesController");
-const { isActiveDefHandler } = require("../controllers/SchedulesController");
+
+// temp schedule
+
+const { createTempSchedule } = require("../controllers/SchedulesController");
+const { getTempSchedule } = require("../controllers/SchedulesController");
+const { deleteOneTempSchedule } = require("../controllers/SchedulesController");
+const { deleteTempSchedules } = require("../controllers/SchedulesController");
+const {
+  deleteManyTempSchedule,
+} = require("../controllers/SchedulesController");
 
 //students
 
@@ -73,7 +81,8 @@ exports.controllers = {
   register,
   changeEmail,
   changePassword,
-  //
+
+  // permanent schedule
   createSchedule,
   getSchedule,
   getOneSchedule,
@@ -81,6 +90,13 @@ exports.controllers = {
   updateScheduleReason,
   deleteOneSchedule,
   deleteManySchedule,
+
+  // temp schedule
+  createTempSchedule,
+  getTempSchedule,
+  deleteOneTempSchedule,
+  deleteTempSchedules,
+  deleteManyTempSchedule,
   //
   createStudent,
   getStudents,
