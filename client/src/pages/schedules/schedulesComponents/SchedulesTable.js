@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa6";
 import Ellipsis from "../../../externalUtils/Ellipsis";
 import ReasonSchedule from "./ReasonSchedule";
+import { BsCheck, BsX } from "react-icons/bs";
 
 const SchedulesTable = ({
   auth,
@@ -411,12 +412,17 @@ const SchedulesTable = ({
                 </div>
                 <div
                   className={`${
-                    k % 2 === 0
-                      ? "bg-gradient-to-r from-[#c5d1de] to-[#22272e] hover:to-[#c5d1de] cursor-pointer"
-                      : "bg-gradient-to-r from-[#c5d1de] to-[#2d333b] hover:to-[#c5d1de] cursor-pointer"
-                  } w-[170px] text-[#22272e] flex justify-center items-center py-1 px-4 rounded-[24px]`}
+                    s.isActive === "Present"
+                      ? "bg-gradient-to-r from-[#008000] to-[transparent] hover:to-[#008000] border-[1px] border-[#008000] cursor-pointer"
+                      : "bg-gradient-to-r from-[#ff3131] to-[transparent] hover:to-[#ff3131] border-[1px] border-[#ff3131] cursor-pointer"
+                  } w-[170px] text-[#ffffff] text-[15px] flex justify-center items-center py-1 px-4 rounded-[24px] gap-2`}
                 >
-                  {s?.isActive?.slice(0, 7)}...
+                  {s?.isActive?.slice(0, 7)}
+                  {s?.isActive === "Present" ? (
+                    <BsCheck className="text-[18px]" />
+                  ) : (
+                    <BsX className="text-[18px]" />
+                  )}
                 </div>
 
                 <div className="w-[170px] whitespace-nowrap flex justify-start items-center px-2 gap-2">

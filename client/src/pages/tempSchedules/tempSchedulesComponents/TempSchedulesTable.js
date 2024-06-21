@@ -146,19 +146,15 @@ const TempSchedulesTable = ({
     setShowDeleteManyScheduleModal(false);
   };
 
-  // edit Schedule functions
-
-  // patch statusOfSchedule
-
-  // schedule remarks
+  //export trigger function
 
   const exportPDF = () => {
     setExportTrigger(true);
-  };
 
-  if (exportTrigger) {
-    pdfExporter(selectedSchedules, tempSchedules, setExportTrigger);
-  }
+    if (exportTrigger) {
+      pdfExporter(selectedSchedules, tempSchedules, setExportTrigger);
+    }
+  };
 
   return (
     <>
@@ -169,7 +165,7 @@ const TempSchedulesTable = ({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "22%" }}>
+        <ModalBox sx={{ width: "fit-content", background: "transparent" }}>
           <DeleteTempScheduleModal
             handleConfirmDelete={handleConfirmDelete}
             handleCloseModal={handleCloseModal}
@@ -183,7 +179,7 @@ const TempSchedulesTable = ({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "22%" }}>
+        <ModalBox sx={{ width: "fit-content", background: "transparent" }}>
           <DeleteManyTempScheduleModal
             deleteSelectedSchedules={deleteSelectedSchedules}
             handleCloseModalDeleteMany={handleCloseModalDeleteMany}

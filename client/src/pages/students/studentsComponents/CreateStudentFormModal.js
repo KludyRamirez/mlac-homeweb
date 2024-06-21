@@ -138,7 +138,7 @@ const CreateStudentFormModal = ({
                   name="studentType"
                   value={studentType}
                   onChange={handleChange}
-                  className="border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                  className="cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
                 >
                   <option value="">Select Type</option>
                   {studentTypes?.map((st) => (
@@ -160,7 +160,7 @@ const CreateStudentFormModal = ({
                   name="sex"
                   value={sex}
                   onChange={handleChange}
-                  className="border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                  className="cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
                 >
                   <option value="">Sex</option>
                   <option value="Male">Male</option>
@@ -182,7 +182,7 @@ const CreateStudentFormModal = ({
                     name="parent"
                     value={parent}
                     onChange={handleParentChange}
-                    className="border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                    className="cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
                   >
                     <option value="">Select Parent</option>
                     {users

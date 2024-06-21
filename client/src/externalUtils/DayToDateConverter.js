@@ -35,7 +35,7 @@ const handlePostScheduleDate = async (
   targetDate.setDate(today.getDate() + offset);
 
   try {
-    await axios.post(
+    const res = await axios.post(
       `/api/logs`,
       { date: targetDate, attendance, ...updatedValues },
       {
@@ -45,6 +45,11 @@ const handlePostScheduleDate = async (
         },
       }
     );
+
+    if (attendance === "Present") {
+      toast.success(res?.data?.message);
+    }
+
     getSchedules();
   } catch (err) {
     toast.error("An error occurred while adding logs");

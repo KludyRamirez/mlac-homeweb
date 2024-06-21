@@ -173,7 +173,7 @@ const CreateUserFormModal = ({
                   name="role"
                   value={role}
                   onChange={handleChange}
-                  className="border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                  className="cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
                 >
                   <option value="">Select Role</option>
                   {roles.map((r) => (

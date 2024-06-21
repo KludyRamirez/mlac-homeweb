@@ -4,37 +4,60 @@ import { FaPlus } from "react-icons/fa6";
 
 const ReasonScheduleFormModal = ({
   handleChange,
-  handleReasonSchedule,
   handleCloseModalReason,
   updatedValues,
+  toast,
+  auth,
+  axios,
+  getSchedules,
+  handlePostScheduleDate,
+  attendance,
 }) => {
   return (
     <>
-      <form onSubmit={(e) => handleReasonSchedule(e)}>
-        <div className="p-10">
-          <div className="text-[28px] text-[#077bff] font-semibold flex justify-between">
-            Add Reason for Absence
-            <BsX
-              onClick={handleCloseModalReason}
-              className="text-[36px] cursor-pointer"
-            />
+      <form
+        onSubmit={() =>
+          handlePostScheduleDate(
+            updatedValues,
+            auth,
+            toast,
+            axios,
+            getSchedules,
+            attendance
+          )
+        }
+      >
+        <div className="w-[100%] mt-[-40px] w-[100%] px-8 py-6 font-semibold flex justify-between items-center rounded-tl-[12px] rounded-tr-[12px] bg-gradient-to-r from-[#2d333b] to-[#22272e]">
+          <div className="text-[#ffffff] text-[24px] flex gap-4 items-center">
+            <span>Add reason for absence</span>
           </div>
-          <div className="text-[#606060] pt-6 flex gap-2">
+          <BsX
+            onClick={handleCloseModalReason}
+            className="text-[#c5d1de] text-[34px] cursor-pointer"
+          />
+        </div>
+        <div className="p-10">
+          <div className="flex gap-2 text-[#c5d1de]">
             <div className="flex flex-col gap-2 w-[100%]">
-              <textarea
-                name="absentReason"
-                value={updatedValues.absentReason}
-                onChange={handleChange}
-                className={`border-[1px] p-3 rounded-[6px] w-[100%] h-[160px] bg-[#f5f5f5] focus:outline-none `}
-              />
+              <div className="flex justify-start items-center gap-2">
+                <span>Type your reason</span>
+              </div>
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <textarea
+                  name="absentReason"
+                  value={updatedValues.absentReason}
+                  onChange={handleChange}
+                  className="h-[100%] cursor-pointer cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="w-100 pt-8 flex justify-end items-center">
-            {updatedValues?.absentReason !== "" ? (
+          <div className="w-[100%] pt-10 flex items-center">
+            {updatedValues.absentReason !== "" ? (
               <button
                 type="submit"
-                className="py-3 px-3 bg-[#007bff] text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
               >
                 <FaPlus />
                 <div>Add Reason</div>
@@ -43,7 +66,7 @@ const ReasonScheduleFormModal = ({
               <button
                 disabled
                 type="submit"
-                className="py-3 px-3 bg-blue-300 text-[white] text-[16px] flex gap-2 items-center rounded-[8px]"
+                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
               >
                 <FaPlus />
                 <div>Add Reason</div>

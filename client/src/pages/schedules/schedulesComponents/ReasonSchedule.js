@@ -14,43 +14,6 @@ const ReasonSchedule = ({
 }) => {
   const [updatedValues, setUpdatedValues] = useState(selectedScheduleReason);
 
-  const handleReasonSchedule = async (e) => {
-    e.preventDefault();
-    try {
-      if (!auth.userDetails.token) {
-        console.error("Authentication token not found.");
-        return;
-      }
-
-      const res = await axios.put(
-        `/api/scheduleReason/${selectedScheduleReason._id}`,
-        updatedValues,
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
-          },
-        }
-      );
-      toast.success(res?.data?.message);
-    } catch (err) {
-      toast.error("Failed to update schedule reason");
-    } finally {
-      await handlePostScheduleDate(
-        updatedValues,
-        auth,
-        toast,
-        axios,
-        getSchedules,
-        attendance
-      );
-      setUpdatedValues({});
-      handleCloseModalReason();
-    }
-  };
-
-  // dynamic value getting and DYNAMIC use of error messages -kludy
-
   const handleChange = (e) => {
     e.preventDefault();
 
@@ -67,11 +30,17 @@ const ReasonSchedule = ({
   return (
     <>
       <ReasonScheduleFormModal
+        auth={auth}
+        toast={toast}
+        setLoading={setLoading}
+        axios={axios}
+        getSchedules={getSchedules}
+        attendance={attendance}
         updatedValues={updatedValues}
         setUpdatedValues={setUpdatedValues}
         handleChange={handleChange}
-        handleReasonSchedule={handleReasonSchedule}
         handleCloseModalReason={handleCloseModalReason}
+        handlePostScheduleDate={handlePostScheduleDate}
       />
     </>
   );

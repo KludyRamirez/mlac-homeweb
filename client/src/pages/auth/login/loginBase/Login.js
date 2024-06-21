@@ -7,14 +7,7 @@ import landingPic from "../../../../images/frontpage.jpg";
 import LoginInputs from "../loginComponents/LoginInputs";
 import { FormTitle } from "../../../../externalComponents/sidebarBase/Sidebar";
 
-import {
-  BsFacebook,
-  BsGithub,
-  BsInstagram,
-  BsMegaphone,
-  BsMessenger,
-  BsTwitterX,
-} from "react-icons/bs";
+import { BsFacebook, BsGithub, BsMegaphone, BsMessenger } from "react-icons/bs";
 
 import { FaRegCopyright } from "react-icons/fa6";
 
@@ -53,10 +46,6 @@ const Login = ({ login, setLoading }) => {
       <div className="w-full flex flex-col gap-[80px]">
         <div className="w-full fixed px-16 zIndex-3">
           <div className="h-[160px] flex justify-between items-center gap-10 relative">
-            <div className="absolute flex gap-4 text-[white] left-[700px] cursor-pointer items-center">
-              <span className="hover:underline">Privacy Policy</span>
-              <span className="hover:underline">Terms and Conditions</span>
-            </div>
             <div className="flex justify-center items-center gap-10">
               <div className="flex items-center gap-6">
                 <img src={osaLogo} alt="" className="w-[36px] h-[36px]" />
@@ -70,6 +59,10 @@ const Login = ({ login, setLoading }) => {
                   MLAC
                 </FormTitle>
               </div>
+            </div>
+            <div className="flex gap-4 text-[white] cursor-pointer items-center">
+              <span className="hover:underline">Privacy Policy</span>
+              <span className="hover:underline">Terms and Conditions</span>
             </div>
             <div className="flex justify-center items-center gap-3">
               <div
@@ -93,7 +86,7 @@ const Login = ({ login, setLoading }) => {
             </div>
             <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,0,0,0)_25%,rgba(0,0,0,0.2))]"></div>
             <div className="absolute inset-0 bg-black opacity-75"></div>
-            <div className="absolute top-0 left-0 w-[100%] h-[100%] flex flex-col justify-center zIndex-2 px-12">
+            <div className="absolute top-0 left-0 w-[100%] h-[100%] flex flex-col justify-center zIndex-2 px-12 mt-">
               <FormTitle
                 sx={{
                   backgroundImage:
@@ -163,7 +156,7 @@ const Login = ({ login, setLoading }) => {
             <div className="absolute top-[196px] right-[-12px] w-[20px] h-[20px] transform rotate-[45deg] bg-white"></div>
             <div className="absolute top-[886px] right-[-12px] w-[20px] h-[20px] transform rotate-[45deg] bg-white"></div>
 
-            <div className="absolute flex items-center gap-4 bottom-[40px] left-[52px] zIndex-3 text-white">
+            <div className="absolute flex items-center gap-4 bottom-[40px] pl-12 zIndex-3 text-white">
               <Link to="https://facebook.com">
                 <BsFacebook className="text-[24px] cursor-pointer" />
               </Link>

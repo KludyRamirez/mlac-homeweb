@@ -22,6 +22,7 @@ import PersistLogin from "./externalUtils/PersistLogin";
 import { default as axios } from "./api";
 import Schedules from "./pages/schedules/schedulesBase/Schedules";
 import TempSchedules from "./pages/tempSchedules/tempSchedulesBase/TempSchedules";
+import TempSolo from "./pages/tempSolo/tempSoloBase/TempSolo";
 
 // Selectors
 const selectAuth = (state) => state.auth;
@@ -97,6 +98,18 @@ const AppRoutes = ({ auth, setLoading, toast, axios }) => (
           path="/temp-schedules"
           element={
             <TempSchedules
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
+            />
+          }
+        />
+        <Route
+          path="/temp-solo"
+          element={
+            <TempSolo
               auth={auth}
               setLoading={setLoading}
               toast={toast}

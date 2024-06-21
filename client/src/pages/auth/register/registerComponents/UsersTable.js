@@ -227,7 +227,7 @@ const UsersTable = ({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "fit-content" }}>
+        <ModalBox sx={{ width: "fit-content", background: "transparent" }}>
           <DeleteManyUserModal
             deleteSelectedUsers={deleteSelectedUsers}
             handleCloseModalDeleteMany={handleCloseModalDeleteMany}

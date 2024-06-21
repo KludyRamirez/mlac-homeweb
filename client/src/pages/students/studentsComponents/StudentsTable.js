@@ -341,7 +341,7 @@ const StudentsTable = ({
                   >
                     {schedulesCount}
                     <span className="text-[14px] font-normal ml-1 mt-[-1px]">
-                      scheds
+                      schedule
                     </span>
                   </div>
 
@@ -354,7 +354,7 @@ const StudentsTable = ({
                   >
                     {schedulesCount}
                     <span className="text-[14px] font-normal ml-1 mt-[-1px]">
-                      scheds
+                      schedule
                     </span>
                   </div>
 
@@ -367,7 +367,7 @@ const StudentsTable = ({
                   >
                     {student?.behindByCounter}{" "}
                     <span className="text-[14px] font-normal ml-1 mt-[-1px]">
-                      scheds
+                      schedule
                     </span>
                   </div>
 

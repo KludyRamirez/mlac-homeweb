@@ -15,12 +15,16 @@ import { CgMenuLeft } from "react-icons/cg";
 import {
   BsArchive,
   BsArchiveFill,
+  BsCalendar,
   BsCalendar4,
   BsCalendar4Event,
   BsCalendar4Range,
   BsCalendar4Week,
+  BsCalendarDate,
+  BsCalendarDateFill,
   BsCalendarEventFill,
   BsCalendarFill,
+  BsCalendarRange,
   BsCalendarRangeFill,
   BsCalendarWeekFill,
   BsChevronDown,
@@ -269,7 +273,7 @@ function Sidebar(props) {
                         <RouteCon
                           sx={{ display: "flex", justifyContent: "center" }}
                         >
-                          <BsCalendarEventFill />
+                          <BsCalendarRangeFill />
                           <p className="text-[18px]">Permanent</p>
                         </RouteCon>
                       </SidebarOptions>
@@ -278,7 +282,7 @@ function Sidebar(props) {
                         <RouteCon
                           sx={{ display: "flex", justifyContent: "center" }}
                         >
-                          <BsCalendar4Event />
+                          <BsCalendar4Range />
                           <p className="text-[18px]">Permanent</p>
                         </RouteCon>
                       </SidebarOptions>
@@ -315,6 +319,37 @@ function Sidebar(props) {
                         >
                           <BsCalendar4Week />
                           <p className="text-[18px]">Temporary</p>
+                        </RouteCon>
+                      </SidebarOptions>
+                    )}
+                  </Link>
+                </div>
+                <div className="w-[100%]">
+                  <Link to="/temp-solo">
+                    {activeItem === "/temp-solo" ? (
+                      <SidebarOptions
+                        sx={{
+                          background:
+                            "radial-gradient(100% 100% at 100% 0, #2d333b 0, #2d333b 100%)",
+                          borderRadius: "6px",
+                          "&:hover": {
+                            transform: "translateY(0px)",
+                            color: "white",
+                            border: "none",
+                          },
+                          "&:active": { transform: "translateY(0px)" },
+                        }}
+                      >
+                        <RouteCon sx={{ display: "flex", marginLeft: "24px" }}>
+                          <BsCalendarEventFill />
+                          <p className="text-[18px]">Solo</p>
+                        </RouteCon>
+                      </SidebarOptions>
+                    ) : (
+                      <SidebarOptions>
+                        <RouteCon sx={{ display: "flex", marginLeft: "24px" }}>
+                          <BsCalendar4Event />
+                          <p className="text-[18px]">Solo</p>
                         </RouteCon>
                       </SidebarOptions>
                     )}

@@ -29,6 +29,22 @@ const {
   deleteManyTempSchedule,
 } = require("../controllers/SchedulesController");
 
+// temp solo
+
+const {
+  createTempSoloSchedule,
+} = require("../controllers/SchedulesController");
+const { getTempSoloSchedule } = require("../controllers/SchedulesController");
+const {
+  deleteOneTempSoloSchedule,
+} = require("../controllers/SchedulesController");
+const {
+  deleteTempSoloSchedules,
+} = require("../controllers/SchedulesController");
+const {
+  deleteManyTempSoloSchedule,
+} = require("../controllers/SchedulesController");
+
 //students
 
 const { createStudent } = require("../controllers/StudentsController");
@@ -97,7 +113,15 @@ exports.controllers = {
   deleteOneTempSchedule,
   deleteTempSchedules,
   deleteManyTempSchedule,
-  //
+
+  // temp solo
+
+  createTempSoloSchedule,
+  getTempSoloSchedule,
+  deleteOneTempSoloSchedule,
+  deleteTempSoloSchedules,
+  deleteManyTempSoloSchedule,
+
   createStudent,
   getStudents,
   getStudent,

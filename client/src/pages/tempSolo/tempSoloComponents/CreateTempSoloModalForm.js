@@ -6,16 +6,16 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 
-const CreateTempScheduleModalForm = ({
-  handleCompanionChange,
+const CreateTempSoloModalForm = ({
   handleCreateSchedule,
   handleCloseModal,
   values,
   schedules,
+  handleChange,
   handleStudentChange,
   handleDateChange,
 }) => {
-  const { student, companion } = values;
+  const { student, timings, timing } = values;
 
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -61,7 +61,7 @@ const CreateTempScheduleModalForm = ({
       <form onSubmit={handleCreateSchedule}>
         <div className="w-[100%] mt-[-40px] w-[100%] px-8 py-6 font-semibold flex justify-between items-center rounded-tl-[12px] rounded-tr-[12px] bg-gradient-to-r from-[#2d333b] to-[#22272e]">
           <div className="text-[#ffffff] text-[24px] flex gap-4 items-center">
-            <span>Add Temporary</span>
+            <span>Add Solo</span>
             <FaUserSecret />
           </div>
           <BsX
@@ -78,11 +78,15 @@ const CreateTempScheduleModalForm = ({
                   name="student"
                   value={student}
                   onChange={handleStudentChange}
-                  className="cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                  className="cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de] cursor-pointer"
                 >
                   <option value="">Select Schedule</option>
                   {schedules
-                    ?.filter((s) => s.isActive === "Absent")
+                    ?.filter(
+                      (s) =>
+                        s.isActive === "Absent" &&
+                        s?.student?.studentType === "Solo"
+                    )
                     ?.sort((a, b) => {
                       const nameA = `${a.nameOfStudent}`.toLowerCase();
                       const nameB = `${b.nameOfStudent}`.toLowerCase();
@@ -111,47 +115,7 @@ const CreateTempScheduleModalForm = ({
             </div>
           </div>
 
-          <div className="flex gap-2 text-[#c5d1de] pt-5">
-            <div className="flex flex-col gap-2 w-[100%]">
-              <div className="text-[#c5d1de]">Dyad With</div>
-              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
-                <select
-                  name="companion"
-                  value={companion}
-                  onChange={handleCompanionChange}
-                  className="cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
-                >
-                  <option value="">Select Companion</option>
-                  {schedules
-                    ?.filter((s) => s.isActive === "Present")
-                    ?.sort((a, b) => {
-                      const nameA = `${a.nameOfStudent}`.toLowerCase();
-                      const nameB = `${b.nameOfStudent}`.toLowerCase();
-
-                      // Compare the names
-                      if (nameA < nameB) {
-                        return -1;
-                      }
-                      if (nameA > nameB) {
-                        return 1;
-                      }
-                      return 0;
-                    })
-                    ?.map((s) => (
-                      <option
-                        key={s?._id}
-                        value={s?._id}
-                        data-timing={s.timing}
-                      >
-                        {s?.nameOfStudent}
-                      </option>
-                    ))}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-2 text-[#c5d1de] pt-5">
+          <div className="w-[100%] flex gap-2 text-[#c5d1de] pt-5">
             <div className="flex flex-col gap-2 w-[100%]">
               <div className="">Date</div>
               <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
@@ -160,20 +124,41 @@ const CreateTempScheduleModalForm = ({
                   placeholderText="Enter Date"
                   selected={selectedDate}
                   onChange={(date) => handleDateChangeCombined(date)}
-                  className="focus:border-[1px] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                  className="w-[100%] focus:border-[1px] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de] cursor-pointer"
                 />
               </div>
             </div>
           </div>
 
+          <div className="text-[#c5d1de] pt-6 flex gap-2">
+            <div className="flex flex-col gap-2 w-[100%]">
+              <div className="">Timing</div>
+              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+                <select
+                  name="timing"
+                  value={timing}
+                  onChange={handleChange}
+                  className="cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de] cursor-pointer"
+                >
+                  <option value="">Select timing</option>
+                  {timings?.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
           <div className="w-[100%] pt-11 flex items-center">
-            {selectedDate !== "" && companion !== "" && student !== "" ? (
+            {selectedDate !== "" && student !== "" && timing !== "" ? (
               <button
                 type="submit"
                 className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
               >
                 <FaPlus />
-                <div>Add Temporary</div>
+                <div>Add Solo</div>
               </button>
             ) : (
               <button
@@ -181,7 +166,7 @@ const CreateTempScheduleModalForm = ({
                 className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
               >
                 <FaPlus />
-                <div>Add Temporary</div>
+                <div>Add Solo</div>
               </button>
             )}
           </div>
@@ -191,4 +176,4 @@ const CreateTempScheduleModalForm = ({
   );
 };
 
-export default CreateTempScheduleModalForm;
+export default CreateTempSoloModalForm;

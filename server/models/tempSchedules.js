@@ -59,9 +59,19 @@ const tempSchedulesSchema = new mongoose.Schema(
       ],
     },
 
+    absentReason: {
+      type: String,
+      trim: true,
+    },
+
     day: {
       type: String,
       trim: true,
+    },
+
+    isVideoOn: {
+      type: Boolean,
+      default: false,
     },
 
     isActive: {

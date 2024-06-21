@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import { FaPlus } from "react-icons/fa6";
-import CreateScheduleFormModal from "./CreateScheduleFormModal";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
+import CreateTempSoloModalForm from "./CreateTempSoloModalForm";
 
 const initialState = {
   student: "",
-  nameOfStudent: "",
-  parent: "",
-  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  studentName: "",
+  studentType: "",
   day: "",
+  dateTime: "",
   timings: [
     "8:00 AM - 9:00 AM",
     "9:00 AM - 10:00 AM",
@@ -22,12 +22,11 @@ const initialState = {
     "4:00 PM - 5:00 PM",
   ],
   timing: "",
-  isWaitlisted: "No",
 };
 
-const CreateSchedule = ({
-  students,
-  getSchedules,
+const CreateTempSolo = ({
+  schedules,
+  getTempSoloSchedules,
   allowedRoles,
   auth,
   setLoading,
@@ -46,7 +45,7 @@ const CreateSchedule = ({
         return;
       }
 
-      const res = await axios.post(`/api/schedule`, values, {
+      const res = await axios.post(`/api/temp-solo`, values, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${auth?.userDetails?.token}`,
@@ -58,33 +57,39 @@ const CreateSchedule = ({
       toast.error(err?.response?.data.message);
     } finally {
       handleCloseModal();
-      getSchedules();
+      getTempSoloSchedules();
     }
   };
 
   // dynamic value getting and DYNAMIC use of error messages -kludy
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    let formattedValue = value;
-    setValues({ ...values, [name]: formattedValue });
-  };
-
   const handleStudentChange = (e) => {
-    e.preventDefault();
-
     const selectedStudent = e.target.value;
-    const selectedNameOfStudent =
-      e.target.options[e.target.selectedIndex].getAttribute(
-        "data-nameofstudent"
-      );
-    const selectedParent =
-      e.target.options[e.target.selectedIndex].getAttribute("data-parent");
+    const selectedStudentName =
+      e.target.options[e.target.selectedIndex].getAttribute("data-studentname");
+    const selectedStudentType =
+      e.target.options[e.target.selectedIndex].getAttribute("data-studenttype");
     setValues({
       ...values,
       student: selectedStudent,
-      nameOfStudent: selectedNameOfStudent,
-      parent: selectedParent,
+      studentName: selectedStudentName,
+      studentType: selectedStudentType,
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const handleDateChange = (date) => {
+    const dateObj = new Date(date);
+    const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
+
+    setValues({
+      ...values,
+      dateTime: date,
+      day: dayOfWeek,
     });
   };
 
@@ -101,30 +106,30 @@ const CreateSchedule = ({
     } catch (error) {
       console.error("An error occurred while handling modal closure:", error);
     } finally {
-      getSchedules();
+      getTempSoloSchedules();
     }
   };
 
   return (
     <>
       <div className="w-100 text-[14px] text-[#c5d1de] pb-6 ">
-        MLAC / Permanent Schedules
+        MLAC / Temporary Solo
       </div>
       <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
-        <div className="font-bold">Permanent List</div>
+        <div className="font-bold">Solo List</div>
 
         {allowedRoles?.find((ar) => auth?.userDetails?.role?.includes(ar)) ? (
           <div
             onClick={handleOpenModal}
-            className="cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px] font-bold"
+            className="cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
           >
             <FaPlus />
-            <div>Add Permanent</div>
+            <div>Add Solo</div>
           </div>
         ) : (
           <div className="cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px] font-bold">
             <FaPlus />
-            <div>Add Permanent</div>
+            <div>Add Solo</div>
           </div>
         )}
       </div>
@@ -136,13 +141,14 @@ const CreateSchedule = ({
         aria-describedby="parent-modal-description"
       >
         <ModalBox>
-          <CreateScheduleFormModal
-            students={students}
+          <CreateTempSoloModalForm
+            schedules={schedules}
             values={values}
             handleChange={handleChange}
             handleCreateSchedule={handleCreateSchedule}
             handleCloseModal={handleCloseModal}
             handleStudentChange={handleStudentChange}
+            handleDateChange={handleDateChange}
           />
         </ModalBox>
       </Modal>
@@ -150,4 +156,4 @@ const CreateSchedule = ({
   );
 };
 
-export default CreateSchedule;
+export default CreateTempSolo;

@@ -96,33 +96,40 @@ router.delete(
 
 // Temporary Solo Schedule
 
-// router.post(
-//   "/temp-soloschedule",
-//   auth,
+router.post(
+  "/temp-solo",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.createTempSoloSchedule
+);
 
-//   mainController.controllers.createTempSoloSchedule
-// );
+router.get(
+  "/temp-solo",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.getTempSoloSchedule
+);
 
-// router.get(
-//   "/temp-soloschedule",
-//   auth,
+router.delete(
+  "/temp-solo/:id",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.deleteOneTempSoloSchedule
+);
 
-//   mainController.controllers.getTempSoloSchedule
-// );
+router.delete(
+  "/temp-solo",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.deleteTempSoloSchedules
+);
 
-// router.delete(
-//   "/temp-soloschedule/:id",
-//   auth,
-
-//   mainController.controllers.deleteOneTempSoloSchedule
-// );
-
-// router.delete(
-//   "/temp-soloschedule",
-//   auth,
-
-//   mainController.controllers.deleteTempSoloSchedules
-// );
+router.delete(
+  "/temp-solos/deleteSelected",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.deleteManyTempSoloSchedule
+);
 
 // isActive status
 

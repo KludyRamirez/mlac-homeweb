@@ -5,6 +5,8 @@ import {
   BsCalendar2,
   BsGear,
   BsClock,
+  BsCalendarDate,
+  BsCalendar4Event,
 } from "react-icons/bs";
 import SchedulesTable from "./SchedulesTable";
 
@@ -138,7 +140,7 @@ const SchedulesFilter = ({
               <div className="flex gap-2 items-center">
                 <div>Day</div> <BsChevronBarDown />
               </div>
-              <BsCalendar2 className="text-[18px]" />
+              <BsCalendar4Event className="text-[18px]" />
             </div>
             <select
               onChange={(e) => setDay(e.target.value)}
