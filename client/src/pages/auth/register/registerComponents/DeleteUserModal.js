@@ -1,6 +1,5 @@
 import React from "react";
-import { BsTrash3, BsX } from "react-icons/bs";
-import { FaTrash, FaTrashCan } from "react-icons/fa6";
+import { FaTrashCan } from "react-icons/fa6";
 
 const DeleteUserModal = ({ handleConfirmDelete, handleCloseModal }) => {
   const handleDeleteAndClose = () => {

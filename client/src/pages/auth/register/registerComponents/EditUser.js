@@ -37,7 +37,7 @@ const EditUser = ({
     e.preventDefault();
 
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -48,7 +48,7 @@ const EditUser = ({
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
+            Authorization: `Bearer ${auth?.userDetails?.token}`,
           },
         }
       );

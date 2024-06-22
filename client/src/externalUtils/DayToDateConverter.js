@@ -6,7 +6,7 @@ const handlePostScheduleDate = async (
   getSchedules,
   attendance
 ) => {
-  if (!auth.userDetails.token) {
+  if (!auth?.userDetails?.token) {
     console.error("Authentication token not found.");
     return;
   }
@@ -46,10 +46,7 @@ const handlePostScheduleDate = async (
       }
     );
 
-    if (attendance === "Present") {
-      toast.success(res?.data?.message);
-    }
-
+    toast.success(res?.data?.message);
     getSchedules();
   } catch (err) {
     toast.error("An error occurred while adding logs");

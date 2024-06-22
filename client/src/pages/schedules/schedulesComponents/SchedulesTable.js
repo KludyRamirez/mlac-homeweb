@@ -7,14 +7,11 @@ import EditSchedule from "./EditSchedule";
 import PatchScheduleStatus from "./PatchScheduleStatus";
 import pdfExporter from "../../../externalUtils/pdfExporter";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
-import {
-  FaArrowUpRightFromSquare,
-  FaPenToSquare,
-  FaTrashCan,
-} from "react-icons/fa6";
+import { FaPenToSquare, FaTrashCan } from "react-icons/fa6";
 import Ellipsis from "../../../externalUtils/Ellipsis";
 import ReasonSchedule from "./ReasonSchedule";
 import { BsCheck, BsX } from "react-icons/bs";
+import handlePostScheduleDate from "../../../externalUtils/DayToDateConverter";
 
 const SchedulesTable = ({
   auth,
@@ -37,9 +34,7 @@ const SchedulesTable = ({
   const [selectedScheduleEdit, setSelectedScheduleEdit] = useState(null);
   const [showPatchScheduleModal, setShowPatchScheduleModal] = useState(false);
   const [selectedSchedulePatch, setSelectedSchedulePatch] = useState(null);
-  const [showRemarksScheduleModal, setShowRemarksScheduleModal] =
-    useState(false);
-  const [selectedScheduleRemarks, setSelectedScheduleRemarks] = useState(null);
+  const [showReasonScheduleModal, setShowReasonScheduleModal] = useState(false);
 
   const [exportTrigger, setExportTrigger] = useState(false);
 
@@ -79,7 +74,7 @@ const SchedulesTable = ({
 
   const deleteSelectedSchedules = async () => {
     try {
-      if (!auth.userDetails || !auth.userDetails.token) {
+      if (!auth.userDetails || !auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         navigate("/");
         return;
@@ -113,7 +108,7 @@ const SchedulesTable = ({
 
   const deleteOneSchedule = async (id) => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -198,17 +193,17 @@ const SchedulesTable = ({
 
   // const handleScheduleRemarksClick = (cas) => {
   //   try {
-  //     setSelectedScheduleRemarks(cas);
+  //     setSelectedScheduleReason(cas);
   //     console.log(cas);
   //   } catch (error) {
   //     console.error("Error handling schedule Remarks click:", error);
   //   } finally {
-  //     setShowRemarksScheduleModal(true);
+  //     setShowReasonScheduleModal(true);
   //   }
   // };
 
-  const handleCloseModalRemarks = () => {
-    setShowRemarksScheduleModal(false);
+  const handleCloseModalReason = () => {
+    setShowReasonScheduleModal(false);
   };
 
   const exportPDF = () => {
@@ -262,31 +257,12 @@ const SchedulesTable = ({
       </Modal>
       <Modal
         sx={{ border: "none", outline: "none" }}
-        open={showRemarksScheduleModal}
-        onClose={handleCloseModalRemarks}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <ModalBox sx={{ width: "38%" }}>
-          <ReasonSchedule
-            handleCloseModalRemarks={handleCloseModalRemarks}
-            selectedScheduleRemarks={selectedScheduleRemarks}
-            auth={auth}
-            setLoading={setLoading}
-            toast={toast}
-            axios={axios}
-            getSchedules={getSchedules}
-          />
-        </ModalBox>
-      </Modal>
-      <Modal
-        sx={{ border: "none", outline: "none" }}
         open={showDeleteScheduleModal}
         onClose={handleCloseModal}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "22%" }}>
+        <ModalBox sx={{ width: "fit-content", background: "transparent" }}>
           <DeleteScheduleModal
             handleConfirmDelete={handleConfirmDelete}
             handleCloseModal={handleCloseModal}
@@ -300,7 +276,7 @@ const SchedulesTable = ({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "22%" }}>
+        <ModalBox sx={{ width: "fit-content", background: "transparent" }}>
           <DeleteManyScheduleModal
             deleteSelectedSchedules={deleteSelectedSchedules}
             handleCloseModalDeleteMany={handleCloseModalDeleteMany}
@@ -309,7 +285,7 @@ const SchedulesTable = ({
       </Modal>
       <div
         className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] border-[1px] border-[#2d333b] phone:overflow-x-scroll ${
-          schedules && schedules.length > 5 ? "overflow-y-scroll" : ""
+          schedules && schedules.length > 5 ? "overflow-auto h-[362px]" : ""
         }`}
       >
         <div className="phone:w-[fit-content] flex items-center gap-4 px-6 bg-[#2d333b] rounded-[10px]">
@@ -339,7 +315,7 @@ const SchedulesTable = ({
           <div className=" w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Parent
           </div>
-          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className=" w-[150px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Status
           </div>
           {selectedSchedules.length > 1 ? (
@@ -363,12 +339,12 @@ const SchedulesTable = ({
                 </div>
               </>
             ) : (
-              <div className="w-[170px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
+              <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
                 <span>Actions</span>
               </div>
             )
           ) : (
-            <div className="w-[170px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
+            <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
               <span>Actions</span>
             </div>
           )}
@@ -405,17 +381,22 @@ const SchedulesTable = ({
                   {s?.timing}
                 </div>
                 <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
-                  {s?.student?.studentType}
+                  {s?.studentId?.studentType}
                 </div>
                 <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.parent}
                 </div>
                 <div
                   className={`${
-                    s.isActive === "Present"
-                      ? "bg-gradient-to-r from-[#008000] to-[transparent] hover:to-[#008000] border-[1px] border-[#008000] cursor-pointer"
-                      : "bg-gradient-to-r from-[#ff3131] to-[transparent] hover:to-[#ff3131] border-[1px] border-[#ff3131] cursor-pointer"
-                  } w-[170px] text-[#ffffff] text-[15px] flex justify-center items-center py-1 px-4 rounded-[24px] gap-2`}
+                    s.isActive === "Present" &&
+                    "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] cursor-pointer text-[#ffffff] "
+                  } ${
+                    s.isActive === "Absent" &&
+                    "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] cursor-pointer text-[#ffffff] "
+                  } ${
+                    s.isActive === "No information yet" &&
+                    "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e] "
+                  } w-[150px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-2`}
                 >
                   {s?.isActive?.slice(0, 7)}
                   {s?.isActive === "Present" ? (
@@ -425,18 +406,12 @@ const SchedulesTable = ({
                   )}
                 </div>
 
-                <div className="w-[170px] whitespace-nowrap flex justify-start items-center px-2 gap-2">
+                <div className="w-[160px] whitespace-nowrap flex justify-start items-center px-2 gap-2">
                   {selectedSchedules.length < 2 ? (
                     allowedRoles?.find((ar) =>
                       auth?.userDetails?.role?.includes(ar)
                     ) ? (
                       <>
-                        <div
-                          onClick={() => handleSchedulePatchClick(s)}
-                          className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
-                        >
-                          <FaArrowUpRightFromSquare className="text-[18px]" />
-                        </div>
                         <div
                           onClick={() => handleScheduleEditClick(s)}
                           className="p-2 bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
@@ -452,9 +427,6 @@ const SchedulesTable = ({
                       </>
                     ) : (
                       <>
-                        <div className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                          <FaArrowUpRightFromSquare className="text-[18px]" />
-                        </div>
                         <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
                           <FaPenToSquare className="text-[18px]" />
                         </div>
@@ -465,9 +437,6 @@ const SchedulesTable = ({
                     )
                   ) : (
                     <>
-                      <div className="relative container w-[36px] h-[36px] flex justify-center items-center bg-[transparent] text-[#c5d1de] rounded-[18px]">
-                        <FaArrowUpRightFromSquare className="text-[18px]" />
-                      </div>
                       <div className="p-2 bg-[transparent] text-[#c5d1de] rounded-[18px]">
                         <FaPenToSquare className="text-[18px]" />
                       </div>

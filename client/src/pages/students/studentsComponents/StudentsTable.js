@@ -77,7 +77,7 @@ const StudentsTable = ({
 
   const deleteSelectedStudents = async () => {
     try {
-      if (!auth.userDetails || !auth.userDetails.token) {
+      if (!auth.userDetails || !auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         // Redirect to login page or handle unauthorized access as per your application's logic
         navigate("/");
@@ -88,7 +88,7 @@ const StudentsTable = ({
         data: { students: selectedStudents },
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
       setSelectedStudents([]);
@@ -112,7 +112,7 @@ const StudentsTable = ({
 
   const deleteOneStudent = async (id) => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }

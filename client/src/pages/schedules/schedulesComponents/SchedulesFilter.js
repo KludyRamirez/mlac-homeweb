@@ -57,7 +57,8 @@ const SchedulesFilter = ({
       const searchMatch =
         searchTerm === "All" ||
         s?.scheduleId?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-        s?.nameOfStudent?.toLowerCase().includes(searchTerm?.toLowerCase());
+        s?.nameOfStudent?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+        s?.parent?.toLowerCase().includes(searchTerm?.toLowerCase());
 
       const dayMatch = day === "All" || s?.day === day;
 
@@ -120,7 +121,7 @@ const SchedulesFilter = ({
             onChange={(e) => setSearchTerm(e.target.value)}
             type="text"
             autoComplete="off"
-            placeholder="Search by case number, student name, etc."
+            placeholder="Search by schedule ID, student name or parent"
             className="p-3 rounded-[6px] w-[97%] phone:w-[100%] bg-[#22272e] border-[1px] border-[#22272e] focus:outline-none focus:border-[#c5d1de]"
           />
           <div className="flex justify-center items-center w-[50px] h-[48px] rounded-[8px] bg-[#2d333b] text-white phone:hidden">

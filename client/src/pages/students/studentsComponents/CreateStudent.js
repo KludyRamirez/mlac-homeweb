@@ -42,7 +42,7 @@ const CreateStudent = ({
     e.preventDefault();
 
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }

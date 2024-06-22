@@ -21,7 +21,7 @@ const ChangeUserInfo = ({ auth, setLoading, toast, axios }) => {
     e.preventDefault();
 
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -32,7 +32,7 @@ const ChangeUserInfo = ({ auth, setLoading, toast, axios }) => {
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
+            Authorization: `Bearer ${auth?.userDetails?.token}`,
           },
         }
       );
@@ -47,7 +47,7 @@ const ChangeUserInfo = ({ auth, setLoading, toast, axios }) => {
     e.preventDefault();
 
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -58,7 +58,7 @@ const ChangeUserInfo = ({ auth, setLoading, toast, axios }) => {
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
+            Authorization: `Bearer ${auth?.userDetails?.token}`,
           },
         }
       );

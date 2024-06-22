@@ -29,7 +29,7 @@ const CreateCollegesAndDepartments = ({
     e.preventDefault();
 
     try {
-      if (!auth.userDetails || !auth.userDetails.token) {
+      if (!auth.userDetails || !auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -37,7 +37,7 @@ const CreateCollegesAndDepartments = ({
       const response = await axios.post(`/api/cad`, values, {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
 

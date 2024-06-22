@@ -5,7 +5,7 @@ import CreateScheduleFormModal from "./CreateScheduleFormModal";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
 
 const initialState = {
-  student: "",
+  studentId: "",
   nameOfStudent: "",
   parent: "",
   days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -23,6 +23,8 @@ const initialState = {
   ],
   timing: "",
   isWaitlisted: "No",
+  studentType: "",
+  schedType: "Permanent",
 };
 
 const CreateSchedule = ({
@@ -80,11 +82,14 @@ const CreateSchedule = ({
       );
     const selectedParent =
       e.target.options[e.target.selectedIndex].getAttribute("data-parent");
+    const selectedStudentType =
+      e.target.options[e.target.selectedIndex].getAttribute("data-studenttype");
     setValues({
       ...values,
-      student: selectedStudent,
+      studentId: selectedStudent,
       nameOfStudent: selectedNameOfStudent,
       parent: selectedParent,
+      studentType: selectedStudentType,
     });
   };
 

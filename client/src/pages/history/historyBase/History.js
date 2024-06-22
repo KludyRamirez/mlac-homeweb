@@ -11,7 +11,7 @@ const History = ({ auth, axios, setLoading, toast, allowedRoles }) => {
 
   const getHistory = async () => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -19,7 +19,7 @@ const History = ({ auth, axios, setLoading, toast, allowedRoles }) => {
       const res = await axios.get(url, {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
       setHistory(res.data);

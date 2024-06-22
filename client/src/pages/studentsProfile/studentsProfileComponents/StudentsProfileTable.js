@@ -115,7 +115,7 @@ const StudentsProfileTable = ({
 
   const deleteSelectedCases = async () => {
     try {
-      if (!auth.userDetails || !auth.userDetails.token) {
+      if (!auth.userDetails || !auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         navigate("/");
         return;
@@ -125,7 +125,7 @@ const StudentsProfileTable = ({
         data: { cases: selectedCases },
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
       setSelectedCases([]);
@@ -149,7 +149,7 @@ const StudentsProfileTable = ({
 
   const deleteOneCase = async (id) => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -213,7 +213,7 @@ const StudentsProfileTable = ({
 
   // const handlePatchStatusOfCase = async (id, statusCase, caseNo) => {
   //   try {
-  //     if (!auth.userDetails.token) {
+  //     if (!auth?.userDetails?.token) {
   //       console.error("Authentication token not found.");
   //       return;
   //     }

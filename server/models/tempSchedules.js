@@ -18,6 +18,12 @@ const tempSchedulesSchema = new mongoose.Schema(
       trim: true,
     },
 
+    studentId: {
+      type: ObjectId,
+      ref: "Students",
+      unique: true,
+    },
+
     studentType: {
       type: String,
       enum: ["Solo", "Dyad"],

@@ -1,4 +1,5 @@
 import React from "react";
+import { BsX } from "react-icons/bs";
 import { FaTrashCan } from "react-icons/fa6";
 
 const DeleteManyTempScheduleModal = ({
@@ -17,8 +18,8 @@ const DeleteManyTempScheduleModal = ({
   return (
     <>
       <div className="flex justify-center border-t-[1px] border-l-[1px] border-r-[1px] border-[#22272e] p-4 rounded-tl-[10px] rounded-tr-[10px] backdrop-filter backdrop-blur-sm">
-        <div className="w-[71px] h-[70px] bg-gradient-to-t from-[#22272e] to-[#ff3131] flex justify-center items-center rounded-[58px]">
-          <FaTrashCan className="text-[36px] text-[#22272e]" />
+        <div className="w-[71px] h-[70px] bg-gradient-to-t from-[#ff3131] to-[#c5d1de] flex justify-center items-center rounded-[58px]">
+          <BsX className="text-[56px] text-[#22272e]" />
         </div>
       </div>
       <div className="p-8 flex flex-col gap-2 text-[#c5d1de] bg-[#22272e] rounded-bl-[10px] rounded-br-[10px]">
@@ -30,7 +31,7 @@ const DeleteManyTempScheduleModal = ({
         <div className="text-white flex justify-center items-center gap-4 pt-4">
           <div
             onClick={handleDeleteManyAndClose}
-            className="w-[100%] flex justify-start items-center gap-2 bg-gradient-to-br from-[#ff3131] to-[#ff3131] text-[#c5d1de] hover:text-[white] border-[1px] border-[#22272e] py-2 px-4 rounded-[8px] cursor-pointer"
+            className="w-[100%] flex justify-start items-center gap-2 bg-gradient-to-br from-[#ff3131] to-[#ff3131] text-[white] hover:text-[white] border-[1px] border-[#22272e] py-2 px-4 rounded-[8px] cursor-pointer"
           >
             <span className="text-[16px]">Delete</span>
           </div>

@@ -55,7 +55,7 @@ const CollegesAndDepartmentsTable = ({
 
   const deleteSelectedCads = async () => {
     try {
-      if (!auth.userDetails || !auth.userDetails.token) {
+      if (!auth.userDetails || !auth?.userDetails?.token) {
         toast.error("Authentication token not found.");
         navigate("/");
         return;
@@ -89,7 +89,7 @@ const CollegesAndDepartmentsTable = ({
 
   const deleteOneCad = async (id) => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }

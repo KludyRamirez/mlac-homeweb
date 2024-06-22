@@ -77,7 +77,7 @@ const createSchedule = async (req, res) => {
 const getSchedule = async (req, res) => {
   try {
     const schedules = await Schedule.find()
-      .populate("student", "studentNo studentType parent")
+      .populate("studentId", "studentNo studentType parent")
       .exec();
     res.status(200).json({
       schedules,
@@ -312,6 +312,7 @@ const getTempSchedule = async (req, res) => {
         "student",
         "day timing parent nameOfStudent studentType scheduleType scheduleId isVideoOn"
       )
+      .populate("studentId", "behindByCounter")
       .exec();
 
     res.status(200).json({ tempSchedules: temporarySchedules });

@@ -6,12 +6,14 @@ import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
 
 const initialState = {
   student: "",
+  studentId: "",
   companion: "",
   studentName: "",
   studentType: "",
   day: "",
   dateTime: "",
   timing: "",
+  schedType: "Temporary",
 };
 
 const CreateTempSchedule = ({
@@ -70,17 +72,22 @@ const CreateTempSchedule = ({
       e.target.options[e.target.selectedIndex].getAttribute("data-studentname");
     const selectedStudentType =
       e.target.options[e.target.selectedIndex].getAttribute("data-studenttype");
+    const selectedStudentId =
+      e.target.options[e.target.selectedIndex].getAttribute("data-studentid");
     setValues({
       ...values,
       student: selectedStudent,
       studentName: selectedStudentName,
       studentType: selectedStudentType,
+      studentId: selectedStudentId,
     });
   };
 
   const handleDateChange = (date) => {
     const dateObj = new Date(date);
     const dayOfWeek = dateObj.toLocaleDateString("en-US", { weekday: "long" });
+
+    console.log(dayOfWeek);
 
     setValues({
       ...values,
@@ -112,20 +119,20 @@ const CreateTempSchedule = ({
         MLAC / Temporary Schedules
       </div>
       <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
-        <div className="font-bold">Schedules List</div>
+        <div className="font-bold">Temporary List</div>
 
         {allowedRoles?.find((ar) => auth?.userDetails?.role?.includes(ar)) ? (
           <div
             onClick={handleOpenModal}
-            className="cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
+            className="font-bold cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
           >
             <FaPlus />
-            <div>Add Schedule</div>
+            <div>Add Temporary</div>
           </div>
         ) : (
-          <div className="cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px] font-bold">
+          <div className="font-bold cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px] font-bold">
             <FaPlus />
-            <div>Add Schedule</div>
+            <div>Add Temporary</div>
           </div>
         )}
       </div>
@@ -140,6 +147,7 @@ const CreateTempSchedule = ({
           <CreateTempScheduleModalForm
             schedules={schedules}
             values={values}
+            setValues={setValues}
             handleCompanionChange={handleCompanionChange}
             handleCreateSchedule={handleCreateSchedule}
             handleCloseModal={handleCloseModal}

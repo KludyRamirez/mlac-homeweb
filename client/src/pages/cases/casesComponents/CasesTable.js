@@ -74,7 +74,7 @@ const CasesTable = ({
 
   const deleteSelectedCases = async () => {
     try {
-      if (!auth.userDetails || !auth.userDetails.token) {
+      if (!auth.userDetails || !auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         navigate("/");
         return;
@@ -108,7 +108,7 @@ const CasesTable = ({
 
   const deleteOneCase = async (id) => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }

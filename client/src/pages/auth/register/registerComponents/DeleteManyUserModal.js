@@ -24,7 +24,7 @@ const DeleteManyUserModal = ({
       <div className="p-8 flex flex-col gap-2 text-[#c5d1de] bg-[#22272e] rounded-bl-[10px] rounded-br-[10px]">
         <div className="flex flex-col phone:justify-between justify-center items-center gap-6">
           <div className="mt-[-6px] phone:w-[260px] w-[260px] flex justify-center items-center text-[16px] text-[#c5d1de] rounded-[6px]">
-            <div>Do you really want to delete this user?</div>
+            <div>Do you really want to delete these users?</div>
           </div>
         </div>
         <div className="text-white flex justify-center items-center gap-4 pt-4">

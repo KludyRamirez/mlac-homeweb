@@ -15,34 +15,27 @@ const ReasonSchedule = ({
   const [updatedValues, setUpdatedValues] = useState(selectedScheduleReason);
 
   const handleChange = (e) => {
-    e.preventDefault();
-
     const { name, value } = e.target;
-
-    let formattedValue = value;
-
-    setUpdatedValues({
-      ...updatedValues,
-      [name]: formattedValue,
-    });
+    setUpdatedValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
   };
 
   return (
-    <>
-      <ReasonScheduleFormModal
-        auth={auth}
-        toast={toast}
-        setLoading={setLoading}
-        axios={axios}
-        getSchedules={getSchedules}
-        attendance={attendance}
-        updatedValues={updatedValues}
-        setUpdatedValues={setUpdatedValues}
-        handleChange={handleChange}
-        handleCloseModalReason={handleCloseModalReason}
-        handlePostScheduleDate={handlePostScheduleDate}
-      />
-    </>
+    <ReasonScheduleFormModal
+      auth={auth}
+      toast={toast}
+      setLoading={setLoading}
+      axios={axios}
+      getSchedules={getSchedules}
+      attendance={attendance}
+      updatedValues={updatedValues}
+      setUpdatedValues={setUpdatedValues}
+      handleChange={handleChange}
+      handleCloseModalReason={handleCloseModalReason}
+      handlePostScheduleDate={handlePostScheduleDate}
+    />
   );
 };
 

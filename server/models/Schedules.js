@@ -3,7 +3,7 @@ const { ObjectId } = mongoose.Schema;
 
 const schedulesSchema = new mongoose.Schema(
   {
-    student: {
+    studentId: {
       type: ObjectId,
       ref: "Students",
     },
@@ -41,6 +41,11 @@ const schedulesSchema = new mongoose.Schema(
     schedType: {
       type: String,
       default: "Permanent",
+    },
+
+    studentType: {
+      type: String,
+      enum: ["Solo", "Dyad"],
     },
 
     timing: {

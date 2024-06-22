@@ -34,7 +34,7 @@ const TempSolo = ({ auth, setLoading, toast, axios, allowedRoles }) => {
 
   const getSchedules = async () => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }

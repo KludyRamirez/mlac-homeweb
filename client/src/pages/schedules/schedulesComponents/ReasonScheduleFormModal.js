@@ -13,69 +13,63 @@ const ReasonScheduleFormModal = ({
   handlePostScheduleDate,
   attendance,
 }) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await handlePostScheduleDate(
+      updatedValues,
+      auth,
+      toast,
+      axios,
+      getSchedules,
+      attendance
+    );
+    handleCloseModalReason();
+  };
+
   return (
-    <>
-      <form
-        onSubmit={() =>
-          handlePostScheduleDate(
-            updatedValues,
-            auth,
-            toast,
-            axios,
-            getSchedules,
-            attendance
-          )
-        }
-      >
-        <div className="w-[100%] mt-[-40px] w-[100%] px-8 py-6 font-semibold flex justify-between items-center rounded-tl-[12px] rounded-tr-[12px] bg-gradient-to-r from-[#2d333b] to-[#22272e]">
-          <div className="text-[#ffffff] text-[24px] flex gap-4 items-center">
-            <span>Add reason for absence</span>
-          </div>
-          <BsX
-            onClick={handleCloseModalReason}
-            className="text-[#c5d1de] text-[34px] cursor-pointer"
-          />
+    <form onSubmit={handleSubmit}>
+      <div className="w-full mt-[-40px] px-8 py-6 font-semibold flex justify-between items-center rounded-tl-[12px] rounded-tr-[12px] bg-gradient-to-r from-[#2d333b] to-[#22272e]">
+        <div className="text-[#ffffff] text-[24px] flex gap-4 items-center">
+          <span>Add reason for absence</span>
         </div>
-        <div className="p-10">
-          <div className="flex gap-2 text-[#c5d1de]">
-            <div className="flex flex-col gap-2 w-[100%]">
-              <div className="flex justify-start items-center gap-2">
-                <span>Type your reason</span>
-              </div>
-              <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
-                <textarea
-                  name="absentReason"
-                  value={updatedValues.absentReason}
-                  onChange={handleChange}
-                  className="h-[100%] cursor-pointer cursor-pointer border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
-                />
-              </div>
+        <BsX
+          onClick={handleCloseModalReason}
+          className="text-[#c5d1de] text-[34px] cursor-pointer"
+        />
+      </div>
+      <div className="p-10">
+        <div className="flex gap-2 text-[#c5d1de]">
+          <div className="flex flex-col gap-2 w-full">
+            <div className="flex justify-start items-center gap-2">
+              <span>Type your reason</span>
+            </div>
+            <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
+              <textarea
+                name="absentReason"
+                value={updatedValues?.absentReason}
+                onChange={handleChange}
+                className="h-full cursor-pointer border-[1px] border-[#22272e] w-full appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+              />
             </div>
           </div>
-
-          <div className="w-[100%] pt-10 flex items-center">
-            {updatedValues.absentReason !== "" ? (
-              <button
-                type="submit"
-                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
-              >
-                <FaPlus />
-                <div>Add Reason</div>
-              </button>
-            ) : (
-              <button
-                disabled
-                type="submit"
-                className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
-              >
-                <FaPlus />
-                <div>Add Reason</div>
-              </button>
-            )}
-          </div>
         </div>
-      </form>
-    </>
+
+        <div className="w-full pt-10 flex items-center">
+          <button
+            type="submit"
+            disabled={!updatedValues.absentReason}
+            className={`w-full font-bold cursor-pointer p-3 ${
+              updatedValues.absentReason
+                ? "bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e]"
+                : "bg-gray-400 text-gray-700"
+            } text-[16px] flex gap-2 items-center rounded-[8px]`}
+          >
+            <FaPlus />
+            <div>Add Reason</div>
+          </button>
+        </div>
+      </div>
+    </form>
   );
 };
 

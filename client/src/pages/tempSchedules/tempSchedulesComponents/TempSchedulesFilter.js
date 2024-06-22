@@ -6,6 +6,7 @@ import {
   BsGear,
   BsClock,
   BsCalendar4Week,
+  BsCalendar4Event,
 } from "react-icons/bs";
 import TempSchedulesTable from "./TempSchedulesTable";
 import DatePicker from "react-datepicker";
@@ -141,7 +142,7 @@ const TempSchedulesFilter = ({
             onChange={(e) => setSearchTerm(e.target.value)}
             type="text"
             autoComplete="off"
-            placeholder="Search by case number, student name, etc."
+            placeholder="Search by schedule ID, student name or parent"
             className="p-3 rounded-[6px] w-[97%] phone:w-[100%] bg-[#22272e] border-[1px] border-[#22272e] focus:outline-none focus:border-[#c5d1de]"
           />
           <div className="flex justify-center items-center w-[50px] h-[48px] rounded-[8px] bg-[#2d333b] text-white phone:hidden">
@@ -161,7 +162,7 @@ const TempSchedulesFilter = ({
               <div className="flex gap-2 items-center">
                 <div>Day</div> <BsChevronBarDown />
               </div>
-              <BsCalendar2 className="text-[18px]" />
+              <BsCalendar4Event className="text-[18px]" />
             </div>
             <select
               onChange={(e) => setDay(e.target.value)}

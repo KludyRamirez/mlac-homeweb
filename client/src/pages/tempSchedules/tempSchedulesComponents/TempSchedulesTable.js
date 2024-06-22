@@ -7,6 +7,7 @@ import { FaTrashCan } from "react-icons/fa6";
 import Ellipsis from "../../../externalUtils/Ellipsis";
 import DeleteTempScheduleModal from "./DeleteTempScheduleModal";
 import DeleteManyTempScheduleModal from "./DeleteManyTempScheduleModal";
+import { BsCheck, BsX } from "react-icons/bs";
 
 const TempSchedulesTable = ({
   auth,
@@ -65,7 +66,7 @@ const TempSchedulesTable = ({
 
   const deleteSelectedSchedules = async () => {
     try {
-      if (!auth.userDetails || !auth.userDetails.token) {
+      if (!auth.userDetails || !auth?.userDetails?.token) {
         navigate("/");
         return;
       }
@@ -97,7 +98,7 @@ const TempSchedulesTable = ({
 
   const deleteOneSchedule = async (id) => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -221,7 +222,7 @@ const TempSchedulesTable = ({
           <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Companion
           </div>
-          <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className=" w-[150px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Status
           </div>
           {selectedSchedules.length > 1 ? (
@@ -301,12 +302,22 @@ const TempSchedulesTable = ({
                 </div>
                 <div
                   className={`${
-                    k % 2 === 0
-                      ? "bg-gradient-to-r from-[#c5d1de] to-[#22272e] hover:to-[#c5d1de] cursor-pointer"
-                      : "bg-gradient-to-r from-[#c5d1de] to-[#2d333b] hover:to-[#c5d1de] cursor-pointer"
-                  } w-[170px] text-[#22272e] flex justify-center items-center py-1 px-4 rounded-[24px]`}
+                    s.isActive === "Present" &&
+                    "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] cursor-pointer text-[#ffffff] "
+                  } ${
+                    s.isActive === "Absent" &&
+                    "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] cursor-pointer text-[#ffffff] "
+                  } ${
+                    s.isActive === "No information yet" &&
+                    "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e] "
+                  } w-[150px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-2`}
                 >
-                  {s?.isActive?.slice(0, 7)}...
+                  {s?.isActive?.slice(0, 7)}
+                  {s?.isActive === "Present" ? (
+                    <BsCheck className="text-[18px]" />
+                  ) : (
+                    <BsX className="text-[18px]" />
+                  )}
                 </div>
 
                 <div className="w-[170px] whitespace-nowrap flex justify-start items-center px-2 gap-2">

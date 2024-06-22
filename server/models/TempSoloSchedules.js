@@ -1,26 +1,54 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const tempSoloSchedulesSchema = new mongoose.Schema(
   {
+    // independent attribute
+
+    student: {
+      type: ObjectId,
+      ref: "Schedules",
+      unique: true,
+    },
+
+    // dependent to student
+
+    studentName: {
+      type: String,
+      trim: true,
+    },
+
+    studentId: {
+      type: ObjectId,
+      ref: "Students",
+      unique: true,
+    },
+
+    studentType: {
+      type: String,
+      enum: ["Solo", "Dyad"],
+    },
+
+    // independent
+
     scheduleId: {
       type: String,
       trim: true,
     },
-    student: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Schedules",
-      unique: true,
-    },
+
     schedType: {
       type: String,
-      enum: ["Permanent", "Temporary"],
+      default: "Temporary",
     },
+
     dateTime: {
       type: Date,
     },
+
     day: {
       type: String,
     },
+
     timing: {
       type: String,
       enum: [
@@ -35,18 +63,10 @@ const tempSoloSchedulesSchema = new mongoose.Schema(
         "4:00 PM - 5:00 PM",
       ],
     },
+
     absentReason: {
       type: String,
-      default: "Busy",
-      enum: [
-        "Busy",
-        "Sickness",
-        "No Transportation",
-        "Family Matter",
-        "Tiredness",
-        "Conflict of Schedule",
-        "Bad Weather",
-      ],
+      trim: true,
     },
 
     isActive: {

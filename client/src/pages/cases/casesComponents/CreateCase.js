@@ -91,7 +91,7 @@ const CreateCase = ({
     e.preventDefault();
 
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -99,7 +99,7 @@ const CreateCase = ({
       const res = await axios.post(`/api/case`, values, {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
       await toast.success(res?.data?.message);

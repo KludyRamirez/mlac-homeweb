@@ -64,7 +64,7 @@ const UsersTable = ({
 
   const deleteSelectedUsers = async () => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -72,7 +72,7 @@ const UsersTable = ({
         data: { users: selectedUsers },
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
       setSelectedUsers([]);
@@ -96,7 +96,7 @@ const UsersTable = ({
 
   const deleteOneUser = async (id) => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }

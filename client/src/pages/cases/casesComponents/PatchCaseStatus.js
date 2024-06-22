@@ -31,7 +31,7 @@ const PatchCaseStatus = ({
   const handlePatchCase = async (e) => {
     e.preventDefault();
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -42,7 +42,7 @@ const PatchCaseStatus = ({
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${auth.userDetails.token}`,
+            Authorization: `Bearer ${auth?.userDetails?.token}`,
           },
         }
       );

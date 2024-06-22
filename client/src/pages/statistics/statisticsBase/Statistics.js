@@ -13,7 +13,7 @@ const Statistics = ({ auth, toast, axios, setLoading }) => {
 
   const getCases = async () => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -33,7 +33,7 @@ const Statistics = ({ auth, toast, axios, setLoading }) => {
 
   const getStudents = async () => {
     try {
-      if (!auth.userDetails.token) {
+      if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
@@ -41,7 +41,7 @@ const Statistics = ({ auth, toast, axios, setLoading }) => {
       const res = await axios.get(url, {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${auth.userDetails.token}`,
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
       setStudents(res.data);
