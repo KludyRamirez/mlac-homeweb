@@ -297,7 +297,7 @@ const SchedulesTable = ({
               onChange={toggleSelectAll}
             />
           </div>
-          <div className="w-[80px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className="w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             ID
           </div>
           <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
@@ -315,7 +315,7 @@ const SchedulesTable = ({
           <div className=" w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Parent
           </div>
-          <div className=" w-[150px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className=" w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Status
           </div>
           {selectedSchedules.length > 1 ? (
@@ -368,7 +368,7 @@ const SchedulesTable = ({
                     onChange={() => toggleScheduleSelection(s?._id)}
                   />
                 </div>
-                <div className="w-[80px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.scheduleId.slice(11)}
                 </div>
                 <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
@@ -389,20 +389,20 @@ const SchedulesTable = ({
                 <div
                   className={`${
                     s.isActive === "Present" &&
-                    "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] cursor-pointer text-[#ffffff] "
+                    "bg-gradient-to-r from-[#2E8B57] to-[#008000] hover:to-[#008000] cursor-pointer text-[#ffffff]"
                   } ${
                     s.isActive === "Absent" &&
-                    "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] cursor-pointer text-[#ffffff] "
+                    "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#880808] cursor-pointer text-[#ffffff]"
                   } ${
                     s.isActive === "No information yet" &&
-                    "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e] "
-                  } w-[150px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-2`}
+                    "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e]"
+                  } w-[120px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[40px] gap-1`}
                 >
                   {s?.isActive?.slice(0, 7)}
                   {s?.isActive === "Present" ? (
-                    <BsCheck className="text-[18px]" />
+                    <BsCheck className="text-[24px]" />
                   ) : (
-                    <BsX className="text-[18px]" />
+                    <BsX className="text-[24px]" />
                   )}
                 </div>
 

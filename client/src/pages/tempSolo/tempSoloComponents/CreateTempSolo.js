@@ -121,13 +121,13 @@ const CreateTempSolo = ({
         {allowedRoles?.find((ar) => auth?.userDetails?.role?.includes(ar)) ? (
           <div
             onClick={handleOpenModal}
-            className="cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
+            className="font-bold cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"
           >
             <FaPlus />
             <div>Add Solo</div>
           </div>
         ) : (
-          <div className="cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px] font-bold">
+          <div className="font-bold cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px] font-bold">
             <FaPlus />
             <div>Add Solo</div>
           </div>

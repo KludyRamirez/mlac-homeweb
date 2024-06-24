@@ -496,7 +496,7 @@ const getTempSoloSchedule = async (req, res) => {
         "day timing parent nameOfStudent studentType scheduleType scheduleId isVideoOn"
       )
       .exec();
-    res.status(200).json({ tempSolo: temporarySoloSchedules });
+    res.status(200).json({ tempSoloSchedules: temporarySoloSchedules });
   } catch (error) {
     return res
       .status(500)
