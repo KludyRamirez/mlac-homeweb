@@ -6,6 +6,7 @@ import { ModalBox } from "../pages/auth/register/registerComponents/CreateUser";
 import ReasonSchedule from "../pages/schedules/schedulesComponents/ReasonSchedule";
 import handlePostScheduleDate from "./DayToDateConverter";
 import ReasonTempSchedule from "../pages/tempSchedules/tempSchedulesComponents/ReasonTempSchedule";
+import ReasonTempSolo from "../pages/tempSolo/tempSoloComponents/ReasonTempSolo";
 
 export default function Ellipsis({
   item,
@@ -15,6 +16,7 @@ export default function Ellipsis({
   toast,
   getSchedules,
   getTempSchedules,
+  getTempSoloSchedules,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showReasonScheduleModal, setShowReasonScheduleModal] = useState(false);
@@ -23,6 +25,11 @@ export default function Ellipsis({
   const [showReasonTempScheduleModal, setShowReasonTempScheduleModal] =
     useState(false);
   const [selectedTempScheduleReason, setSelectedTempScheduleReason] =
+    useState(null);
+
+  const [showReasonTempSoloScheduleModal, setShowReasonTempSoloScheduleModal] =
+    useState(false);
+  const [selectedTempSoloScheduleReason, setSelectedTempSoloScheduleReason] =
     useState(null);
 
   const location = useLocation();
@@ -59,7 +66,7 @@ export default function Ellipsis({
     setShowReasonScheduleModal(false);
   };
 
-  // start of temp-solo functions
+  // start of temporarysched functions
   // api request for temporary schedule logs
 
   const handleSubmitTempLogs = async (item, attendance) => {
@@ -96,6 +103,23 @@ export default function Ellipsis({
     setShowReasonTempScheduleModal(false);
   };
 
+  // start of temp-solo functions
+  // api request for temporary schedule logs
+
+  const handleTempSoloScheduleReasonClick = (r) => {
+    try {
+      setSelectedTempSoloScheduleReason(r);
+    } catch (error) {
+      console.error("Error handling temp-solo reason click:", error);
+    } finally {
+      setShowReasonTempSoloScheduleModal(true);
+    }
+  };
+
+  const handleTempSoloCloseModalReason = () => {
+    setShowReasonTempSoloScheduleModal(false);
+  };
+
   return (
     <>
       <Modal
@@ -105,7 +129,7 @@ export default function Ellipsis({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "38%" }}>
+        <ModalBox sx={{ width: "30%" }}>
           <ReasonSchedule
             handleCloseModalReason={handleCloseModalReason}
             selectedScheduleReason={selectedScheduleReason}
@@ -121,12 +145,12 @@ export default function Ellipsis({
       </Modal>
       <Modal
         sx={{ border: "none", outline: "none" }}
-        open={showReasonScheduleModal}
-        onClose={handleCloseModalReason}
+        open={showReasonTempScheduleModal}
+        onClose={handleTempCloseModalReason}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox sx={{ width: "38%" }}>
+        <ModalBox sx={{ width: "30%" }}>
           <ReasonTempSchedule
             handleTempCloseModalReason={handleTempCloseModalReason}
             selectedTempScheduleReason={selectedTempScheduleReason}
@@ -135,6 +159,26 @@ export default function Ellipsis({
             toast={toast}
             axios={axios}
             getTempSchedules={getTempSchedules}
+            attendance="Absent"
+          />
+        </ModalBox>
+      </Modal>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showReasonTempSoloScheduleModal}
+        onClose={handleTempSoloCloseModalReason}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <ModalBox sx={{ width: "30%" }}>
+          <ReasonTempSolo
+            handleTempSoloCloseModalReason={handleTempSoloCloseModalReason}
+            selectedTempSoloScheduleReason={selectedTempSoloScheduleReason}
+            auth={auth}
+            setLoading={setLoading}
+            toast={toast}
+            axios={axios}
+            getTempSoloSchedules={getTempSoloSchedules}
             attendance="Absent"
           />
         </ModalBox>
@@ -336,9 +380,8 @@ export default function Ellipsis({
                           </div>
                           <div
                             onClick={() =>
-                              handleSubmitTempLogs(
+                              handleTempSoloScheduleReasonClick(
                                 item,
-                                "Absent",
                                 setIsMenuOpen(false)
                               )
                             }

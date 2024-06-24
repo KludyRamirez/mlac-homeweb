@@ -307,7 +307,7 @@ const TempSoloTable = ({
                   } ${
                     s.isActive === "No information yet" &&
                     "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e] "
-                  } w-[120px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-2`}
+                  } w-[120px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-1`}
                 >
                   {s?.isActive?.slice(0, 7)}
                   {s?.isActive === "Present" ? (

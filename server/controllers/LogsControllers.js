@@ -1,6 +1,7 @@
 const Log = require("../models/Logs");
 const Schedule = require("../models/Schedules");
 const TempSchedule = require("../models/TempSchedules");
+const TempSolo = require("../models/TempSoloSchedules");
 const Notification = require("../models/Notifications");
 const Student = require("../models/Students");
 const cron = require("node-cron");
@@ -13,8 +14,6 @@ const createLogs = async (req, res) => {
 
     const userData = req.user;
 
-    console.log(studentType, schedType);
-
     if (schedType === "Permanent") {
       await Schedule.findOneAndUpdate(
         { scheduleId: scheduleId },
@@ -24,6 +23,13 @@ const createLogs = async (req, res) => {
       );
     } else if (schedType === "Temporary" && studentType === "Dyad") {
       await TempSchedule.findOneAndUpdate(
+        { scheduleId: scheduleId },
+        {
+          isActive: attendance === "Absent" ? "Absent" : "Present",
+        }
+      );
+    } else if (schedType === "Temporary" && studentType === "Solo") {
+      await TempSolo.findOneAndUpdate(
         { scheduleId: scheduleId },
         {
           isActive: attendance === "Absent" ? "Absent" : "Present",
