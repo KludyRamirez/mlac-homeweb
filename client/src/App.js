@@ -23,6 +23,7 @@ import { default as axios } from "./api";
 import Schedules from "./pages/schedules/schedulesBase/Schedules";
 import TempSchedules from "./pages/tempSchedules/tempSchedulesBase/TempSchedules";
 import TempSolo from "./pages/tempSolo/tempSoloBase/TempSolo";
+import Logs from "./pages/logs/logsBase/Logs";
 
 // Selectors
 const selectAuth = (state) => state.auth;
@@ -163,6 +164,18 @@ const AppRoutes = ({ auth, setLoading, toast, axios }) => (
               toast={toast}
               axios={axios}
               allowedRoles={["Administrator", "Parent"]}
+            />
+          }
+        />
+        <Route
+          path="/logs"
+          element={
+            <Logs
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator"]}
             />
           }
         />

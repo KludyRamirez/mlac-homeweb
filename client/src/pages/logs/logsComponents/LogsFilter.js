@@ -7,7 +7,7 @@ import {
   BsCalendar4Week,
   BsCalendar4Event,
 } from "react-icons/bs";
-import TempSchedulesTable from "./TempSchedulesTable";
+import LogsTable from "./LogsTable";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,9 +26,9 @@ const timings = [
   "4:00 PM - 5:00 PM",
 ];
 
-const TempSchedulesFilter = ({
-  tempSchedules,
-  getTempSchedules,
+const LogsFilter = ({
+  logs,
+  getLogs,
   allowedRoles,
   auth,
   setLoading,
@@ -40,15 +40,15 @@ const TempSchedulesFilter = ({
   const [day, setDay] = useState("All");
   const [date, setDate] = useState(null);
   const [timing, setTiming] = useState("All");
-  const [selectedSchedules, setSelectedSchedules] = useState([]);
+  const [selectedLogs, setSelectedLogs] = useState([]);
   const [activeMainFilter, setActiveMainFilter] = useState("All");
 
   const handleMainFilterChange = (filter) => {
     setActiveMainFilter(filter);
   };
 
-  const filterSchedules = (
-    tempSchedules,
+  const filterLogs = (
+    logs,
     searchTerm,
     type,
     day,
@@ -56,7 +56,7 @@ const TempSchedulesFilter = ({
     timing,
     activeMainFilter
   ) => {
-    return tempSchedules?.filter((s) => {
+    return logs?.filter((s) => {
       const searchMatch =
         searchTerm === "All" ||
         s?.scheduleId?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
@@ -96,8 +96,8 @@ const TempSchedulesFilter = ({
     });
   };
 
-  const filteredSchedules = filterSchedules(
-    tempSchedules,
+  const filteredLogs = filterLogs(
+    logs,
     searchTerm,
     type,
     day,
@@ -106,7 +106,7 @@ const TempSchedulesFilter = ({
     activeMainFilter
   );
 
-  let combinedFilteredSchedules = [...filteredSchedules];
+  let combinedFilteredLogs = [...filteredLogs];
 
   const isSunday = (date) => {
     return moment(date).day() === 0;
@@ -233,20 +233,20 @@ const TempSchedulesFilter = ({
         </div>
       </div>
       <div className="py-8">
-        <TempSchedulesTable
+        <LogsTable
           auth={auth}
           setLoading={setLoading}
           toast={toast}
           axios={axios}
           allowedRoles={allowedRoles}
-          tempSchedules={combinedFilteredSchedules}
-          getTempSchedules={getTempSchedules}
-          selectedSchedules={selectedSchedules}
-          setSelectedSchedules={setSelectedSchedules}
+          logs={combinedFilteredLogs}
+          getLogs={getLogs}
+          selectedLogs={selectedLogs}
+          setSelectedLogs={setSelectedLogs}
         />
       </div>
     </>
   );
 };
 
-export default TempSchedulesFilter;
+export default LogsFilter;

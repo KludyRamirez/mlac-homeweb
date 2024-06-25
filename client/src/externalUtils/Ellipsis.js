@@ -83,7 +83,11 @@ export default function Ellipsis({
       );
 
       toast.success(res?.data?.message);
-      getTempSchedules();
+      if (location.pathname === "/temp-schedules") {
+        getTempSchedules();
+      } else if (location.pathname === "/temp-solo") {
+        getTempSoloSchedules();
+      }
     } catch (err) {
       toast.error("An error occurred while adding logs");
     }

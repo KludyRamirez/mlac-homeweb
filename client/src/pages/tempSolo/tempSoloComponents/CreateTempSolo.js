@@ -69,11 +69,14 @@ const CreateTempSolo = ({
       e.target.options[e.target.selectedIndex].getAttribute("data-studentname");
     const selectedStudentType =
       e.target.options[e.target.selectedIndex].getAttribute("data-studenttype");
+    const selectedStudentId =
+      e.target.options[e.target.selectedIndex].getAttribute("data-studentid");
     setValues({
       ...values,
       student: selectedStudent,
       studentName: selectedStudentName,
       studentType: selectedStudentType,
+      studentId: selectedStudentId,
     });
   };
 

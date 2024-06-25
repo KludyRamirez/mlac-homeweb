@@ -37,14 +37,12 @@ const createLogs = async (req, res) => {
       );
     }
 
-    const studentFind = await Student.findById(studentId);
-
     let incrementValue;
 
     if (attendance === "Absent") {
       incrementValue = 1;
     } else {
-      incrementValue = studentFind.behindByCounter === 0 ? 0 : -1;
+      incrementValue = 0;
     }
 
     const studentUpdatePromise = await Student.findByIdAndUpdate(
@@ -60,6 +58,7 @@ const createLogs = async (req, res) => {
     const logCreatePromise = Log.create({
       ...req.body,
       _id: new mongoose.Types.ObjectId(),
+      isActive: attendance,
     });
 
     const notificationCreatePromise = Notification.create({
@@ -90,7 +89,7 @@ const updateSchedulesIsActiveToAbsent = async () => {
   try {
     const today = new Date();
 
-    const todayDay = today.toLocaleString("en-us", { weekday: "long" });
+    const todayDay = today.toLocaleString("en-US", { weekday: "long" });
 
     await updateSchedulesIsActiveToAbsentDef(todayDay, today);
   } catch (error) {
@@ -106,27 +105,31 @@ const updateSchedulesIsActiveToAbsentDef = async (day, today) => {
     });
 
     if (schedules.length > 0) {
-      const logsPromises = schedules.map((schedule) => {
-        const logData = {
-          ...schedule.toObject(),
-          _id: new mongoose.Types.ObjectId(),
-          date: today,
-        };
+      // Create logs for each schedule
+      const logData = schedules.map((schedule) => ({
+        ...schedule.toObject(),
+        _id: new mongoose.Types.ObjectId(),
+        date: today,
+      }));
 
-        const log = new Log(logData);
-        return log.save();
-      });
-
+      const logsPromises = logData.map((log) => new Log(log).save());
       await Promise.all(logsPromises);
 
-      const ids = schedules.map((schedule) => schedule._id);
-      await Schedule.updateMany(
-        { _id: { $in: ids } },
-        {
-          $set: { isActive: "Absent" },
-          $inc: { absentCounter: 1 },
-        }
-      );
+      // bulkwriting updates - kludy - pag maramihan gusto mo mag update tas nsa ibang
+      // model  yung gusto mo iupdate.
+      // nested update
+
+      const bulkUpdateOps = schedules.map((schedule) => ({
+        updateOne: {
+          filter: { _id: schedule._id },
+          update: {
+            $set: { isActive: "Absent" },
+            $inc: { "studentId.behindByCounter": 1 },
+          },
+        },
+      }));
+
+      await Schedule.bulkWrite(bulkUpdateOps);
     }
   } catch (error) {
     throw new Error(`Failed to update schedules for ${day}: ${error.message}`);
@@ -139,6 +142,40 @@ const isActiveAbsentHandler = () => {
 
 isActiveAbsentHandler();
 
+const getLogs = async (req, res) => {
+  try {
+    const logs = await Log.find();
+    res.status(200).json({
+      logs,
+      message: "Successfully getting logs.",
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error occurred, please try again." });
+  }
+};
+
+const getOneLog = async (req, res) => {
+  try {
+    const logs = await Log.findById(req.params.id);
+
+    if (!logs) {
+      return res.status(404).json({ message: "Log not found." });
+    }
+
+    res.status(200).json({
+      logs,
+      message: "Successfully getting the log.",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error." });
+  }
+};
+
 module.exports = {
   createLogs,
+  getLogs,
+  getOneLog,
 };

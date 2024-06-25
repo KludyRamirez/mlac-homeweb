@@ -57,9 +57,9 @@ const ReasonScheduleFormModal = ({
         <div className="w-full pt-10 flex items-center">
           <button
             type="submit"
-            disabled={!updatedValues.absentReason}
+            disabled={!updatedValues?.absentReason}
             className={`w-full font-bold cursor-pointer p-3 ${
-              updatedValues.absentReason
+              updatedValues?.absentReason
                 ? "bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e]"
                 : "bg-gray-400 text-gray-700"
             } text-[16px] flex gap-2 items-center rounded-[8px]`}

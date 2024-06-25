@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BsCalendar4Event, BsCheckLg, BsX } from "react-icons/bs";
-import { FaPlus, FaUserSecret } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
@@ -84,8 +84,8 @@ const CreateTempSoloModalForm = ({
                   {schedules
                     ?.filter(
                       (s) =>
-                        s.isActive === "Absent" &&
-                        s?.student?.studentType === "Solo"
+                        s?.isActive === "Absent" &&
+                        s?.studentId?.studentType === "Solo"
                     )
                     ?.sort((a, b) => {
                       const nameA = `${a.nameOfStudent}`.toLowerCase();
@@ -105,9 +105,10 @@ const CreateTempSoloModalForm = ({
                         key={s?._id}
                         value={s?._id}
                         data-studentname={s?.nameOfStudent}
-                        data-studenttype={s?.student?.studentType}
+                        data-studenttype={s?.studentId?.studentType}
+                        data-studentid={s?.studentId?._id}
                       >
-                        {s?.nameOfStudent}
+                        {s?.nameOfStudent} [{s?.day}] [{s?.timing}]
                       </option>
                     ))}
                 </select>

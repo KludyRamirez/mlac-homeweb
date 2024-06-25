@@ -34,7 +34,6 @@ const SchedulesTable = ({
   const [selectedScheduleEdit, setSelectedScheduleEdit] = useState(null);
   const [showPatchScheduleModal, setShowPatchScheduleModal] = useState(false);
   const [selectedSchedulePatch, setSelectedSchedulePatch] = useState(null);
-  const [showReasonScheduleModal, setShowReasonScheduleModal] = useState(false);
 
   const [exportTrigger, setExportTrigger] = useState(false);
 
@@ -201,10 +200,6 @@ const SchedulesTable = ({
   //     setShowReasonScheduleModal(true);
   //   }
   // };
-
-  const handleCloseModalReason = () => {
-    setShowReasonScheduleModal(false);
-  };
 
   const exportPDF = () => {
     setExportTrigger(true);

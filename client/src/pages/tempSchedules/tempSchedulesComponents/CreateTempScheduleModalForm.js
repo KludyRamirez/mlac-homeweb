@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BsCalendar4Event,
-  BsCalendar4Week,
-  BsCheckLg,
-  BsX,
-} from "react-icons/bs";
+import { BsCalendar4Week, BsCheckLg, BsX } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";

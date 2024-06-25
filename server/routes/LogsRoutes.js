@@ -15,4 +15,18 @@ router.post(
   mainController.controllers.createLogs
 );
 
+router.get(
+  "/log",
+  auth,
+  role(["Administrator", "Parent"]),
+  mainController.controllers.getLogs
+);
+
+router.get(
+  "/log/:id",
+  auth,
+  role(["Administrator", "Parent"]),
+  mainController.controllers.getOneLog
+);
+
 module.exports = router;

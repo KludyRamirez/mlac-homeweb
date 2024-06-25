@@ -87,6 +87,8 @@ const { getCsrf } = require("../controllers/SecurityControllers");
 
 // logs
 const { createLogs } = require("./LogsControllers");
+const { getLogs } = require("./LogsControllers");
+const { getOneLog } = require("./LogsControllers");
 
 exports.controllers = {
   login,
@@ -152,4 +154,6 @@ exports.controllers = {
   getCsrf,
   //
   createLogs,
+  getLogs,
+  getOneLog,
 };

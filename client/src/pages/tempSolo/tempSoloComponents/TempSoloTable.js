@@ -71,7 +71,7 @@ const TempSoloTable = ({
         return;
       }
 
-      const res = await axios.delete(`/api/temp-schedules/deleteSelected`, {
+      const res = await axios.delete(`/api/temp-solos/deleteSelected`, {
         data: { tempSoloSchedules: selectedSchedules },
         withCredentials: true,
         headers: {
@@ -102,7 +102,7 @@ const TempSoloTable = ({
         console.error("Authentication token not found.");
         return;
       }
-      const res = await axios.delete(`/api/temp-schedule/${id}`, {
+      const res = await axios.delete(`/api/temp-solo/${id}`, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${auth?.userDetails?.token}`,
@@ -299,13 +299,13 @@ const TempSoloTable = ({
 
                 <div
                   className={`${
-                    s.isActive === "Present" &&
+                    s?.isActive === "Present" &&
                     "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] cursor-pointer text-[#ffffff] "
                   } ${
-                    s.isActive === "Absent" &&
+                    s?.isActive === "Absent" &&
                     "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] cursor-pointer text-[#ffffff] "
                   } ${
-                    s.isActive === "No information yet" &&
+                    s?.isActive === "No information yet" &&
                     "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e] "
                   } w-[120px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-1`}
                 >

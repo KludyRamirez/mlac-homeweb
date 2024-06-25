@@ -363,7 +363,7 @@ const deleteTempSchedules = async (req, res) => {
 
     const studentBehindByCounterUpdate = schedules.map((schedule) => {
       return Student.updateOne(
-        { _id: schedule?.student?.student },
+        { _id: schedule?.studentId },
         {
           $inc: {
             behindByCounter:
@@ -400,10 +400,10 @@ const deleteTempSchedules = async (req, res) => {
 
 const deleteManyTempSchedule = async (req, res) => {
   try {
-    const { schedules } = req.body;
+    const { tempSchedules } = req.body;
     const userData = req.user;
 
-    await TempSchedule.deleteMany({ _id: { $in: schedules } });
+    await TempSchedule.deleteMany({ _id: { $in: tempSchedules } });
 
     await Notification.create({
       userId: userData._id,
@@ -449,16 +449,16 @@ const createTempSoloSchedule = async (req, res) => {
 
   const scheduleExists = await Schedule.exists({
     $and: [
-      { isActive: "Present" && "No information yet" },
+      { isActive: "Present" || "No information yet" },
       { day: day },
       { timing: timing },
     ],
   });
 
   if (scheduleExists) {
-    return res
-      .status(409)
-      .json({ message: "You can't schedule on occupied slots." });
+    return res.status(409).json({
+      message: "You cannot create temporary solo schedule on occupied slots.",
+    });
   }
 
   const tempScheduleExists = await TempSchedule.exists({
@@ -474,11 +474,11 @@ const createTempSoloSchedule = async (req, res) => {
   try {
     const schedule = await new TempSolo({
       ...req.body,
-      cardId: uniqid(),
+      scheduleId: uniqid(),
     }).save();
     res.status(200).json({
       data: schedule,
-      message: "You have added new temporary solo schedule successfully.",
+      message: "Temporary solo schedule has been added successfully.",
     });
   } catch (err) {
     console.log(err);
@@ -544,7 +544,7 @@ const deleteTempSoloSchedules = async (req, res) => {
 
     const studentBehindByCounterUpdate = schedules.map((schedule) => {
       return Student.updateOne(
-        { _id: schedule?.student?.student },
+        { _id: schedule?.studentId },
         {
           $inc: {
             behindByCounter:
@@ -581,10 +581,10 @@ const deleteTempSoloSchedules = async (req, res) => {
 
 const deleteManyTempSoloSchedule = async (req, res) => {
   try {
-    const { schedules } = req.body;
+    const { tempSoloSchedules } = req.body;
     const userData = req.user;
 
-    await TempSolo.deleteMany({ _id: { $in: schedules } });
+    await TempSolo.deleteMany({ _id: { $in: tempSoloSchedules } });
 
     await Notification.create({
       userId: userData._id,
