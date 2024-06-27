@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import pdfExporter from "../../../externalUtils/pdfExporter";
+import pdfExporter, {
+  pdfExporterSingleItem,
+} from "../../../externalUtils/pdfExporter";
 import { FaTrashCan } from "react-icons/fa6";
 import Ellipsis from "../../../externalUtils/Ellipsis";
 import { BsCheck, BsX } from "react-icons/bs";
 import { TbDownload, TbFileShredder } from "react-icons/tb";
-import { IoMdDownload } from "react-icons/io";
 
 const LogsTable = ({
   auth,
@@ -148,11 +149,11 @@ const LogsTable = ({
     }
   };
 
-  const exportSingleLog = (logId) => {
+  const exportSingleLog = (log) => {
     setExportTrigger(true);
 
     if (exportTrigger) {
-      pdfExporter(logId, logs, setExportTrigger);
+      pdfExporterSingleItem(log, logs, setExportTrigger);
     }
   };
 
@@ -298,9 +299,7 @@ const LogsTable = ({
                     ) ? (
                       <>
                         <div
-                          onClick={() =>
-                            exportSingleLog(s?._id, logs, setExportTrigger)
-                          }
+                          onClick={() => exportSingleLog(s)}
                           className="p-1 bg-[transparent] text-white rounded-[48px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
                         >
                           <TbDownload className="text-[24px]" />

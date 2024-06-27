@@ -2,10 +2,9 @@ const Student = require("../models/Students");
 const History = require("../models/History");
 
 const createStudent = async (req, res) => {
-  try {
-    const { firstName, surName, studentNo } = req.body;
-    const { selectedUser } = req.body;
+  const { firstName, surName, studentNo, selectedUser } = req.body;
 
+  try {
     if (!firstName || !surName || !studentNo) {
       return res.status(400).send("Missing required fields.");
     }
@@ -13,8 +12,6 @@ const createStudent = async (req, res) => {
     if (!req.user) {
       return res.status(401).send("User authentication required.");
     }
-
-    const userData = req.user;
 
     const studentNoExists = await Student.exists({ studentNo });
 
@@ -25,7 +22,8 @@ const createStudent = async (req, res) => {
     }
 
     let newStudent;
-    if (selectedUser && selectedUser.firstName && selectedUser.surName) {
+
+    if (selectedUser && selectedUser._id) {
       newStudent = await Student.create({
         ...req.body,
         parent: selectedUser._id,
@@ -33,6 +31,25 @@ const createStudent = async (req, res) => {
     } else {
       newStudent = await Student.create(req.body);
     }
+
+    const userData = req.user;
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Schedules",
+      message: `${firstName} ${surName} has been added as your child.`,
+      createdAt: new Date(),
+    });
+
+    const student = await Student.findById(newStudent._id).populate("parent");
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
 
     await History.create({
       userId: userData._id,

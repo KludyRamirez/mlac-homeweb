@@ -61,7 +61,7 @@ export function pdfExporterSingleItem(selectedItem, items, setExportTrigger) {
     <div id="pdf-content">
       {exportItems.map((i) => (
         <div className="w-[710px] border-[1px]" key={i?._id}>
-          {i?.scheduleId}
+          {i?._id}
         </div>
       ))}
     </div>

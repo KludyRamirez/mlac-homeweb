@@ -44,7 +44,7 @@ const EditSchedule = ({
       }
 
       const res = await axios.put(
-        `/api/case/${selectedScheduleEdit._id}`,
+        `/api/schedule/${selectedScheduleEdit._id}`,
         updatedValues,
         {
           withCredentials: true,
@@ -53,7 +53,7 @@ const EditSchedule = ({
           },
         }
       );
-      await toast.success(res?.data?.message);
+      toast.success(res?.data?.message);
     } catch (err) {
       toast.error(err?.response?.data);
     } finally {

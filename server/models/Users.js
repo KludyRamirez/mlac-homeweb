@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
+
 const usersSchema = new mongoose.Schema(
   {
     uid: { type: Number },
@@ -12,14 +14,23 @@ const usersSchema = new mongoose.Schema(
       type: String,
       enum: ["Student", "Parent", "Administrator"],
     },
+
     statusOfUser: {
       type: String,
       default: "Enabled",
       enum: ["Enabled", "Disabled"],
     },
+
     refreshToken: {
       type: String,
     },
+
+    notifications: [
+      {
+        type: ObjectId,
+        ref: "Notifications",
+      },
+    ],
   },
   { timestamps: true }
 );

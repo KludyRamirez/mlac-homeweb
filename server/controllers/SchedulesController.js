@@ -7,70 +7,110 @@ const History = require("../models/History");
 const uniqid = require("uniqid");
 const cron = require("node-cron");
 const moment = require("moment");
+const Notification = require("../models/Notifications");
+const User = require("../models/Users");
 
 // schedule
 
 const createSchedule = async (req, res) => {
-  const { day, timing, studentType } = req.body;
+  const { day, timing, studentType, nameOfStudent, studentId } = req.body;
+  const userData = req.user;
 
-  const scheduleExists = await Schedule.exists({
-    $and: [{ studentType: "Solo" }, { day: day }, { timing: timing }],
-  });
-
-  const isVideoExistsPerm = await Schedule.exists({
-    $and: [{ isVideoOn: true }, { day: day }, { timing: timing }],
-  });
-
-  const dyadExists = await Schedule.exists({
-    $and: [{ studentType: "Dyad" }, { day: day }, { timing: timing }],
-  });
-
-  const dyadTempExists = await TempSchedule.exists({
-    $and: [{ studentType: "Dyad" }, { day: day }, { timing: timing }],
-  });
-
-  const tempSoloScheduleExists = await TempSolo.exists({
-    $and: [{ day: day }, { timing: timing }],
-  });
-
-  if (scheduleExists) {
-    return res.status(409).json({
-      message: "You cannot duplicate existing schedules.",
+  try {
+    // Check for existing schedules
+    const scheduleExists = await Schedule.exists({
+      $and: [{ studentType: "Solo" }, { day: day }, { timing: timing }],
     });
-  } else if (dyadExists && studentType === "Solo") {
-    return res.status(409).json({
-      message: "You cannot combine solo schedules with any other schedules.",
+
+    const isVideoExistsPerm = await Schedule.exists({
+      $and: [{ isVideoOn: true }, { day: day }, { timing: timing }],
     });
-  } else if (isVideoExistsPerm) {
-    return res.status(409).json({
-      message:
-        "You cannot combine online permanent schedules with offline permanent schedules.",
+
+    const dyadExists = await Schedule.exists({
+      $and: [{ studentType: "Dyad" }, { day: day }, { timing: timing }],
     });
-  } else if (dyadTempExists && studentType === "Solo") {
-    return res.status(409).json({
-      message:
-        "You cannot combine temporary dyad schedules with solo schedules or temporary solo schedules.",
+
+    const dyadTempExists = await TempSchedule.exists({
+      $and: [{ studentType: "Dyad" }, { day: day }, { timing: timing }],
     });
-  } else if (tempSoloScheduleExists) {
-    return res.status(409).json({
-      message:
-        "You cannot combine temporary solo schedules with any other schedules.",
+
+    const tempSoloScheduleExists = await TempSolo.exists({
+      $and: [{ day: day }, { timing: timing }],
     });
-  } else {
-    try {
-      const schedules = await new Schedule({
-        ...req.body,
-        scheduleId: uniqid(),
-      }).save();
-      res.status(200).json({
-        data: schedules,
-        message: "A new schedule has been added to the database.",
+
+    // Conflict checks
+    if (scheduleExists) {
+      return res.status(409).json({
+        message: "You cannot duplicate existing schedules.",
       });
-    } catch (error) {
-      res.status(400).json({
-        message: "Error adding schedule to database.",
+    } else if (dyadExists && studentType === "Solo") {
+      return res.status(409).json({
+        message: "You cannot combine solo schedules with any other schedules.",
+      });
+    } else if (isVideoExistsPerm) {
+      return res.status(409).json({
+        message:
+          "You cannot combine online permanent schedules with offline permanent schedules.",
+      });
+    } else if (dyadTempExists && studentType === "Solo") {
+      return res.status(409).json({
+        message:
+          "You cannot combine temporary dyad schedules with solo schedules or temporary solo schedules.",
+      });
+    } else if (tempSoloScheduleExists) {
+      return res.status(409).json({
+        message:
+          "You cannot combine temporary solo schedules with any other schedules.",
       });
     }
+
+    // Create and save new schedule
+    const newSchedule = new Schedule({
+      ...req.body,
+      scheduleId: uniqid(),
+    });
+
+    const savedSchedule = await newSchedule.save();
+
+    // Send success response
+    res.status(200).json({
+      data: savedSchedule,
+      message: `A permanent schedule has been created for your child ${nameOfStudent}`,
+    });
+
+    // Create and push notification
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Schedules",
+      message: `A permanent schedule has been created for your child ${nameOfStudent}`,
+      createdAt: new Date(),
+    });
+
+    const student = await Student.findOne({ _id: studentId }).populate(
+      "parent"
+    );
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
+
+    // Add to history
+    await History.create({
+      userId: userData._id,
+      typeOfNotif: "Schedules",
+      actionOfNotif: "Add",
+      message: "Successful on adding a new schedule.",
+      createdAt: new Date(),
+    });
+  } catch (error) {
+    console.error("Error adding schedule:", error);
+    res.status(500).json({
+      message: "Error adding schedule to database.",
+    });
   }
 };
 
@@ -91,9 +131,23 @@ const getSchedule = async (req, res) => {
 };
 
 const isVideoOff = async () => {
+  const userData = req.user;
+
   try {
     const currentDay = new Date().toLocaleString("en-us", { weekday: "long" });
     await updateSchedulesForDay(currentDay);
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Automatic",
+      message:
+        "Resetting video status to 'No information yet' for past schedules",
+      createdAt: new Date(),
+    });
+
+    await User.findByIdAndUpdate(userData._id, {
+      $push: { notifications: notification._id },
+    });
   } catch (error) {
     console.error("Error updating schedules:", error);
   }
@@ -115,9 +169,23 @@ const isVideoOffHandler = () => {
 isVideoOffHandler();
 
 const isActiveDef = async () => {
+  const userData = req.user;
+
   try {
     const currentDay = new Date().toLocaleString("en-us", { weekday: "long" });
     await updateSchedulesIsActiveDef(currentDay);
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Automatic",
+      message:
+        "Resetting permanent schedule status to 'No information yet' for past schedules",
+      createdAt: new Date(),
+    });
+
+    await User.findByIdAndUpdate(userData._id, {
+      $push: { notifications: notification._id },
+    });
   } catch (error) {
     console.error("Error updating schedules:", error);
   }
@@ -154,15 +222,42 @@ const getOneSchedule = async (req, res) => {
 };
 
 const updateOneSchedule = async (req, res) => {
+  const { id } = req.params;
+
+  const userData = req.user;
+
   try {
-    const schedule = await Schedule.findByIdAndUpdate(req.params.id, req.body, {
+    const schedule = await Schedule.findByIdAndUpdate(id, req.body, {
       new: true,
     }).exec();
 
     if (!schedule) {
       return res.status(404).json({ message: "Schedule not found" });
     }
-    res.json(schedule);
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Schedules",
+      message: `${schedule.nameOfStudent} schedule has been updated.`,
+      createdAt: new Date(),
+    });
+
+    const student = await Student.findOne({ _id: schedule.studentId }).populate(
+      "parent"
+    );
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
+
+    res.status(200).json({
+      schedule,
+      message: `${schedule.nameOfStudent} schedule has been updated.`,
+    });
   } catch (error) {
     return res.status(400).json({ message: "Error updating schedule" });
   }
@@ -204,24 +299,85 @@ const updateScheduleReason = async (req, res) => {
 };
 
 const deleteOneSchedule = async (req, res) => {
+  const userData = req.user;
+  const { id } = req.params;
+
   try {
-    const deletedSched = await Schedule.findByIdAndDelete(req.params.id);
+    const deletedSched = await Schedule.findByIdAndDelete(id);
 
     if (!deletedSched) {
       return res.status(404).json({ message: "Schedule not found" });
     }
-    res.json({ success: true });
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Schedules",
+      message: `${deletedSched.nameOfStudent} schedule has been deleted successfully.`,
+      createdAt: new Date(),
+    });
+
+    const student = await Student.findOne({
+      _id: deletedSched.studentId,
+    }).populate("parent");
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
+
+    res.status(200).json({
+      message: `${deletedSched.nameOfStudent} schedule has been deleted successfully.`,
+    });
   } catch (err) {
     res.status(400).json({ message: "Error deleting schedule" });
   }
 };
 
 const deleteManySchedule = async (req, res) => {
-  try {
-    const { schedules } = req.body;
-    const userData = req.user;
+  const { schedules } = req.body;
+  const userData = req.user;
 
+  try {
     await Schedule.deleteMany({ _id: { $in: schedules } });
+
+    // pag gusto mo i update yung objects sa isang array ng isa isa ganto gawin mo, i loop mo
+    // like gusto mo gumawa ng notif per schedule tas hanapin yung mga parent ng schedules na yun tas don mo lalagay notif mo
+
+    for (const scheduleId of schedules) {
+      const deletedSched = await Schedule.findById(scheduleId).populate(
+        "studentId"
+      );
+
+      if (!deletedSched) {
+        console.error(`Schedule with ID ${scheduleId} not found`);
+        continue;
+      }
+
+      const notification = await Notification.create({
+        sender: userData._id,
+        type: "Schedules",
+        message: `${deletedSched?.studentId?.firstName} ${deletedSched?.studentId?.surName} schedule has been deleted successfully.`,
+        createdAt: new Date(),
+      });
+
+      const student = await Student.findById(
+        deletedSched.studentId._id
+      ).populate("parent");
+
+      if (!student) {
+        console.error(
+          `Student with ID ${deletedSched.studentId._id} not found`
+        );
+        continue;
+      }
+
+      await User.findByIdAndUpdate(student.parent._id, {
+        $push: { notifications: notification._id },
+      });
+    }
 
     await History.create({
       userId: userData._id,
@@ -240,7 +396,8 @@ const deleteManySchedule = async (req, res) => {
 };
 
 const createTempSchedule = async (req, res) => {
-  const { day, timing, dateTime } = req.body;
+  const { day, timing, dateTime, studentName, studentId } = req.body;
+  const userData = req.user;
 
   const today = moment();
   const tomorrow = moment().add(1, "day").startOf("day");
@@ -290,6 +447,26 @@ const createTempSchedule = async (req, res) => {
       ...req.body,
       scheduleId: uniqid(),
     }).save();
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Schedules",
+      message: `A temporary schedule has been created for your child ${studentName}`,
+      createdAt: new Date(),
+    });
+
+    const student = await Student.findOne({ _id: studentId }).populate(
+      "parent"
+    );
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
+
     res.status(200).json({
       data: tempSchedule,
       message: "A new temporary schedule has been added.",
@@ -324,6 +501,8 @@ const getTempSchedule = async (req, res) => {
 };
 
 const deleteOneTempSchedule = async (req, res) => {
+  const userData = req.user;
+
   try {
     const deletedTempSched = await TempSchedule.findByIdAndDelete(
       req.params.id
@@ -333,16 +512,38 @@ const deleteOneTempSchedule = async (req, res) => {
         .status(404)
         .json({ message: "Sorry, we can't find your schedule." });
     }
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Schedules",
+      message: `${deletedTempSched.studentName} schedule has been deleted successfully.`,
+      createdAt: new Date(),
+    });
+
+    const student = await Student.findOne({
+      _id: deletedTempSched.studentId,
+    }).populate("parent");
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
+
     res.status(200).json({
-      message: "Your schedule has been deleted successfully",
+      message: "Your temporary schedule has been deleted successfully.",
       success: true,
     });
   } catch (err) {
-    res.status(400).json({ message: "Error deleting your schedule" });
+    res.status(400).json({ message: "Error deleting your schedule." });
   }
 };
 
 const deleteTempSchedules = async (req, res) => {
+  const userData = req.user;
+
   try {
     const currentDate = new Date();
 
@@ -387,6 +588,39 @@ const deleteTempSchedules = async (req, res) => {
       dateTime: { $lt: currentDate },
     });
 
+    for (const scheduleId of schedules) {
+      const deletedSched = await Schedule.findById(scheduleId).populate(
+        "studentId"
+      );
+
+      if (!deletedSched) {
+        console.error(`Schedule with ID ${scheduleId} not found`);
+        continue;
+      }
+
+      const notification = await Notification.create({
+        sender: userData._id,
+        type: "Schedules",
+        message: `${deletedSched?.studentId?.firstName} ${deletedSched?.studentId?.surName} temporary schedule has been deleted successfully.`,
+        createdAt: new Date(),
+      });
+
+      const student = await Student.findById(
+        deletedSched.studentId._id
+      ).populate("parent");
+
+      if (!student) {
+        console.error(
+          `Student with ID ${deletedSched.studentId._id} not found`
+        );
+        continue;
+      }
+
+      await User.findByIdAndUpdate(student.parent._id, {
+        $push: { notifications: notification._id },
+      });
+    }
+
     res.status(200).json({
       message:
         "Expired temporary schedules has been cloned and deleted successfully.",
@@ -404,6 +638,39 @@ const deleteManyTempSchedule = async (req, res) => {
     const userData = req.user;
 
     await TempSchedule.deleteMany({ _id: { $in: tempSchedules } });
+
+    for (const scheduleId of tempSchedules) {
+      const deletedSched = await Schedule.findById(scheduleId).populate(
+        "studentId"
+      );
+
+      if (!deletedSched) {
+        console.error(`Schedule with ID ${scheduleId} not found`);
+        continue;
+      }
+
+      const notification = await Notification.create({
+        sender: userData._id,
+        type: "Schedules",
+        message: `${deletedSched?.studentId?.firstName} ${deletedSched?.studentId?.surName} schedule has been deleted successfully.`,
+        createdAt: new Date(),
+      });
+
+      const student = await Student.findById(
+        deletedSched.studentId._id
+      ).populate("parent");
+
+      if (!student) {
+        console.error(
+          `Student with ID ${deletedSched.studentId._id} not found`
+        );
+        continue;
+      }
+
+      await User.findByIdAndUpdate(student.parent._id, {
+        $push: { notifications: notification._id },
+      });
+    }
 
     await History.create({
       userId: userData._id,
@@ -424,7 +691,8 @@ const deleteManyTempSchedule = async (req, res) => {
 // // temporary solo schedule
 
 const createTempSoloSchedule = async (req, res) => {
-  const { day, timing, dateTime } = req.body;
+  const { day, timing, dateTime, studentName, studentId } = req.body;
+  const userData = req.user;
 
   const today = moment();
   const tomorrow = moment().add(1, "day").startOf("day");
@@ -476,6 +744,26 @@ const createTempSoloSchedule = async (req, res) => {
       ...req.body,
       scheduleId: uniqid(),
     }).save();
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Schedules",
+      message: `A temporary solo schedule has been created for your child ${studentName}`,
+      createdAt: new Date(),
+    });
+
+    const student = await Student.findOne({ _id: studentId }).populate(
+      "parent"
+    );
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
+
     res.status(200).json({
       data: schedule,
       message: "Temporary solo schedule has been added successfully.",
@@ -505,16 +793,40 @@ const getTempSoloSchedule = async (req, res) => {
 };
 
 const deleteOneTempSoloSchedule = async (req, res) => {
+  const userData = req.user;
+
   try {
-    const deletedTempSched = await TempSolo.findByIdAndDelete(req.params.id);
-    if (!deletedTempSched) {
+    const deletedTempSoloSched = await TempSolo.findByIdAndDelete(
+      req.params.id
+    );
+
+    if (!deletedTempSoloSched) {
       return res
         .status(404)
         .json({ message: "Sorry, schedule does not exist." });
     }
-    res.json({
-      message:
-        "You have been successfully deleted selected temporary solo schedule.",
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Schedules",
+      message: `${deletedTempSoloSched.studentName} schedule has been deleted successfully.`,
+      createdAt: new Date(),
+    });
+
+    const student = await Student.findOne({
+      _id: deletedTempSoloSched.studentId,
+    }).populate("parent");
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
+
+    res.status(200).json({
+      message: `${deletedTempSoloSched.studentName} schedule has been deleted successfully.`,
     });
   } catch (err) {
     res
@@ -524,6 +836,8 @@ const deleteOneTempSoloSchedule = async (req, res) => {
 };
 
 const deleteTempSoloSchedules = async (req, res) => {
+  const userData = req.user;
+
   try {
     const currentDate = new Date();
 
@@ -568,6 +882,39 @@ const deleteTempSoloSchedules = async (req, res) => {
       dateTime: { $lt: currentDate },
     });
 
+    for (const scheduleId of schedules) {
+      const deletedSched = await Schedule.findById(scheduleId).populate(
+        "studentId"
+      );
+
+      if (!deletedSched) {
+        console.error(`Schedule with ID ${scheduleId} not found`);
+        continue;
+      }
+
+      const notification = await Notification.create({
+        sender: userData._id,
+        type: "Schedules",
+        message: `${deletedSched?.studentId?.firstName} ${deletedSched?.studentId?.surName} temporary schedule has been deleted successfully.`,
+        createdAt: new Date(),
+      });
+
+      const student = await Student.findById(
+        deletedSched.studentId._id
+      ).populate("parent");
+
+      if (!student) {
+        console.error(
+          `Student with ID ${deletedSched.studentId._id} not found`
+        );
+        continue;
+      }
+
+      await User.findByIdAndUpdate(student.parent._id, {
+        $push: { notifications: notification._id },
+      });
+    }
+
     res.status(200).json({
       message:
         "Expired temporary solo schedules has been cloned and deleted successfully.",
@@ -593,6 +940,39 @@ const deleteManyTempSoloSchedule = async (req, res) => {
       message: "Selected schedules has been deleted successfully.",
       createdAt: new Date(),
     });
+
+    for (const scheduleId of tempSoloSchedules) {
+      const deletedSched = await Schedule.findById(scheduleId).populate(
+        "studentId"
+      );
+
+      if (!deletedSched) {
+        console.error(`Schedule with ID ${scheduleId} not found`);
+        continue;
+      }
+
+      const notification = await Notification.create({
+        sender: userData._id,
+        type: "Schedules",
+        message: `${deletedSched?.studentId?.firstName} ${deletedSched?.studentId?.surName} schedule has been deleted successfully.`,
+        createdAt: new Date(),
+      });
+
+      const student = await Student.findById(
+        deletedSched.studentId._id
+      ).populate("parent");
+
+      if (!student) {
+        console.error(
+          `Student with ID ${deletedSched.studentId._id} not found`
+        );
+        continue;
+      }
+
+      await User.findByIdAndUpdate(student.parent._id, {
+        $push: { notifications: notification._id },
+      });
+    }
 
     res
       .status(200)
