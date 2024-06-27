@@ -2,7 +2,7 @@ const Log = require("../models/Logs");
 const Schedule = require("../models/Schedules");
 const TempSchedule = require("../models/TempSchedules");
 const TempSolo = require("../models/TempSoloSchedules");
-const Notification = require("../models/Notifications");
+const History = require("../models/History");
 const Student = require("../models/Students");
 const cron = require("node-cron");
 const mongoose = require("mongoose");
@@ -61,7 +61,7 @@ const createLogs = async (req, res) => {
       isActive: attendance,
     });
 
-    const notificationCreatePromise = Notification.create({
+    const notificationCreatePromise = History.create({
       userId: userData._id,
       typeOfNotif: "Logs",
       actionOfNotif: "Add",
@@ -144,7 +144,9 @@ isActiveAbsentHandler();
 
 const getLogs = async (req, res) => {
   try {
-    const logs = await Log.find();
+    const logs = await Log.find()
+      .populate("studentId", "studentNo studentType parent")
+      .exec();
     res.status(200).json({
       logs,
       message: "Successfully getting logs.",

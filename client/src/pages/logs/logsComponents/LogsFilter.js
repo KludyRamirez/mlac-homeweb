@@ -11,6 +11,7 @@ import LogsTable from "./LogsTable";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
+import { FaPlus } from "react-icons/fa6";
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -66,13 +67,13 @@ const LogsFilter = ({
 
       const dayMatch = day === "All" || s?.day === day;
 
-      const typeMatch = type === "All" || s?.studentType === type;
+      const typeMatch = type === "All" || s?.studentId?.studentType === type;
 
       const timingMatch = timing === "All" || s?.timing === timing;
 
       const dateMatch =
         date === null ||
-        new Date(s.dateTime).toLocaleDateString("en-PH", {
+        new Date(s.date).toLocaleDateString("en-PH", {
           month: "long",
           day: "numeric",
           year: "numeric",
@@ -122,6 +123,25 @@ const LogsFilter = ({
 
   return (
     <>
+      <div className="w-100 text-[14px] text-[#c5d1de] pb-6 ">MLAC / Logs</div>
+      <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
+        <div className="font-bold">Logs List</div>
+
+        {/* {allowedRoles?.find((ar) => auth?.userDetails?.role?.includes(ar)) ? (
+          <div
+            onClick={handleOpenModal}
+            className="cursor-pointer py-3 px-4 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px] font-bold"
+          >
+            <FaPlus />
+            <div>Add Permanent</div>
+          </div>
+        ) : (
+          <div className="cursor-pointer py-3 px-3 bg-gray-100 text-[white] text-[16px] flex gap-2 items-center rounded-[8px] font-bold">
+            <FaPlus />
+            <div>Add Permanent</div>
+          </div>
+        )} */}
+      </div>
       <div className="w-100 bg-[#2d333b] text-[#c5d1de] rounded-tl-[10px] rounded-tr-[10px] flex flex-col border-[1px] border-[#2d333b]">
         <div className="px-3 w-100 h-[58px] flex justify-start gap-2 border-b-2 border-[#2D333b]">
           <div

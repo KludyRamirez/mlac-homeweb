@@ -1,6 +1,6 @@
 const Case = require("../models/Cases");
 const Student = require("../models/Students");
-const Notification = require("../models/Notifications");
+const History = require("../models/History");
 
 const createCase = async (req, res) => {
   try {
@@ -140,7 +140,7 @@ const createCase = async (req, res) => {
       );
     }
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Cases",
       actionOfNotif: "Add",
@@ -191,7 +191,7 @@ const editCase = async (req, res) => {
       }
     );
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Cases",
       actionOfNotif: "Update",
@@ -227,7 +227,7 @@ const patchCase = async (req, res) => {
       }
     );
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Cases",
       actionOfNotif: "Update One",
@@ -263,7 +263,7 @@ const remarksCase = async (req, res) => {
       }
     );
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Cases",
       actionOfNotif: "Update One",
@@ -289,7 +289,7 @@ const remarksCase = async (req, res) => {
 
 //     await Case.findByIdAndUpdate(req.params.id, { statusOfCase });
 
-//     await Notification.create({
+//     await History.create({
 //       userId: userData._id,
 //       message: `Case No. ${caseNo} status has been changed to ${statusOfCase}`,
 //       createdAt: new Date(),
@@ -312,7 +312,7 @@ const deleteOneCase = async (req, res) => {
       return res.status(404).json({ error: "Case not found!" });
     }
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Cases",
       actionOfNotif: "Delete",
@@ -337,7 +337,7 @@ const deleteManyCase = async (req, res) => {
     const { cases } = req.body;
     await Case.deleteMany({ _id: { $in: cases } });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Cases",
       actionOfNotif: "Delete",

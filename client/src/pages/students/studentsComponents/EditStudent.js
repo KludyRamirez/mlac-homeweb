@@ -6,25 +6,16 @@ const initialState = {
   studentNo: "",
   firstName: "",
   surName: "",
-  middleName: "",
-  college: "",
-  department: "",
-  year: Number,
-  section: "",
+  studentTypes: ["Solo", "Dyad"],
+  studentType: "",
   sex: "",
-  contactNo: "",
-  guardianContactNo: "",
-  email: "",
+  parent: "",
 };
 
 const errorsInitialState = {
   studentNo: "",
   firstName: "",
   surName: "",
-  middleName: "",
-  email: "",
-  contactNo: "",
-  guardianContactNo: "",
 };
 
 const EditStudent = ({
@@ -37,7 +28,7 @@ const EditStudent = ({
   selectedStudentEdit,
   handleCloseModalEdit,
   handleCloseModalEditStudent,
-  cads,
+  users,
 }) => {
   const [values, setValues] = useState(initialState);
   const [updatedValues, setUpdatedValues] = useState(selectedStudentEdit);
@@ -69,12 +60,16 @@ const EditStudent = ({
       toast.error(err?.response?.data);
     } finally {
       setValues(initialState);
-      handleCloseModalEdit
-        ? handleCloseModalEdit()
-        : handleCloseModalEditStudent();
-      if (location.pathname === "/student") {
+      setUpdatedValues(initialState);
+
+      if (location.pathname === "/students") {
+        handleCloseModalEdit();
+      } else if (location.pathname.startsWith("/profile/")) {
+        handleCloseModalEditStudent();
+      }
+      if (location.pathname === "/students") {
         await getStudents();
-      } else if (location.pathname.startsWith("/student/")) {
+      } else if (location.pathname.startsWith("/profile/")) {
         await getOneStudent();
       }
     }
@@ -90,7 +85,7 @@ const EditStudent = ({
 
     let formattedValue = value;
 
-    if (name === "firstName" || name === "middleName" || name === "surName") {
+    if (name === "firstName" || name === "surName") {
       formattedValue =
         value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     }
@@ -102,14 +97,6 @@ const EditStudent = ({
         newErrors[name] = "First name must be at least 3 characters long.";
       } else if (value.length > 48) {
         newErrors[name] = "First name must be at most 48 characters long.";
-      } else {
-        newErrors[name] = "";
-      }
-    } else if (name === "middleName") {
-      if (value.length < 3) {
-        newErrors[name] = "Middlename must be at least 3 characters long.";
-      } else if (value.length > 48) {
-        newErrors[name] = "Middlename must be at most 48 characters long.";
       } else {
         newErrors[name] = "";
       }
@@ -130,36 +117,15 @@ const EditStudent = ({
         } else {
           newErrors[name] = "";
         }
-      } else if (name === "email") {
-        if (value.length < 11) {
-          newErrors[name] = "Email must be at least 11 characters long.";
-        } else if (value.length > 48) {
-          newErrors[name] = "Email must be at most 48 characters long.";
-        } else {
-          newErrors[name] = "";
-        }
-      } else if (name === "contactNo") {
-        if (value.length < 11) {
-          newErrors[name] = "Contact No. must be at least 11 characters long.";
-        } else if (value.length > 48) {
-          newErrors[name] = "Contact No. must be at most 48 characters long.";
-        } else {
-          newErrors[name] = "";
-        }
-      } else if (name === "guardianContactNo") {
-        if (value.length < 11) {
-          newErrors[name] = "Guardian No. must be at least 11 characters long.";
-        } else if (value.length > 48) {
-          newErrors[name] = "Guardian No. must be at most 48 characters long.";
-        } else {
-          newErrors[name] = "";
-        }
       }
     }
     setErrors(newErrors);
   };
 
-  const uniqueColleges = [...new Set(cads?.map((c) => c?.college))];
+  const handleParentChange = (e) => {
+    e.preventDefault();
+    setUpdatedValues({ ...updatedValues, parent: e.target.value });
+  };
 
   return (
     <>
@@ -168,11 +134,11 @@ const EditStudent = ({
         values={values}
         updatedValues={updatedValues}
         handleChange={handleChange}
+        handleParentChange={handleParentChange}
         handleCloseModalEdit={handleCloseModalEdit}
         handleCloseModalEditStudent={handleCloseModalEditStudent}
         handleEditStudent={handleEditStudent}
-        cads={cads}
-        uniqueColleges={uniqueColleges}
+        users={users}
       />
     </>
   );

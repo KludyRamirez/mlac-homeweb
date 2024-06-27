@@ -73,7 +73,7 @@ const { deleteManyCase } = require("../controllers/CasesController");
 
 //notification
 
-const { getNotifications } = require("../controllers/NotificationsController");
+const { getNotifications } = require("../controllers/HistoryController");
 
 //colleges and departments
 

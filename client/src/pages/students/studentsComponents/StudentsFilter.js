@@ -17,6 +17,7 @@ const StudentsFilter = ({
   schedules,
   getStudents,
   allowedRoles,
+  users,
 }) => {
   const [searchTerm, setSearchTerm] = useState("All");
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -198,6 +199,7 @@ const StudentsFilter = ({
           setSelectedStudents={setSelectedStudents}
           schedules={schedules}
           allowedRoles={allowedRoles}
+          users={users}
         />
       </div>
     </>

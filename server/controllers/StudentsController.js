@@ -1,5 +1,5 @@
 const Student = require("../models/Students");
-const Notification = require("../models/Notifications");
+const History = require("../models/History");
 
 const createStudent = async (req, res) => {
   try {
@@ -34,7 +34,7 @@ const createStudent = async (req, res) => {
       newStudent = await Student.create(req.body);
     }
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Students",
       actionOfNotif: "Add",
@@ -106,7 +106,7 @@ const editStudent = async (req, res) => {
       }
     );
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Students",
       actionOfNotif: "Update",
@@ -133,7 +133,7 @@ const deleteOneStudent = async (req, res) => {
       return res.status(404).json({ error: "Cannot find selected student." });
     }
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Students",
       actionOfNotif: "Delete",
@@ -158,7 +158,7 @@ const deleteManyStudent = async (req, res) => {
 
     await Student.deleteMany({ _id: { $in: students } });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Students",
       actionOfNotif: "Delete",

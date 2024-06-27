@@ -1,7 +1,7 @@
 const User = require("../models/Users");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Notification = require("../models/Notifications");
+const History = require("../models/History");
 
 const getUsers = async (req, res) => {
   try {
@@ -52,7 +52,7 @@ const editUser = async (req, res) => {
     const secretKey = process.env.ACCESS_TOKEN;
     const token = jwt.sign(tokenPayload, secretKey, { expiresIn: "24h" });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Users",
       actionOfNotif: "Update",
@@ -85,7 +85,7 @@ const deleteOneUser = async (req, res) => {
       return res.status(404).json({ error: "Cannot find selected user." });
     }
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Users",
       actionOfNotif: "Delete",
@@ -116,7 +116,7 @@ const deleteManyUser = async (req, res) => {
 
     await User.deleteMany({ _id: { $in: users } });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Users",
       actionOfNotif: "Delete",

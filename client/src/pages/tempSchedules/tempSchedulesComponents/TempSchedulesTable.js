@@ -222,7 +222,7 @@ const TempSchedulesTable = ({
           <div className=" w-[170px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Companion
           </div>
-          <div className=" w-[150px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className=" w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Status
           </div>
           {selectedSchedules.length > 1 ? (
@@ -310,13 +310,13 @@ const TempSchedulesTable = ({
                   } ${
                     s.isActive === "No information yet" &&
                     "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e] "
-                  } w-[150px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-1`}
+                  } w-[120px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-1`}
                 >
                   {s?.isActive?.slice(0, 7)}
                   {s?.isActive === "Present" ? (
-                    <BsCheck className="text-[18px]" />
+                    <BsCheck className="text-[24px]" />
                   ) : (
-                    <BsX className="text-[18px]" />
+                    <BsX className="text-[24px]" />
                   )}
                 </div>
 

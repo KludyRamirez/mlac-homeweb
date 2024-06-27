@@ -1,7 +1,7 @@
 const User = require("../../models/Users");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Notification = require("../../models/Notifications");
+const History = require("../../models/History");
 
 const login = async (req, res) => {
   try {
@@ -56,7 +56,7 @@ const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    await Notification.create({
+    await History.create({
       userId: user._id,
       typeOfNotif: "Authentication",
       actionOfNotif: "Add",

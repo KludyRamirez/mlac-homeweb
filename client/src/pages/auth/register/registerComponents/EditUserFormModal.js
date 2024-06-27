@@ -50,7 +50,7 @@ const EditStudentFormModal = ({
                   placeholder="e.g. kluds19"
                   className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
                     userNameError === ""
-                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      ? "border-[#22272e] focus:border-[#c5d1de]"
                       : "border-[#ff3131]"
                   } focus:outline-none`}
                 />
@@ -73,7 +73,7 @@ const EditStudentFormModal = ({
                   placeholder="e.g. Ramirez"
                   className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
                     firstNameError === ""
-                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      ? "border-[#22272e] focus:border-[#c5d1de]"
                       : "border-[#ff3131]"
                   } focus:outline-none`}
                 />
@@ -96,7 +96,7 @@ const EditStudentFormModal = ({
                   placeholder="e.g. Ramirez"
                   className={`border-[1px]  w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
                     surNameError === ""
-                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      ? "border-[#22272e] focus:border-[#c5d1de]"
                       : "border-[#ff3131]"
                   } focus:outline-none`}
                 />
@@ -121,7 +121,7 @@ const EditStudentFormModal = ({
                   placeholder="example@domain.com"
                   className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
                     emailError === ""
-                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      ? "border-[#22272e] focus:border-[#c5d1de]"
                       : "border-[#ff3131]"
                   } focus:outline-none`}
                 />
@@ -142,7 +142,7 @@ const EditStudentFormModal = ({
                   placeholder="admin123"
                   className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
                     passwordError === ""
-                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      ? "border-[#22272e] focus:border-[#c5d1de]"
                       : "border-[#ff3131]"
                   } focus:outline-none`}
                 />
@@ -164,7 +164,7 @@ const EditStudentFormModal = ({
                   name="role"
                   value={updatedValues?.role}
                   onChange={handleChange}
-                  className="border-[1px] border-[#2d333b] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
+                  className="border-[1px] border-[#22272e] w-[100%] appearance-none px-4 py-3 rounded-[8px] bg-[transparent] focus:outline-none focus:border-[#c5d1de]"
                 >
                   <option key="" value="">
                     Select Role
@@ -191,7 +191,7 @@ const EditStudentFormModal = ({
                   placeholder="admin123"
                   className={`border-[1px] w-[100%] px-4 py-3 bg-transparent rounded-[8px] ${
                     contactNoError === ""
-                      ? "border-[#2d333b] focus:border-[#c5d1de]"
+                      ? "border-[#22272e] focus:border-[#c5d1de]"
                       : "border-[#ff3131]"
                   } focus:outline-none`}
                 />

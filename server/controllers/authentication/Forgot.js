@@ -1,6 +1,5 @@
 const User = require("../../models/Users");
 const jwt = require("jsonwebtoken");
-const Notification = require("../../models/Notifications");
 const nodemailer = require("nodemailer");
 
 const forgot = async (req, res) => {

@@ -1,6 +1,6 @@
 const User = require("../../models/Users");
 const bcrypt = require("bcryptjs");
-const Notification = require("../../models/Notifications");
+const History = require("../../models/History");
 
 const changeEmail = async (req, res) => {
   try {
@@ -20,7 +20,7 @@ const changeEmail = async (req, res) => {
 
     await user.save();
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Account",
       actionOfNotif: "Update One",
@@ -56,7 +56,7 @@ const changePassword = async (req, res) => {
 
     await user.save();
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Account",
       actionOfNotif: "Update One",

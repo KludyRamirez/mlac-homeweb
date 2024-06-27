@@ -3,7 +3,7 @@ const { ObjectId } = mongoose.Schema;
 
 const logsSchema = new mongoose.Schema(
   {
-    student: {
+    studentId: {
       type: ObjectId,
       ref: "Students",
     },
@@ -18,6 +18,11 @@ const logsSchema = new mongoose.Schema(
     parent: {
       type: String,
       trim: true,
+    },
+
+    studentType: {
+      type: String,
+      enum: ["Solo", "Dyad"],
     },
 
     // independent attributes

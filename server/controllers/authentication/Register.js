@@ -1,7 +1,6 @@
 const User = require("../../models/Users");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const Notification = require("../../models/Notifications");
+const History = require("../../models/History");
 
 const register = async (req, res) => {
   const userData = req.user;
@@ -51,7 +50,7 @@ const register = async (req, res) => {
       role,
     });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Authentication",
       actionOfNotif: "Add",

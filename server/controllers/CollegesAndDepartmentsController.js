@@ -1,5 +1,5 @@
 const Cad = require("../models/CollegesAndDepartments");
-const Notification = require("../models/Notifications");
+const History = require("../models/History");
 
 const createCad = async (req, res) => {
   try {
@@ -31,7 +31,7 @@ const createCad = async (req, res) => {
       ...req.body,
     });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Utilities",
       actionOfNotif: "Add",
@@ -87,7 +87,7 @@ const deleteOneCad = async (req, res) => {
       return res.status(404).json({ error: "Cad not found!" });
     }
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Utilities",
       actionOfNotif: "Delete",
@@ -109,7 +109,7 @@ const deleteManyCad = async (req, res) => {
   try {
     const { cads } = req.body;
     await Cad.deleteMany({ _id: { $in: cads } });
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Utilities",
       actionOfNotif: "Delete",

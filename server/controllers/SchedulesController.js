@@ -3,7 +3,7 @@ const Student = require("../models/Students");
 const Logs = require("../models/Logs");
 const TempSchedule = require("../models/TempSchedules");
 const TempSolo = require("../models/TempSoloSchedules");
-const Notification = require("../models/Notifications");
+const History = require("../models/History");
 const uniqid = require("uniqid");
 const cron = require("node-cron");
 const moment = require("moment");
@@ -186,7 +186,7 @@ const updateScheduleReason = async (req, res) => {
       }
     );
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Schedules",
       actionOfNotif: "Update One",
@@ -223,7 +223,7 @@ const deleteManySchedule = async (req, res) => {
 
     await Schedule.deleteMany({ _id: { $in: schedules } });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Schedule",
       actionOfNotif: "Delete",
@@ -405,7 +405,7 @@ const deleteManyTempSchedule = async (req, res) => {
 
     await TempSchedule.deleteMany({ _id: { $in: tempSchedules } });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Schedule",
       actionOfNotif: "Delete",
@@ -586,7 +586,7 @@ const deleteManyTempSoloSchedule = async (req, res) => {
 
     await TempSolo.deleteMany({ _id: { $in: tempSoloSchedules } });
 
-    await Notification.create({
+    await History.create({
       userId: userData._id,
       typeOfNotif: "Schedule",
       actionOfNotif: "Delete",

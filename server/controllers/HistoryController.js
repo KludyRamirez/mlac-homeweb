@@ -1,8 +1,8 @@
-const Notification = require("../models/Notifications");
+const History = require("../models/History");
 
 const getNotifications = async (req, res) => {
   try {
-    const notifications = await Notification.find()
+    const notifications = await History.find()
       .populate("userId", "uid userName firstName surName")
       .sort({ createdAt: -1 })
       .exec();
