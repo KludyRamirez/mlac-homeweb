@@ -8,23 +8,16 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
 import { useLocation } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 import { CgMenuLeft } from "react-icons/cg";
 import {
-  BsArchive,
-  BsArchiveFill,
-  BsCalendar,
   BsCalendar4,
   BsCalendar4Event,
   BsCalendar4Range,
   BsCalendar4Week,
-  BsCalendarDate,
-  BsCalendarDateFill,
   BsCalendarEventFill,
   BsCalendarFill,
-  BsCalendarRange,
   BsCalendarRangeFill,
   BsCalendarWeekFill,
   BsChevronDown,
@@ -35,19 +28,21 @@ import {
   BsHourglassSplit,
   BsPeople,
   BsPeopleFill,
-  BsPerson,
   BsPersonFill,
   BsPieChart,
   BsPieChartFill,
 } from "react-icons/bs";
 import { logoutUtil } from "../../pages/auth/login/loginUtils/logoutUtil";
+import { FaScroll } from "react-icons/fa6";
+import { LuScroll } from "react-icons/lu";
+import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 
 const AppNavBar = styled(AppBar)({
   background: "transparent",
   boxShadow: "none",
   width: { sm: "calc(100% - 40px)" },
   ml: { sm: "40px" },
-  height: "80px",
+  height: "40px",
 });
 
 const SidebarOptions = styled("div")({
@@ -408,15 +403,15 @@ function Sidebar(props) {
                       }}
                     >
                       <RouteCon>
-                        <BsPersonFill />
-                        <p className="text-[18px]">Users</p>
+                        <PiUsersThreeFill className="text-[28px]" />
+                        <p className="text-[18px] ml-[-2px]">Users</p>
                       </RouteCon>
                     </SidebarOptions>
                   ) : (
                     <SidebarOptions>
                       <RouteCon>
-                        <BsPerson />
-                        <p className="text-[18px]">Users</p>
+                        <PiUsersThree className="text-[28px]" />
+                        <p className="text-[18px] ml-[-2px]">Users</p>
                       </RouteCon>
                     </SidebarOptions>
                   )}
@@ -442,14 +437,14 @@ function Sidebar(props) {
                       }}
                     >
                       <RouteCon>
-                        <BsArchiveFill />
+                        <FaScroll />
                         <p className="text-[18px]">Logs</p>
                       </RouteCon>
                     </SidebarOptions>
                   ) : (
                     <SidebarOptions>
                       <RouteCon>
-                        <BsArchive />
+                        <LuScroll />
                         <p className="text-[18px]">Logs</p>
                       </RouteCon>
                     </SidebarOptions>
@@ -460,8 +455,8 @@ function Sidebar(props) {
 
             {auth?.userDetails?.role === "Administrator" ? (
               <div className="w-full">
-                <Link to="/notification">
-                  {activeItem === "/notification" ? (
+                <Link to="/history">
+                  {activeItem === "/history" ? (
                     <SidebarOptions
                       sx={{
                         background:
@@ -578,27 +573,25 @@ function Sidebar(props) {
   return (
     <Box sx={{ display: "flex" }}>
       <AppNavBar>
-        <div className="flex h-[100%] justify-between items-center">
-          <Toolbar
+        <div
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+          }}
+        >
+          <IconButton
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
             sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              padding: "0",
+              display: { sm: "none" },
+              color: "white",
+              padding: "18px 14px",
+              margin: "0",
             }}
           >
-            <IconButton
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{
-                mr: 2,
-                display: { sm: "none" },
-                color: "white",
-              }}
-            >
-              <CgMenuLeft />
-            </IconButton>
-          </Toolbar>
+            <CgMenuLeft className="text-[28px]" />
+          </IconButton>
         </div>
       </AppNavBar>
       <Box

@@ -2,6 +2,7 @@ const User = require("../models/Users");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const History = require("../models/History");
+const Notification = require("../models/Notifications");
 
 const getUsers = async (req, res) => {
   try {
@@ -45,12 +46,22 @@ const editUser = async (req, res) => {
     const tokenPayload = {
       _id: user._id,
       userName: user.userName,
-      email: user.email,
       role: user.role,
     };
 
     const secretKey = process.env.ACCESS_TOKEN;
     const token = jwt.sign(tokenPayload, secretKey, { expiresIn: "24h" });
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Users",
+      message: `User ${user.userName} has been updated successfully.`,
+      createdAt: new Date(),
+    });
+
+    await User.findByIdAndUpdate(id, {
+      $push: { notifications: notification._id },
+    });
 
     await History.create({
       userId: userData._id,
@@ -65,7 +76,6 @@ const editUser = async (req, res) => {
         _id: user._id,
         token: token,
         userName: user.userName,
-        email: user.email,
         role: user.role,
       },
       message: `User ${user.userName} has been updated successfully.`,
@@ -79,11 +89,24 @@ const editUser = async (req, res) => {
 const deleteOneUser = async (req, res) => {
   try {
     const userData = req.user;
+    const { id } = req.params;
 
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    const deletedUser = await User.findByIdAndDelete(id);
+
     if (!deletedUser) {
       return res.status(404).json({ error: "Cannot find selected user." });
     }
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Users",
+      message: `User ${deletedUser.userName} has been deleted successfully.`,
+      createdAt: new Date(),
+    });
+
+    await User.findByIdAndUpdate(id, {
+      $push: { notifications: notification._id },
+    });
 
     await History.create({
       userId: userData._id,
@@ -115,6 +138,26 @@ const deleteManyUser = async (req, res) => {
     }
 
     await User.deleteMany({ _id: { $in: users } });
+
+    for (const userId of users) {
+      const deletedUser = await User.findById(userId);
+
+      if (!deletedUser) {
+        console.error(`User with ID ${userId} not found.`);
+        continue;
+      }
+
+      const notification = await Notification.create({
+        sender: userData._id,
+        type: "Users",
+        message: `User ${deletedUser.userName} has been deleted successfully.`,
+        createdAt: new Date(),
+      });
+
+      await User.findByIdAndUpdate(deletedUser._id, {
+        $push: { notifications: notification._id },
+      });
+    }
 
     await History.create({
       userId: userData._id,

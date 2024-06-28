@@ -23,7 +23,7 @@ const PersistLogin = ({ auth }) => {
     !auth?.userDetails?.token ? verifyRefreshToken() : setIsLoading(false);
   }, []);
 
-  return <>{isLoading ? <Loading /> : <Outlet />}</>;
+  return <>{isLoading ? <Loading /> : <Outlet auth={auth} />}</>;
 };
 
 export default PersistLogin;

@@ -3,7 +3,17 @@ import Sidebar from "../../../externalComponents/sidebarBase/Sidebar";
 import CreateSchedule from "../schedulesComponents/CreateSchedule";
 import SchedulesFilter from "../schedulesComponents/SchedulesFilter";
 
-const Schedules = ({ auth, setLoading, toast, axios, allowedRoles }) => {
+const Schedules = ({
+  auth,
+  setLoading,
+  toast,
+  axios,
+  allowedRoles,
+  notif,
+  getNotifications,
+  indicator,
+  setIndicator,
+}) => {
   const [students, setStudents] = useState([]);
   const [schedules, setSchedules] = useState([]);
 
@@ -65,6 +75,10 @@ const Schedules = ({ auth, setLoading, toast, axios, allowedRoles }) => {
               getSchedules={getSchedules}
               allowedRoles={allowedRoles}
               students={students}
+              notif={notif}
+              getNotifications={getNotifications}
+              indicator={indicator}
+              setIndicator={setIndicator}
             />
             <SchedulesFilter
               auth={auth}

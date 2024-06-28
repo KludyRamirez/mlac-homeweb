@@ -22,7 +22,7 @@ const useRefreshToken = () => {
         );
 
         setTimeout(() => {
-          return res.data.userDetails.token;
+          return res?.data?.userDetails?.token;
         }, 100);
       }
     } catch (err) {

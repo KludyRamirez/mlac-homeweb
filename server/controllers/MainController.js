@@ -71,9 +71,9 @@ const { remarksCase } = require("../controllers/CasesController");
 const { deleteOneCase } = require("../controllers/CasesController");
 const { deleteManyCase } = require("../controllers/CasesController");
 
-//notification
+//history
 
-const { getNotifications } = require("../controllers/HistoryController");
+const { getHistory } = require("../controllers/HistoryController");
 
 //colleges and departments
 
@@ -89,6 +89,10 @@ const { getCsrf } = require("../controllers/SecurityControllers");
 const { createLogs } = require("./LogsControllers");
 const { getLogs } = require("./LogsControllers");
 const { getOneLog } = require("./LogsControllers");
+
+// real-time notification
+
+const { getUserNotifications } = require("./NotificationsController");
 
 exports.controllers = {
   login,
@@ -144,7 +148,7 @@ exports.controllers = {
   deleteOneCase,
   deleteManyCase,
   //
-  getNotifications,
+  getHistory,
   //
   createCad,
   getCads,
@@ -156,4 +160,6 @@ exports.controllers = {
   createLogs,
   getLogs,
   getOneLog,
+  //
+  getUserNotifications,
 };

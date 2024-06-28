@@ -1,8 +1,10 @@
 const Student = require("../models/Students");
 const History = require("../models/History");
+const Notification = require("../models/Notifications");
 
 const createStudent = async (req, res) => {
   const { firstName, surName, studentNo, selectedUser } = req.body;
+  const userData = req.user;
 
   try {
     if (!firstName || !surName || !studentNo) {
@@ -31,8 +33,6 @@ const createStudent = async (req, res) => {
     } else {
       newStudent = await Student.create(req.body);
     }
-
-    const userData = req.user;
 
     const notification = await Notification.create({
       sender: userData._id,
@@ -109,7 +109,7 @@ const editStudent = async (req, res) => {
   try {
     const userData = req.user;
 
-    const { studentNo } = req.body;
+    const { studentNo, firstName, surName } = req.body;
 
     const { id } = req.params;
 
@@ -121,7 +121,22 @@ const editStudent = async (req, res) => {
       {
         new: true,
       }
-    );
+    ).populate("parent");
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Students",
+      message: `Your child ${firstName} ${surName} has been successfully edited.`,
+      createdAt: new Date(),
+    });
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await User.findByIdAndUpdate(student.parent._id, {
+      $push: { notifications: notification._id },
+    });
 
     await History.create({
       userId: userData._id,
@@ -145,10 +160,24 @@ const deleteOneStudent = async (req, res) => {
   try {
     const userData = req.user;
 
-    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
+    const deletedStudent = await Student.findByIdAndDelete(
+      req.params.id
+    ).populate("parent");
+
     if (!deletedStudent) {
       return res.status(404).json({ error: "Cannot find selected student." });
     }
+
+    const notification = await Notification.create({
+      sender: userData._id,
+      type: "Students",
+      message: `${deletedStudent.firstName} ${deletedStudent.surName}'s schedule has been deleted successfully.`,
+      createdAt: new Date(),
+    });
+
+    await User.findByIdAndUpdate(deletedStudent.parent._id, {
+      $push: { notifications: notification._id },
+    });
 
     await History.create({
       userId: userData._id,
@@ -174,6 +203,28 @@ const deleteManyStudent = async (req, res) => {
     const userData = req.user;
 
     await Student.deleteMany({ _id: { $in: students } });
+
+    for (const studentId of students) {
+      const deletedStudent = await Student.findById(studentId).populate(
+        "parent"
+      );
+
+      if (!deletedStudent) {
+        console.error(`Schedule with ID ${studentId} not found`);
+        continue;
+      }
+
+      const notification = await Notification.create({
+        sender: userData._id,
+        type: "Students",
+        message: `${deletedStudent?.firstName} ${deletedStudent?.surName} schedule has been deleted successfully.`,
+        createdAt: new Date(),
+      });
+
+      await User.findByIdAndUpdate(deletedStudent.parent._id, {
+        $push: { notifications: notification._id },
+      });
+    }
 
     await History.create({
       userId: userData._id,

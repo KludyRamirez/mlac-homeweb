@@ -383,15 +383,15 @@ const SchedulesTable = ({
                 </div>
                 <div
                   className={`${
-                    s.isActive === "Present" &&
-                    "bg-gradient-to-r from-[#2E8B57] to-[#008000] hover:to-[#008000] cursor-pointer text-[#ffffff]"
+                    s?.isActive === "Present" &&
+                    "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] cursor-pointer text-[#ffffff] "
                   } ${
-                    s.isActive === "Absent" &&
-                    "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#880808] cursor-pointer text-[#ffffff]"
+                    s?.isActive === "Absent" &&
+                    "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] cursor-pointer text-[#ffffff] "
                   } ${
-                    s.isActive === "No information yet" &&
-                    "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e]"
-                  } w-[120px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[40px] gap-1`}
+                    s?.isActive === "No information yet" &&
+                    "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e] "
+                  } w-[120px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-1`}
                 >
                   {s?.isActive?.slice(0, 7)}
                   {s?.isActive === "Present" ? (

@@ -119,17 +119,27 @@ const updateSchedulesIsActiveToAbsentDef = async (day, today) => {
       // model  yung gusto mo iupdate.
       // nested update
 
+      // correction 28/06/2024
+      // need mo paden pala ihiwalay yung update ng studentId.behindByCounter para gumana kasi naka reference ka lng,
+      // pero kapag nsa isang docs sila like yung student schema and schedule schema nsa isang docs pwede na mo na gawin eto,
+      // $inc: { "studentId.behindByCounter": 1 },
+
       const bulkUpdateOps = schedules.map((schedule) => ({
         updateOne: {
           filter: { _id: schedule._id },
-          update: {
-            $set: { isActive: "Absent" },
-            $inc: { "studentId.behindByCounter": 1 },
-          },
+          update: { $set: { isActive: "Absent" } },
         },
       }));
 
       await Schedule.bulkWrite(bulkUpdateOps);
+
+      // magkahiwalay ang case, so ganto approach naten
+
+      const studentIds = schedules.map((schedule) => schedule.studentId);
+      await Student.updateMany(
+        { _id: { $in: studentIds } },
+        { $inc: { behindByCounter: 1 } }
+      );
     }
   } catch (error) {
     throw new Error(`Failed to update schedules for ${day}: ${error.message}`);

@@ -4,9 +4,15 @@ const getUserNotifications = async (req, res) => {
   try {
     const userData = req.user;
 
-    const user = await User.findOne({ username: userData.username }).populate(
-      "notifications"
-    );
+    const user = await User.findOne({ _id: userData._id }).populate({
+      path: "notifications",
+      model: "Notifications",
+      populate: {
+        path: "sender",
+        model: "Users",
+        select: "firstName surName",
+      },
+    });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

@@ -1,6 +1,6 @@
 const History = require("../models/History");
 
-const getNotifications = async (req, res) => {
+const getHistory = async (req, res) => {
   try {
     const notifications = await History.find()
       .populate("userId", "uid userName firstName surName")
@@ -13,5 +13,5 @@ const getNotifications = async (req, res) => {
 };
 
 module.exports = {
-  getNotifications,
+  getHistory,
 };

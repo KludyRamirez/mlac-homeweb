@@ -15,7 +15,7 @@ const History = ({ auth, axios, setLoading, toast, allowedRoles }) => {
         console.error("Authentication token not found.");
         return;
       }
-      const url = `/api/notification`;
+      const url = `/api/history`;
       const res = await axios.get(url, {
         withCredentials: true,
         headers: {

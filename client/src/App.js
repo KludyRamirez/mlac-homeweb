@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
@@ -29,32 +29,46 @@ import Logs from "./pages/logs/logsBase/Logs";
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const AppRoutes = ({ auth, setLoading, toast, axios }) => (
-  <Routes>
-    <Route
-      path="*"
-      element={
-        auth?.userDetails?.token ? (
-          <Statistics auth={auth} setLoading={setLoading} toast={toast} />
-        ) : (
-          <Login setLoading={setLoading} toast={toast} />
-        )
-      }
-    />
-    <Route path="/error" element={<Error403 />} />
-    <Route
-      path="/forgot"
-      element={<Forgot setLoading={setLoading} toast={toast} axios={axios} />}
-    />
-    <Route
-      path="/reset-password/:id/:token"
-      element={<Reset setLoading={setLoading} toast={toast} axios={axios} />}
-    />
+const selectNotification = (state) => state.notification;
+const notificationSelector = createSelector(
+  [selectNotification],
+  (notification) => notification
+);
 
-    {/* Persist Login Routes */}
-    <Route element={<PersistLogin auth={auth} />}>
+const AppRoutes = ({ auth, setLoading, toast, axios, notification }) => {
+  const [notif, setNotif] = useState([]);
+  const [indicator, setIndicator] = useState(false);
+
+  const getNotifications = async () => {
+    try {
+      const url = `/api/notification`;
+      const res = await axios.get(url, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${auth?.userDetails?.token}`,
+        },
+      });
+      setNotif(res?.data?.notifications);
+
+      const storeNotifications = new Set(notification?.map((n) => n?._id));
+      const currentIds = new Set(notif?.map((n) => n?._id));
+
+      const newIds = [...currentIds].filter(
+        (id) => !storeNotifications?.has(id)
+      );
+
+      if (newIds?.length > 0) {
+        setIndicator(true);
+      }
+    } catch (err) {
+      console.error("Error fetching logs!", err);
+    }
+  };
+
+  return (
+    <Routes>
       <Route
-        path="/"
+        path="*"
         element={
           auth?.userDetails?.token ? (
             <Statistics auth={auth} setLoading={setLoading} toast={toast} />
@@ -63,185 +77,220 @@ const AppRoutes = ({ auth, setLoading, toast, axios }) => (
           )
         }
       />
-
+      <Route path="/error" element={<Error403 />} />
       <Route
-        path="/account"
-        element={
-          <AccountSettings
-            auth={auth}
-            setLoading={setLoading}
-            toast={toast}
-            axios={axios}
-            allowedRoles={["Administrator", "Parent", "Student"]}
-          />
-        }
+        path="/forgot"
+        element={<Forgot setLoading={setLoading} toast={toast} axios={axios} />}
+      />
+      <Route
+        path="/reset-password/:id/:token"
+        element={<Reset setLoading={setLoading} toast={toast} axios={axios} />}
       />
 
-      {/* Admin and Parent Routes */}
-      <Route
-        element={
-          <SecureRoles auth={auth} allowedRoles={["Administrator", "Parent"]} />
-        }
-      >
+      {/* Persist Login Routes */}
+      <Route element={<PersistLogin auth={auth} />}>
         <Route
-          path="/schedules"
+          path="/"
           element={
-            <Schedules
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
-          }
-        />
-        <Route
-          path="/temp-schedules"
-          element={
-            <TempSchedules
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
-          }
-        />
-        <Route
-          path="/temp-solo"
-          element={
-            <TempSolo
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
-          }
-        />
-        <Route
-          path="/students"
-          element={
-            <Students
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
-          }
-        />
-        <Route
-          path="/profile/:id"
-          element={
-            <StudentProfile
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
-          }
-        />
-        <Route
-          path="/statistics"
-          element={
-            <Statistics
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator", "Parent"]}
-            />
-          }
-        />
-        <Route
-          path="/chats"
-          element={
-            <Statistics
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator", "Parent"]}
-            />
-          }
-        />
-        <Route
-          path="/logs"
-          element={
-            <Logs
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
-          }
-        />
-      </Route>
-
-      {/* Admin Only Routes */}
-      <Route
-        element={<SecureRoles auth={auth} allowedRoles={["Administrator"]} />}
-      >
-        <Route
-          path="/users"
-          element={
-            <Register
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <Settings
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
-          }
-        />
-        <Route
-          path="/notification"
-          element={
-            <History
-              auth={auth}
-              setLoading={setLoading}
-              toast={toast}
-              axios={axios}
-              allowedRoles={["Administrator"]}
-            />
+            auth?.userDetails?.token ? (
+              <Statistics auth={auth} setLoading={setLoading} toast={toast} />
+            ) : (
+              <Login setLoading={setLoading} toast={toast} />
+            )
           }
         />
 
         <Route
-          path="/logs"
+          path="/account"
           element={
-            <Register
+            <AccountSettings
               auth={auth}
               setLoading={setLoading}
               toast={toast}
               axios={axios}
-              allowedRoles={["Administrator"]}
+              allowedRoles={["Administrator", "Parent", "Student"]}
             />
           }
         />
+
+        {/* Admin and Parent Routes */}
+        <Route
+          element={
+            <SecureRoles
+              auth={auth}
+              allowedRoles={["Administrator", "Parent"]}
+            />
+          }
+        >
+          <Route
+            path="/schedules"
+            element={
+              <Schedules
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+                notif={notif}
+                getNotifications={getNotifications}
+                indicator={indicator}
+                setIndicator={setIndicator}
+              />
+            }
+          />
+          <Route
+            path="/temp-schedules"
+            element={
+              <TempSchedules
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+          <Route
+            path="/temp-solo"
+            element={
+              <TempSolo
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+          <Route
+            path="/students"
+            element={
+              <Students
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+          <Route
+            path="/profile/:id"
+            element={
+              <StudentProfile
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+          <Route
+            path="/statistics"
+            element={
+              <Statistics
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator", "Parent"]}
+              />
+            }
+          />
+          <Route
+            path="/chats"
+            element={
+              <Statistics
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator", "Parent"]}
+              />
+            }
+          />
+          <Route
+            path="/logs"
+            element={
+              <Logs
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+        </Route>
+
+        {/* Admin Only Routes */}
+        <Route
+          element={<SecureRoles auth={auth} allowedRoles={["Administrator"]} />}
+        >
+          <Route
+            path="/users"
+            element={
+              <Register
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <Settings
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <History
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+
+          <Route
+            path="/logs"
+            element={
+              <Register
+                auth={auth}
+                setLoading={setLoading}
+                toast={toast}
+                axios={axios}
+                allowedRoles={["Administrator"]}
+              />
+            }
+          />
+        </Route>
       </Route>
-    </Route>
-  </Routes>
-);
+    </Routes>
+  );
+};
 
 function App() {
   const [loading, setLoading] = useState(false);
   const auth = useSelector(authSelector);
+  const notification = useSelector(notificationSelector);
+
+  if (!auth) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -266,6 +315,7 @@ function App() {
             setLoading={setLoading}
             toast={toast}
             axios={axios}
+            notification={notification}
           />
         )}
       </Router>

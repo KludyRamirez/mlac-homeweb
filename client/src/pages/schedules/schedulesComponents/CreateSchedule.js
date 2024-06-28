@@ -3,6 +3,7 @@ import Modal from "@mui/material/Modal";
 import { FaPlus } from "react-icons/fa6";
 import CreateScheduleFormModal from "./CreateScheduleFormModal";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
+import NotificationBell from "../../../externalComponents/NotificationBell/NotificationBell";
 
 const initialState = {
   studentId: "",
@@ -35,6 +36,10 @@ const CreateSchedule = ({
   setLoading,
   toast,
   axios,
+  notif,
+  getNotifications,
+  indicator,
+  setIndicator,
 }) => {
   const [values, setValues] = useState(initialState);
   const [showCreateScheduleModal, setShowCreateScheduleModal] = useState(false);
@@ -61,6 +66,7 @@ const CreateSchedule = ({
     } finally {
       handleCloseModal();
       getSchedules();
+      getNotifications();
     }
   };
 
@@ -112,8 +118,14 @@ const CreateSchedule = ({
 
   return (
     <>
-      <div className="w-100 text-[14px] text-[#c5d1de] pb-6 ">
-        MLAC / Permanent Schedules
+      <div className="w-100 flex justify-start items-center gap-4 text-[14px] text-[#c5d1de] pb-6 ">
+        <span>MLAC / Permanent Schedules</span>
+        <NotificationBell
+          notif={notif}
+          getNotifications={getNotifications}
+          indicator={indicator}
+          setIndicator={setIndicator}
+        />
       </div>
       <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
         <div className="font-bold">Permanent List</div>

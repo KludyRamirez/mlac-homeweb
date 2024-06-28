@@ -45,7 +45,7 @@ export default function pdfExporter(selectedItems, items, setExportTrigger) {
 }
 
 export function pdfExporterSingleItem(selectedItem, items, setExportTrigger) {
-  const exportItems = items.filter((i) => selectedItem === i?._id);
+  const exportItems = items.filter((i) => selectedItem?._id === i?._id);
 
   const pdfElement = document.createElement("div");
   pdfElement.style.position = "absolute";

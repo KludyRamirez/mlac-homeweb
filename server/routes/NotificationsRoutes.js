@@ -9,10 +9,10 @@ const auth = VerifyJWT;
 const role = VerifyRoles;
 
 router.get(
-  "/history",
+  "/notification",
   auth,
   role(["Administrator"]),
-  mainController.controllers.getHistory
+  mainController.controllers.getUserNotifications
 );
 
 module.exports = router;
