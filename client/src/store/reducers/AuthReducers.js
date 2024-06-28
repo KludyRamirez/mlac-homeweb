@@ -4,7 +4,7 @@ const initState = {
   userDetails: null,
 };
 
-const reducer = (state = initState, action) => {
+const authReducer = (state = initState, action) => {
   switch (action.type) {
     case AuthActions.SET_USER_DETAILS:
       return {
@@ -21,4 +21,4 @@ const reducer = (state = initState, action) => {
   }
 };
 
-export default reducer;
+export default authReducer;

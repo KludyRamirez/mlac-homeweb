@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import toast, { Toaster } from "react-hot-toast";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkIndicator,
+  setStoreNotifications,
+} from "./store/actions/NotificationActions";
 
 import Students from "./pages/students/studentsBase/Students";
 import Login from "./pages/auth/login/loginBase/Login";
@@ -25,45 +30,50 @@ import TempSchedules from "./pages/tempSchedules/tempSchedulesBase/TempSchedules
 import TempSolo from "./pages/tempSolo/tempSoloBase/TempSolo";
 import Logs from "./pages/logs/logsBase/Logs";
 
+export const getNotification = async (auth) =>
+  await axios.get(`/api/notification`, {
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${auth?.userDetails?.token}`,
+    },
+  });
+
 // Selectors
 const selectAuth = (state) => state.auth;
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
-const selectNotification = (state) => state.notification;
-const notificationSelector = createSelector(
-  [selectNotification],
-  (notification) => notification
-);
-
-const AppRoutes = ({ auth, setLoading, toast, axios, notification }) => {
+const AppRoutes = ({ auth, setLoading, toast, axios }) => {
   const [notif, setNotif] = useState([]);
-  const [indicator, setIndicator] = useState(false);
+
+  const dispatch = useDispatch();
+  const indicator = useSelector((state) => state.notifications.indicator);
 
   const getNotifications = async () => {
     try {
-      const url = `/api/notification`;
-      const res = await axios.get(url, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${auth?.userDetails?.token}`,
-        },
+      getNotification(auth).then((c) => {
+        const notifications = c?.data?.notifications;
+        setNotif(notifications);
+        dispatch(checkIndicator(notifications));
       });
-      setNotif(res?.data?.notifications);
-
-      const storeNotifications = new Set(notification?.map((n) => n?._id));
-      const currentIds = new Set(notif?.map((n) => n?._id));
-
-      const newIds = [...currentIds].filter(
-        (id) => !storeNotifications?.has(id)
-      );
-
-      if (newIds?.length > 0) {
-        setIndicator(true);
-      }
     } catch (err) {
-      console.error("Error fetching logs!", err);
+      console.error("Error fetching notifications!", err);
     }
   };
+
+  const getNotificationsBell = async () => {
+    try {
+      getNotification(auth).then((c) => {
+        const notifications = c?.data?.notifications;
+        setNotif(notifications);
+      });
+    } catch (err) {
+      console.error("Error fetching notifications!", err);
+    }
+  };
+
+  useEffect(() => {
+    console.log(indicator);
+  }, [indicator]);
 
   return (
     <Routes>
@@ -134,7 +144,6 @@ const AppRoutes = ({ auth, setLoading, toast, axios, notification }) => {
                 notif={notif}
                 getNotifications={getNotifications}
                 indicator={indicator}
-                setIndicator={setIndicator}
               />
             }
           />
@@ -286,7 +295,6 @@ const AppRoutes = ({ auth, setLoading, toast, axios, notification }) => {
 function App() {
   const [loading, setLoading] = useState(false);
   const auth = useSelector(authSelector);
-  const notification = useSelector(notificationSelector);
 
   if (!auth) {
     return <Loading />;
@@ -315,7 +323,6 @@ function App() {
             setLoading={setLoading}
             toast={toast}
             axios={axios}
-            notification={notification}
           />
         )}
       </Router>

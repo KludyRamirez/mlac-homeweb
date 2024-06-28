@@ -1,10 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaBell, FaRegBell } from "react-icons/fa6";
+import {
+  checkIndicator,
+  setStoreNotifications,
+} from "../../store/actions/NotificationActions";
+import { getNotification } from "../../App";
 
-function NotificationBell({ notif, indicator, setIndicator }) {
+function NotificationBell({ notif, auth }) {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const notifRef = useRef(null);
+
+  const indicator = useSelector((state) => state.notifications.indicator);
 
   const dispatch = useDispatch();
 
@@ -21,22 +29,28 @@ function NotificationBell({ notif, indicator, setIndicator }) {
     };
   }, []);
 
-  const handleGetRealTimeNotifClick = () => {
-    localStorage.setItem("notifications", JSON.stringify(notif));
-    dispatch({
-      type: "SET_NOTIFICATIONS",
-      payload: notif,
-    });
+  const handleGetRealTimeNotifClick = async () => {
+    fetchNotifications();
     setIsNotifOpen(true);
-    setIndicator(false);
+    dispatch(setStoreNotifications(notif));
+    dispatch(checkIndicator([]));
   };
 
-  const latestNotif = notif[notif.length - 1];
+  const fetchNotifications = async () => {
+    try {
+      const res = await getNotification(auth);
+      setNotifications(res?.data?.notifications);
+    } catch (error) {
+      console.error("Error fetching notifications!", error);
+    }
+  };
+
+  const latestNotif = notifications[notifications.length - 1];
   const now = new Date();
   const createdAt = new Date(latestNotif?.createdAt);
   const elapsedTime = Math?.floor((now - createdAt) / 60000);
 
-  const pastNotifs = notif?.slice(0, -1);
+  const pastNotifs = notifications?.slice(0, -1);
 
   return (
     <>
@@ -85,7 +99,9 @@ function NotificationBell({ notif, indicator, setIndicator }) {
               </div>
               <div
                 className={`flex flex-col items-start gap-4 mt-2 ${
-                  notif && notif?.length >= 4 ? "overflow-y-auto h-[282px]" : ""
+                  notifications && notifications?.length >= 4
+                    ? "overflow-y-auto h-[282px]"
+                    : ""
                 }`}
               >
                 <div className="text-[#2d333b] text-[18px] font-bold">

@@ -59,14 +59,15 @@ const CreateSchedule = ({
           Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
-      await toast.success(res?.data?.message);
+
+      toast.success(res?.data?.message);
+      await getNotifications();
       setValues(initialState);
     } catch (err) {
       toast.error(err?.response?.data.message);
     } finally {
       handleCloseModal();
       getSchedules();
-      getNotifications();
     }
   };
 
@@ -121,6 +122,7 @@ const CreateSchedule = ({
       <div className="w-100 flex justify-start items-center gap-4 text-[14px] text-[#c5d1de] pb-6 ">
         <span>MLAC / Permanent Schedules</span>
         <NotificationBell
+          auth={auth}
           notif={notif}
           getNotifications={getNotifications}
           indicator={indicator}
