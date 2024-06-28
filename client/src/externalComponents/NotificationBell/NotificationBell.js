@@ -79,23 +79,29 @@ function NotificationBell({ notif, auth }) {
                 <div className="text-[#2d333b] text-[18px] font-bold">
                   Newest
                 </div>
-                <div
-                  key={latestNotif?._id}
-                  className="w-[100%] flex justify-start items-center gap-3"
-                >
-                  <div className="flex justify-center items-center w-[68px] h-[68px] rounded-[100px] bg-gradient-to-b from-[#c5d1de] to-[#22272e] border-[1px] text-[#ffffff] text-[24px] font-bold">
-                    {latestNotif?.sender?.firstName?.slice(0, 1)}
-                    {latestNotif?.sender?.surName?.slice(0, 1)}
+                {latestNotif ? (
+                  <div
+                    key={latestNotif?._id}
+                    className="w-[100%] flex justify-start items-center gap-3"
+                  >
+                    <div className="flex justify-center items-center w-[68px] h-[68px] rounded-[100px] bg-gradient-to-b from-[#c5d1de] to-[#22272e] border-[1px] text-[#ffffff] text-[24px] font-bold">
+                      {latestNotif?.sender?.firstName?.slice(0, 1)}
+                      {latestNotif?.sender?.surName?.slice(0, 1)}
+                    </div>
+                    <div className="w-[75%] flex flex-col items-start justify-center gap-1 text-[#2d333b]">
+                      <div>{latestNotif?.message}</div>
+                      {elapsedTime < 60 ? (
+                        <div>{elapsedTime}m</div>
+                      ) : (
+                        <div>An hour ago</div>
+                      )}
+                    </div>
                   </div>
-                  <div className="w-[75%] flex flex-col items-start justify-center gap-1 text-[#2d333b]">
-                    <div>{latestNotif?.message}</div>
-                    {elapsedTime < 60 ? (
-                      <div>{elapsedTime}m</div>
-                    ) : (
-                      <div>An hour ago</div>
-                    )}
+                ) : (
+                  <div className="w-[100%] flex justify-start items-center text-[#2d333b] text-[16px]">
+                    <span>No notifications</span>
                   </div>
-                </div>
+                )}
               </div>
               <div
                 className={`flex flex-col items-start gap-4 mt-2 ${
