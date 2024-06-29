@@ -30,51 +30,12 @@ import TempSchedules from "./pages/tempSchedules/tempSchedulesBase/TempSchedules
 import TempSolo from "./pages/tempSolo/tempSoloBase/TempSolo";
 import Logs from "./pages/logs/logsBase/Logs";
 
-export const getNotification = async (auth) =>
-  await axios.get(`/api/notification`, {
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${auth?.userDetails?.token}`,
-    },
-  });
-
 // Selectors
 const selectAuth = (state) => state.auth;
+
 const authSelector = createSelector([selectAuth], (auth) => auth);
 
 const AppRoutes = ({ auth, setLoading, toast, axios }) => {
-  const [notif, setNotif] = useState([]);
-
-  const dispatch = useDispatch();
-  const indicator = useSelector((state) => state.notifications.indicator);
-
-  const getNotifications = async () => {
-    try {
-      getNotification(auth).then((c) => {
-        const notifications = c?.data?.notifications;
-        setNotif(notifications);
-        dispatch(checkIndicator(notifications));
-      });
-    } catch (err) {
-      console.error("Error fetching notifications!", err);
-    }
-  };
-
-  const getNotificationsBell = async () => {
-    try {
-      getNotification(auth).then((c) => {
-        const notifications = c?.data?.notifications;
-        setNotif(notifications);
-      });
-    } catch (err) {
-      console.error("Error fetching notifications!", err);
-    }
-  };
-
-  useEffect(() => {
-    console.log(indicator);
-  }, [indicator]);
-
   return (
     <Routes>
       <Route
@@ -141,9 +102,6 @@ const AppRoutes = ({ auth, setLoading, toast, axios }) => {
                 toast={toast}
                 axios={axios}
                 allowedRoles={["Administrator"]}
-                notif={notif}
-                getNotifications={getNotifications}
-                indicator={indicator}
               />
             }
           />

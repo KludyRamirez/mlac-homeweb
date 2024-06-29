@@ -4,6 +4,7 @@ import CreateStudentFormModal from "./CreateStudentFormModal";
 import { FaPlus } from "react-icons/fa6";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
 import { useLocation } from "react-router-dom";
+import NotificationBell from "../../../externalComponents/NotificationBell/NotificationBell";
 
 const initialState = {
   studentNo: "",
@@ -138,8 +139,9 @@ const CreateStudent = ({
     <>
       {location.pathname === "/students" ? (
         <>
-          <div className="w-100 text-[14px] text-[#c5d1de] pb-6">
-            Maria Luisa Aguedan Carsula Homeweb / Students
+          <div className="w-100 flex justify-start items-center gap-4 text-[14px] text-[#c5d1de] pb-6 ">
+            <span>MLAC / Students</span>
+            <NotificationBell auth={auth} axios={axios} />
           </div>
           <div className="w-100 text-[26px] text-[#c5d1de] font-bold pb-6 flex justify-between items-center">
             <div>Students List</div>

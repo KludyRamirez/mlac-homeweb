@@ -3,6 +3,7 @@ import Modal from "@mui/material/Modal";
 import { FaPlus } from "react-icons/fa6";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
 import CreateTempSoloModalForm from "./CreateTempSoloModalForm";
+import NotificationBell from "../../../externalComponents/NotificationBell/NotificationBell";
 
 const initialState = {
   student: "",
@@ -115,8 +116,9 @@ const CreateTempSolo = ({
 
   return (
     <>
-      <div className="w-100 text-[14px] text-[#c5d1de] pb-6 ">
-        MLAC / Temporary Solo
+      <div className="w-100 flex justify-start items-center gap-4 text-[14px] text-[#c5d1de] pb-6 ">
+        <span>MLAC / Temporary Solo</span>
+        <NotificationBell auth={auth} axios={axios} />
       </div>
       <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
         <div className="font-bold">Solo List</div>

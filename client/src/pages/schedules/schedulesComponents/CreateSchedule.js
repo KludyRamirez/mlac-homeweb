@@ -36,10 +36,6 @@ const CreateSchedule = ({
   setLoading,
   toast,
   axios,
-  notif,
-  getNotifications,
-  indicator,
-  setIndicator,
 }) => {
   const [values, setValues] = useState(initialState);
   const [showCreateScheduleModal, setShowCreateScheduleModal] = useState(false);
@@ -61,7 +57,6 @@ const CreateSchedule = ({
       });
 
       toast.success(res?.data?.message);
-      await getNotifications();
       setValues(initialState);
     } catch (err) {
       toast.error(err?.response?.data.message);
@@ -121,13 +116,7 @@ const CreateSchedule = ({
     <>
       <div className="w-100 flex justify-start items-center gap-4 text-[14px] text-[#c5d1de] pb-6 ">
         <span>MLAC / Permanent Schedules</span>
-        <NotificationBell
-          auth={auth}
-          notif={notif}
-          getNotifications={getNotifications}
-          indicator={indicator}
-          setIndicator={setIndicator}
-        />
+        <NotificationBell auth={auth} axios={axios} />
       </div>
       <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
         <div className="font-bold">Permanent List</div>

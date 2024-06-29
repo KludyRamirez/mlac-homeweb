@@ -5,16 +5,43 @@ import {
   checkIndicator,
   setStoreNotifications,
 } from "../../store/actions/NotificationActions";
-import { getNotification } from "../../App";
 
-function NotificationBell({ notif, auth }) {
+function NotificationBell({ auth, axios }) {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
-  const [notifications, setNotifications] = useState([]);
   const notifRef = useRef(null);
 
   const indicator = useSelector((state) => state.notifications.indicator);
+  const notifications = useSelector(
+    (state) => state.notifications.storeNotifications
+  );
 
   const dispatch = useDispatch();
+
+  const getNotification = async (auth) =>
+    await axios.get(`/api/notification`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${auth?.userDetails?.token}`,
+      },
+    });
+
+  const getNotifications = async (authToken) => {
+    try {
+      const res = await getNotification(authToken);
+      const notifications = res?.data?.notifications || [];
+      dispatch(checkIndicator(notifications.map((n) => n._id)));
+    } catch (err) {
+      console.error("Error fetching notifications!", err);
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getNotifications(auth);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [auth?.userDetails?.token]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -32,14 +59,14 @@ function NotificationBell({ notif, auth }) {
   const handleGetRealTimeNotifClick = async () => {
     fetchNotifications();
     setIsNotifOpen(true);
-    dispatch(setStoreNotifications(notif));
     dispatch(checkIndicator([]));
   };
 
   const fetchNotifications = async () => {
     try {
       const res = await getNotification(auth);
-      setNotifications(res?.data?.notifications);
+      const notifications = res?.data?.notifications || [];
+      dispatch(setStoreNotifications(notifications));
     } catch (error) {
       console.error("Error fetching notifications!", error);
     }
@@ -61,7 +88,9 @@ function NotificationBell({ notif, auth }) {
             <div
               ref={notifRef}
               className={`flex flex-col p-6 gap-3 absolute top-[50px] left-[-40px] w-[380px] ${
-                notif && notif?.length >= 4 ? "h-[582px]" : "h-[fit-content]"
+                notifications && notifications?.length >= 4
+                  ? "h-[582px]"
+                  : "h-[fit-content]"
               } rounded-[10px] bg-gradient-to-t from-[#ffffff] to-[#c5d1de]`}
             >
               <div className="text-[26px] text-[#2d333b] font-bold">
@@ -153,12 +182,12 @@ function NotificationBell({ notif, auth }) {
           {isNotifOpen === false ? (
             <FaRegBell
               onClick={handleGetRealTimeNotifClick}
-              className="text-[22px] text-[white] cursor-pointer"
+              className="text-[24px] text-[white] cursor-pointer"
             />
           ) : (
             <FaBell
               onClick={() => setIsNotifOpen(false)}
-              className="text-[22px] text-[white] cursor-pointer"
+              className="text-[24px] text-[white] cursor-pointer"
             />
           )}
         </div>

@@ -17,7 +17,7 @@ const notificationsReducer = (state = initialState, action) => {
       };
     case CHECK_INDICATOR:
       const hasUnseenNotifications = action.payload.some(
-        (id) => !state.storeNotifications.includes(id)
+        (id) => !state.storeNotifications.some((notif) => notif._id === id)
       );
       return {
         ...state,

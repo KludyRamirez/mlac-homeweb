@@ -3,6 +3,7 @@ import Modal from "@mui/material/Modal";
 import { FaPlus } from "react-icons/fa6";
 import CreateTempScheduleModalForm from "./CreateTempScheduleModalForm";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
+import NotificationBell from "../../../externalComponents/NotificationBell/NotificationBell";
 
 const initialState = {
   student: "",
@@ -115,8 +116,9 @@ const CreateTempSchedule = ({
 
   return (
     <>
-      <div className="w-100 text-[14px] text-[#c5d1de] pb-6 ">
-        MLAC / Temporary Schedules
+      <div className="w-100 flex justify-start items-center gap-4 text-[14px] text-[#c5d1de] pb-6 ">
+        <span>MLAC / Temporary Schedules</span>
+        <NotificationBell auth={auth} axios={axios} />
       </div>
       <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
         <div className="font-bold">Temporary List</div>

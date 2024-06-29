@@ -12,6 +12,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaPlus } from "react-icons/fa6";
+import NotificationBell from "../../../externalComponents/NotificationBell/NotificationBell";
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -123,7 +124,10 @@ const LogsFilter = ({
 
   return (
     <>
-      <div className="w-100 text-[14px] text-[#c5d1de] pb-6 ">MLAC / Logs</div>
+      <div className="w-100 flex justify-start items-center gap-4 text-[14px] text-[#c5d1de] pb-6 ">
+        <span>MLAC / Logs</span>
+        <NotificationBell auth={auth} axios={axios} />
+      </div>
       <div className="w-100 text-[26px] text-[#c5d1de] pb-6 flex justify-between items-center">
         <div className="font-bold">Logs List</div>
 

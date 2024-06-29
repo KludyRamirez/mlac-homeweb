@@ -6,6 +6,7 @@ import CreateUserFormModal from "./CreateUserFormModal";
 
 import { connect } from "react-redux";
 import { getActions } from "../../../../store/actions/AuthActions";
+import NotificationBell from "../../../../externalComponents/NotificationBell/NotificationBell";
 
 export const ModalBox = styled("div")({
   position: "absolute",
@@ -50,7 +51,7 @@ const errorsInitialState = {
   contactNo: "",
 };
 
-const CreateUser = ({ register, getUsers, allowedRoles, auth }) => {
+const CreateUser = ({ register, getUsers, allowedRoles, auth, axios }) => {
   const [values, setValues] = useState(initialState);
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   const [errors, setErrors] = useState(errorsInitialState);
@@ -167,8 +168,9 @@ const CreateUser = ({ register, getUsers, allowedRoles, auth }) => {
 
   return (
     <>
-      <div className="w-100 text-[14px] text-[#c5d1de] pb-6">
-        Maria Luisa Aguedan Carsula Homeweb / Users
+      <div className="w-100 flex justify-start items-center gap-4 text-[14px] text-[#c5d1de] pb-6 ">
+        <span>MLAC / Users</span>
+        <NotificationBell auth={auth} axios={axios} />
       </div>
       <div className="w-100 text-[26px] text-[#c5d1de] font-bold pb-6 flex justify-between items-center">
         <div>Users List</div>
