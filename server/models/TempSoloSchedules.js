@@ -76,8 +76,14 @@ const tempSoloSchedulesSchema = new mongoose.Schema(
     },
 
     isVideoOn: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "Off",
+      enum: ["Off", "On"],
+    },
+
+    zoomLink: {
+      type: String,
+      trim: true,
     },
   },
   { timestamps: true }

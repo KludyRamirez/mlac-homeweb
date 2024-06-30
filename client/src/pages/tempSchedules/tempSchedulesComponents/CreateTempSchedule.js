@@ -15,6 +15,7 @@ const initialState = {
   dateTime: "",
   timing: "",
   schedType: "Temporary",
+  isVideoOn: "Off",
 };
 
 const CreateTempSchedule = ({
@@ -60,10 +61,13 @@ const CreateTempSchedule = ({
     const selectedCompanion = e.target.value;
     const timing =
       e.target.options[e.target.selectedIndex].getAttribute("data-timing");
+    const videoStatus =
+      e.target.options[e.target.selectedIndex].getAttribute("data-videostatus");
     setValues({
       ...values,
       companion: selectedCompanion,
       timing: timing,
+      isVideoOn: videoStatus,
     });
   };
 

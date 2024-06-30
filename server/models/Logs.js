@@ -39,8 +39,9 @@ const logsSchema = new mongoose.Schema(
     },
 
     isVideoOn: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "Off",
+      enum: ["Off", "On"],
     },
 
     schedType: {

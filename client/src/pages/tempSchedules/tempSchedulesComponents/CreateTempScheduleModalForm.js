@@ -194,11 +194,24 @@ const CreateTempScheduleModalForm = ({
                           key={s?._id}
                           value={s?._id}
                           data-timing={s.timing}
+                          data-videostatus={s.isVideoOn}
                         >
                           {s?.nameOfStudent} {s?.timing} {s?.day}
                         </option>
                       ))}
                   </select>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {companion.isVideoOn === "On" ? (
+            <div className="flex gap-2 text-[#007bff] pt-5">
+              <div className="w-[100%] flex flex-col justify-center items-start gap-2">
+                <span className="text-[#007bff]">Note:</span>
+                <div className="p-4 w-[100%] border-[1px] border-[#007bff] rounded-[8px]">
+                  You have selected an online schedule as a companion, therefore
+                  this schedule will be online also.
                 </div>
               </div>
             </div>
@@ -211,7 +224,10 @@ const CreateTempScheduleModalForm = ({
                 <BsCheckLg />
               </div>
               <div className="bg-gradient-to-r from-[#2d333b] to-[#22272e] rounded-[8px]">
-                {selectedDate !== "" && companion !== "" && student !== "" ? (
+                {selectedDate !== "" &&
+                companion !== "" &&
+                student !== "" &&
+                student.day !== companion.day ? (
                   <button
                     type="submit"
                     className="w-[100%] font-bold cursor-pointer p-3 bg-gradient-to-br from-[#ffffff] to-[#c5d1de] text-[#22272e] text-[16px] flex gap-2 items-center rounded-[8px]"

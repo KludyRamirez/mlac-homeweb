@@ -7,11 +7,10 @@ import EditSchedule from "./EditSchedule";
 import PatchScheduleStatus from "./PatchScheduleStatus";
 import pdfExporter from "../../../externalUtils/pdfExporter";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
-import { FaPenToSquare, FaTrashCan } from "react-icons/fa6";
+import { FaPenToSquare, FaTrashCan, FaVideo } from "react-icons/fa6";
 import Ellipsis from "../../../externalUtils/Ellipsis";
-import ReasonSchedule from "./ReasonSchedule";
-import { BsCheck, BsX } from "react-icons/bs";
-import handlePostScheduleDate from "../../../externalUtils/DayToDateConverter";
+import { BsLink45Deg } from "react-icons/bs";
+import ShowZoomLinkModal from "../../../externalUtils/ShowZoomLinkModal";
 
 const SchedulesTable = ({
   auth,
@@ -34,6 +33,9 @@ const SchedulesTable = ({
   const [selectedScheduleEdit, setSelectedScheduleEdit] = useState(null);
   const [showPatchScheduleModal, setShowPatchScheduleModal] = useState(false);
   const [selectedSchedulePatch, setSelectedSchedulePatch] = useState(null);
+  const [showZoomLink, setShowZoomLink] = useState(false);
+  const [selectedScheduleZoomLink, setSelectedScheduleZoomLink] =
+    useState(null);
 
   const [exportTrigger, setExportTrigger] = useState(false);
 
@@ -188,18 +190,23 @@ const SchedulesTable = ({
     setShowPatchScheduleModal(false);
   };
 
-  // schedule remarks
+  // show zoom link
 
-  // const handleScheduleRemarksClick = (cas) => {
-  //   try {
-  //     setSelectedScheduleReason(cas);
-  //     console.log(cas);
-  //   } catch (error) {
-  //     console.error("Error handling schedule Remarks click:", error);
-  //   } finally {
-  //     setShowReasonScheduleModal(true);
-  //   }
-  // };
+  const handleShowZoomLink = (schedule) => {
+    try {
+      setSelectedScheduleZoomLink(schedule);
+    } catch (error) {
+      console.error("Error handling schedule edit click:", error);
+    } finally {
+      setShowZoomLink(true);
+    }
+  };
+
+  const handleCloseZoomLinkModal = () => {
+    setShowZoomLink(false);
+  };
+
+  //
 
   const exportPDF = () => {
     setExportTrigger(true);
@@ -209,8 +216,101 @@ const SchedulesTable = ({
     pdfExporter(selectedSchedules, schedules, setExportTrigger);
   }
 
+  //
+
+  const handlePatchVideoStatus = async (id, videoStatus) => {
+    try {
+      if (!auth?.userDetails?.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const videoStatusMapping = {
+        On: "Off",
+        Off: "On",
+      };
+
+      const videoStatusBool = videoStatusMapping[videoStatus];
+
+      if (!videoStatusBool) {
+        console.error("Invalid video status:", videoStatus);
+        return;
+      }
+
+      const res = await axios.patch(
+        `/api/schedule/${id}/setVideo`,
+        {
+          isVideoOn: videoStatusBool,
+        },
+        {
+          headers: {
+            withCredentials: true,
+            Authorization: `Bearer ${auth?.userDetails?.token}`,
+          },
+        }
+      );
+
+      toast.success(res?.data?.message);
+      getSchedules();
+    } catch (error) {
+      console.error("Error fetching cases!", error);
+    }
+  };
+
+  let randomString;
+
+  const handleCreateZoomLink = async (s) => {
+    const generateRandomString = (length) => {
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let result = "";
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomIndex);
+      }
+      return result;
+    };
+
+    randomString = generateRandomString(10);
+
+    try {
+      const res = await axios.post(
+        `/api/schedulevideostatus/${s._id}`,
+        { randomString, day: s?.day, timing: s?.timing },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${auth?.userDetails?.token}`,
+          },
+        }
+      );
+      toast.success(res?.data?.message);
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
+
   return (
     <>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showZoomLink}
+        onClose={handleCloseZoomLinkModal}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <ModalBox>
+          <ShowZoomLinkModal
+            handleCloseZoomLinkModal={handleCloseZoomLinkModal}
+            selectedScheduleZoomLink={selectedScheduleZoomLink}
+            auth={auth}
+            setLoading={setLoading}
+            toast={toast}
+            axios={axios}
+            getSchedules={getSchedules}
+          />
+        </ModalBox>
+      </Modal>
       <Modal
         sx={{ border: "none", outline: "none" }}
         open={showEditScheduleModal}
@@ -298,13 +398,13 @@ const SchedulesTable = ({
           <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Student
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className=" w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Day
           </div>
           <div className=" w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Timing
           </div>
-          <div className=" w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className=" w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             Type
           </div>
           <div className=" w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
@@ -334,12 +434,12 @@ const SchedulesTable = ({
                 </div>
               </>
             ) : (
-              <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
+              <div className="w-[240px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
                 <span>Actions</span>
               </div>
             )
           ) : (
-            <div className="w-[160px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
+            <div className="w-[240px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
               <span>Actions</span>
             </div>
           )}
@@ -369,39 +469,44 @@ const SchedulesTable = ({
                 <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.nameOfStudent}
                 </div>
-                <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.day}
                 </div>
                 <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.timing}
                 </div>
-                <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.studentId?.studentType}
                 </div>
                 <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.parent}
                 </div>
-                <div
-                  className={`${
-                    s?.isActive === "Present" &&
-                    "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] cursor-pointer text-[#ffffff] "
-                  } ${
-                    s?.isActive === "Absent" &&
-                    "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] cursor-pointer text-[#ffffff] "
-                  } ${
-                    s?.isActive === "No information yet" &&
-                    "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer text-[#22272e] "
-                  } w-[120px] text-[14px] flex justify-center items-center py-1 px-3 rounded-[24px] gap-1`}
-                >
-                  {s?.isActive?.slice(0, 7)}
-                  {s?.isActive === "Present" ? (
-                    <BsCheck className="text-[24px]" />
-                  ) : (
-                    <BsX className="text-[24px]" />
-                  )}
+                <div className="w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px] gap-2">
+                  <div
+                    className={`${
+                      s?.isActive === "Present" &&
+                      "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] cursor-pointer"
+                    } ${
+                      s?.isActive === "Absent" &&
+                      "bg-gradient-to-r from-[#ff3131] to-[#C41E3A] hover:to-[#ff3131] cursor-pointer"
+                    } ${
+                      s?.isActive === "No information yet" &&
+                      "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer"
+                    } w-[32px] h-[14px] flex justify-center items-center rounded-[32px]`}
+                  ></div>
+
+                  <div
+                    className={`${
+                      s?.isVideoOn === "On" &&
+                      "bg-gradient-to-r from-[#07bbff] to-[#007bff] hover:to-[#0FFF50] cursor-pointer"
+                    } ${
+                      s?.isVideoOn === "Off" &&
+                      "bg-gradient-to-r from-[#FF5F1F] to-[#CC5500] hover:to-[#FF5F1F] cursor-pointer"
+                    } w-[32px] h-[14px] flex justify-center items-center rounded-[32px]`}
+                  ></div>
                 </div>
 
-                <div className="w-[160px] whitespace-nowrap flex justify-start items-center px-2 gap-2">
+                <div className="w-[240px] whitespace-nowrap flex justify-start items-center px-2 gap-2">
                   {selectedSchedules.length < 2 ? (
                     allowedRoles?.find((ar) =>
                       auth?.userDetails?.role?.includes(ar)
@@ -419,6 +524,35 @@ const SchedulesTable = ({
                         >
                           <FaTrashCan className="text-[18px]" />
                         </div>
+                        <div
+                          onClick={() =>
+                            handlePatchVideoStatus(s?._id, s?.isVideoOn)
+                          }
+                          className="p-2 bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
+                        >
+                          <FaVideo className="text-[18px]" />
+                        </div>
+                        {s.isVideoOn === "On" ? (
+                          <>
+                            {s?.zoomLink ? (
+                              <div
+                                onClick={() => handleShowZoomLink(s)}
+                                className="flex justify-center items-center gap-2 ml-1 py-1 px-3 rounded-[28px] cursor-pointer bg-gradient-to-br from-[#007bff] to-[#0437F2] hover:to-[#0FFF50] text-[14px] text-[#ffffff]"
+                              >
+                                <span>Show Zoom</span>
+                                <BsLink45Deg className="text-[18px]" />
+                              </div>
+                            ) : (
+                              <div
+                                onClick={() => handleCreateZoomLink(s)}
+                                className="flex justify-center items-center gap-2 ml-1 py-1 px-3 rounded-[8px] cursor-pointer bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[14px] text-[#2d333b]"
+                              >
+                                <span>Create Zoom</span>
+                                <BsLink45Deg className="text-[18px]" />
+                              </div>
+                            )}
+                          </>
+                        ) : null}
                       </>
                     ) : (
                       <>
@@ -441,14 +575,16 @@ const SchedulesTable = ({
                     </>
                   )}
                 </div>
-                <Ellipsis
-                  item={s}
-                  auth={auth}
-                  axios={axios}
-                  setLoading={setLoading}
-                  toast={toast}
-                  getSchedules={getSchedules}
-                />
+                <div className="ml-6">
+                  <Ellipsis
+                    item={s}
+                    auth={auth}
+                    axios={axios}
+                    setLoading={setLoading}
+                    toast={toast}
+                    getSchedules={getSchedules}
+                  />
+                </div>
               </div>
             ))}
           </>

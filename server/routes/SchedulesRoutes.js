@@ -11,6 +11,13 @@ const role = VerifyRoles;
 // schedule
 
 router.post(
+  "/schedulevideostatus/:id",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.createZoomLink
+);
+
+router.post(
   "/schedule",
   auth,
   role(["Administrator"]),
@@ -131,78 +138,25 @@ router.delete(
   mainController.controllers.deleteManyTempSoloSchedule
 );
 
-// isActive status
+router.patch(
+  "/schedule/:id/setVideo",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.setVideo
+);
 
-// router.patch(
-//   "/schedule/:id/setActive",
-//   auth,
+router.patch(
+  "/temp-schedule/:id/setVideo",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.setTempVideo
+);
 
-//   mainController.controllers.setActive
-// );
-
-// router.patch(
-//   "/temp-schedule/:id/setActiveTemp",
-//   auth,
-
-//   mainController.controllers.setActiveTemp
-// );
-
-// router.patch(
-//   "/temp-soloschedule/:id/setActiveTempSolo",
-//   auth,
-
-//   mainController.controllers.setActiveTempSolo
-// );
-
-// router.patch(
-//   "/schedule/:id/setVideo",
-//   auth,
-
-//   mainController.controllers.setVideo
-// );
-
-// router.patch(
-//   "/schedule/:id/setVideoTempSolo",
-//   auth,
-
-//   mainController.controllers.setVideoTempSolo
-// );
-
-// router.post(
-//   "/schedule-vidoff",
-//   auth,
-
-//   mainController.controllers.isVideoOffHandler
-// );
-
-// router.post(
-//   "/schedule-isactivedef",
-//   auth,
-
-//   mainController.controllers.isActiveDefHandler
-// );
-
-//
-
-// router.patch(
-//   "/schedule/:id/setabsentcounterplus",
-//   auth,
-
-//   mainController.controllers.setPlusAbsentCounter
-// );
-
-// router.patch(
-//   "/schedule/:id/setpresentcounterminus",
-//   auth,
-
-//   mainController.controllers.setMinusAbsentCounter
-// );
-
-// router.patch(
-//   "/schedule/:id/setwaitliststatus",
-//   auth,
-
-//   mainController.controllers.setWaitlistStatus
-// );
+router.patch(
+  "/temp-solo/:id/setVideo",
+  auth,
+  role(["Administrator"]),
+  mainController.controllers.setTempSoloVideo
+);
 
 module.exports = router;

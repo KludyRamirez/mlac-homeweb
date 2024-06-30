@@ -18,6 +18,10 @@ const { updateOneSchedule } = require("../controllers/SchedulesController");
 const { updateScheduleReason } = require("../controllers/SchedulesController");
 const { deleteOneSchedule } = require("../controllers/SchedulesController");
 const { deleteManySchedule } = require("../controllers/SchedulesController");
+const { createZoomLink } = require("../controllers/SchedulesController");
+const {
+  deleteExpiredZoomLinks,
+} = require("../controllers/SchedulesController");
 
 // temp schedule
 
@@ -94,6 +98,12 @@ const { getOneLog } = require("./LogsControllers");
 
 const { getUserNotifications } = require("./NotificationsController");
 
+// video setters
+
+const { setVideo } = require("./SchedulesController");
+const { setTempVideo } = require("./SchedulesController");
+const { setTempSoloVideo } = require("./SchedulesController");
+
 exports.controllers = {
   login,
   handleRefreshToken,
@@ -162,4 +172,14 @@ exports.controllers = {
   getOneLog,
   //
   getUserNotifications,
+
+  //
+  setVideo,
+  setTempVideo,
+  setTempSoloVideo,
+
+  //
+
+  createZoomLink,
+  deleteExpiredZoomLinks,
 };

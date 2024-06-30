@@ -9,8 +9,197 @@ const cron = require("node-cron");
 const moment = require("moment");
 const Notification = require("../models/Notifications");
 const User = require("../models/Users");
+const api_base_url = "https://api.zoom.us/v2";
+const axios = require("axios");
 
 // schedule
+
+let config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: "https://zoom.us/oauth/token?grant_type=account_credentials&account_id=dfAO9bUiQReK7iXGUBgdbQ",
+  headers: {
+    Authorization:
+      "Basic R1NfRTFVaGtUV0t3eVJUa2JkS0Z1UTo4TEIzaWJ5Nk04Q3FFZzBYcE1yODk3QXR1ZWhJYllZTg==",
+  },
+};
+
+const createZoomLink = async (req, res) => {
+  const { id } = req.params;
+  const { randomString, day, timing } = req.body;
+
+  try {
+    let authResponse;
+
+    await axios
+      .request(config)
+      .then((response) => {
+        authResponse = response.data;
+      })
+      .catch((error) => {
+        console.error("Error in authentication request:", error);
+        return res.status(500).json({
+          message: "Error in authentication request.",
+        });
+      });
+
+    const access_token = authResponse.access_token;
+
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+      "Content-Type": "application/json",
+    };
+
+    const today = new Date();
+    const nextFiveDays = [];
+
+    for (let i = 0; nextFiveDays.length < 6; i++) {
+      const nextDate = new Date(today);
+      nextDate.setDate(today.getDate() + i);
+
+      const dayOfWeek = nextDate.toLocaleDateString("en-US", {
+        weekday: "long",
+      });
+
+      nextFiveDays.push({
+        date: nextDate,
+        day: dayOfWeek,
+      });
+    }
+
+    const startDate = () => {
+      return nextFiveDays
+        .filter((date) => date.day === day)
+        .map((date) => date.date);
+    };
+
+    const startTime = () => {
+      const times = {
+        "8:00 AM - 9:00 AM": "08:00:00",
+        "9:00 AM - 10:00 AM": "09:00:00",
+        "10:00 AM - 11:00 AM": "10:00:00",
+        "11:00 AM - 12:00 NN": "11:00:00",
+        "12:00 NN - 1:00 PM": "12:00:00",
+        "1:00 PM - 2:00 PM": "13:00:00",
+        "2:00 PM - 3:00 PM": "14:00:00",
+        "3:00 PM - 4:00 PM": "15:00:00",
+        "4:00 PM - 5:00 PM": "16:00:00",
+      };
+      return times[timing];
+    };
+
+    const officialStartTime = moment(`${startDate()}T${startTime()}`);
+    console.log("Official Start Time:", officialStartTime);
+
+    let data = JSON.stringify({
+      topic: "MLAC Online Scheduled Therapy",
+      type: 2,
+      start_time: officialStartTime?.utc().format(),
+      duration: 40,
+      password: randomString,
+      settings: {
+        allow_multiple_devices: true,
+        join_before_host: true,
+        waiting_room: false,
+      },
+    });
+
+    console.log("Payload Data:", data);
+
+    const meetingResponse = await axios.post(
+      `${api_base_url}/users/me/meetings`,
+      data,
+      { headers }
+    );
+
+    if (meetingResponse.status !== 201) {
+      console.error("Error creating Zoom meeting:", meetingResponse.status);
+      return res.status(500).json({
+        message: "Error creating Zoom meeting",
+      });
+    }
+
+    const response_data = meetingResponse.data;
+
+    const content = {
+      meeting_url: response_data.join_url,
+      meetingTime: response_data.start_time,
+      purpose: response_data.topic,
+      duration: response_data.duration,
+      message: "Success",
+      password: randomString,
+      status: 1,
+    };
+
+    await Schedule.findByIdAndUpdate(
+      id,
+      {
+        zoomLink: content,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Zoom link has been created successfully.",
+    });
+  } catch (error) {
+    console.error("Error creating Zoom link.", error);
+    res.status(500).json({
+      message: "Error creating Zoom link.",
+    });
+  }
+};
+
+const deleteExpiredZoomLinks = async (req, res) => {
+  let authResponse;
+
+  await axios
+    .request(config)
+    .then((response) => {
+      authResponse = response.data;
+    })
+    .catch((error) => {
+      console.error("Error in authentication request:", error);
+      return res.status(500).json({
+        message: "Error in authentication request.",
+      });
+    });
+
+  const access_token = authResponse.access_token;
+
+  const headers = {
+    Authorization: `Bearer ${access_token}`,
+    "Content-Type": "application/json",
+  };
+
+  try {
+    const schedules = await Schedule.find({
+      "zoomLink.meetingTime": { $exists: true },
+    });
+
+    const now = new Date();
+
+    for (const schedule of schedules) {
+      const meetingTime = new Date(schedule.zoomLink.meetingTime);
+
+      if (now > meetingTime) {
+        const meetingId = schedule.zoomLink.meeting_url.split("/").pop();
+
+        await axios.delete(`${api_base_url}/meetings/${meetingId}`, {
+          headers,
+        });
+
+        await Schedule.findByIdAndUpdate(schedule._id, {
+          $unset: { zoomLink: "" },
+        });
+
+        console.log(`Deleted expired meeting for schedule ID: ${schedule._id}`);
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting expired Zoom links.", error);
+  }
+};
 
 const createSchedule = async (req, res) => {
   const { day, timing, studentType, nameOfStudent, studentId } = req.body;
@@ -23,7 +212,7 @@ const createSchedule = async (req, res) => {
     });
 
     const isVideoExistsPerm = await Schedule.exists({
-      $and: [{ isVideoOn: true }, { day: day }, { timing: timing }],
+      $and: [{ isVideoOn: "On" }, { day: day }, { timing: timing }],
     });
 
     const dyadExists = await Schedule.exists({
@@ -155,7 +344,7 @@ const isVideoOff = async () => {
 
 const updateSchedulesForDay = async (day) => {
   try {
-    await Schedule.updateMany({ day }, { isVideoOn: false });
+    await Schedule.updateMany({ day }, { isVideoOn: "Off" });
     console.log(`Updated schedules for ${day}`);
   } catch (error) {
     throw new Error(`Failed to update schedules for ${day}: ${error.message}`);
@@ -395,17 +584,35 @@ const deleteManySchedule = async (req, res) => {
   }
 };
 
+const setVideo = async (req, res) => {
+  try {
+    const { isVideoOn } = req.body;
+    await Schedule.findByIdAndUpdate(req.params.id, { isVideoOn });
+    res.status(200).json({ message: "Video status has been updated." });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to updaet video status." });
+  }
+};
+
 const createTempSchedule = async (req, res) => {
-  const { day, timing, dateTime, studentName, studentId } = req.body;
+  const { day, timing, dateTime, studentName, studentId, companion } = req.body;
   const userData = req.user;
 
   const today = moment();
   const tomorrow = moment().add(1, "day").startOf("day");
 
+  const companionStudent = await Schedule.find({ _id: companion });
+
+  if (day === companionStudent.day) {
+    return res
+      .status(409)
+      .json({ message: "You cannot schedule on the same day." });
+  }
+
   if (moment(dateTime).isSame(today, "day")) {
     return res
       .status(409)
-      .json({ message: "You can't schedule on the same day." });
+      .json({ message: "You cannot schedule on the same date." });
   }
 
   if (moment(dateTime).isBefore(today, "day")) {
@@ -562,22 +769,28 @@ const deleteTempSchedules = async (req, res) => {
       );
     });
 
-    const studentBehindByCounterUpdate = schedules.map((schedule) => {
-      return Student.updateOne(
-        { _id: schedule?.studentId },
-        {
-          $inc: {
-            behindByCounter:
-              schedule.isActive === "Absent" ||
-              schedule.isActive === "No information"
-                ? 0
-                : schedule.isActive <= 0
-                ? 0
-                : -1,
-          },
+    const studentBehindByCounterUpdate = async () => {
+      for (const schedule of schedules) {
+        const student = await Student.findById(schedule?.studentId);
+        if (student) {
+          const currentCounter = student.behindByCounter;
+          const incrementValue =
+            schedule.isActive === "Absent" ||
+            schedule.isActive === "No information"
+              ? 0
+              : currentCounter <= 0
+              ? 0
+              : -1;
+
+          await Student.updateOne(
+            { _id: schedule?.studentId },
+            {
+              $inc: { behindByCounter: incrementValue },
+            }
+          );
         }
-      );
-    });
+      }
+    };
 
     await Promise.all(
       tempScheduleAttendanceStatusReset,
@@ -685,6 +898,16 @@ const deleteManyTempSchedule = async (req, res) => {
       .json({ message: "Selected schedules has been deleted successfully." });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error." });
+  }
+};
+
+const setTempVideo = async (req, res) => {
+  try {
+    const { isVideoOn } = req.body;
+    await TempSchedule.findByIdAndUpdate(req.params.id, { isVideoOn });
+    res.status(200).json({ message: "Video status has been updated." });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to updaet video status." });
   }
 };
 
@@ -865,7 +1088,7 @@ const deleteTempSoloSchedules = async (req, res) => {
               schedule.isActive === "Absent" ||
               schedule.isActive === "No information"
                 ? 0
-                : schedule.isActive <= 0
+                : schedule?.studentId?.behindByCounter <= 0
                 ? 0
                 : -1,
           },
@@ -982,6 +1205,16 @@ const deleteManyTempSoloSchedule = async (req, res) => {
   }
 };
 
+const setTempSoloVideo = async (req, res) => {
+  try {
+    const { isVideoOn } = req.body;
+    await TempSolo.findByIdAndUpdate(req.params.id, { isVideoOn });
+    res.status(200).json({ message: "Video status has been updated." });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to updaet video status." });
+  }
+};
+
 // // setting isActive state
 
 // const setActive = async (req, res) => {
@@ -1008,16 +1241,6 @@ const deleteManyTempSoloSchedule = async (req, res) => {
 //   try {
 //     const { isActive } = req.body;
 //     await TempSolo.findByIdAndUpdate(req.params.id, { isActive });
-//     res.status(200).json({ message: "Active status changed." });
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to change active status." });
-//   }
-// };
-
-// const setVideo = async (req, res) => {
-//   try {
-//     const { isVideoOn } = req.body;
-//     await Schedule.findByIdAndUpdate(req.params.id, { isVideoOn });
 //     res.status(200).json({ message: "Active status changed." });
 //   } catch (error) {
 //     res.status(500).json({ error: "Failed to change active status." });
@@ -1101,6 +1324,12 @@ module.exports = {
   deleteTempSoloSchedules,
   deleteManyTempSoloSchedule,
 
+  //
+
+  setVideo,
+  setTempVideo,
+  setTempSoloVideo,
+
   // setActive,
   // setActiveTemp,
   // setActiveTempSolo,
@@ -1110,6 +1339,11 @@ module.exports = {
 
   isVideoOffHandler,
   isActiveDefHandler,
+
+  //
+
+  createZoomLink,
+  deleteExpiredZoomLinks,
 
   // setPlusAbsentCounter,
   // setMinusAbsentCounter,

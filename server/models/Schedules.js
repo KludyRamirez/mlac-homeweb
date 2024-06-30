@@ -34,8 +34,9 @@ const schedulesSchema = new mongoose.Schema(
     },
 
     isVideoOn: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "Off",
+      enum: ["Off", "On"],
     },
 
     schedType: {
@@ -82,6 +83,10 @@ const schedulesSchema = new mongoose.Schema(
     isDisabled: {
       type: Boolean,
       default: false,
+    },
+
+    zoomLink: {
+      type: Object,
     },
   },
   { timestamps: true }

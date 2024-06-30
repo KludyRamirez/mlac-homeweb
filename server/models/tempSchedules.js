@@ -76,14 +76,20 @@ const tempSchedulesSchema = new mongoose.Schema(
     },
 
     isVideoOn: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "Off",
+      enum: ["Off", "On"],
     },
 
     isActive: {
       type: String,
       default: "No information yet",
       enum: ["No information yet", "Present", "Absent"],
+    },
+
+    zoomLink: {
+      type: String,
+      trim: true,
     },
   },
   { timestamps: true }
