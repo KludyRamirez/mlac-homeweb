@@ -62,12 +62,27 @@ const MyCalendar = ({ auth, axios, setLoading, toast, allowedRoles }) => {
       title: log.nameOfStudent,
       start: startDateWithTime.toDate(),
       end: endDateWithTime,
+      isActive: log.isActive,
     };
   });
 
+  const eventPropGetter = (event) => {
+    const style = {
+      backgroundColor: event.isActive ? "red" : "blue",
+      color: "white",
+      borderRadius: "5px",
+      border: "none",
+    };
+    return { style };
+  };
+
   return (
     <div style={{ height: "500px" }}>
-      <Calendar localizer={localizer} events={events} />
+      <Calendar
+        localizer={localizer}
+        events={events}
+        eventPropGetter={eventPropGetter}
+      />
     </div>
   );
 };
