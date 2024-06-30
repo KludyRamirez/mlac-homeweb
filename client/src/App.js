@@ -30,6 +30,7 @@ import TempSchedules from "./pages/tempSchedules/tempSchedulesBase/TempSchedules
 import TempSolo from "./pages/tempSolo/tempSoloBase/TempSolo";
 import Logs from "./pages/logs/logsBase/Logs";
 import Timetable from "./pages/timetable/timetableBase/Timetable";
+import Calendar from "./pages/calendar/calendarBase/Calendar";
 
 // Selectors
 const selectAuth = (state) => state.auth;
@@ -76,6 +77,19 @@ const AppRoutes = ({ auth, setLoading, toast, axios }) => {
           path="/account"
           element={
             <AccountSettings
+              auth={auth}
+              setLoading={setLoading}
+              toast={toast}
+              axios={axios}
+              allowedRoles={["Administrator", "Parent", "Student"]}
+            />
+          }
+        />
+
+        <Route
+          path="/calendar"
+          element={
+            <Calendar
               auth={auth}
               setLoading={setLoading}
               toast={toast}
