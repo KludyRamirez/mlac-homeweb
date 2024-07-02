@@ -116,12 +116,12 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
         <Sidebar />
         <div className="flex justify-start w-[100%]">
           <div className="flex flex-col bg-[#2d333b] items-start w-[100%] mt-[48px] rounded-tl-[8px] phone:rounded-tl-[0px] phone:px-4">
-            <div className="flex justify-start w-[100%] h-[60px] border-b-[1px] border-[#22272e]">
+            <div className="flex justify-start w-[100%] h-[60px] border-b-[1px] border-[#c5d1de]">
               <div className="w-[120px] h-[100%] flex justify-center items-center text-[#c5d1de]">
                 Weekly
               </div>
-              <div className="flex w-[100%] h-[100%] border-l-[1px] border-[#22272e]">
-                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-r-[1px] border-[#22272e]">
+              <div className="flex w-[100%] h-[100%]">
+                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-l-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">Monday</span>
 
                   {nextFiveDays
@@ -132,7 +132,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       </div>
                     ))}
                 </div>
-                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-r-[1px] border-[#22272e]">
+                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-l-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">Tuesday</span>
                   {nextFiveDays
                     .filter((date) => date.day === "Tuesday")
@@ -142,7 +142,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       </div>
                     ))}
                 </div>
-                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-r-[1px] border-[#22272e]">
+                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-l-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">Wednesday</span>
                   {nextFiveDays
                     .filter((date) => date.day === "Wednesday")
@@ -152,7 +152,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       </div>
                     ))}
                 </div>
-                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-r-[1px] border-[#22272e]">
+                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-l-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">Thursday</span>
                   {nextFiveDays
                     .filter((date) => date.day === "Thursday")
@@ -162,7 +162,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       </div>
                     ))}
                 </div>
-                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-r-[1px] border-[#22272e]">
+                <div className="flex justify-between px-6 items-center w-[20%] h-[100%] border-l-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">Friday</span>
                   {nextFiveDays
                     .filter((date) => date.day === "Friday")
@@ -176,37 +176,37 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
             </div>
             <div className="flex justify-start w-[100%] h-[100%]">
               <div className="flex flex-col w-[120px] h-[100%]">
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">8:00 am</span>
                 </div>
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">9:00 am</span>
                 </div>
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">10:00 am</span>
                 </div>
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">11:00 am</span>
                 </div>
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">12:00 nn</span>
                 </div>
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">1:00 pm</span>
                 </div>
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">2:00 pm</span>
                 </div>
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">3:00 pm</span>
                 </div>
-                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex justify-center items-center gap-1 border-b-[1px] border-[#c5d1de]">
                   <span className="text-[#c5d1de] text-[16px]">4:00 pm</span>
                 </div>
               </div>
               <div className="flex flex-col w-[100%] h-[100%]">
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -223,8 +223,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -241,7 +241,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -259,8 +259,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -277,7 +277,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -295,8 +295,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -313,7 +313,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -331,8 +331,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -349,7 +349,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -366,8 +366,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -385,8 +385,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -404,8 +404,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -422,7 +422,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -440,8 +440,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -458,7 +458,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -476,8 +476,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -494,7 +494,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -512,8 +512,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -530,7 +530,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -548,8 +548,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -567,8 +567,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -586,8 +586,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -604,7 +604,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -622,8 +622,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -640,7 +640,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -658,8 +658,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -676,7 +676,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -694,8 +694,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -712,7 +712,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -730,8 +730,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -749,7 +749,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
                   {combinedSchedules
                     ?.filter(
                       (s) =>
@@ -766,8 +766,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                           "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                         } ${
                           s.isActive === "Present" &&
-                          "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                        } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                          "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                        } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                       >
                         <div>
                           {s?.nameOfStudent} {s?.studentName}
@@ -777,7 +777,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         ) : null}
                       </div>
                     ))}
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -795,8 +795,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -813,7 +813,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -831,8 +831,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -849,7 +849,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -867,8 +867,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -885,7 +885,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -903,8 +903,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -921,7 +921,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -939,8 +939,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -958,8 +958,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -977,8 +977,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -995,7 +995,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1013,8 +1013,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1031,7 +1031,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1049,8 +1049,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1067,7 +1067,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1085,8 +1085,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1103,7 +1103,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1121,8 +1121,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1140,8 +1140,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1158,8 +1158,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1176,7 +1176,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1194,8 +1194,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1212,7 +1212,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1230,8 +1230,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1248,7 +1248,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1266,8 +1266,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1284,7 +1284,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1301,8 +1301,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1320,8 +1320,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1338,8 +1338,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1356,7 +1356,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1374,8 +1374,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1392,7 +1392,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1410,8 +1410,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1428,7 +1428,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1446,8 +1446,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1464,7 +1464,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1481,8 +1481,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1500,8 +1500,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1518,8 +1518,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1536,7 +1536,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1554,8 +1554,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1572,7 +1572,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1590,8 +1590,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1608,7 +1608,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1626,8 +1626,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1644,7 +1644,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1661,8 +1661,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1680,8 +1680,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#3a4855]">
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                <div className="w-[100%] h-[12%] flex border-b-[1px] border-[#c5d1de]">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1698,8 +1698,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1716,7 +1716,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1734,8 +1734,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1752,7 +1752,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1770,8 +1770,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1788,7 +1788,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1806,8 +1806,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}
@@ -1824,7 +1824,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                         </div>
                       ))}
                   </div>
-                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2">
+                  <div className="w-[20%] h-[100%] bg-gradient-to-tl from-[#2d333b] to-[#22272e] p-2 flex flex-wrap justify-start items-start gap-2 border-l-[1px] border-[#c5d1de]">
                     {combinedSchedules
                       ?.filter(
                         (s) =>
@@ -1841,8 +1841,8 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] text-[#ffffff]"
-                          } text-[14px] rounded-[4px] cursor-pointer w-[48.6%]`}
+                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
                           <div>
                             {s?.nameOfStudent} {s?.studentName}

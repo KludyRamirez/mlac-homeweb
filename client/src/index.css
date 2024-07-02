@@ -88,3 +88,52 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/* month */
+
+.rbc-month-view {
+  background-color: #2d333b; /* Background color for the month view */
+  border-radius: 4px;
+  color: white;
+  border: none !important;
+}
+
+.rbc-header {
+  background: transparent;
+  padding: 8px !important;
+}
+
+.rbc-button-link {
+  font-weight: 400 !important;
+}
+
+/* Customizing each row in the month */
+
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 1px solid #c5d1de !important;
+}
+
+.rbc-month-row {
+  border-color: #c5d1de !important;
+}
+
+/* Customizing each day cell background */
+.rbc-day-bg {
+  background-color: #2d333b;
+  border-color: #c5d1de !important; /* Background color for day cells */
+}
+
+.rbc-today {
+  background: #2d333b !important;
+}
+
+.rbc-off-range-bg {
+  background: #22272e !important;
+  color: white !important;
+}
+
+.rbc-date-cell {
+  color: white; /* Date number text color */
+  font-weight: bold;
+  background-color: transparent; /* Date number font weight */
+}
