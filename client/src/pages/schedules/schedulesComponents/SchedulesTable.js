@@ -299,7 +299,12 @@ const SchedulesTable = ({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <ModalBox>
+        <ModalBox
+          sx={{
+            width: "fit-content",
+            background: "transparent",
+          }}
+        >
           <ShowZoomLinkModal
             handleCloseZoomLinkModal={handleCloseZoomLinkModal}
             selectedScheduleZoomLink={selectedScheduleZoomLink}
@@ -392,7 +397,7 @@ const SchedulesTable = ({
               onChange={toggleSelectAll}
             />
           </div>
-          <div className="w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
+          <div className="w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
             ID
           </div>
           <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[24px] border-[1px] border-[#22272e]">
@@ -434,12 +439,12 @@ const SchedulesTable = ({
                 </div>
               </>
             ) : (
-              <div className="w-[240px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
+              <div className="w-[264px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
                 <span>Actions</span>
               </div>
             )
           ) : (
-            <div className="w-[240px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
+            <div className="w-[264px] whitespace-nowrap flex justify-start items-center border-[1px] border-[#22272e] py-1 px-4 rounded-[24px]">
               <span>Actions</span>
             </div>
           )}
@@ -463,7 +468,7 @@ const SchedulesTable = ({
                     onChange={() => toggleScheduleSelection(s?._id)}
                   />
                 </div>
-                <div className="w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
+                <div className="w-[100px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
                   {s?.scheduleId.slice(11)}
                 </div>
                 <div className="w-[200px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px]">
@@ -506,7 +511,7 @@ const SchedulesTable = ({
                   ></div>
                 </div>
 
-                <div className="w-[240px] whitespace-nowrap flex justify-start items-center px-2 gap-2">
+                <div className="w-[254px] whitespace-nowrap flex justify-start items-center px-2 gap-2">
                   {selectedSchedules.length < 2 ? (
                     allowedRoles?.find((ar) =>
                       auth?.userDetails?.role?.includes(ar)
@@ -537,7 +542,7 @@ const SchedulesTable = ({
                             {s?.zoomLink ? (
                               <div
                                 onClick={() => handleShowZoomLink(s)}
-                                className="flex justify-center items-center gap-2 ml-1 py-1 px-3 rounded-[28px] cursor-pointer bg-gradient-to-br from-[#007bff] to-[#0437F2] hover:to-[#0FFF50] text-[14px] text-[#ffffff]"
+                                className="flex justify-center items-center gap-2 ml-1 py-1 rounded-[28px] p-3 cursor-pointer bg-gradient-to-br from-[#007bff] to-[#3F00FF] hover:from-[#ffffff] hover:to-[#c5d1de] text-[14px] text-[#ffffff] hover:text-[#22272e]"
                               >
                                 <span>Show Zoom</span>
                                 <BsLink45Deg className="text-[18px]" />
@@ -545,7 +550,7 @@ const SchedulesTable = ({
                             ) : (
                               <div
                                 onClick={() => handleCreateZoomLink(s)}
-                                className="flex justify-center items-center gap-2 ml-1 py-1 px-3 rounded-[8px] cursor-pointer bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[14px] text-[#2d333b]"
+                                className="flex justify-center items-center gap-2 ml-1 py-1 rounded-[28px] p-3 cursor-pointer bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[14px] text-[#2d333b]"
                               >
                                 <span>Create Zoom</span>
                                 <BsLink45Deg className="text-[18px]" />

@@ -52,10 +52,10 @@ const Statistics = ({ auth, toast, axios, setLoading }) => {
 
   return (
     <>
-      <div className="flex justify-start">
+      <div className="flex justify-start h-screen w-screen bg-[#22272e]">
         <Sidebar />
-        <div className="w-full flex justify-start bg-[#007bff]">
-          <div className="w-full bg-[#fefefe] mt-[80px] rounded-tl-[24px] phone:rounded-tl-[0px] px-8 phone:px-4 pt-8">
+        <div className="flex justify-start w-[100%]">
+          <div className="w-full bg-[#22272e] mt-[28px] rounded-tl-[24px] phone:rounded-tl-[0px] px-8 phone:px-4 pt-8">
             <StatisticsTable
               toast={toast}
               setLoading={setLoading}

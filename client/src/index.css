@@ -124,7 +124,7 @@ body {
 }
 
 .rbc-today {
-  background: #2d333b !important;
+  background: radial-gradient(circle, #2d333b, #22272e) !important;
 }
 
 .rbc-off-range-bg {

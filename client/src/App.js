@@ -31,6 +31,7 @@ import TempSolo from "./pages/tempSolo/tempSoloBase/TempSolo";
 import Logs from "./pages/logs/logsBase/Logs";
 import Timetable from "./pages/timetable/timetableBase/Timetable";
 import Calendar from "./pages/calendar/calendarBase/Calendar";
+import RasaChatBotWidget from "./externalComponents/RasaChatBotWidget/RasaChatBotWidget";
 
 // Selectors
 const selectAuth = (state) => state.auth;
@@ -312,6 +313,7 @@ function App() {
           />
         )}
       </Router>
+      {/* <RasaChatBotWidget /> */}
     </>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../../externalComponents/sidebarBase/Sidebar";
-import { FaVideo } from "react-icons/fa6";
+import { FaPeopleGroup, FaPerson, FaVideo } from "react-icons/fa6";
 import { BsCameraVideo } from "react-icons/bs";
 
 const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
@@ -215,7 +215,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -223,21 +223,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -251,7 +274,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -259,21 +282,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -287,7 +333,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -295,21 +341,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -323,7 +392,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -331,21 +400,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -358,7 +450,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -366,21 +458,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -396,7 +511,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -404,21 +519,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -432,7 +570,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -440,21 +578,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -468,7 +629,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -476,21 +637,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -504,7 +688,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -512,21 +696,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -540,7 +747,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -548,21 +755,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -578,7 +808,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -586,21 +816,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -614,7 +867,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -622,21 +875,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -650,7 +926,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -658,21 +934,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -686,7 +985,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -694,21 +993,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -722,7 +1044,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -730,21 +1052,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -758,7 +1103,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                     ?.map((s) => (
                       <div
                         key={s._id}
-                        className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                        className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                           s.isActive === "Absent" &&
                           "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                         } ${
@@ -766,7 +1111,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                           "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                         } ${
                           s.isActive === "Present" &&
-                          "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                          "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                         } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                       >
                         <div>
@@ -787,7 +1132,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -795,21 +1140,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -823,7 +1191,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -831,21 +1199,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -859,7 +1250,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -867,21 +1258,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -895,7 +1309,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -903,21 +1317,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -931,7 +1368,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -939,21 +1376,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -969,7 +1429,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -977,21 +1437,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1005,7 +1488,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1013,21 +1496,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1041,7 +1547,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1049,21 +1555,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1077,7 +1606,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1085,21 +1614,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1113,7 +1665,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1121,21 +1673,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1150,7 +1725,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1158,21 +1733,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1186,7 +1784,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1194,21 +1792,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1222,7 +1843,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1230,21 +1851,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1258,7 +1902,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1266,21 +1910,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1293,7 +1960,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1301,21 +1968,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1330,7 +2020,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1338,21 +2028,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1366,7 +2079,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1374,21 +2087,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1402,7 +2138,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1410,21 +2146,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1438,7 +2197,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1446,21 +2205,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1473,7 +2255,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1481,21 +2263,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1510,7 +2315,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1518,21 +2323,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1546,7 +2374,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1554,21 +2382,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1582,7 +2433,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1590,21 +2441,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1618,7 +2492,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1626,21 +2500,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1653,7 +2550,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1661,21 +2558,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1690,7 +2610,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1698,21 +2618,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1726,7 +2669,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1734,21 +2677,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1762,7 +2728,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1770,21 +2736,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1798,7 +2787,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1806,21 +2795,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -1833,7 +2845,7 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                       ?.map((s) => (
                         <div
                           key={s._id}
-                          className={`flex justify-start items-center h-[34px] px-3 gap-2 ${
+                          className={`w-[100%] flex justify-between items-center h-[34px] px-3 gap-2 ${
                             s.isActive === "Absent" &&
                             "bg-gradient-to-r from-[#ff3131] to-[#880808] hover:to-[#ff3131] text-[#ffffff]"
                           } ${
@@ -1841,21 +2853,44 @@ const Timetable = ({ auth, setLoading, toast, axios, allowedRoles }) => {
                             "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[#2d333b]"
                           } ${
                             s.isActive === "Present" &&
-                            "bg-gradient-to-r from-[#228B22] to-[#0BDA51] hover:to-[#228B22] text-[#ffffff]"
+                            "bg-gradient-to-r from-[#4CBB17] to-[#808000] hover:to-[#4CBB17] text-[#ffffff]"
                           } text-[14px] rounded-[4px] cursor-pointer w-[100%]`}
                         >
-                          <div>
+                          <div className="text-[16px]">
                             {s?.nameOfStudent} {s?.studentName}
                           </div>
-                          {s?.isVideoOn === "On" ? (
-                            <FaVideo
-                              className={`text-[18px] ${
-                                s.isActive === "No information yet"
-                                  ? "text-[#22272e]"
-                                  : "text-[#ffffff]"
-                              }`}
-                            />
-                          ) : null}
+                          <div className="flex justify-start items-center gap-2">
+                            <div>
+                              {s?.isVideoOn === "On" ? (
+                                <FaVideo
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : null}
+                            </div>
+                            <div>
+                              {s?.studentType === "Solo" ? (
+                                <FaPerson
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              ) : (
+                                <FaPeopleGroup
+                                  className={`text-[18px] ${
+                                    s.isActive === "No information yet"
+                                      ? "text-[#22272e]"
+                                      : "text-[#ffffff]"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       ))}
                   </div>

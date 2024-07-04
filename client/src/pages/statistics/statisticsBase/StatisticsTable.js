@@ -12,30 +12,30 @@ const StatisticsTable = ({ cases, students, getCases, toast, setLoading }) => {
 
   return (
     <>
-      <div className="w-100 text-[14px] text-[#404040] pb-6 ">
-        Office of Student Affairs / Statistics
+      <div className="w-100 text-[14px] text-[#c5d1de] pb-6">
+        MLAC / Statistics
       </div>
       <div className="w-100 pb-6 flex flex-col gap-2">
-        <div className="text-[26px] text-[#077bff] font-bold flex justify-between items-center">
+        <div className="text-[26px] text-[#c5d1de] font-bold flex justify-between items-center">
           <div>Statistics</div>
           <div className="flex justify-start items-center gap-2">
             <div
               onClick={() => handleSetActiveStats("Dynamic")}
-              className={`text-[18px] ${
+              className={`text-[16px] ${
                 activeStats === "Dynamic"
-                  ? "text-white bg-[#007bff] border-[#007bff]"
+                  ? "text-white bg-gradient-to-br from-[#007bff] to-[#3F00FF]"
                   : "text-[#505050] bg-gray-100 border-gray-100"
-              } font-normal py-1 px-4 rounded-[50px] border-[1px] cursor-pointer`}
+              } font-normal py-1 px-4 rounded-[28px] cursor-pointer`}
             >
               Dynamic
             </div>
             <div
               onClick={() => handleSetActiveStats("Yearly")}
-              className={`text-[18px] ${
+              className={`text-[16px] ${
                 activeStats === "Yearly"
-                  ? "text-white bg-[#007bff] border-[#007bff]"
+                  ? "text-white bg-gradient-to-br from-[#007bff] to-[#3F00FF]"
                   : "text-[#505050] bg-gray-100 border-gray-100"
-              } font-normal py-1 px-4 rounded-[50px] border-[1px] cursor-pointer`}
+              } font-normal py-1 px-4 rounded-[28px] cursor-pointer`}
             >
               Yearly
             </div>

@@ -213,11 +213,11 @@ const CasesPerMonthFilter = ({ cases, students, getCases }) => {
     <>
       <div className="phone:overflow-x-scroll">
         <div className="w-[fit-content] flex justify-start items-center gap-4 whitespace-nowrap">
-          <div className="p-2 w-[206px] h-[180px] bg-blue-100 rounded-[4px] flex flex-col items-center gap-5 relative overflow-hidden">
+          <div className="p-2 w-[206px] h-[180px] bg-[#22272e] rounded-[4px] flex flex-col items-center gap-5 relative overflow-hidden border-[1px] border-[#007bff]">
             <div className="pl-1 w-[100%] h-[100%] flex justify-center items-end">
               {totalPercentageConverter()}
             </div>
-            <div className="text-[16px] text-[#007bff]">Total Cases</div>
+            <div className="text-[16px] text-[#007bff]">Total Schedules</div>
             <svg
               className="absolute top-0 left-0"
               viewBox="0 0 500 500"
@@ -231,7 +231,7 @@ const CasesPerMonthFilter = ({ cases, students, getCases }) => {
           </div>
           <div
             onClick={() => handleSetMinorPercentage()}
-            className="p-2 w-[206px] h-[180px] bg-yellow-100 rounded-[4px] flex flex-col items-center gap-5 relative overflow-hidden"
+            className="p-2 w-[206px] h-[180px] bg-[#22272e] rounded-[4px] flex flex-col items-center gap-5 relative overflow-hidden border-[1px] border-[#FFBF00]"
           >
             <div className="w-[100%] h-[100%] flex justify-center items-end">
               {minorPercentage === "Percentage" ? (
@@ -254,7 +254,7 @@ const CasesPerMonthFilter = ({ cases, students, getCases }) => {
           </div>
           <div
             onClick={() => handleSetMajorPercentage()}
-            className="p-2 w-[206px] h-[180px] bg-red-100 rounded-[4px] flex flex-col items-center gap-5 relative overflow-hidden"
+            className="p-2 w-[206px] h-[180px] bg-[#22272e] rounded-[4px] flex flex-col items-center gap-5 relative overflow-hidden border-[1px] border-[#ff3131]"
           >
             <div className="w-[100%] h-[100%] flex justify-center items-end">
               {majorPercentage === "Percentage" ? (

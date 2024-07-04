@@ -3,11 +3,12 @@ import Modal from "@mui/material/Modal";
 import { useNavigate } from "react-router-dom";
 import pdfExporter from "../../../externalUtils/pdfExporter";
 import { ModalBox } from "../../auth/register/registerComponents/CreateUser";
-import { FaTrashCan } from "react-icons/fa6";
+import { FaTrashCan, FaVideo } from "react-icons/fa6";
 import Ellipsis from "../../../externalUtils/Ellipsis";
 import DeleteTempScheduleModal from "./DeleteTempScheduleModal";
 import DeleteManyTempScheduleModal from "./DeleteManyTempScheduleModal";
-import { BsCheck, BsX } from "react-icons/bs";
+import { BsCheck, BsLink45Deg, BsX } from "react-icons/bs";
+import ShowZoomLinkModal from "../../../externalUtils/ShowZoomLinkModal";
 
 const TempSchedulesTable = ({
   auth,
@@ -26,6 +27,9 @@ const TempSchedulesTable = ({
   const [showDeleteManyScheduleModal, setShowDeleteManyScheduleModal] =
     useState(false);
   const [exportTrigger, setExportTrigger] = useState(false);
+  const [showZoomLink, setShowZoomLink] = useState(false);
+  const [selectedScheduleZoomLink, setSelectedScheduleZoomLink] =
+    useState(null);
 
   const navigate = useNavigate();
 
@@ -157,8 +161,118 @@ const TempSchedulesTable = ({
     }
   };
 
+  const handleShowZoomLink = (schedule) => {
+    try {
+      setSelectedScheduleZoomLink(schedule);
+    } catch (error) {
+      console.error("Error handling schedule edit click:", error);
+    } finally {
+      setShowZoomLink(true);
+    }
+  };
+
+  const handleCloseZoomLinkModal = () => {
+    setShowZoomLink(false);
+  };
+
+  let randomString;
+
+  const handleCreateZoomLink = async (s) => {
+    const generateRandomString = (length) => {
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let result = "";
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomIndex);
+      }
+      return result;
+    };
+
+    randomString = generateRandomString(10);
+
+    try {
+      const res = await axios.post(
+        `/api/schedulevideostatus/${s._id}`,
+        { randomString, day: s?.day, timing: s?.timing },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${auth?.userDetails?.token}`,
+          },
+        }
+      );
+      toast.success(res?.data?.message);
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
+
+  const handlePatchVideoStatus = async (id, videoStatus) => {
+    try {
+      if (!auth?.userDetails?.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+
+      const videoStatusMapping = {
+        On: "Off",
+        Off: "On",
+      };
+
+      const videoStatusBool = videoStatusMapping[videoStatus];
+
+      if (!videoStatusBool) {
+        console.error("Invalid video status:", videoStatus);
+        return;
+      }
+
+      const res = await axios.patch(
+        `/api/schedule/${id}/setVideo`,
+        {
+          isVideoOn: videoStatusBool,
+        },
+        {
+          headers: {
+            withCredentials: true,
+            Authorization: `Bearer ${auth?.userDetails?.token}`,
+          },
+        }
+      );
+
+      toast.success(res?.data?.message);
+      getTempSchedules();
+    } catch (error) {
+      console.error("Error fetching cases!", error);
+    }
+  };
+
   return (
     <>
+      <Modal
+        sx={{ border: "none", outline: "none" }}
+        open={showZoomLink}
+        onClose={handleCloseZoomLinkModal}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <ModalBox
+          sx={{
+            width: "fit-content",
+            background: "transparent",
+          }}
+        >
+          <ShowZoomLinkModal
+            handleCloseZoomLinkModal={handleCloseZoomLinkModal}
+            selectedScheduleZoomLink={selectedScheduleZoomLink}
+            auth={auth}
+            setLoading={setLoading}
+            toast={toast}
+            axios={axios}
+            getTempSchedules={getTempSchedules}
+          />
+        </ModalBox>
+      </Modal>
       <Modal
         sx={{ border: "none", outline: "none" }}
         open={showDeleteScheduleModal}
@@ -332,6 +446,35 @@ const TempSchedulesTable = ({
                         >
                           <FaTrashCan className="text-[18px]" />
                         </div>
+                        <div
+                          onClick={() =>
+                            handlePatchVideoStatus(s?._id, s?.isVideoOn)
+                          }
+                          className="p-2 bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
+                        >
+                          <FaVideo className="text-[18px]" />
+                        </div>
+                        {s?.isVideoOn === "On" ? (
+                          <>
+                            {s?.zoomLink ? (
+                              <div
+                                onClick={() => handleShowZoomLink(s)}
+                                className="flex justify-center items-center gap-2 ml-1 py-1 px-3 rounded-[28px] w-[130px] cursor-pointer bg-gradient-to-br from-[#007bff] to-[#3F00FF] hover:from-[#ffffff] hover:to-[#c5d1de] text-[14px] text-[#ffffff] hover:text-[#22272e]"
+                              >
+                                <span>Show Zoom</span>
+                                <BsLink45Deg className="text-[18px]" />
+                              </div>
+                            ) : (
+                              <div
+                                onClick={() => handleCreateZoomLink(s)}
+                                className="flex justify-center items-center gap-2 ml-1 py-1 px-3 rounded-[28px] w-[130px] cursor-pointer bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] text-[14px] text-[#2d333b]"
+                              >
+                                <span>Create Zoom</span>
+                                <BsLink45Deg className="text-[18px]" />
+                              </div>
+                            )}
+                          </>
+                        ) : null}
                       </>
                     ) : (
                       <>
