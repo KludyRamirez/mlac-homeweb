@@ -3,7 +3,13 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Sidebar from "../../../externalComponents/sidebarBase/Sidebar";
-import { BsArrowLeftShort } from "react-icons/bs";
+import {
+  BsArrowLeftShort,
+  BsArrowRightShort,
+  BsCalendarDate,
+  BsStar,
+  BsStarFill,
+} from "react-icons/bs";
 
 const localizer = momentLocalizer(moment);
 
@@ -26,26 +32,48 @@ const CustomToolbar = ({ label, onNavigate, view }) => {
   }
 
   return (
-    <div className="w-[100%] flex justify-between items-center pb-4">
-      <span className="text-[#c5d1de] text-[18px]">{label}</span>
-      <div className="flex justify-center items-center gap-4">
+    <div className="w-[100%] flex justify-between items-center pb-4 pr-4">
+      <div className="flex justify-center items-center gap-1">
         <button
-          className="py-1 px-3 border-[1px] border-[#c5d1de] rounded-tl-[4px] rounded-bl-[4px] bg-[#22272e] text-[#c5d1de] hover:bg-[#c5d1de] hover:text-[#22272e]"
+          className="bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer w-[46px] py-1 border-[#c5d1de] bg-[#22272e] text-[#22272e] hover:text-[#ffffff]"
           onClick={goToBack}
         >
           <BsArrowLeftShort className="text-[24px]" />
         </button>
         <button
-          className="py-1 px-3 border-t-[1px] border-b-[1px] border-[#c5d1de] bg-[#22272e] text-[#c5d1de] hover:bg-[#c5d1de] hover:text-[#22272e]"
+          className="bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer py-1 px-3 border-[#c5d1de] bg-[#22272e] hover:text-[#ffffff] text-[#22272e] hover:rounded-[4px]"
           onClick={goToCurrent}
         >
           Today
         </button>
         <button
-          className="py-1 px-3 border-[1px] border-[#c5d1de] rounded-tr-[4px] rounded-br-[4px] bg-[#22272e] text-[#c5d1de] hover:bg-[#c5d1de] hover:text-[#22272e]"
+          className="bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer w-[46px] py-1 border-[#c5d1de] bg-[#22272e] hover:text-[#ffffff] text-[#22272e] hover:rounded-[4px]"
           onClick={goToNext}
         >
-          Next
+          <BsArrowRightShort className="text-[24px]" />
+        </button>
+      </div>
+      <span className="text-[#ffffff] text-[16px] py-1 px-4 bg-gradient-to-br from-[#007bff] to-[#3F00FF] rounded-[24px] hover:from-[#ffffff] hover:to-[#c5d1de] hover:text-[#22272e]">
+        {label}
+      </span>
+      <div className="flex justify-center items-center gap-2 opacity-0">
+        <button
+          className="bg-gradient-to-br from-[#007bff] to-[#3F00FF] hover:from-[#2d333b] hover:to-[#22272e] rounded-[2px] flex justify-center items-center cursor-pointer w-[46px] py-1 border-[#c5d1de] bg-[#22272e] hover:text-[#ffffff] text-[#22272e] hover:rounded-[4px]"
+          onClick={goToBack}
+        >
+          <BsArrowLeftShort className="text-[24px]" />
+        </button>
+        <button
+          className="font-bold bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:from-[#2d333b] hover:to-[#22272e] rounded-[2px] flex justify-center items-center cursor-pointer py-1 px-3 border-[#c5d1de] bg-[#22272e] hover:text-[#ffffff] text-[#22272e] hover:border-[1px] hover:border-[#c5d1de] hover:rounded-[4px]"
+          onClick={goToCurrent}
+        >
+          Today
+        </button>
+        <button
+          className="bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:from-[#2d333b] hover:to-[#22272e] rounded-[2px] flex justify-center items-center cursor-pointer w-[46px] py-1 border-[#c5d1de] bg-[#22272e] hover:text-[#ffffff] text-[#22272e] hover:border-[1px] hover:border-[#c5d1de] hover:rounded-[4px]"
+          onClick={goToNext}
+        >
+          <BsArrowRightShort className="text-[24px]" />
         </button>
       </div>
     </div>
@@ -133,7 +161,7 @@ const MyCalendar = ({ auth, axios, setLoading, toast, allowedRoles }) => {
     <div className="flex justify-start h-screen w-screen bg-[#22272e]">
       <Sidebar />
       <div className="flex justify-start w-[100%]">
-        <div className="w-[100%] mt-[28px] bg-[#22272e] rounded-tl-[24px] phone:rounded-tl-[0px] pl-8 phone:px-4 pt-8">
+        <div className="w-[100%] mt-[22px] bg-[#22272e] rounded-tl-[24px] phone:rounded-tl-[0px] pl-8 phone:px-4 pt-8">
           <Calendar
             localizer={localizer}
             events={events}

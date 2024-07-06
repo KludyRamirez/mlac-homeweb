@@ -3,29 +3,29 @@ import Sidebar from "../../../externalComponents/sidebarBase/Sidebar";
 import StatisticsTable from "./StatisticsTable";
 
 const Statistics = ({ auth, toast, axios, setLoading }) => {
-  const [cases, setCases] = useState([]);
+  const [logs, setLogs] = useState([]);
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    getCases();
+    getLogs();
+
     getStudents();
   }, []);
 
-  const getCases = async () => {
+  const getLogs = async () => {
     try {
       if (!auth?.userDetails?.token) {
         console.error("Authentication token not found.");
         return;
       }
-      const url = `/api/case`;
+      const url = `/api/log`;
       const res = await axios.get(url, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${auth?.userDetails?.token}`,
         },
       });
-
-      setCases(res.data);
+      setLogs(res?.data?.logs);
     } catch (err) {
       console.error("Error fetching users!", err);
     }
@@ -59,8 +59,8 @@ const Statistics = ({ auth, toast, axios, setLoading }) => {
             <StatisticsTable
               toast={toast}
               setLoading={setLoading}
-              getCases={getCases}
-              cases={cases}
+              getLogs={getLogs}
+              logs={logs}
               students={students}
             />
           </div>

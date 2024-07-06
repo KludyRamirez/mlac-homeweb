@@ -1,24 +1,35 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 
-export function StudentsPerYearPieChart({ cases }) {
-  const yearLabels = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
-  const casesPerYear = [1, 2, 3, 4].map(
-    (year) => cases.filter((c) => c?.student?.year === year).length
+export function StudentsPerYearPieChart({ students }) {
+  const studentTypeLabels = ["Dyad", "Solo"];
+  const studentTypeIndex = ["Dyad", "Solo"].map(
+    (type) => students.filter((s) => s?.studentType === type).length
   );
 
   const data = [
-    ["Task", "Cases per year"],
-    ...yearLabels.map((label, index) => [label, casesPerYear[index]]),
+    ["Task", "Students"],
+    ...studentTypeLabels.map((label, index) => [
+      label,
+      studentTypeIndex[index],
+    ]),
   ];
 
   const options = {
     is3D: true,
     backgroundColor: "transparent",
+    legend: {
+      textStyle: {
+        color: "#c5d1de",
+      },
+    },
   };
 
   return (
-    <div className="mt-[-4px]">
+    <div className="flex flex-col border-[1px] border-[#2d333b] rounded-[8px]">
+      <div className="flex justify-start items-center w-[100%] h-[50px] bg-gradient-to-r from-[#2d333b] to-[#22272e] px-4 rounded-tl-[6px] rounded-tr-[6px] text-[#c5d1de]">
+        Students
+      </div>
       <Chart
         chartType="PieChart"
         data={data}

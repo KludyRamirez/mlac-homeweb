@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import CasesPerMonthFilter from "../statisticsComponents/CasesPerMonthFilter";
-import StudentsPerYearFilter from "../statisticsComponents/StudentsPerYearFilter";
 import YearlyStatistics from "../statisticsComponents/YearlyStatistics";
+import StatisticsBoxes from "../statisticsComponents/StatisticsBoxes";
 
-const StatisticsTable = ({ cases, students, getCases, toast, setLoading }) => {
+const StatisticsTable = ({ toast, students, logs, getLogs }) => {
   const [activeStats, setActiveStats] = useState("Dynamic");
 
   const handleSetActiveStats = (active) => {
@@ -29,34 +29,23 @@ const StatisticsTable = ({ cases, students, getCases, toast, setLoading }) => {
             >
               Dynamic
             </div>
-            <div
-              onClick={() => handleSetActiveStats("Yearly")}
-              className={`text-[16px] ${
-                activeStats === "Yearly"
-                  ? "text-white bg-gradient-to-br from-[#007bff] to-[#3F00FF]"
-                  : "text-[#505050] bg-gray-100 border-gray-100"
-              } font-normal py-1 px-4 rounded-[28px] cursor-pointer`}
-            >
-              Yearly
-            </div>
           </div>
         </div>
 
         {activeStats === "Dynamic" ? (
           <div className="flex phone:flex-wrap justify-start gap-8">
-            <div className="w-[100%] h-[fit-content] pt-2">
+            <div className="w-[58%] h-[fit-content] pt-2">
               <CasesPerMonthFilter
                 toast={toast}
-                getCases={getCases}
-                cases={cases}
+                getLogs={getLogs}
+                logs={logs}
                 students={students}
               />
             </div>
-            <div className="w-[100%] h-[fit-content] pt-2">
-              <StudentsPerYearFilter
-                toast={toast}
-                getCases={getCases}
-                cases={cases}
+            <div className="w-[42%] h-[fit-content] pt-2">
+              <StatisticsBoxes
+                logs={logs}
+                getLogs={getLogs}
                 students={students}
               />
             </div>
@@ -64,7 +53,7 @@ const StatisticsTable = ({ cases, students, getCases, toast, setLoading }) => {
         ) : (
           <div className="flex phone:flex-wrap justify-start gap-8">
             <div className="w-[100%] h-[fit-content] mt-2">
-              <YearlyStatistics cases={cases} />
+              <YearlyStatistics logs={logs} />
             </div>
           </div>
         )}

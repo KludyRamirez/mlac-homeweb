@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import {
   BsFilter,
   BsChevronBarDown,
-  BsCalendar2,
   BsGear,
   BsClock,
-  BsCalendarDate,
   BsCalendar4Event,
 } from "react-icons/bs";
 import SchedulesTable from "./SchedulesTable";

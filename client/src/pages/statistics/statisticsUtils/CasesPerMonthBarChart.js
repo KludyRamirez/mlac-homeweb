@@ -17,14 +17,14 @@ const months = [
 ];
 
 // Define the React component
-const CasesPerMonthBarChart = ({ cases }) => {
+const CasesPerMonthBarChart = ({ schedules }) => {
   const chartContainer = useRef(null);
 
-  const casesByMonth = {};
+  const schedulesByMonth = {};
 
   months.forEach((month, index) => {
-    const monthCases = cases?.filter((c) => {
-      const dateParts = new Date(c?.dateOfIncident)
+    const monthSchedules = schedules?.filter((s) => {
+      const dateParts = new Date(s?.date)
         .toLocaleDateString("en-PH", {
           month: "long",
           day: "numeric",
@@ -34,7 +34,7 @@ const CasesPerMonthBarChart = ({ cases }) => {
       return dateParts[0] === month;
     });
 
-    casesByMonth[month] = monthCases?.length;
+    schedulesByMonth[month] = monthSchedules?.length;
   });
 
   const data = useMemo(() => {
@@ -55,8 +55,8 @@ const CasesPerMonthBarChart = ({ cases }) => {
       ],
       datasets: [
         {
-          label: "Cases",
-          data: months?.map((month) => casesByMonth[month]),
+          label: "Schedules",
+          data: months?.map((month) => schedulesByMonth[month]),
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
             "rgba(255, 159, 64, 0.2)",
@@ -66,20 +66,10 @@ const CasesPerMonthBarChart = ({ cases }) => {
             "rgba(153, 102, 255, 0.2)",
             "rgba(201, 203, 207, 0.2)",
           ],
-          borderColor: [
-            "rgb(255, 99, 132)",
-            "rgb(255, 159, 64)",
-            "rgb(255, 205, 86)",
-            "rgb(75, 192, 192)",
-            "rgb(54, 162, 235)",
-            "rgb(153, 102, 255)",
-            "rgb(201, 203, 207)",
-          ],
-          borderWidth: 1,
         },
       ],
     };
-  }, [casesByMonth]);
+  }, [schedulesByMonth]);
 
   const config = useMemo(() => {
     return {
@@ -105,7 +95,7 @@ const CasesPerMonthBarChart = ({ cases }) => {
   }, [config]);
 
   return (
-    <div className="px-4 py-3 border-[1px] rounded-[8px]">
+    <div className="px-4 py-3 border-[1px] border-[#2b333b] rounded-[8px]">
       <canvas ref={chartContainer} />
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import zoom from "../images/zoom.svg";
 import { BsCopy, BsLink45Deg } from "react-icons/bs";
 import { FaCameraRetro } from "react-icons/fa";
-import { FaCopy, FaRegCopy } from "react-icons/fa6";
+import { FaArrowRight, FaCopy, FaRegCopy } from "react-icons/fa6";
 
 export default function ShowZoomLinkModal({
   selectedScheduleZoomLink,
@@ -10,8 +10,8 @@ export default function ShowZoomLinkModal({
 }) {
   return (
     <div className="relative flex flex-col items-start w-[420px]">
-      <div className="flex flex-col gap-4 w-[100%] backdrop-filter backdrop-blur-sm rounded-[24px] p-8 border-[1px] border-[#1F2329]">
-        <div className="flex flex-col gap-2 w-[100%] mt-2">
+      <div className="flex flex-col gap-4 w-[100%] backdrop-filter backdrop-blur-sm rounded-[8px] p-8">
+        {/* <div className="flex flex-col gap-2 w-[100%] mt-2">
           <div className="flex justify-between items-center text-[16px] text-[#c5d1de] w-[100%]">
             <span>Password</span>
             <FaRegCopy className="text-[#c5d1de] text-[18px] cursor-pointer" />
@@ -19,7 +19,7 @@ export default function ShowZoomLinkModal({
           <div className="text-[16px] p-3 w-[100%] bg-gradient-to-br from-[#2d333b] to-[#22272e] rounded-[8px] text-[#c5d1de]">
             {selectedScheduleZoomLink?.zoomLink?.password}
           </div>
-        </div>
+        </div> */}
         <div className="flex flex-col gap-2 w-[100%]">
           <div className="flex justify-start items-center gap-2 text-[16px] text-[#c5d1de]">
             <span>Link</span>
@@ -30,9 +30,9 @@ export default function ShowZoomLinkModal({
           </div>
         </div>
         <div className="flex flex-col gap-2 w-[100%] mt-4">
-          <div className="cursor-pointer text-[16px] w-[100%] rounded-[8px] py-2 px-3 text-[white] bg-gradient-to-br from-[#007bff] to-[#3F00FF] flex justify-between items-center">
+          <div className="cursor-pointer text-[16px] w-[100%] rounded-[4px] py-2 px-3 text-[white] bg-gradient-to-br from-[#007bff] to-[#3F00FF] flex justify-between items-center">
             <span>Go to zoom meeting</span>
-            <FaCameraRetro className="text-[20px] text-[#c5d1de]" />
+            <FaArrowRight className="text-[20px] text-[#c5d1de]" />
           </div>
         </div>
       </div>
