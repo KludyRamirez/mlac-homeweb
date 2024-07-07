@@ -9,7 +9,7 @@ export default function ShowZoomLinkModal({
 }) {
   return (
     <div className="relative flex flex-col items-start w-[420px]">
-      <div className="flex flex-col gap-4 w-[100%] backdrop-filter backdrop-blur-sm rounded-[8px] p-8">
+      <div className="flex flex-col gap-4 w-[100%] backdrop-filter backdrop-blur-md rounded-[24px] p-8">
         {/* <div className="flex flex-col gap-2 w-[100%] mt-2">
           <div className="flex justify-between items-center text-[16px] text-[#c5d1de] w-[100%]">
             <span>Password</span>
@@ -29,7 +29,7 @@ export default function ShowZoomLinkModal({
           </div>
         </div>
         <div className="flex flex-col gap-2 w-[100%] mt-4">
-          <div className="cursor-pointer text-[16px] w-[100%] rounded-[4px] py-2 px-3 text-[white] bg-gradient-to-br from-[#007bff] to-[#3F00FF] flex justify-between items-center">
+          <div className="cursor-pointer text-[16px] w-[100%] rounded-[40px] py-2 px-4 text-[white] bg-gradient-to-br from-[#007bff] to-[#3F00FF] flex justify-between items-center">
             <span>Go to zoom meeting</span>
             <FaArrowUpRightFromSquare className="text-[18px] text-[#c5d1de]" />
           </div>

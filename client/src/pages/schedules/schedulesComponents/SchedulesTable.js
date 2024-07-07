@@ -285,6 +285,7 @@ const SchedulesTable = ({
         }
       );
       toast.success(res?.data?.message);
+      getSchedules();
     } catch (err) {
       toast.error(err?.response?.data?.message);
     }
