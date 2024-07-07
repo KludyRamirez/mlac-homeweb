@@ -30,14 +30,14 @@ import {
   BsHourglassSplit,
   BsPeople,
   BsPeopleFill,
+  BsPerson,
   BsPersonFill,
   BsPieChart,
   BsPieChartFill,
 } from "react-icons/bs";
 import { logoutUtil } from "../../pages/auth/login/loginUtils/logoutUtil";
-import { FaScroll } from "react-icons/fa6";
-import { LuScroll } from "react-icons/lu";
-import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
+import { IoReceipt, IoReceiptOutline } from "react-icons/io5";
+import avatar from "../../images/drac.png";
 
 const AppNavBar = styled(AppBar)({
   background: "transparent",
@@ -437,14 +437,14 @@ function Sidebar(props) {
                       }}
                     >
                       <RouteCon>
-                        <PiUsersThreeFill className="text-[28px]" />
+                        <BsPersonFill />
                         <p className="text-[18px] ml-[-2px]">Users</p>
                       </RouteCon>
                     </SidebarOptions>
                   ) : (
                     <SidebarOptions>
                       <RouteCon>
-                        <PiUsersThree className="text-[28px]" />
+                        <BsPerson />
                         <p className="text-[18px] ml-[-2px]">Users</p>
                       </RouteCon>
                     </SidebarOptions>
@@ -471,14 +471,14 @@ function Sidebar(props) {
                       }}
                     >
                       <RouteCon>
-                        <FaScroll />
+                        <IoReceipt />
                         <p className="text-[18px]">Logs</p>
                       </RouteCon>
                     </SidebarOptions>
                   ) : (
                     <SidebarOptions>
                       <RouteCon>
-                        <LuScroll />
+                        <IoReceiptOutline />
                         <p className="text-[18px]">Logs</p>
                       </RouteCon>
                     </SidebarOptions>
@@ -521,79 +521,29 @@ function Sidebar(props) {
               </div>
             ) : null}
           </div>
-          <div className="flex flex-col justify-start items-start gap-[12px] w-full p-[20px]">
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              {auth?.userDetails?.role === "Administrator" ? (
-                <div className="w-full">
-                  <Link to="/settings">
-                    {activeItem === "/settings" ? (
-                      <SidebarOptions
-                        sx={{
-                          background:
-                            "radial-gradient(100% 100% at 100% 0, #2d333b 0, #2d333b 100%)",
-                          borderRadius: "6px",
-                          "&:hover": {
-                            transform: "translateY(0px)",
-                            color: "white",
-                            border: "none",
-                          },
-                          "&:active": { transform: "translateY(0px)" },
-                        }}
-                      >
-                        <RouteCon>
-                          <BsGearFill />
-                          <p className="text-[18px]">Settings</p>
-                        </RouteCon>
-                      </SidebarOptions>
-                    ) : (
-                      <SidebarOptions>
-                        <RouteCon>
-                          <BsGear />
-                          <p className="text-[18px]">Settings</p>
-                        </RouteCon>
-                      </SidebarOptions>
-                    )}
-                  </Link>
+
+          <div className="flex flex-col justify-center items-center w-[100%] p-4">
+            <div className="group flex justify-start items-center gap-4 w-[100%] bg-[#2d333b] border-[1px] border-[#2d333b] p-4 rounded-tl-[8px] rounded-tr-[8px]">
+              <img
+                src={avatar}
+                alt=""
+                className="w-[50px] h-[50px] transition-transform duration-300 transform group-hover:rotate-[360deg]"
+              />
+              <div className="flex flex-col">
+                <div className="text-[#ffffff] text-[18px] font-bold hover:underline cursor-pointer">
+                  {auth.userDetails.userName}
                 </div>
-              ) : null}
+                <div className="text-[#c5d1de] text-[14px]">
+                  {auth.userDetails.role?.slice(0, 5)}
+                </div>
+              </div>
             </div>
             <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
+              onClick={logoutUtil}
+              className="group cursor-pointer bg-gradient-to-br from-[#ffffff] to-[#c5d1de] flex justify-start gap-2 items-center w-[100%] border-[1px] border-[#c5d1de] rounded-bl-[8px] rounded-br-[8px] px-4 py-2 text-[#22272e] hover:from-[#ff3131] hover:to-[#ff3131] hover:text-[#ffffff] hover:border-[#ff3131]"
             >
-              <div className="w-full">
-                <SidebarOptions
-                  onClick={logoutUtil}
-                  sx={{
-                    background: "rgba(0, 0, 0, 0.04)",
-                    borderRadius: "6px",
-                    boxShadow: "none",
-                    "&:hover": {
-                      transform: "translateY(-1px)",
-                      background: "#FF4433",
-                      color: "white",
-                      border: "none",
-                    },
-                    "&:active": { transform: "translateY(1px)" },
-                  }}
-                >
-                  <RouteCon>
-                    <AiOutlineLogout />
-                    <p className="text-[18px]">Sign Out</p>
-                  </RouteCon>
-                </SidebarOptions>
-              </div>
+              <span className="text-[16px]">Sign out</span>
+              <AiOutlineLogout className="text-[18px] transition-transform duration-300 transform group-hover:translate-x-2" />
             </div>
           </div>
         </div>

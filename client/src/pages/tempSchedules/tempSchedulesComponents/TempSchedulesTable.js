@@ -302,7 +302,7 @@ const TempSchedulesTable = ({
         </ModalBox>
       </Modal>
       <div
-        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] border-[1px] border-[#2d333b] phone:overflow-x-scroll ${
+        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] phone:overflow-x-scroll ${
           tempSchedules && tempSchedules.length > 5 ? "overflow-y-scroll" : ""
         }`}
       >
@@ -376,7 +376,7 @@ const TempSchedulesTable = ({
             {tempSchedules?.map((s, k) => (
               <div
                 className={`phone:w-[fit-content]
-              flex items-center gap-4 px-6 last:rounded-bl-[10px] rounded-br-[10px] ${
+              flex items-center gap-4 px-6 last:rounded-bl-[8px] last:rounded-br-[8px] ${
                 k % 2 === 0 ? "bg-[#22272e]" : "bg-transparent"
               }`}
                 key={k}

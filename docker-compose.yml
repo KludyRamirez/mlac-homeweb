@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  client:
+    build: ./client
+    container_name: mlac-client
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - server
+    networks:
+      - mern-network
+
+  server:
+    build: ./server
+    container_name: mlac-server
+    restart: always
+    ports:
+      - "5001:5001"
+    depends_on:
+      - database
+    networks:
+      - mern-network
+
+  database:
+    image: mongo
+    container_name: mlac-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - /c/Users/kluds/OneDrive/Desktop/mongo-backup:/data/db
+    networks:
+      - mern-network
+
+networks:
+  mern-network:
+    driver: bridge

@@ -1,17 +1,18 @@
 import axios from "axios";
 
+const apiClient = axios.create({
+  baseURL: process.env.REACT_APP_API_URI,
+  withCredentials: true,
+});
+
 export const handleCsrfToken = async () => {
   try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URI}/api/csrf-token`,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return res.data.csrfToken;
+    const res = await apiClient.get(`/api/csrf-token`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res?.data?.csrfToken;
   } catch (error) {
     console.error(
       "Error getting CSRF token. Please reload the browser.",
@@ -20,11 +21,6 @@ export const handleCsrfToken = async () => {
     throw error;
   }
 };
-
-const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URI,
-  withCredentials: true,
-});
 
 handleCsrfToken()
   .then((csrfToken) => {

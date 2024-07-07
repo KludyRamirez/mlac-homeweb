@@ -35,19 +35,19 @@ const CustomToolbar = ({ label, onNavigate, view }) => {
     <div className="w-[100%] flex justify-between items-center pb-4 pr-4">
       <div className="flex justify-center items-center gap-1">
         <button
-          className="bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer w-[46px] py-1 border-[#c5d1de] bg-[#22272e] text-[#22272e] hover:text-[#ffffff]"
+          className="bg-gradient-to-br from-[#2d333b] to-[#2d333b] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer w-[46px] py-1 border-[#c5d1de] bg-[#22272e] text-[#ffffff]"
           onClick={goToBack}
         >
           <BsArrowLeftShort className="text-[24px]" />
         </button>
         <button
-          className="bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer py-1 px-3 border-[#c5d1de] bg-[#22272e] hover:text-[#ffffff] text-[#22272e] hover:rounded-[4px]"
+          className="bg-gradient-to-br from-[#2d333b] to-[#2d333b] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer py-1 px-3 border-[#c5d1de] bg-[#22272e] text-[#ffffff]"
           onClick={goToCurrent}
         >
           Today
         </button>
         <button
-          className="bg-gradient-to-br from-[#ffffff] to-[#c5d1de] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer w-[46px] py-1 border-[#c5d1de] bg-[#22272e] hover:text-[#ffffff] text-[#22272e] hover:rounded-[4px]"
+          className="bg-gradient-to-br from-[#2d333b] to-[#2d333b] hover:from-[#007bff] hover:to-[#3F00FF] rounded-[2px] flex justify-center items-center cursor-pointer w-[46px] py-1 border-[#c5d1de] bg-[#22272e] text-[#ffffff]"
           onClick={goToNext}
         >
           <BsArrowRightShort className="text-[24px]" />

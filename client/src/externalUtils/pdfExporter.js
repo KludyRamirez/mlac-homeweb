@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { createRoot } from "react-dom/client";
 
-export default function pdfExporter(selectedItems, items, setExportTrigger) {
+export default function pdfExporter(selectedItems, items) {
   const exportItems = items.filter((i) => selectedItems.includes(i?._id));
 
   const pdfElement = document.createElement("div");
@@ -34,17 +34,15 @@ export default function pdfExporter(selectedItems, items, setExportTrigger) {
         pdf.addImage(imgData, "PNG", 10, 10);
         pdf.save("download.pdf");
         document.body.removeChild(pdfElement);
-        setExportTrigger(false);
       })
       .catch((error) => {
         console.error("Error creating PDF:", error);
         document.body.removeChild(pdfElement);
-        setExportTrigger(false);
       });
   }, 1000);
 }
 
-export function pdfExporterSingleItem(selectedItem, items, setExportTrigger) {
+export function pdfExporterSingleItem(selectedItem, items) {
   const exportItems = items.filter((i) => selectedItem?._id === i?._id);
 
   const pdfElement = document.createElement("div");
@@ -75,12 +73,10 @@ export function pdfExporterSingleItem(selectedItem, items, setExportTrigger) {
         pdf.addImage(imgData, "PNG", 10, 10);
         pdf.save("download.pdf");
         document.body.removeChild(pdfElement);
-        setExportTrigger(false);
       })
       .catch((error) => {
         console.error("Error creating PDF:", error);
         document.body.removeChild(pdfElement);
-        setExportTrigger(false);
       });
   }, 1000);
 }

@@ -235,7 +235,7 @@ const UsersTable = ({
         </ModalBox>
       </Modal>
       <div
-        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] border-[1px] border-[#2d333b] phone:overflow-x-scroll ${
+        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] phone:overflow-x-scroll ${
           users && users?.length > 5 ? "overflow-y-scroll" : ""
         }`}
       >
@@ -329,8 +329,19 @@ const UsersTable = ({
                 <div className="w-[140px] whitespace-nowrap flex justify-between items-center py-1 px-4 rounded-[4px]">
                   {user?.contactNo}
                 </div>
-                <div className="w-[120px] whitespace-nowrap flex justify-between items-center py-1 px-4 rounded-[4px] text-[#0FFF50]">
-                  {user?.statusOfUser}
+                <div className="w-[120px] whitespace-nowrap flex justify-start items-center py-1 px-4 rounded-[4px] gap-2">
+                  <div
+                    className={`${
+                      user?.statusOfUser === "Enabled" &&
+                      "bg-gradient-to-r from-[#0FFF50] to-[#008000] hover:to-[#0FFF50] cursor-pointer"
+                    } ${
+                      user?.statusOfUser === "Disabled" &&
+                      "bg-gradient-to-r from-[#ff3131] to-[#C41E3A] hover:to-[#ff3131] cursor-pointer"
+                    } ${
+                      user?.statusOfUser === "No information yet" &&
+                      "bg-gradient-to-r from-[#ffffff] to-[#c5d1de] hover:to-[#ffffff] cursor-pointer"
+                    } w-[32px] h-[14px] flex justify-center items-center rounded-[32px]`}
+                  ></div>
                 </div>
                 <div className="w-[140px] whitespace-nowrap flex justify-start items-center py-1 px-1 rounded-[4px] gap-2">
                   {selectedUsers?.length < 2 ? (

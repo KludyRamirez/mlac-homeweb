@@ -26,9 +26,9 @@ export function StudentsPerYearPieChart({ students }) {
   };
 
   return (
-    <div className="flex flex-col border-[1px] border-[#2d333b] rounded-[8px]">
-      <div className="flex justify-start items-center w-[100%] h-[50px] bg-gradient-to-r from-[#2d333b] to-[#22272e] px-4 rounded-tl-[6px] rounded-tr-[6px] text-[#c5d1de]">
-        Students
+    <div className="flex flex-col rounded-[4px] bg-gradient-to-b from-[#2d333b] to-[#22272e]">
+      <div className="flex border-[1px] border-[#2d333b] justify-start items-center h-[50px] bg-gradient-to-r from-[#22272e] to-[#22272e] px-4 rounded-tl-[4px] rounded-tr-[4px] text-[#c5d1de]">
+        Type of Student Percentage
       </div>
       <Chart
         chartType="PieChart"

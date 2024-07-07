@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { BsChevronBarDown, BsFilter } from "react-icons/bs";
+import {
+  BsCalendar4Event,
+  BsCalendarDate,
+  BsCalendarEvent,
+  BsCalendarEventFill,
+  BsCalendarWeek,
+  BsChevronBarDown,
+  BsFilter,
+} from "react-icons/bs";
 import CasesPerMonthBarChart from "../statisticsUtils/CasesPerMonthBarChart";
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -70,28 +78,7 @@ const CasesPerMonthFilter = ({ toast, students, logs, getLogs }) => {
                   : "border-b-2 border-[#2d333b]"
               }`}
             >
-              All Cases
-            </div>
-
-            <div
-              onClick={() => handleMainFilterChange("Minor")}
-              className={`px-3 h-[58px] hover:border-white flex justify-center items-center text-[18px] cursor-pointer ${
-                activeMainFilter === "Minor"
-                  ? "border-b-2 border-[#c5d1de]"
-                  : "border-b-2 border-[#2d333b]"
-              }`}
-            >
-              Minor
-            </div>
-            <div
-              onClick={() => handleMainFilterChange("Major")}
-              className={`px-3 h-[58px] hover:border-white flex justify-center items-center text-[18px] cursor-pointer ${
-                activeMainFilter === "Major"
-                  ? "border-b-2 border-[#c5d1de]"
-                  : "border-b-2 border-[#2d333b]"
-              }`}
-            >
-              Major
+              All Schedules
             </div>
           </div>
           <div className="flex justify-center items-center pr-2">
@@ -102,14 +89,14 @@ const CasesPerMonthFilter = ({ toast, students, logs, getLogs }) => {
         <div className="bg-[#22272e] p-4 rounded-bl-[10px] rounded-br-[10px] text-[#c5d1de]">
           <div className="flex flex-wrap justify-start items-center gap-4 phone:gap-2">
             <div className="phone:w-[50%] flex flex-col items-start gap-2">
-              <div className="pl-1 w-[142px] phone:w-[100%] flex justify-between items-center">
+              <div className="pl-1 w-[201px] phone:w-[100%] flex justify-between items-center">
                 <div className="flex gap-2 items-center">
                   <div>Day</div> <BsChevronBarDown />
                 </div>
               </div>
               <select
                 onChange={(e) => setDay(e.target.value)}
-                className="px-3 h-[44px] w-[142px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+                className="px-3 h-[44px] w-[201px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
               >
                 <option value="All">All</option>
                 {days?.map((d) => (
@@ -121,14 +108,14 @@ const CasesPerMonthFilter = ({ toast, students, logs, getLogs }) => {
             </div>
 
             <div className="phone:w-[47.8%] flex flex-col items-start gap-2">
-              <div className="pl-1 w-[142px] phone:w-[100%] flex justify-between items-center">
+              <div className="pl-1 w-[201px] phone:w-[100%] flex justify-between items-center">
                 <div className="flex gap-2 items-center">
                   <div>Type</div> <BsChevronBarDown />
                 </div>
               </div>
               <select
                 onChange={(e) => setType(e.target.value)}
-                className="px-3 h-[44px] w-[142px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+                className="px-3 h-[44px] w-[201px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
               >
                 <option value="All">All</option>
                 <option value="Dyad">Dyad</option>
@@ -137,14 +124,14 @@ const CasesPerMonthFilter = ({ toast, students, logs, getLogs }) => {
             </div>
 
             <div className="phone:w-[50%] flex flex-col items-start gap-2">
-              <div className="pl-1 w-[142px] phone:w-[100%] flex justify-between items-center">
+              <div className="pl-1 w-[201px] phone:w-[100%] flex justify-between items-center">
                 <div className="flex gap-2 items-center">
                   <div>Timing</div> <BsChevronBarDown />
                 </div>
               </div>
               <select
                 onChange={(e) => setTiming(e.target.value)}
-                className="px-3 h-[44px] w-[142px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+                className="px-3 h-[44px] w-[201px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
               >
                 <option value="All">All</option>
                 {timings?.map((t) => (
@@ -156,7 +143,7 @@ const CasesPerMonthFilter = ({ toast, students, logs, getLogs }) => {
             </div>
 
             <div className="phone:w-[50%] flex flex-col items-start gap-2">
-              <div className="pl-1 w-[142px] phone:w-[100%] flex justify-between items-center">
+              <div className="pl-1 w-[201px] phone:w-[100%] flex justify-between items-center">
                 <div className="flex gap-2 items-center">
                   <div>Year</div> <BsChevronBarDown />
                 </div>
@@ -166,7 +153,7 @@ const CasesPerMonthFilter = ({ toast, students, logs, getLogs }) => {
                 onChange={(e) => {
                   setDate(e.target.value);
                 }}
-                className="px-3 h-[44px] w-[142px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
+                className="px-3 h-[44px] w-[201px] phone:w-[100%] rounded-[6px] bg-[#2d333b] border-[1px] border-[#2d333b] appearance-none focus:outline-none focus:bg-[#22272e] focus:border-[#2d333b] cursor-pointer"
               >
                 <option value="All">All</option>
                 {years.map((year) => (
@@ -177,6 +164,38 @@ const CasesPerMonthFilter = ({ toast, students, logs, getLogs }) => {
               </select>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="mt-4 w-[100%] h-[70px] flex justify-center items-center gap-4">
+        <div className="flex justify-center items-center gap-6 w-[26%] h-[100%] rounded-[12px] bg-gradient-to-br from-[#00d2ff] to-[#3a7bd5] shadow-xl">
+          <div className="flex justify-center items-center gap-4 p-2 bg-white/30 rounded-lg">
+            <BsCalendarEvent className="text-white text-[24px]" />
+          </div>
+          <div className="flex flex-col text-[14px] text-[white] font-bold">
+            <span>Scheds</span>
+            <span>Completed</span>
+          </div>
+          <div className="text-[36px] text-[white] font-bold">0</div>
+        </div>
+        <div className="flex justify-center items-center gap-6 w-[26%] h-[100%] rounded-[12px] bg-gradient-to-br from-[#ffc837] to-[#ff8008] shadow-xl">
+          <div className="flex justify-center items-center gap-4 p-2 bg-white/30 rounded-lg">
+            <BsCalendarDate className="text-white text-[24px]" />
+          </div>
+          <div className="flex flex-col text-[14px] text-[white] font-bold">
+            <span>Scheds</span>
+            <span>Completed</span>
+          </div>
+          <div className="text-[36px] text-[white] font-bold">0</div>
+        </div>
+        <div className="flex justify-center items-center gap-6 w-[26%] h-[100%] rounded-[12px] bg-gradient-to-br from-[#93edc7] to-[#1cd8d2] shadow-xl">
+          <div className="flex justify-center items-center gap-4 p-2 bg-white/30 rounded-lg">
+            <BsCalendarWeek className="text-white text-[24px]" />
+          </div>
+          <div className="flex flex-col text-[14px] text-[white] font-bold">
+            <span>Scheds</span>
+            <span>Completed</span>
+          </div>
+          <div className="text-[36px] text-[white] font-bold">0</div>
         </div>
       </div>
       <div className="mt-4">

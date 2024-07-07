@@ -1,8 +1,7 @@
 import React from "react";
-import zoom from "../images/zoom.svg";
-import { BsCopy, BsLink45Deg } from "react-icons/bs";
+import { BsLink45Deg } from "react-icons/bs";
 import { FaCameraRetro } from "react-icons/fa";
-import { FaArrowRight, FaCopy, FaRegCopy } from "react-icons/fa6";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 export default function ShowZoomLinkModal({
   selectedScheduleZoomLink,
@@ -32,7 +31,7 @@ export default function ShowZoomLinkModal({
         <div className="flex flex-col gap-2 w-[100%] mt-4">
           <div className="cursor-pointer text-[16px] w-[100%] rounded-[4px] py-2 px-3 text-[white] bg-gradient-to-br from-[#007bff] to-[#3F00FF] flex justify-between items-center">
             <span>Go to zoom meeting</span>
-            <FaArrowRight className="text-[20px] text-[#c5d1de]" />
+            <FaArrowUpRightFromSquare className="text-[18px] text-[#c5d1de]" />
           </div>
         </div>
       </div>

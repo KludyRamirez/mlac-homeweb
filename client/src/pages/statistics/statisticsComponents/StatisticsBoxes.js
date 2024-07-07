@@ -144,22 +144,39 @@ export default function StatisticsBoxes({ logs, getLogs, students }) {
           </div>
         </div>
       </div>
-      <div>
-        {logs.length > 0 ? (
-          <>
-            <StudentsPerYearPieChart
-              schedules={logs}
-              students={students}
-              getLogs={getLogs}
-            />
-          </>
-        ) : (
-          <div className="mt-[-20px] h-[297px] flex flex-col justify-center items-center gap-2">
-            <BsFolderX className="text-[80px] text-[#007bff]" />
-            <div className="text-[#007bff]">No schedule available</div>
+      <div className="phone:overflow-x-scroll">
+        <div className="w-[fit-content] flex justify-start items-center gap-4 whitespace-nowrap">
+          <div className="p-2 w-[206px] h-[180px] bg-gradient-to-br from-[#007bff] to-[#2d333b] rounded-[4px] relative overflow-hidden">
+            <div className="absolute bottom-[-90px] left-[-90px] w-[200px] h-[200px] rounded-[50%] bg-[#22272e] flex justify-center items-center">
+              <div className="w-[120px] h-[120px] rounded-[50%] bg-[#007bff]"></div>
+            </div>
           </div>
-        )}
+          <div className="p-2 w-[206px] h-[180px] bg-gradient-to-br from-[#FFBF00] to-[#2d333b] rounded-[4px] relative overflow-hidden">
+            <div className="absolute top-[-90px] left-[-90px] w-[200px] h-[200px] rounded-[50%] bg-[#22272e] flex justify-center items-center">
+              <div className="w-[120px] h-[120px] rounded-[50%] bg-[#FFBF00]"></div>
+            </div>
+          </div>
+          <div className="p-2 w-[206px] h-[180px] bg-gradient-to-br from-[#ff3131] to-[#2d333b] rounded-[4px] relative overflow-hidden">
+            <div className="absolute bottom-[-90px] right-[-90px] w-[200px] h-[200px] rounded-[50%] bg-[#22272e] flex justify-center items-center">
+              <div className="w-[120px] h-[120px] rounded-[50%] bg-[#ff3131]"></div>
+            </div>
+          </div>
+        </div>
       </div>
+      {logs.length > 0 ? (
+        <>
+          <StudentsPerYearPieChart
+            schedules={logs}
+            students={students}
+            getLogs={getLogs}
+          />
+        </>
+      ) : (
+        <div className="w-[100%] h-[338px] flex flex-col justify-center items-center gap-2">
+          <BsFolderX className="text-[80px] text-[#007bff]" />
+          <div className="text-[#007bff]">No schedule available</div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,13 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  BsEye,
-  BsEyeFill,
-  BsFolder2Open,
-  BsPenFill,
-  BsPen,
-  BsTrash3,
-  BsTrash3Fill,
-} from "react-icons/bs";
 import Modal from "@mui/material/Modal";
 import DeleteManyStudentModal from "./DeleteManyStudentModal";
 import DeleteStudentModal from "./DeleteStudentModal";
@@ -230,7 +221,7 @@ const StudentsTable = ({
         </ModalBox>
       </Modal>
       <div
-        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] border-[1px] border-[#2d333b] phone:overflow-x-scroll ${
+        className={`flex flex-col bg-[#2d333b] rounded-[10px] text-[#c5d1de] phone:overflow-x-scroll ${
           students && students?.length > 5 ? "overflow-y-scroll" : ""
         }`}
       >
@@ -374,7 +365,7 @@ const StudentsTable = ({
                   </div>
 
                   <div className="w-[140px] flex justify-start items-center px-1 rounded-[4px] gap-2">
-                    {selectedStudents.length < 2 ? (
+                    {/* {selectedStudents.length < 2 ? (
                       <div
                         onClick={() => handleClickProfile(student?._id)}
                         className="p-2 flex justify-center items-center bg-[transparent] text-white rounded-[18px] cursor-pointer hover:bg-[#c5d1de] hover:text-[#2d333e]"
@@ -385,7 +376,7 @@ const StudentsTable = ({
                       <div className="p-2 flex justify-center items-center bg-[transparent] text-white rounded-[18px]">
                         <FaArrowUpRightFromSquare className="text-[18px]" />
                       </div>
-                    )}
+                    )} */}
 
                     {selectedStudents.length < 2 ? (
                       allowedRoles?.find((ar) =>
@@ -426,7 +417,7 @@ const StudentsTable = ({
                       </>
                     )}
                   </div>
-                  <Ellipsis item={student} />
+                  {/* <Ellipsis item={student} /> */}
                 </div>
               );
             })}

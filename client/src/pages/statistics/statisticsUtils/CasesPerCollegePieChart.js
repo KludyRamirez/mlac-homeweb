@@ -28,14 +28,11 @@ export function CasesPerCollegePieChart({ cases }) {
 
   return (
     <>
-      <div className="mt-[-4px]">
-        <Chart
-          chartType="PieChart"
-          data={data}
-          options={options}
-          width={"100%"}
-          height={"280px"}
-        />
+      <div className="flex flex-col border-[1px] border-[#2d333b] rounded-[8px] w-[50%] h-[242px] bg-gradient-to-br from-[#22272e] to-[#2d333b]">
+        <div className="flex justify-start items-center w-[100%] h-[50px] bg-gradient-to-r from-[#22272e] to-[#2d333b] px-4 rounded-tl-[6px] rounded-tr-[6px] text-[#c5d1de]">
+          Students
+        </div>
+        <Chart chartType="PieChart" data={data} options={options} />
       </div>
     </>
   );
