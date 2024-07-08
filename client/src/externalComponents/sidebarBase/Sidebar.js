@@ -540,7 +540,7 @@ function Sidebar(props) {
             </div>
             <div
               onClick={logoutUtil}
-              className="group cursor-pointer bg-gradient-to-br from-[#ffffff] to-[#c5d1de] flex justify-start gap-2 items-center w-[100%] border-[1px] border-[#c5d1de] rounded-bl-[8px] rounded-br-[8px] px-4 py-2 text-[#22272e] hover:from-[#ff3131] hover:to-[#ff3131] hover:text-[#ffffff] hover:border-[#ff3131]"
+              className="group cursor-pointer bg-gradient-to-br from-[#2d333b] to-[#2d333b] flex justify-start gap-2 items-center w-[100%] border-t-[1px] border-[#22272e] rounded-bl-[8px] rounded-br-[8px] px-4 py-2  hover:from-[#ff3131] hover:to-[#ff3131] text-[#ffffff] hover:border-[#ff3131]"
             >
               <span className="text-[16px]">Sign out</span>
               <AiOutlineLogout className="text-[18px] transition-transform duration-300 transform group-hover:translate-x-2" />
