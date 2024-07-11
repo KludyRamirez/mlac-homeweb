@@ -56,7 +56,7 @@ export default function Ellipsis({
     try {
       setSelectedScheduleReason(r);
     } catch (error) {
-      console.error("Error handling schedule Reason click:", error);
+      console.error("Error handling schedule Reason clic:", error);
     } finally {
       setShowReasonScheduleModal(true);
     }
