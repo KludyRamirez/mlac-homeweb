@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createSelector } from "reselect";
 import toast, { Toaster } from "react-hot-toast";
 
-import { useDispatch, useSelector } from "react-redux";
-import {
-  checkIndicator,
-  setStoreNotifications,
-} from "./store/actions/NotificationActions";
+import { useSelector } from "react-redux";
 
 import Students from "./pages/students/studentsBase/Students";
 import Login from "./pages/auth/login/loginBase/Login";
@@ -31,7 +27,6 @@ import TempSolo from "./pages/tempSolo/tempSoloBase/TempSolo";
 import Logs from "./pages/logs/logsBase/Logs";
 import Timetable from "./pages/timetable/timetableBase/Timetable";
 import Calendar from "./pages/calendar/calendarBase/Calendar";
-import RasaChatBotWidget from "./externalComponents/RasaChatBotWidget/RasaChatBotWidget";
 
 // Selectors
 const selectAuth = (state) => state.auth;
